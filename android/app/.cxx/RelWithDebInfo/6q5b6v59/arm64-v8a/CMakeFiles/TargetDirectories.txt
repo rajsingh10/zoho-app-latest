@@ -1,0 +1,2 @@
+/Users/imac/StudioProjects/zoho-app/android/app/.cxx/RelWithDebInfo/6q5b6v59/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/imac/StudioProjects/zoho-app/android/app/.cxx/RelWithDebInfo/6q5b6v59/arm64-v8a/CMakeFiles/rebuild_cache.dir
