@@ -28,31 +28,31 @@ class ReplyTikitModal {
 
   ReplyTikitModal(
       {this.content,
-        this.id,
-        this.channel,
-        this.canReply,
-        this.contentType,
-        this.hasAttach,
-        this.status,
-        this.summary,
-        this.author,
-        this.attachmentCount,
-        this.channelRelatedInfo,
-        this.respondedIn,
-        this.readReceipts,
-        this.impersonatedUser,
-        this.isDescriptionThread,
-        this.isContentTruncated,
-        this.source,
-        this.visibility,
-        this.createdTime,
-        this.direction,
-        this.cc,
-        this.responderId,
-        this.bcc,
-        this.to,
-        this.fromEmailAddress,
-        this.isForward});
+      this.id,
+      this.channel,
+      this.canReply,
+      this.contentType,
+      this.hasAttach,
+      this.status,
+      this.summary,
+      this.author,
+      this.attachmentCount,
+      this.channelRelatedInfo,
+      this.respondedIn,
+      this.readReceipts,
+      this.impersonatedUser,
+      this.isDescriptionThread,
+      this.isContentTruncated,
+      this.source,
+      this.visibility,
+      this.createdTime,
+      this.direction,
+      this.cc,
+      this.responderId,
+      this.bcc,
+      this.to,
+      this.fromEmailAddress,
+      this.isForward});
 
   ReplyTikitModal.fromJson(Map<String, dynamic> json) {
     content = json['content'];
@@ -64,7 +64,7 @@ class ReplyTikitModal {
     status = json['status'];
     summary = json['summary'];
     author =
-    json['author'] != null ? new Author.fromJson(json['author']) : null;
+        json['author'] != null ? new Author.fromJson(json['author']) : null;
     attachmentCount = json['attachmentCount'];
     channelRelatedInfo = json['channelRelatedInfo'];
     respondedIn = json['respondedIn'];
@@ -73,7 +73,7 @@ class ReplyTikitModal {
     isDescriptionThread = json['isDescriptionThread'];
     isContentTruncated = json['isContentTruncated'];
     source =
-    json['source'] != null ? new Source.fromJson(json['source']) : null;
+        json['source'] != null ? new Source.fromJson(json['source']) : null;
     visibility = json['visibility'];
     createdTime = json['createdTime'];
     direction = json['direction'];
@@ -132,12 +132,12 @@ class Author {
 
   Author(
       {this.id,
-        this.name,
-        this.email,
-        this.photoURL,
-        this.type,
-        this.firstName,
-        this.lastName});
+      this.name,
+      this.email,
+      this.photoURL,
+      this.type,
+      this.firstName,
+      this.lastName});
 
   Author.fromJson(Map<String, dynamic> json) {
     id = json['id'];

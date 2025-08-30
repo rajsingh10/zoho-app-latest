@@ -25,7 +25,6 @@ import '../../homeScreen/modal/allTicketModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
 import '../../manageMembershipScreen/view/membershipPageScreen.dart';
 
-
 class adviceTicketsScreen extends StatefulWidget {
   const adviceTicketsScreen({super.key});
 
@@ -404,7 +403,11 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                                   i++) ...[
                                                 InkWell(
                                                   onTap: () {
-                                                    Get.to(TicketDetailsScreen(tickitid:filteredTicketList[i].id,));
+                                                    Get.to(TicketDetailsScreen(
+                                                      tickitid:
+                                                          filteredTicketList[i]
+                                                              .id,
+                                                    ));
                                                     print(
                                                         'Id : ${filteredTicketList[i].id}');
                                                   },

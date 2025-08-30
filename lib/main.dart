@@ -2,7 +2,6 @@ import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:salesiq_mobilisten/launcher.dart';
 import 'package:salesiq_mobilisten/salesiq_mobilisten.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/ui/welcomeScreen/view/welcomeScreen.dart';

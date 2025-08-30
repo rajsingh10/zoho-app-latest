@@ -45,25 +45,25 @@ class Data {
 
   Data(
       {this.id,
-        this.channel,
-        this.canReply,
-        this.contentType,
-        this.hasAttach,
-        this.status,
-        this.summary,
-        this.author,
-        this.attachmentCount,
-        this.respondedIn,
-        this.isDescriptionThread,
-        this.visibility,
-        this.createdTime,
-        this.direction,
-        this.cc,
-        this.responderId,
-        this.bcc,
-        this.to,
-        this.fromEmailAddress,
-        this.isForward});
+      this.channel,
+      this.canReply,
+      this.contentType,
+      this.hasAttach,
+      this.status,
+      this.summary,
+      this.author,
+      this.attachmentCount,
+      this.respondedIn,
+      this.isDescriptionThread,
+      this.visibility,
+      this.createdTime,
+      this.direction,
+      this.cc,
+      this.responderId,
+      this.bcc,
+      this.to,
+      this.fromEmailAddress,
+      this.isForward});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -74,7 +74,7 @@ class Data {
     status = json['status'];
     summary = json['summary'];
     author =
-    json['author'] != null ? new Author.fromJson(json['author']) : null;
+        json['author'] != null ? new Author.fromJson(json['author']) : null;
     attachmentCount = json['attachmentCount'];
     respondedIn = json['respondedIn'];
     isDescriptionThread = json['isDescriptionThread'];
@@ -128,12 +128,12 @@ class Author {
 
   Author(
       {this.id,
-        this.name,
-        this.email,
-        this.photoURL,
-        this.type,
-        this.firstName,
-        this.lastName});
+      this.name,
+      this.email,
+      this.photoURL,
+      this.type,
+      this.firstName,
+      this.lastName});
 
   Author.fromJson(Map<String, dynamic> json) {
     id = json['id'];

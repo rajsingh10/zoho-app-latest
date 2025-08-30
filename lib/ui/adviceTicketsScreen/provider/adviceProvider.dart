@@ -34,7 +34,6 @@ class Adviceprovider extends ChangeNotifier {
     return responseJson;
   }
 
-
   Future<http.Response> viewtikitdetaisl(id) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = ${headers}');
@@ -58,6 +57,7 @@ class Adviceprovider extends ChangeNotifier {
 
     return responseJson;
   }
+
   Future<http.Response> viewtikitrepliesdetaisl(id) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = ${headers}');
@@ -112,6 +112,4 @@ class Adviceprovider extends ChangeNotifier {
       rethrow; // 👈 rethrow for catchError() to handle
     }
   }
-
-
 }

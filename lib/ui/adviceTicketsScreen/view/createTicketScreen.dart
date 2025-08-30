@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:zohosystem/ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart'
+    as AllDeparmentModal;
 import 'package:zohosystem/utils/textFields.dart';
 
 import '../../../apiCalling/Loader.dart';
@@ -23,10 +24,7 @@ import '../../../utils/fontFamily.dart';
 import '../../../utils/images.dart';
 import '../../../utils/snackBars.dart';
 import '../../authentications/login/modal/authTokenModal.dart';
-import 'package:zohosystem/ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart'
-as AllDeparmentModal;
 import '../../authentications/login/provider/loginProvider.dart';
-
 import '../modal/addTicketModal.dart';
 import '../provider/adviceProvider.dart';
 import 'adviceTicketsScreen.dart';
@@ -100,461 +98,461 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
       body: isLoading
           ? Loader()
           : Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                padding:
-                EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-                width: double.infinity,
-                decoration:
-                BoxDecoration(color: AppColors.alternativeBlueColor),
-                child: Column(
+              children: [
+                Column(
                   children: [
-                    SizedBox(height: 5.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Image.asset(
-                            Imgs.backIcon,
-                            scale: 30,
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+                      width: double.infinity,
+                      decoration:
+                          BoxDecoration(color: AppColors.alternativeBlueColor),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Image.asset(
+                                  Imgs.backIcon,
+                                  scale: 30,
+                                ),
+                              ),
+                              Text(
+                                "Create Ticket",
+                                style: TextStyle(
+                                  fontFamily: FontFamily.bold,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.whiteColor,
+                                  fontSize: 19.sp,
+                                ),
+                              ),
+                              Icon(null),
+                            ],
                           ),
-                        ),
-                        Text(
-                          "Create Ticket",
-                          style: TextStyle(
-                            fontFamily: FontFamily.bold,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.whiteColor,
-                            fontSize: 19.sp,
-                          ),
-                        ),
-                        Icon(null),
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  color: AppColors.whiteColor,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: SingleChildScrollView(
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            SizedBox(height: 2.h),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 1.h),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  color: Color(0xffE9E7E7)),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        color: AppColors.whiteColor,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.w),
+                          child: SingleChildScrollView(
+                            child: Form(
+                              key: _formKey,
                               child: Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          final result =
-                                          await showMenu<String>(
-                                            context: context,
-                                            position:
-                                            RelativeRect.fromLTRB(
-                                                6.w, 25.h, 7.w, 5.w),
-                                            // position of menu
-                                            items: [
-                                              PopupMenuItem<String>(
-                                                value: '',
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      'Which support would you like?',
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .bgColor,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontFamily:
-                                                          FontFamily
-                                                              .light,
-                                                          decoration:
-                                                          TextDecoration
-                                                              .underline,
-                                                          fontSize:
-                                                          16.sp),
+                                  SizedBox(height: 2.h),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 4.w, vertical: 1.h),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Color(0xffE9E7E7)),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              onTap: () async {
+                                                final result =
+                                                    await showMenu<String>(
+                                                  context: context,
+                                                  position:
+                                                      RelativeRect.fromLTRB(
+                                                          6.w, 25.h, 7.w, 5.w),
+                                                  // position of menu
+                                                  items: [
+                                                    PopupMenuItem<String>(
+                                                      value: '',
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            'Which support would you like?',
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .bgColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .light,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                fontSize:
+                                                                    16.sp),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    PopupMenuItem<String>(
+                                                      value:
+                                                          'AMZ Advice Centre',
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            'AMZ Advice Centre',
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .bgColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .light,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                fontSize:
+                                                                    14.5.sp),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    PopupMenuItem<String>(
+                                                      value:
+                                                          'Marketing Advice Centre',
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            'Marketing Advice Centre',
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .bgColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .light,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                fontSize:
+                                                                    14.5.sp),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
-                                                ),
+                                                  elevation: 5,
+                                                );
+
+                                                if (result != null) {
+                                                  print('Selected: $result');
+                                                }
+                                              },
+                                              child: Icon(
+                                                Icons.filter_alt,
+                                                color: Color(0xff545454),
+                                                size: 25.sp,
                                               ),
-                                              PopupMenuItem<String>(
-                                                value:
-                                                'AMZ Advice Centre',
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      'AMZ Advice Centre',
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .bgColor,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontFamily:
-                                                          FontFamily
-                                                              .light,
-                                                          decoration:
-                                                          TextDecoration
-                                                              .underline,
-                                                          fontSize:
-                                                          14.5.sp),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              PopupMenuItem<String>(
-                                                value:
-                                                'Marketing Advice Centre',
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      'Marketing Advice Centre',
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .bgColor,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontFamily:
-                                                          FontFamily
-                                                              .light,
-                                                          decoration:
-                                                          TextDecoration
-                                                              .underline,
-                                                          fontSize:
-                                                          14.5.sp),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                            elevation: 5,
-                                          );
-
-                                          if (result != null) {
-                                            print('Selected: $result');
-                                          }
-                                        },
-                                        child: Icon(
-                                          Icons.filter_alt,
-                                          color: Color(0xff545454),
-                                          size: 25.sp,
-                                        ),
-                                      ),
-                                      Image.asset(
-                                        Imgs.namedLogo,
-                                        scale: 4.5,
-                                      ),
-                                      Icon(null),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Divider(
-                                    thickness: 0.5,
-                                    color: AppColors.blackColor,
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  AppTextField(
-                                      controller: _subjectController,
-                                      hintText: 'Enter Ticket Subject',
-                                      text: 'Ticket Subject',
-                                      isTextavailable: true,
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.trim().isEmpty) {
-                                          return 'Subject is required';
-                                        }
-                                        return null;
-                                      },
-                                      textInputType: TextInputType.text),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  AppTextField(
-                                    controller: _bodyController,
-                                    hintText: 'Enter Message',
-                                    text: 'Message body',
-                                    isTextavailable: true,
-                                    maxline: 5,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return 'Message is required';
-                                      }
-                                      return null;
-                                    },
-                                    textInputType: TextInputType.text,
-                                    suffix: IconButton(
-                                      icon: Icon(Icons.attach_file,
-                                          color: AppColors.bgColor),
-                                      onPressed: _pickFiles,
-                                    ),
-                                  ),
-                                  SizedBox(height: 1.h),
-
-// Show picked files
-                                  if (_pickedFiles.isNotEmpty)
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: _pickedFiles
-                                          .asMap()
-                                          .entries
-                                          .map((entry) {
-                                        final index = entry.key;
-                                        final file = entry.value;
-                                        return Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 0.5.h),
-                                          padding: EdgeInsets.all(2.w),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(10),
-                                            border: Border.all(
-                                                color: AppColors.bgColor),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              // Preview Thumbnail
-                                              if (file.extension ==
-                                                  'jpg' ||
-                                                  file.extension ==
-                                                      'jpeg' ||
-                                                  file.extension == 'png')
-                                                Image.file(
-                                                  File(file.path!),
-                                                  width: 50,
-                                                  height: 50,
-                                                  fit: BoxFit.cover,
-                                                )
-                                              else if (file.extension ==
-                                                  'mp4' ||
-                                                  file.extension ==
-                                                      'mov' ||
-                                                  file.extension == 'avi')
-                                                Icon(Icons.videocam,
-                                                    color:
-                                                    AppColors.bgColor,
-                                                    size: 40)
-                                              else
-                                                Icon(
-                                                    Icons
-                                                        .insert_drive_file,
-                                                    color:
-                                                    AppColors.bgColor,
-                                                    size: 40),
-
-                                              SizedBox(width: 2.w),
-
-                                              // File Name
-                                              Expanded(
-                                                child: Text(
-                                                  file.name,
-                                                  style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    color:
-                                                    AppColors.bgColor,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                  overflow: TextOverflow
-                                                      .ellipsis,
-                                                ),
-                                              ),
-
-                                              // Delete Button
-                                              IconButton(
-                                                icon: Icon(Icons.delete,
-                                                    color: Colors.red),
-                                                onPressed: () =>
-                                                    _removeFile(index),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Select Department",
-                                        style: TextStyle(
-                                            color: AppColors.bgColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.light,
-                                            fontSize: 15.sp),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: _showError
-                                                  ? Colors.red
-                                                  : AppColors.bgColor),
-                                        ),
-                                        child:
-                                        DropdownButtonHideUnderline(
-                                          child: DropdownButtonFormField(
-                                            icon: Icon(
-                                              CupertinoIcons.chevron_down,
-                                              size: 16.sp,
                                             ),
-                                            style: TextStyle(
-                                                color: AppColors.bgColor),
-                                            value: selectedCustomer,
-                                            items: customerList
-                                                .map((customer) {
-                                              return DropdownMenuItem(
-                                                value: customer.id,
-                                                child: Text(
-                                                    customer.name ??
-                                                        'N/A'),
-                                              );
-                                            }).toList(),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedCustomer = value;
-                                                _showError = false;
-                                              });
-                                            },
+                                            Image.asset(
+                                              Imgs.namedLogo,
+                                              scale: 4.5,
+                                            ),
+                                            Icon(null),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Divider(
+                                          thickness: 0.5,
+                                          color: AppColors.blackColor,
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        AppTextField(
+                                            controller: _subjectController,
+                                            hintText: 'Enter Ticket Subject',
+                                            text: 'Ticket Subject',
+                                            isTextavailable: true,
                                             validator: (value) {
                                               if (value == null ||
-                                                  value
-                                                      .toString()
-                                                      .isEmpty) {
-                                                setState(() {
-                                                  _showError = true;
-                                                });
-                                                return '';
+                                                  value.trim().isEmpty) {
+                                                return 'Subject is required';
                                               }
                                               return null;
                                             },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              // No underline
-                                              contentPadding:
-                                              EdgeInsets.zero,
-                                            ),
-                                            hint: Text(
-                                              'Select Department',
+                                            textInputType: TextInputType.text),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        AppTextField(
+                                          controller: _bodyController,
+                                          hintText: 'Enter Message',
+                                          text: 'Message body',
+                                          isTextavailable: true,
+                                          maxline: 5,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.trim().isEmpty) {
+                                              return 'Message is required';
+                                            }
+                                            return null;
+                                          },
+                                          textInputType: TextInputType.text,
+                                          suffix: IconButton(
+                                            icon: Icon(Icons.attach_file,
+                                                color: AppColors.bgColor),
+                                            onPressed: _pickFiles,
+                                          ),
+                                        ),
+                                        SizedBox(height: 1.h),
+
+// Show picked files
+                                        if (_pickedFiles.isNotEmpty)
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: _pickedFiles
+                                                .asMap()
+                                                .entries
+                                                .map((entry) {
+                                              final index = entry.key;
+                                              final file = entry.value;
+                                              return Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 0.5.h),
+                                                padding: EdgeInsets.all(2.w),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: AppColors.bgColor),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    // Preview Thumbnail
+                                                    if (file.extension ==
+                                                            'jpg' ||
+                                                        file.extension ==
+                                                            'jpeg' ||
+                                                        file.extension == 'png')
+                                                      Image.file(
+                                                        File(file.path!),
+                                                        width: 50,
+                                                        height: 50,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    else if (file.extension ==
+                                                            'mp4' ||
+                                                        file.extension ==
+                                                            'mov' ||
+                                                        file.extension == 'avi')
+                                                      Icon(Icons.videocam,
+                                                          color:
+                                                              AppColors.bgColor,
+                                                          size: 40)
+                                                    else
+                                                      Icon(
+                                                          Icons
+                                                              .insert_drive_file,
+                                                          color:
+                                                              AppColors.bgColor,
+                                                          size: 40),
+
+                                                    SizedBox(width: 2.w),
+
+                                                    // File Name
+                                                    Expanded(
+                                                      child: Text(
+                                                        file.name,
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          color:
+                                                              AppColors.bgColor,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+
+                                                    // Delete Button
+                                                    IconButton(
+                                                      icon: Icon(Icons.delete,
+                                                          color: Colors.red),
+                                                      onPressed: () =>
+                                                          _removeFile(index),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Select Department",
                                               style: TextStyle(
-                                                color: AppColors.bgColor,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily:
-                                                FontFamily.light,
-                                                fontSize: 14.5.sp,
+                                                  color: AppColors.bgColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: FontFamily.light,
+                                                  fontSize: 15.sp),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 2.w),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                    color: _showError
+                                                        ? Colors.red
+                                                        : AppColors.bgColor),
+                                              ),
+                                              child:
+                                                  DropdownButtonHideUnderline(
+                                                child: DropdownButtonFormField(
+                                                  icon: Icon(
+                                                    CupertinoIcons.chevron_down,
+                                                    size: 16.sp,
+                                                  ),
+                                                  style: TextStyle(
+                                                      color: AppColors.bgColor),
+                                                  value: selectedCustomer,
+                                                  items: customerList
+                                                      .map((customer) {
+                                                    return DropdownMenuItem(
+                                                      value: customer.id,
+                                                      child: Text(
+                                                          customer.name ??
+                                                              'N/A'),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      selectedCustomer = value;
+                                                      _showError = false;
+                                                    });
+                                                  },
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value
+                                                            .toString()
+                                                            .isEmpty) {
+                                                      setState(() {
+                                                        _showError = true;
+                                                      });
+                                                      return '';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    // No underline
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                  ),
+                                                  hint: Text(
+                                                    'Select Department',
+                                                    style: TextStyle(
+                                                      color: AppColors.bgColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily:
+                                                          FontFamily.light,
+                                                      fontSize: 14.5.sp,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            if (_showError)
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 2.w, top: 1.h),
+                                                child: Text(
+                                                  'Please select a department',
+                                                  style: TextStyle(
+                                                      color: AppColors.redColor,
+                                                      fontSize: 15.sp),
+                                                ),
+                                              ),
+                                          ],
                                         ),
-                                      ),
-                                      if (_showError)
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 2.w, top: 1.h),
-                                          child: Text(
-                                            'Please select a department',
-                                            style: TextStyle(
-                                                color: AppColors.redColor,
-                                                fontSize: 15.sp),
-                                          ),
+                                        SizedBox(
+                                          height: 1.h,
                                         ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
-                                    height: 1.h,
+                                    height: 5.h,
                                   ),
+                                  InkWell(
+                                    onTap: () {
+                                      FocusScope.of(context).unfocus();
+                                      if (_formKey.currentState!.validate()) {
+                                        addTicketApi();
+                                      } else {
+                                        setState(() {
+                                          _showError = selectedCustomer == null;
+                                        });
+                                      }
+                                    },
+                                    child: Container(
+                                      height: 5.5.h,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.bgColor,
+                                          borderRadius:
+                                              BorderRadius.circular(3.w)),
+                                      child: Text(
+                                        'Create a New Ticket',
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: FontFamily.bold),
+                                      ),
+                                    ),
+                                  ).marginSymmetric(horizontal: 2.w),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                                if (_formKey.currentState!.validate()) {
-                                  addTicketApi();
-                                } else {
-                                  setState(() {
-                                    _showError = selectedCustomer == null;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                height: 5.5.h,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: AppColors.bgColor,
-                                    borderRadius:
-                                    BorderRadius.circular(3.w)),
-                                child: Text(
-                                  'Create a New Ticket',
-                                  style: TextStyle(
-                                      fontSize: 17.sp,
-                                      color: AppColors.whiteColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: FontFamily.bold),
-                                ),
-                              ),
-                            ).marginSymmetric(horizontal: 2.w),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          if (isAdding)
-            Container(
-              color: Colors.black.withOpacity(0.3),
-              child: Center(child: Loader()),
+                if (isAdding)
+                  Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(child: Loader()),
+                  ),
+              ],
             ),
-        ],
-      ),
       bottomNavigationBar: SizedBox(
         height: 10.h,
         child: AppBottombar(),

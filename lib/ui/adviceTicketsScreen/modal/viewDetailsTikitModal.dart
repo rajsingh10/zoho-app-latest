@@ -1,4 +1,3 @@
-
 class ViewDetailsTikitModal {
   String? modifiedTime;
   var subCategory;
@@ -55,57 +54,57 @@ class ViewDetailsTikitModal {
 
   ViewDetailsTikitModal(
       {this.modifiedTime,
-        this.subCategory,
-        this.statusType,
-        this.subject,
-        this.dueDate,
-        this.departmentId,
-        this.channel,
-        this.source,
-        this.resolution,
-        this.closedTime,
-        this.approvalCount,
-        this.isOverDue,
-        this.isTrashed,
-        this.createdTime,
-        this.id,
-        this.isResponseOverdue,
-        this.customerResponseTime,
-        this.productId,
-        this.contactId,
-        this.threadCount,
-        this.priority,
-        this.classification,
-        this.commentCount,
-        this.taskCount,
-        this.accountId,
-        this.phone,
-        this.webUrl,
-        this.isSpam,
-        this.status,
-        this.ticketNumber,
-        this.sentiment,
-        this.isArchived,
-        this.description,
-        this.timeEntryCount,
-        this.channelRelatedInfo,
-        this.responseDueDate,
-        this.isDeleted,
-        this.modifiedBy,
-        this.followerCount,
-        this.email,
-        this.layoutDetails,
-        this.channelCode,
-        this.isFollowing,
-        this.slaId,
-        this.layoutId,
-        this.assigneeId,
-        this.createdBy,
-        this.teamId,
-        this.tagCount,
-        this.attachmentCount,
-        this.isEscalated,
-        this.category});
+      this.subCategory,
+      this.statusType,
+      this.subject,
+      this.dueDate,
+      this.departmentId,
+      this.channel,
+      this.source,
+      this.resolution,
+      this.closedTime,
+      this.approvalCount,
+      this.isOverDue,
+      this.isTrashed,
+      this.createdTime,
+      this.id,
+      this.isResponseOverdue,
+      this.customerResponseTime,
+      this.productId,
+      this.contactId,
+      this.threadCount,
+      this.priority,
+      this.classification,
+      this.commentCount,
+      this.taskCount,
+      this.accountId,
+      this.phone,
+      this.webUrl,
+      this.isSpam,
+      this.status,
+      this.ticketNumber,
+      this.sentiment,
+      this.isArchived,
+      this.description,
+      this.timeEntryCount,
+      this.channelRelatedInfo,
+      this.responseDueDate,
+      this.isDeleted,
+      this.modifiedBy,
+      this.followerCount,
+      this.email,
+      this.layoutDetails,
+      this.channelCode,
+      this.isFollowing,
+      this.slaId,
+      this.layoutId,
+      this.assigneeId,
+      this.createdBy,
+      this.teamId,
+      this.tagCount,
+      this.attachmentCount,
+      this.isEscalated,
+      this.category});
 
   ViewDetailsTikitModal.fromJson(Map<String, dynamic> json) {
     modifiedTime = json['modifiedTime'];
@@ -116,7 +115,7 @@ class ViewDetailsTikitModal {
     departmentId = json['departmentId'];
     channel = json['channel'];
     source =
-    json['source'] != null ? new Source.fromJson(json['source']) : null;
+        json['source'] != null ? new Source.fromJson(json['source']) : null;
     resolution = json['resolution'];
     closedTime = json['closedTime'];
     approvalCount = json['approvalCount'];
@@ -237,11 +236,11 @@ class Source {
 
   Source(
       {this.appName,
-        this.extId,
-        this.permalink,
-        this.type,
-        this.uuid,
-        this.appPhotoURL});
+      this.extId,
+      this.permalink,
+      this.type,
+      this.uuid,
+      this.appPhotoURL});
 
   Source.fromJson(Map<String, dynamic> json) {
     appName = json['appName'];

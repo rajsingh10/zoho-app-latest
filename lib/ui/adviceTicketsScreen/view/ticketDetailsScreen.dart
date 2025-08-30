@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:zohosystem/apiCalling/apiConfig.dart';
 import 'package:zohosystem/ui/adviceTicketsScreen/modal/ticketRepliesModal.dart';
 import 'package:zohosystem/utils/snackBars.dart';
+
 import '../../../apiCalling/Loader.dart';
 import '../../../apiCalling/checkInternetModule.dart';
 import '../../../utils/colors.dart';
@@ -49,8 +50,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   width: double.infinity,
-                  decoration:
-                     const BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: AppColors.alternativeBlueColor),
                   child: Column(
                     children: [
@@ -495,7 +495,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
         setState(() {
           isLoading = false;
         });
-      
+
         showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
       }
     });
@@ -519,8 +519,6 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             });
           }
         }).catchError((error, stackTrace) {
-        
-
           if (mounted) {
             setState(() {
               isLoading = false;
