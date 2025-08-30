@@ -7,9 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/apiCalling/apiConfig.dart';
 import 'package:zohosystem/ui/adviceTicketsScreen/modal/ticketRepliesModal.dart';
-
+import 'package:zohosystem/utils/snackBars.dart';
 import '../../../apiCalling/Loader.dart';
-import '../../../apiCalling/buildErrorDialog.dart';
 import '../../../apiCalling/checkInternetModule.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/fontFamily.dart';
@@ -31,7 +30,6 @@ class TicketDetailsScreen extends StatefulWidget {
 class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       isLoading = true;
@@ -52,7 +50,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   width: double.infinity,
                   decoration:
-                      BoxDecoration(color: AppColors.alternativeBlueColor),
+                     const BoxDecoration(
+                      color: AppColors.alternativeBlueColor),
                   child: Column(
                     children: [
                       SizedBox(height: 5.h),
@@ -77,7 +76,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                               fontSize: 19.sp,
                             ),
                           ),
-                          Icon(null),
+                          const Icon(null),
                         ],
                       ),
                     ],
@@ -98,7 +97,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                   horizontal: 4.w, vertical: 1.h),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Color(0xffE9E7E7)),
+                                  color: const Color(0xffE9E7E7)),
                               child: Column(
                                 children: [
                                   Row(
@@ -107,19 +106,19 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                     children: [
                                       InkWell(
                                         onTap: () async {},
-                                        child: Icon(null),
+                                        child: const Icon(null),
                                       ),
                                       Image.asset(
                                         Imgs.namedLogo,
                                         scale: 4.5,
                                       ),
-                                      Icon(null),
+                                      const Icon(null),
                                     ],
                                   ),
                                   SizedBox(
                                     height: 1.h,
                                   ),
-                                  Divider(
+                                  const Divider(
                                     thickness: 0.5,
                                     color: AppColors.blackColor,
                                   ),
@@ -321,12 +320,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   horizontal: 3.w,
                                                   vertical: 1.5.h),
                                               decoration: BoxDecoration(
-                                                color: Color(0xffF5F5F5),
+                                                color: const Color(0xffF5F5F5),
                                                 borderRadius:
                                                     BorderRadius.circular(15),
                                                 border: Border.all(
                                                     color: AppColors.blackColor
-                                                        .withOpacity(0.1)),
+                                                        .withValues(
+                                                            alpha: 0.1)),
                                               ),
                                               child: Column(
                                                 crossAxisAlignment:
@@ -495,22 +495,20 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
         setState(() {
           isLoading = false;
         });
-        buildErrorDialog(context, 'Error', "Internet Required");
+      
+        showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
       }
     });
   }
 
   void allTicketRepliesApi() {
-    print('Hellooo kaa');
     checkInternet().then((internet) async {
       if (internet) {
-        print('Hellooo ki he');
         Adviceprovider()
             .viewtikitrepliesdetaisl(widget.tickitid)
             .then((response) async {
           ticketReplies =
               TicketRepliesModal.fromJson(json.decode(response.body));
-          print('Hellooo');
           if (response.statusCode == 200) {
             setState(() {
               isLoading = false;
@@ -534,7 +532,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
         setState(() {
           isLoading = false;
         });
-        buildErrorDialog(context, 'Error', "Internet Required");
+        showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
       }
     });
   }
