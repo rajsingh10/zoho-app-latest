@@ -18,6 +18,7 @@ import '../../homeScreen/provider/homeProvider.dart';
 import '../modal/viewDetailsTikitModal.dart';
 import '../provider/adviceProvider.dart';
 
+// ignore: must_be_immutable
 class TicketDetailsScreen extends StatefulWidget {
   var tickitid;
 
@@ -466,7 +467,6 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
 
     checkInternet().then((internet) async {
       if (internet) {
-
         Adviceprovider()
             .viewtikitdetaisl(widget.tickitid)
             .then((response) async {
@@ -484,8 +484,6 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          final errorMessage = error.toString();
-
           if (mounted) {
             setState(() {
               isLoading = false;
@@ -523,7 +521,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          final errorMessage = error.toString();
+        
 
           if (mounted) {
             setState(() {
