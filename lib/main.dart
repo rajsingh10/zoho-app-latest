@@ -6,7 +6,11 @@ import 'package:salesiq_mobilisten/salesiq_mobilisten.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/ui/welcomeScreen/view/welcomeScreen.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

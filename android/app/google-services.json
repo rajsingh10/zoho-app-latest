@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "472210129716",
+    "project_id": "theadvicecenter-zoho",
+    "storage_bucket": "theadvicecenter-zoho.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472210129716:android:c6c2cd5ba9dd880eecdb61",
+        "android_client_info": {
+          "package_name": "com.zs.zohosystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmFm4M26lgP4ttD7KGHfrKucPmGwmvdZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

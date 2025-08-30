@@ -54,6 +54,12 @@ dependencies:
   intl_phone_field:
   salesiq_mobilisten: ^6.0.0
   auto_size_text:
+  firebase_core: 
+  firebase_messaging: 
+  awesome_notifications: 
+  googleapis: 
+  googleapis_auth: 
+
 
 dev_dependencies:
   flutter_test:
