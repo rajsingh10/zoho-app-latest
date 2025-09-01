@@ -8,9 +8,19 @@ import 'package:zohosystem/ui/welcomeScreen/view/welcomeScreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("✅ Firebase initialized successfully");
+  } catch (e, stack) {
+    print("❌ Firebase initialization failed: $e");
+    print(stack); // optional, shows where the error came from
+  }
   runApp(const MyApp());
 }
 
