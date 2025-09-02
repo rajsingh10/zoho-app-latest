@@ -28,7 +28,6 @@ class apiEndpoints {
   static String fetchCountries =
       "https://countriesnow.space/api/v0.1/countries";
   static String contract = "${zohoDeskBaseUrl}contacts";
-  static String updatePaymentMethod = "${zohoBillingBaseUrl}hostedpages/updatepaymentmethod";
-
-  
+  static String updatePaymentMethod =
+      "${zohoBillingBaseUrl}hostedpages/updatepaymentmethod";
 }

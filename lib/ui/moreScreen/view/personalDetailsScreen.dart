@@ -54,7 +54,7 @@ final TextEditingController _zipCode = TextEditingController();
 TextEditingController searchController = TextEditingController();
 List<Products> productsList = [];
 List<Data> countriesList = [];
-Cards? selectedPrimaryCard; 
+Cards? selectedPrimaryCard;
 String _countryCode = '';
 String _initialCountryCode = '';
 String? selectedCountry;
@@ -1490,6 +1490,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
       if (mounted) setState(() => isLoading = false);
     }
   }
+
   updatePaymentMethodApi() async {
     setState(() => isAdding = true);
 

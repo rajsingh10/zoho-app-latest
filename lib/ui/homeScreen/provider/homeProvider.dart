@@ -118,7 +118,9 @@ class HomeProvider extends ChangeNotifier {
       rethrow; // 👈 rethrow for catchError() to handle
     }
   }
-   Future<http.Response> updatePaymentMethod(Map<String, dynamic> bodyData) async {
+
+  Future<http.Response> updatePaymentMethod(
+      Map<String, dynamic> bodyData) async {
     String url = apiEndpoints.updatePaymentMethod;
     log("API URL: $url");
 
@@ -148,7 +150,8 @@ class HomeProvider extends ChangeNotifier {
       rethrow; // 👈 rethrow for catchError() to handle
     }
   }
-    Future<http.Response> getCard(id) async {
+
+  Future<http.Response> getCard(id) async {
     String url = apiEndpoints.registerApi + "/${id}/cards";
     print("API URL: $url");
 

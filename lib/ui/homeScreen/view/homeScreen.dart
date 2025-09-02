@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer'as dev;
+import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -1165,7 +1165,7 @@ class _HomescreenState extends State<Homescreen> {
                                                 : Column(
                                                     children: [
                                                       for (int i = 0;
-                                                         i <
+                                                          i <
                                                               min(
                                                                   (allTicket
                                                                           ?.data
@@ -1708,11 +1708,15 @@ class _HomescreenState extends State<Homescreen> {
               allTicketApi();
               planDetailsApi(subscriptionsdateleft?.subscriptions?[0].planCode);
 
-              dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
-              dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].nextBillingAt}");
+              dev.log(
+                  "subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
+              dev.log(
+                  "subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].nextBillingAt}");
               if (subscriptionsdateleft?.subscriptions?[0].status == "trial") {
-                dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
-                dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].trialendsat}");
+                dev.log(
+                    "subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
+                dev.log(
+                    "subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].trialendsat}");
                 lastBillingAtStr =
                     subscriptionsdateleft?.subscriptions?[0].createdAt;
                 nextBillingAtStr =
@@ -1753,7 +1757,7 @@ class _HomescreenState extends State<Homescreen> {
                     setState(() {
                       dayWithSuffix = getDayWithSuffix(parsedDate);
                     });
-                   dev.log("Subscription Day Only ===>>>> $dayWithSuffix");
+                    dev.log("Subscription Day Only ===>>>> $dayWithSuffix");
                   }
                   setState(() {
                     daysRemaining =
@@ -1977,7 +1981,8 @@ class _HomescreenState extends State<Homescreen> {
                         "Start Date (cfStartDateTime): ${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
                     print(
                         "End Date (currentTermEndsAt): ${subscriptionsdateleft?.subscriptions?[0].currentTermEndsAt}");
-                    dev.log("subscription Start===>>>>${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
+                    dev.log(
+                        "subscription Start===>>>>${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
 
                     await HomeProvider()
                         .getTimeEntryApi(ticketId)
@@ -2061,7 +2066,8 @@ class _HomescreenState extends State<Homescreen> {
                         }
                       }
                     }).catchError((error) {
-                      dev.log("❗ Error fetching time entry for ticket ID $ticketId: $error");
+                      dev.log(
+                          "❗ Error fetching time entry for ticket ID $ticketId: $error");
                     });
                   }
                 }

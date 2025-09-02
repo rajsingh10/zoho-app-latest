@@ -184,7 +184,6 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                 ),
                               ),
                             ),
-                            
                             SizedBox(height: 2.h),
                             Container(
                               padding: EdgeInsets.symmetric(

@@ -99,7 +99,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
 
   List<PlatformFile> _pickedFiles = [];
 
-Future<void> _pickFiles() async {
+  Future<void> _pickFiles() async {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -245,7 +245,6 @@ Future<void> _pickFiles() async {
       },
     );
   }
-
 
   void _removeFile(int index) {
     setState(() {
@@ -734,7 +733,7 @@ Future<void> _pickFiles() async {
     );
   }
 
-deparmentallapi() {
+  deparmentallapi() {
     checkInternet().then((internet) async {
       if (internet) {
         Adviceprovider().departments().then((response) async {
@@ -742,7 +741,6 @@ deparmentallapi() {
             allDepartment = AllDeparmentModal.AllDeparmentModal.fromJson(
               json.decode(response.body),
             );
-           
 
             setState(() {
               customerList = allDepartment?.data ?? [];

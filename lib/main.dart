@@ -1,12 +1,11 @@
 import 'dart:io' as io;
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:salesiq_mobilisten/salesiq_mobilisten.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/ui/welcomeScreen/view/welcomeScreen.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
 

@@ -26,15 +26,14 @@ class _UpdateCardWebVewState extends State<UpdateCardWebVew> {
       "https://api.theadvicecentre.ltd/card_details_updated_success";
 
   void _handleSuccess() {
-
     showCustomSuccessSnackbar(
       title: 'Success',
       message: 'Card details updated successfully',
     );
 
     Future.delayed(const Duration(seconds: 1), () {
-      Get.back(); 
-      Get.back(); 
+      Get.back();
+      Get.back();
       Get.to(PersonalDetailsScreen());
     });
   }

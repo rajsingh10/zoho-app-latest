@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'theadvicecenter-zoho.firebasestorage.app',
     iosBundleId: 'com.tac.advicecenter',
   );
-
 }
