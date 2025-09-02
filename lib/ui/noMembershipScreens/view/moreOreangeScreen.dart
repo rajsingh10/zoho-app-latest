@@ -22,13 +22,13 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
               width: Device.width,
-              decoration: BoxDecoration(color: AppColors.orangeColor),
+              decoration: const BoxDecoration(color: AppColors.orangeColor),
               child: Column(
                 children: [
                   SizedBox(
@@ -76,7 +76,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -108,7 +108,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -140,7 +140,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -171,7 +171,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -202,7 +202,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -233,7 +233,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -257,7 +257,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -267,7 +267,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   Center(
                     child: InkWell(
                       onTap: () {
-                        Get.offAll(LandingScreen());
+                        Get.offAll(const LandingScreen());
                       },
                       child: Text(
                         'Existing Member? Sign In Here',
@@ -286,7 +286,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),

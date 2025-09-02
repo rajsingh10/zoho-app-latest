@@ -102,7 +102,7 @@ buildErrorDialog(
                 ),
               ),
               SizedBox(height: 2.h),
-              Divider(height: 1.0, color: Colors.grey),
+              const Divider(height: 1.0, color: Colors.grey),
               SizedBox(height: 2.h),
               okButton,
               SizedBox(height: 2.h),
@@ -122,6 +122,9 @@ buildErrorDialog1(
   String? buttonname,
 }) {
   Widget okButton = GestureDetector(
+    onTap:
+        // if (callback == null) {
+        callback,
     child: Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -144,9 +147,6 @@ buildErrorDialog1(
         ),
       ),
     ),
-    onTap:
-        // if (callback == null) {
-        callback,
 
     // } else {
 
@@ -212,7 +212,7 @@ buildErrorDialog1(
                 ),
               ),
               SizedBox(height: 2.h),
-              Divider(height: 1.0, color: Colors.grey),
+              const Divider(height: 1.0, color: Colors.grey),
               SizedBox(height: 2.h),
               okButton,
               SizedBox(height: 2.h),

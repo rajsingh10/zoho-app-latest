@@ -46,7 +46,8 @@ class _policyWebviewScreenState extends State<policyWebviewScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: double.infinity,
-            decoration: BoxDecoration(color: AppColors.alternativeBlueColor),
+            decoration:
+                const BoxDecoration(color: AppColors.alternativeBlueColor),
             child: Column(
               children: [
                 SizedBox(height: 5.h),
@@ -71,7 +72,7 @@ class _policyWebviewScreenState extends State<policyWebviewScreen> {
                         fontSize: 19.sp,
                       ),
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -88,7 +89,7 @@ class _policyWebviewScreenState extends State<policyWebviewScreen> {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                      url: WebUri.uri(Uri.parse('${widget.link}')),
+                      url: WebUri.uri(Uri.parse(widget.link)),
                     ),
                     onWebViewCreated: (controller) {
                       webViewController = controller;
@@ -102,7 +103,7 @@ class _policyWebviewScreenState extends State<policyWebviewScreen> {
                   if (_isLoading)
                     Container(
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.orangeColor,
                         ),

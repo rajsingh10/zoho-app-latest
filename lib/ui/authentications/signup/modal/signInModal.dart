@@ -8,17 +8,16 @@ class signInModal {
   signInModal.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    customer = json['customer'] != null
-        ? new Customer.fromJson(json['customer'])
-        : null;
+    customer =
+        json['customer'] != null ? Customer.fromJson(json['customer']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.customer != null) {
-      data['customer'] = this.customer!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (customer != null) {
+      data['customer'] = customer!.toJson();
     }
     return data;
   }
@@ -257,14 +256,14 @@ class Customer {
     channelCustomerId = json['channel_customer_id'];
     channelSource = json['channel_source'];
     encryptionKeyMap = json['encryption_key_map'] != null
-        ? new EncryptionKeyMap.fromJson(json['encryption_key_map'])
+        ? EncryptionKeyMap.fromJson(json['encryption_key_map'])
         : null;
     entityAddressId = json['entity_address_id'];
     billingAddress = json['billing_address'] != null
-        ? new BillingAddress.fromJson(json['billing_address'])
+        ? BillingAddress.fromJson(json['billing_address'])
         : null;
     shippingAddress = json['shipping_address'] != null
-        ? new BillingAddress.fromJson(json['shipping_address'])
+        ? BillingAddress.fromJson(json['shipping_address'])
         : null;
     achSupported = json['ach_supported'];
     primaryContactpersonId = json['primary_contactperson_id'];
@@ -276,105 +275,100 @@ class Customer {
     createdTime = json['created_time'];
     updatedTime = json['updated_time'];
     defaultTemplates = json['default_templates'] != null
-        ? new DefaultTemplates.fromJson(json['default_templates'])
+        ? DefaultTemplates.fromJson(json['default_templates'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['display_name'] = this.displayName;
-    data['company_name'] = this.companyName;
-    data['customer_id'] = this.customerId;
-    data['contact_name'] = this.contactName;
-    data['contact_id'] = this.contactId;
-    data['status'] = this.status;
-    data['customer_sub_type'] = this.customerSubType;
-    data['currency_id'] = this.currencyId;
-    data['is_client_review_asked'] = this.isClientReviewAsked;
-    data['is_client_review_settings_enabled'] =
-        this.isClientReviewSettingsEnabled;
-    data['source'] = this.source;
-    data['payment_reminder_enabled'] = this.paymentReminderEnabled;
-    data['language_code'] = this.languageCode;
-    data['portal_status'] = this.portalStatus;
-    data['owner_id'] = this.ownerId;
-    data['language_code_formatted'] = this.languageCodeFormatted;
-    data['is_added_in_portal'] = this.isAddedInPortal;
-    data['can_invite'] = this.canInvite;
-    data['billing_day'] = this.billingDay;
-    data['is_taxable'] = this.isTaxable;
-    data['tax_id'] = this.taxId;
-    data['tax_name'] = this.taxName;
-    data['tax_percentage'] = this.taxPercentage;
-    data['vat_treatment'] = this.vatTreatment;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['price_precision'] = this.pricePrecision;
-    data['unused_credits'] = this.unusedCredits;
-    data['outstanding_receivable_amount'] = this.outstandingReceivableAmount;
-    data['outstanding'] = this.outstanding;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['mobile'] = this.mobile;
-    data['salutation'] = this.salutation;
-    data['contact_salutation'] = this.contactSalutation;
-    data['ip_address'] = this.ipAddress;
-    data['twitter'] = this.twitter;
-    data['facebook'] = this.facebook;
-    data['department'] = this.department;
-    data['designation'] = this.designation;
-    data['skype'] = this.skype;
-    data['fax'] = this.fax;
-    data['is_portal_invitation_accepted'] = this.isPortalInvitationAccepted;
-    data['website'] = this.website;
-    data['pricebook_id'] = this.pricebookId;
-    data['zcrm_account_id'] = this.zcrmAccountId;
-    data['zcrm_contact_id'] = this.zcrmContactId;
-    data['is_sms_enabled'] = this.isSmsEnabled;
-    data['payment_terms'] = this.paymentTerms;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    data['is_gapps_customer'] = this.isGappsCustomer;
-    data['unused_credits_receivable_amount'] =
-        this.unusedCreditsReceivableAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['display_name'] = displayName;
+    data['company_name'] = companyName;
+    data['customer_id'] = customerId;
+    data['contact_name'] = contactName;
+    data['contact_id'] = contactId;
+    data['status'] = status;
+    data['customer_sub_type'] = customerSubType;
+    data['currency_id'] = currencyId;
+    data['is_client_review_asked'] = isClientReviewAsked;
+    data['is_client_review_settings_enabled'] = isClientReviewSettingsEnabled;
+    data['source'] = source;
+    data['payment_reminder_enabled'] = paymentReminderEnabled;
+    data['language_code'] = languageCode;
+    data['portal_status'] = portalStatus;
+    data['owner_id'] = ownerId;
+    data['language_code_formatted'] = languageCodeFormatted;
+    data['is_added_in_portal'] = isAddedInPortal;
+    data['can_invite'] = canInvite;
+    data['billing_day'] = billingDay;
+    data['is_taxable'] = isTaxable;
+    data['tax_id'] = taxId;
+    data['tax_name'] = taxName;
+    data['tax_percentage'] = taxPercentage;
+    data['vat_treatment'] = vatTreatment;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['price_precision'] = pricePrecision;
+    data['unused_credits'] = unusedCredits;
+    data['outstanding_receivable_amount'] = outstandingReceivableAmount;
+    data['outstanding'] = outstanding;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['mobile'] = mobile;
+    data['salutation'] = salutation;
+    data['contact_salutation'] = contactSalutation;
+    data['ip_address'] = ipAddress;
+    data['twitter'] = twitter;
+    data['facebook'] = facebook;
+    data['department'] = department;
+    data['designation'] = designation;
+    data['skype'] = skype;
+    data['fax'] = fax;
+    data['is_portal_invitation_accepted'] = isPortalInvitationAccepted;
+    data['website'] = website;
+    data['pricebook_id'] = pricebookId;
+    data['zcrm_account_id'] = zcrmAccountId;
+    data['zcrm_contact_id'] = zcrmContactId;
+    data['is_sms_enabled'] = isSmsEnabled;
+    data['payment_terms'] = paymentTerms;
+    data['payment_terms_label'] = paymentTermsLabel;
+    data['is_gapps_customer'] = isGappsCustomer;
+    data['unused_credits_receivable_amount'] = unusedCreditsReceivableAmount;
     data['unused_credits_receivable_amount_bcy'] =
-        this.unusedCreditsReceivableAmountBcy;
-    data['unused_credits_payable_amount'] = this.unusedCreditsPayableAmount;
-    data['unused_credits_payable_amount_bcy'] =
-        this.unusedCreditsPayableAmountBcy;
-    data['is_linked_with_zohocrm'] = this.isLinkedWithZohocrm;
-    data['photo_url'] = this.photoUrl;
-    data['category'] = this.category;
-    data['is_consent_agreed'] = this.isConsentAgreed;
-    data['consent_date'] = this.consentDate;
-    data['customer_consolidation_preference'] =
-        this.customerConsolidationPreference;
-    data['customer_consolidation_applicable'] =
-        this.customerConsolidationApplicable;
-    data['channel_customer_id'] = this.channelCustomerId;
-    data['channel_source'] = this.channelSource;
-    if (this.encryptionKeyMap != null) {
-      data['encryption_key_map'] = this.encryptionKeyMap!.toJson();
+        unusedCreditsReceivableAmountBcy;
+    data['unused_credits_payable_amount'] = unusedCreditsPayableAmount;
+    data['unused_credits_payable_amount_bcy'] = unusedCreditsPayableAmountBcy;
+    data['is_linked_with_zohocrm'] = isLinkedWithZohocrm;
+    data['photo_url'] = photoUrl;
+    data['category'] = category;
+    data['is_consent_agreed'] = isConsentAgreed;
+    data['consent_date'] = consentDate;
+    data['customer_consolidation_preference'] = customerConsolidationPreference;
+    data['customer_consolidation_applicable'] = customerConsolidationApplicable;
+    data['channel_customer_id'] = channelCustomerId;
+    data['channel_source'] = channelSource;
+    if (encryptionKeyMap != null) {
+      data['encryption_key_map'] = encryptionKeyMap!.toJson();
     }
-    data['entity_address_id'] = this.entityAddressId;
-    if (this.billingAddress != null) {
-      data['billing_address'] = this.billingAddress!.toJson();
+    data['entity_address_id'] = entityAddressId;
+    if (billingAddress != null) {
+      data['billing_address'] = billingAddress!.toJson();
     }
-    if (this.shippingAddress != null) {
-      data['shipping_address'] = this.shippingAddress!.toJson();
+    if (shippingAddress != null) {
+      data['shipping_address'] = shippingAddress!.toJson();
     }
-    data['ach_supported'] = this.achSupported;
-    data['primary_contactperson_id'] = this.primaryContactpersonId;
-    data['can_add_card'] = this.canAddCard;
-    data['can_add_bank_account'] = this.canAddBankAccount;
-    data['company_id'] = this.companyId;
-    data['label_for_company_id'] = this.labelForCompanyId;
-    data['notes'] = this.notes;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    if (this.defaultTemplates != null) {
-      data['default_templates'] = this.defaultTemplates!.toJson();
+    data['ach_supported'] = achSupported;
+    data['primary_contactperson_id'] = primaryContactpersonId;
+    data['can_add_card'] = canAddCard;
+    data['can_add_bank_account'] = canAddBankAccount;
+    data['company_id'] = companyId;
+    data['label_for_company_id'] = labelForCompanyId;
+    data['notes'] = notes;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    if (defaultTemplates != null) {
+      data['default_templates'] = defaultTemplates!.toJson();
     }
     return data;
   }
@@ -392,9 +386,9 @@ class EncryptionKeyMap {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['modulus'] = this.modulus;
-    data['exponent'] = this.exponent;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['modulus'] = modulus;
+    data['exponent'] = exponent;
     return data;
   }
 }
@@ -446,20 +440,20 @@ class BillingAddress {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_id'] = this.addressId;
-    data['street'] = this.street;
-    data['address'] = this.address;
-    data['street2'] = this.street2;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['zip'] = this.zip;
-    data['country'] = this.country;
-    data['fax'] = this.fax;
-    data['state_code'] = this.stateCode;
-    data['country_code'] = this.countryCode;
-    data['phone'] = this.phone;
-    data['attention'] = this.attention;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['address_id'] = addressId;
+    data['street'] = street;
+    data['address'] = address;
+    data['street2'] = street2;
+    data['city'] = city;
+    data['state'] = state;
+    data['zip'] = zip;
+    data['country'] = country;
+    data['fax'] = fax;
+    data['state_code'] = stateCode;
+    data['country_code'] = countryCode;
+    data['phone'] = phone;
+    data['attention'] = attention;
     return data;
   }
 }
@@ -476,9 +470,9 @@ class DefaultTemplates {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['invoice_template_id'] = this.invoiceTemplateId;
-    data['creditnote_template_id'] = this.creditnoteTemplateId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['invoice_template_id'] = invoiceTemplateId;
+    data['creditnote_template_id'] = creditnoteTemplateId;
     return data;
   }
 }

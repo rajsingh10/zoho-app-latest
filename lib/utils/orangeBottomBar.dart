@@ -56,7 +56,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.whiteColor,
       ),
       height: Platform.isAndroid ? 13.h : 14.h,
@@ -71,7 +71,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                 setState(() {
                   selected = 1;
                 });
-                Get.offAll(() => Nomembershomescreen());
+                Get.offAll(() => const Nomembershomescreen());
               }
             },
             child: Column(
@@ -103,7 +103,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                 setState(() {
                   selected = 2;
                 });
-                Get.offAll(() => joinTodayButtonPage());
+                Get.offAll(() => const joinTodayButtonPage());
               }
             },
             child: Column(
@@ -135,7 +135,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                 setState(() {
                   selected = 3;
                 });
-                Get.offAll(() => moreOreangeScreen());
+                Get.offAll(() => const moreOreangeScreen());
               }
             },
             child: Column(
@@ -204,7 +204,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
@@ -226,7 +226,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                           alignment: Alignment.centerRight,
                           child: InkWell(
                             onTap: () => Get.back(),
-                            child: Icon(CupertinoIcons.clear),
+                            child: const Icon(CupertinoIcons.clear),
                           ),
                         ),
                         SizedBox(
@@ -236,12 +236,12 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4),
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(TheAdviceCentreAcademyScreen());
+                                Get.to(const TheAdviceCentreAcademyScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +266,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.offAll(adviceTicketsScreen());
+                                Get.offAll(const adviceTicketsScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -291,7 +291,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.to(BillsnPaymentsscreen());
+                                Get.to(const BillsnPaymentsscreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -316,7 +316,7 @@ class _AppOrangeBottombarState extends State<AppOrangeBottombar> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.to(moreOreangeScreen());
+                                Get.to(const moreOreangeScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

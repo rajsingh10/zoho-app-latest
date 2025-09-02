@@ -56,7 +56,8 @@ class _PdfViewWebState extends State<PdfViewWeb> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: double.infinity,
-            decoration: BoxDecoration(color: AppColors.alternativeBlueColor),
+            decoration:
+                const BoxDecoration(color: AppColors.alternativeBlueColor),
             child: Column(
               children: [
                 SizedBox(height: 5.h),
@@ -123,7 +124,7 @@ class _PdfViewWebState extends State<PdfViewWeb> {
                   if (_isLoading)
                     Container(
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.orangeColor,
                         ),

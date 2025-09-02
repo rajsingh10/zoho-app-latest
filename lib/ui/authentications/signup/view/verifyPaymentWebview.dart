@@ -11,7 +11,7 @@ import '../../../../utils/snackBars.dart';
 class VerifyPaymentScreen extends StatefulWidget {
   final String? paymentLink;
 
-  VerifyPaymentScreen({super.key, this.paymentLink});
+  const VerifyPaymentScreen({super.key, this.paymentLink});
 
   @override
   State<VerifyPaymentScreen> createState() => _VerifyPaymentScreenState();
@@ -54,9 +54,9 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                         Future.delayed(const Duration(seconds: 3), () {
                           if (mounted) {
                             Get.offAll(
-                              LandingScreen(),
+                              const LandingScreen(),
                               transition: Transition.rightToLeft,
-                              duration: Duration(milliseconds: 250),
+                              duration: const Duration(milliseconds: 250),
                             );
 
                             showCustomSuccessSnackbar(
@@ -70,7 +70,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                   if (_isLoading)
                     Container(
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.orangeColor,
                         ),

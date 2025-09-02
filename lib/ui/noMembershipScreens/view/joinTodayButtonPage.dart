@@ -29,7 +29,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -38,13 +38,13 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(null),
+                    const Icon(null),
                     Image.asset(
                       Imgs.namedLogo,
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -85,7 +85,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
                       width: Device.width,
-                      color: Color(0xff232f3f),
+                      color: const Color(0xff232f3f),
                       child: Column(
                         children: [
                           SizedBox(
@@ -99,7 +99,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     horizontal: 6.w, vertical: 3.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: Color(0xff22a34d)),
+                                        width: 0.5.w,
+                                        color: const Color(0xff22a34d)),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -115,7 +116,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(
-                                            membershipFindOutMorePageScreen());
+                                            const membershipFindOutMorePageScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -123,7 +124,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(50),
-                                            color: Color(0xff22a34d)),
+                                            color: const Color(0xff22a34d)),
                                         child: Text(
                                           "Find Out More",
                                           style: TextStyle(
@@ -159,7 +160,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.to(amzAdviceFindOutMoreScreen());
+                                        Get.to(
+                                            const amzAdviceFindOutMoreScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -211,7 +213,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.to(amzAgencyFindOutMoreScreen());
+                                        Get.to(
+                                            const amzAgencyFindOutMoreScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -239,7 +242,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     horizontal: 6.w, vertical: 2.3.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: Color(0xff2274bb)),
+                                        width: 0.5.w,
+                                        color: const Color(0xff2274bb)),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -255,7 +259,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(
-                                            marketingAgencyFindOutMorePageScreen());
+                                            const marketingAgencyFindOutMorePageScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -263,7 +267,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(50),
-                                            color: Color(0xff2274bb)),
+                                            color: const Color(0xff2274bb)),
                                         child: Text(
                                           "Find Out More",
                                           style: TextStyle(
@@ -286,9 +290,9 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                           InkWell(
                             onTap: () {
                               Get.to(
-                                Registerscreen(),
+                                const Registerscreen(),
                                 transition: Transition.rightToLeft,
-                                duration: Duration(milliseconds: 250),
+                                duration: const Duration(milliseconds: 250),
                               );
                             },
                             child: Container(
@@ -296,7 +300,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                   horizontal: 5.w, vertical: 1.h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     Color(0xFFfbd352), // yellowish start
                                     Color(0xFFf1811b), // orange end
@@ -342,7 +346,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.offAll(LandingScreen());
+                              Get.offAll(const LandingScreen());
                             },
                             child: Text(
                               "Return to Login Screen",

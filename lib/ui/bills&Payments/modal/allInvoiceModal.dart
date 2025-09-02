@@ -12,23 +12,23 @@ class allInvoiceModal {
     if (json['invoices'] != null) {
       invoices = <Invoices>[];
       json['invoices'].forEach((v) {
-        invoices!.add(new Invoices.fromJson(v));
+        invoices!.add(Invoices.fromJson(v));
       });
     }
     pageContext = json['page_context'] != null
-        ? new PageContext.fromJson(json['page_context'])
+        ? PageContext.fromJson(json['page_context'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.invoices != null) {
-      data['invoices'] = this.invoices!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (invoices != null) {
+      data['invoices'] = invoices!.map((v) => v.toJson()).toList();
     }
-    if (this.pageContext != null) {
-      data['page_context'] = this.pageContext!.toJson();
+    if (pageContext != null) {
+      data['page_context'] = pageContext!.toJson();
     }
     return data;
   }
@@ -159,10 +159,10 @@ class Invoices {
     country = json['country'];
     phone = json['phone'];
     billingAddress = json['billing_address'] != null
-        ? new BillingAddress.fromJson(json['billing_address'])
+        ? BillingAddress.fromJson(json['billing_address'])
         : null;
     shippingAddress = json['shipping_address'] != null
-        ? new BillingAddress.fromJson(json['shipping_address'])
+        ? BillingAddress.fromJson(json['shipping_address'])
         : null;
     billingStreet = json['billing_street'];
     billingStreet2 = json['billing_street2'];
@@ -187,58 +187,58 @@ class Invoices {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['invoice_id'] = this.invoiceId;
-    data['ach_payment_initiated'] = this.achPaymentInitiated;
-    data['number'] = this.number;
-    data['invoice_number'] = this.invoiceNumber;
-    data['customer_id'] = this.customerId;
-    data['customer_name'] = this.customerName;
-    data['email'] = this.email;
-    data['project_name'] = this.projectName;
-    data['reference_number'] = this.referenceNumber;
-    data['invoice_date'] = this.invoiceDate;
-    data['due_date'] = this.dueDate;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['total'] = this.total;
-    data['balance'] = this.balance;
-    data['status'] = this.status;
-    data['transaction_type'] = this.transactionType;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['created_by'] = this.createdBy;
-    data['payment_expected_date'] = this.paymentExpectedDate;
-    data['salesperson'] = this.salesperson;
-    data['salesperson_name'] = this.salespersonName;
-    data['country'] = this.country;
-    data['phone'] = this.phone;
-    if (this.billingAddress != null) {
-      data['billing_address'] = this.billingAddress!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['invoice_id'] = invoiceId;
+    data['ach_payment_initiated'] = achPaymentInitiated;
+    data['number'] = number;
+    data['invoice_number'] = invoiceNumber;
+    data['customer_id'] = customerId;
+    data['customer_name'] = customerName;
+    data['email'] = email;
+    data['project_name'] = projectName;
+    data['reference_number'] = referenceNumber;
+    data['invoice_date'] = invoiceDate;
+    data['due_date'] = dueDate;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['total'] = total;
+    data['balance'] = balance;
+    data['status'] = status;
+    data['transaction_type'] = transactionType;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['created_by'] = createdBy;
+    data['payment_expected_date'] = paymentExpectedDate;
+    data['salesperson'] = salesperson;
+    data['salesperson_name'] = salespersonName;
+    data['country'] = country;
+    data['phone'] = phone;
+    if (billingAddress != null) {
+      data['billing_address'] = billingAddress!.toJson();
     }
-    if (this.shippingAddress != null) {
-      data['shipping_address'] = this.shippingAddress!.toJson();
+    if (shippingAddress != null) {
+      data['shipping_address'] = shippingAddress!.toJson();
     }
-    data['billing_street'] = this.billingStreet;
-    data['billing_street2'] = this.billingStreet2;
-    data['billing_city'] = this.billingCity;
-    data['billing_state'] = this.billingState;
-    data['billing_zipcode'] = this.billingZipcode;
-    data['billing_country'] = this.billingCountry;
-    data['billing_phone'] = this.billingPhone;
-    data['shipping_street'] = this.shippingStreet;
-    data['shipping_street2'] = this.shippingStreet2;
-    data['shipping_city'] = this.shippingCity;
-    data['shipping_state'] = this.shippingState;
-    data['shipping_zipcode'] = this.shippingZipcode;
-    data['shipping_country'] = this.shippingCountry;
-    data['shipping_phone'] = this.shippingPhone;
-    data['is_viewed_by_client'] = this.isViewedByClient;
-    data['client_viewed_time'] = this.clientViewedTime;
-    data['has_attachment'] = this.hasAttachment;
-    data['is_viewed_in_mail'] = this.isViewedInMail;
-    data['mail_first_viewed_time'] = this.mailFirstViewedTime;
-    data['mail_last_viewed_time'] = this.mailLastViewedTime;
+    data['billing_street'] = billingStreet;
+    data['billing_street2'] = billingStreet2;
+    data['billing_city'] = billingCity;
+    data['billing_state'] = billingState;
+    data['billing_zipcode'] = billingZipcode;
+    data['billing_country'] = billingCountry;
+    data['billing_phone'] = billingPhone;
+    data['shipping_street'] = shippingStreet;
+    data['shipping_street2'] = shippingStreet2;
+    data['shipping_city'] = shippingCity;
+    data['shipping_state'] = shippingState;
+    data['shipping_zipcode'] = shippingZipcode;
+    data['shipping_country'] = shippingCountry;
+    data['shipping_phone'] = shippingPhone;
+    data['is_viewed_by_client'] = isViewedByClient;
+    data['client_viewed_time'] = clientViewedTime;
+    data['has_attachment'] = hasAttachment;
+    data['is_viewed_in_mail'] = isViewedInMail;
+    data['mail_first_viewed_time'] = mailFirstViewedTime;
+    data['mail_last_viewed_time'] = mailLastViewedTime;
     return data;
   }
 }
@@ -278,16 +278,16 @@ class BillingAddress {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['street'] = this.street;
-    data['street2'] = this.street2;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['zipcode'] = this.zipcode;
-    data['country'] = this.country;
-    data['phone'] = this.phone;
-    data['fax'] = this.fax;
-    data['attention'] = this.attention;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['street'] = street;
+    data['street2'] = street2;
+    data['city'] = city;
+    data['state'] = state;
+    data['zipcode'] = zipcode;
+    data['country'] = country;
+    data['phone'] = phone;
+    data['fax'] = fax;
+    data['attention'] = attention;
     return data;
   }
 }
@@ -323,23 +323,22 @@ class PageContext {
     if (json['search_criteria'] != null) {
       searchCriteria = <SearchCriteria>[];
       json['search_criteria'].forEach((v) {
-        searchCriteria!.add(new SearchCriteria.fromJson(v));
+        searchCriteria!.add(SearchCriteria.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['has_more_page'] = this.hasMorePage;
-    data['report_name'] = this.reportName;
-    data['applied_filter'] = this.appliedFilter;
-    data['sort_column'] = this.sortColumn;
-    data['sort_order'] = this.sortOrder;
-    if (this.searchCriteria != null) {
-      data['search_criteria'] =
-          this.searchCriteria!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['per_page'] = perPage;
+    data['has_more_page'] = hasMorePage;
+    data['report_name'] = reportName;
+    data['applied_filter'] = appliedFilter;
+    data['sort_column'] = sortColumn;
+    data['sort_order'] = sortOrder;
+    if (searchCriteria != null) {
+      data['search_criteria'] = searchCriteria!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -365,11 +364,11 @@ class SearchCriteria {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['column_name'] = this.columnName;
-    data['search_text'] = this.searchText;
-    data['search_text_formatted'] = this.searchTextFormatted;
-    data['comparator'] = this.comparator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['column_name'] = columnName;
+    data['search_text'] = searchText;
+    data['search_text_formatted'] = searchTextFormatted;
+    data['comparator'] = comparator;
     return data;
   }
 }

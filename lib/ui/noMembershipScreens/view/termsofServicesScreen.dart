@@ -25,7 +25,7 @@ class _termsofServicesScreenState extends State<termsofServicesScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -57,7 +57,7 @@ class _termsofServicesScreenState extends State<termsofServicesScreen> {
                         scale: 5.5,
                         color: AppColors.whiteColor,
                       ),
-                      Icon(null),
+                      const Icon(null),
                     ],
                   ),
                 ],
@@ -96,7 +96,7 @@ class _termsofServicesScreenState extends State<termsofServicesScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),

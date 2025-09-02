@@ -12,23 +12,23 @@ class checkEmailModal {
     if (json['customers'] != null) {
       customers = <Customers>[];
       json['customers'].forEach((v) {
-        customers!.add(new Customers.fromJson(v));
+        customers!.add(Customers.fromJson(v));
       });
     }
     pageContext = json['page_context'] != null
-        ? new PageContext.fromJson(json['page_context'])
+        ? PageContext.fromJson(json['page_context'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.customers != null) {
-      data['customers'] = this.customers!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (customers != null) {
+      data['customers'] = customers!.map((v) => v.toJson()).toList();
     }
-    if (this.pageContext != null) {
-      data['page_context'] = this.pageContext!.toJson();
+    if (pageContext != null) {
+      data['page_context'] = pageContext!.toJson();
     }
     return data;
   }
@@ -140,38 +140,37 @@ class Customers {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_name'] = this.customerName;
-    data['display_name'] = this.displayName;
-    data['is_primary_associated'] = this.isPrimaryAssociated;
-    data['is_backup_associated'] = this.isBackupAssociated;
-    data['customer_id'] = this.customerId;
-    data['contact_id'] = this.contactId;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['status'] = this.status;
-    data['company_name'] = this.companyName;
-    data['unused_credits'] = this.unusedCredits;
-    data['outstanding_receivable_amount'] = this.outstandingReceivableAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['customer_name'] = customerName;
+    data['display_name'] = displayName;
+    data['is_primary_associated'] = isPrimaryAssociated;
+    data['is_backup_associated'] = isBackupAssociated;
+    data['customer_id'] = customerId;
+    data['contact_id'] = contactId;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['status'] = status;
+    data['company_name'] = companyName;
+    data['unused_credits'] = unusedCredits;
+    data['outstanding_receivable_amount'] = outstandingReceivableAmount;
     data['unused_credits_receivable_amount_bcy'] =
-        this.unusedCreditsReceivableAmountBcy;
-    data['outstanding_receivable_amount_bcy'] =
-        this.outstandingReceivableAmountBcy;
-    data['outstanding'] = this.outstanding;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['mobile'] = this.mobile;
-    data['website'] = this.website;
-    data['is_gapps_customer'] = this.isGappsCustomer;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['is_portal_invitation_accepted'] = this.isPortalInvitationAccepted;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    data['payment_terms'] = this.paymentTerms;
-    data['created_by'] = this.createdBy;
-    data['has_attachment'] = this.hasAttachment;
+        unusedCreditsReceivableAmountBcy;
+    data['outstanding_receivable_amount_bcy'] = outstandingReceivableAmountBcy;
+    data['outstanding'] = outstanding;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['mobile'] = mobile;
+    data['website'] = website;
+    data['is_gapps_customer'] = isGappsCustomer;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['is_portal_invitation_accepted'] = isPortalInvitationAccepted;
+    data['payment_terms_label'] = paymentTermsLabel;
+    data['payment_terms'] = paymentTerms;
+    data['created_by'] = createdBy;
+    data['has_attachment'] = hasAttachment;
     // if (this.tags != null) {
     //   data['tags'] = this.tags!.map((v) => v.toJson()).toList();
     // }
@@ -210,23 +209,22 @@ class PageContext {
     if (json['search_criteria'] != null) {
       searchCriteria = <SearchCriteria>[];
       json['search_criteria'].forEach((v) {
-        searchCriteria!.add(new SearchCriteria.fromJson(v));
+        searchCriteria!.add(SearchCriteria.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['has_more_page'] = this.hasMorePage;
-    data['report_name'] = this.reportName;
-    data['applied_filter'] = this.appliedFilter;
-    data['sort_column'] = this.sortColumn;
-    data['sort_order'] = this.sortOrder;
-    if (this.searchCriteria != null) {
-      data['search_criteria'] =
-          this.searchCriteria!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['per_page'] = perPage;
+    data['has_more_page'] = hasMorePage;
+    data['report_name'] = reportName;
+    data['applied_filter'] = appliedFilter;
+    data['sort_column'] = sortColumn;
+    data['sort_order'] = sortOrder;
+    if (searchCriteria != null) {
+      data['search_criteria'] = searchCriteria!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -252,11 +250,11 @@ class SearchCriteria {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['column_name'] = this.columnName;
-    data['search_text'] = this.searchText;
-    data['search_text_formatted'] = this.searchTextFormatted;
-    data['comparator'] = this.comparator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['column_name'] = columnName;
+    data['search_text'] = searchText;
+    data['search_text_formatted'] = searchTextFormatted;
+    data['comparator'] = comparator;
     return data;
   }
 }

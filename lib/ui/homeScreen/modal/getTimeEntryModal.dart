@@ -7,13 +7,13 @@ class GetTimeEntryModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -80,11 +80,10 @@ class Data {
       this.taskId});
 
   Data.fromJson(Map<String, dynamic> json) {
-    parent =
-        json['parent'] != null ? new Parent.fromJson(json['parent']) : null;
+    parent = json['parent'] != null ? Parent.fromJson(json['parent']) : null;
     executedTime = json['executedTime'];
     customFields = json['customFields'] != null
-        ? new CustomFields.fromJson(json['customFields'])
+        ? CustomFields.fromJson(json['customFields'])
         : null;
     departmentId = json['departmentId'];
     agentCostPerHour = json['agentCostPerHour'];
@@ -98,10 +97,10 @@ class Data {
     id = json['id'];
     requestChargeType = json['requestChargeType'];
     layoutDetails = json['layoutDetails'] != null
-        ? new LayoutDetails.fromJson(json['layoutDetails'])
+        ? LayoutDetails.fromJson(json['layoutDetails'])
         : null;
     secondsSpent = json['secondsSpent'];
-    cf = json['cf'] != null ? new Cf.fromJson(json['cf']) : null;
+    cf = json['cf'] != null ? Cf.fromJson(json['cf']) : null;
     fixedCost = json['fixedCost'];
     minutesSpent = json['minutesSpent'];
     hoursSpent = json['hoursSpent'];
@@ -115,42 +114,42 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.parent != null) {
-      data['parent'] = this.parent!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (parent != null) {
+      data['parent'] = parent!.toJson();
     }
-    data['executedTime'] = this.executedTime;
-    if (this.customFields != null) {
-      data['customFields'] = this.customFields!.toJson();
+    data['executedTime'] = executedTime;
+    if (customFields != null) {
+      data['customFields'] = customFields!.toJson();
     }
-    data['departmentId'] = this.departmentId;
-    data['agentCostPerHour'] = this.agentCostPerHour;
-    data['description'] = this.description;
-    data['ownerId'] = this.ownerId;
-    data['mode'] = this.mode;
-    data['isTrashed'] = this.isTrashed;
-    data['billingType'] = this.billingType;
-    data['requestId'] = this.requestId;
-    data['createdTime'] = this.createdTime;
-    data['id'] = this.id;
-    data['requestChargeType'] = this.requestChargeType;
-    if (this.layoutDetails != null) {
-      data['layoutDetails'] = this.layoutDetails!.toJson();
+    data['departmentId'] = departmentId;
+    data['agentCostPerHour'] = agentCostPerHour;
+    data['description'] = description;
+    data['ownerId'] = ownerId;
+    data['mode'] = mode;
+    data['isTrashed'] = isTrashed;
+    data['billingType'] = billingType;
+    data['requestId'] = requestId;
+    data['createdTime'] = createdTime;
+    data['id'] = id;
+    data['requestChargeType'] = requestChargeType;
+    if (layoutDetails != null) {
+      data['layoutDetails'] = layoutDetails!.toJson();
     }
-    data['secondsSpent'] = this.secondsSpent;
-    if (this.cf != null) {
-      data['cf'] = this.cf!.toJson();
+    data['secondsSpent'] = secondsSpent;
+    if (cf != null) {
+      data['cf'] = cf!.toJson();
     }
-    data['fixedCost'] = this.fixedCost;
-    data['minutesSpent'] = this.minutesSpent;
-    data['hoursSpent'] = this.hoursSpent;
-    data['layoutId'] = this.layoutId;
-    data['isBillable'] = this.isBillable;
-    data['createdBy'] = this.createdBy;
-    data['invoiceId'] = this.invoiceId;
-    data['additionalCost'] = this.additionalCost;
-    data['totalCost'] = this.totalCost;
-    data['taskId'] = this.taskId;
+    data['fixedCost'] = fixedCost;
+    data['minutesSpent'] = minutesSpent;
+    data['hoursSpent'] = hoursSpent;
+    data['layoutId'] = layoutId;
+    data['isBillable'] = isBillable;
+    data['createdBy'] = createdBy;
+    data['invoiceId'] = invoiceId;
+    data['additionalCost'] = additionalCost;
+    data['totalCost'] = totalCost;
+    data['taskId'] = taskId;
     return data;
   }
 }
@@ -171,11 +170,11 @@ class Parent {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ticketNumber'] = this.ticketNumber;
-    data['subject'] = this.subject;
-    data['id'] = this.id;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ticketNumber'] = ticketNumber;
+    data['subject'] = subject;
+    data['id'] = id;
+    data['type'] = type;
     return data;
   }
 }
@@ -190,8 +189,8 @@ class CustomFields {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Date'] = this.date;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Date'] = date;
     return data;
   }
 }
@@ -208,9 +207,9 @@ class LayoutDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['layoutName'] = this.layoutName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['layoutName'] = layoutName;
     return data;
   }
 }
@@ -225,8 +224,8 @@ class Cf {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cf_date'] = this.cfDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cf_date'] = cfDate;
     return data;
   }
 }

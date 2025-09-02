@@ -7,13 +7,13 @@ class TicketRepliesModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -73,8 +73,7 @@ class Data {
     hasAttach = json['hasAttach'];
     status = json['status'];
     summary = json['summary'];
-    author =
-        json['author'] != null ? new Author.fromJson(json['author']) : null;
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
     attachmentCount = json['attachmentCount'];
     respondedIn = json['respondedIn'];
     isDescriptionThread = json['isDescriptionThread'];
@@ -90,29 +89,29 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['channel'] = this.channel;
-    data['canReply'] = this.canReply;
-    data['contentType'] = this.contentType;
-    data['hasAttach'] = this.hasAttach;
-    data['status'] = this.status;
-    data['summary'] = this.summary;
-    if (this.author != null) {
-      data['author'] = this.author!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['channel'] = channel;
+    data['canReply'] = canReply;
+    data['contentType'] = contentType;
+    data['hasAttach'] = hasAttach;
+    data['status'] = status;
+    data['summary'] = summary;
+    if (author != null) {
+      data['author'] = author!.toJson();
     }
-    data['attachmentCount'] = this.attachmentCount;
-    data['respondedIn'] = this.respondedIn;
-    data['isDescriptionThread'] = this.isDescriptionThread;
-    data['visibility'] = this.visibility;
-    data['createdTime'] = this.createdTime;
-    data['direction'] = this.direction;
-    data['cc'] = this.cc;
-    data['responderId'] = this.responderId;
-    data['bcc'] = this.bcc;
-    data['to'] = this.to;
-    data['fromEmailAddress'] = this.fromEmailAddress;
-    data['isForward'] = this.isForward;
+    data['attachmentCount'] = attachmentCount;
+    data['respondedIn'] = respondedIn;
+    data['isDescriptionThread'] = isDescriptionThread;
+    data['visibility'] = visibility;
+    data['createdTime'] = createdTime;
+    data['direction'] = direction;
+    data['cc'] = cc;
+    data['responderId'] = responderId;
+    data['bcc'] = bcc;
+    data['to'] = to;
+    data['fromEmailAddress'] = fromEmailAddress;
+    data['isForward'] = isForward;
     return data;
   }
 }
@@ -146,14 +145,14 @@ class Author {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['photoURL'] = this.photoURL;
-    data['type'] = this.type;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['photoURL'] = photoURL;
+    data['type'] = type;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
     return data;
   }
 }

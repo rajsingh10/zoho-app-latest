@@ -35,13 +35,13 @@ class _WelcomescreenState extends State<Welcomescreen> {
     await getdata();
     print('userData : $userData');
     Timer(
-      Duration(seconds: 3),
+      const Duration(seconds: 3),
       () async {
         if (userData == null) {
-          await Get.offAll(LandingScreen(), transition: Transition.fade);
+          await Get.offAll(const LandingScreen(), transition: Transition.fade);
         } else {
           await Get.offAll(
-            Homescreen(),
+            const Homescreen(),
             transition: Transition.fade,
           );
         }
@@ -58,7 +58,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 30.h,
               width: 80.w,
               child: Image.asset(

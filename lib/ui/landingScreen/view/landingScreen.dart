@@ -44,7 +44,7 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      body: Container(
+      body: SizedBox(
         height: Device.height,
         width: Device.width,
         child: Stack(
@@ -96,7 +96,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       SizedBox(
                         width: 1.w,
                       ),
-                      Text(
+                      const Text(
                         'Professional Advice',
                         style: TextStyle(
                             color: AppColors.whiteColor,
@@ -104,7 +104,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       ),
                     ],
                   ),
-                  Text(
+                  const Text(
                     'from Leading UK Experts',
                     style: TextStyle(
                         color: AppColors.whiteColor,
@@ -124,7 +124,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.to(landingAssociates());
+                          Get.to(const landingAssociates());
                         },
                         child: Text(
                           "Associates",
@@ -144,7 +144,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(LandingIntroducers());
+                      Get.to(const LandingIntroducers());
                     },
                     child: Text(
                       "Introducers",
@@ -166,7 +166,7 @@ class _LandingScreenState extends State<LandingScreen> {
             Positioned(
               top: 32.h,
               left: 3.w,
-              child: Container(
+              child: SizedBox(
                 height: 90.w,
                 width: 90.w,
                 child: Container(
@@ -180,7 +180,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       fontSize: 25.sp,
                       shadows: [
                         Shadow(
-                          offset: Offset(2.0, 2.0),
+                          offset: const Offset(2.0, 2.0),
                           blurRadius: 5.0,
                           color: Colors.black.withOpacity(0.8),
                         ),
@@ -196,9 +196,9 @@ class _LandingScreenState extends State<LandingScreen> {
               child: InkWell(
                 onTap: () {
                   Get.to(
-                    SendOtpScreen(),
+                    const SendOtpScreen(),
                     transition: Transition.rightToLeft,
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                   );
                 },
                 child: Container(
@@ -208,7 +208,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xff0097b2),
                         Color(0xff7ed957),
                       ]),
@@ -239,9 +239,9 @@ class _LandingScreenState extends State<LandingScreen> {
               left: 2.w,
               child: InkWell(
                 onTap: () => Get.to(
-                  Sevendaystrialselectscreen(),
+                  const Sevendaystrialselectscreen(),
                   transition: Transition.rightToLeft,
-                  duration: Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 250),
                 ),
                 child: Container(
                   margin: EdgeInsets.only(left: 8.w),
@@ -250,7 +250,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xffffde59),
                         Color(0xfff1811b),
                         Color(0xfff1811b),
@@ -282,9 +282,9 @@ class _LandingScreenState extends State<LandingScreen> {
               right: 12.w,
               child: InkWell(
                 onTap: () {
-                  Get.to(Nomembershomescreen());
+                  Get.to(const Nomembershomescreen());
                 },
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(

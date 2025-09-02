@@ -56,6 +56,7 @@ class _HomescreenState extends State<Homescreen> {
   int totalAdviceTime = 0;
   int totalSpentTime = 0;
 
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -83,9 +84,9 @@ class _HomescreenState extends State<Homescreen> {
     return prefs.getBool("isTimeExceeded") ?? false;
   }
 
-  TextEditingController _reasonController = TextEditingController();
+  final TextEditingController _reasonController = TextEditingController();
   DateTime? selectedDate;
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -102,8 +103,8 @@ class _HomescreenState extends State<Homescreen> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   width: Device.width,
-                  decoration:
-                      BoxDecoration(color: AppColors.alternativeBlueColor),
+                  decoration: const BoxDecoration(
+                      color: AppColors.alternativeBlueColor),
                   child: Column(
                     children: [
                       SizedBox(
@@ -116,7 +117,7 @@ class _HomescreenState extends State<Homescreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.to(PersonalDetailsScreen());
+                              Get.to(const PersonalDetailsScreen());
                             },
                             child: Image.asset(
                               Imgs.personIcon,
@@ -171,7 +172,7 @@ class _HomescreenState extends State<Homescreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Get.to(membershipPageScreen());
+                                  Get.to(const membershipPageScreen());
                                 },
                                 child: Container(
                                   width: Device.width,
@@ -218,7 +219,7 @@ class _HomescreenState extends State<Homescreen> {
                                                       .status ==
                                                   'cancelled'
                                               ? Container()
-                                              : Divider(
+                                              : const Divider(
                                                   color: AppColors.bgColor,
                                                   thickness: 0.5,
                                                 ),
@@ -281,7 +282,7 @@ class _HomescreenState extends State<Homescreen> {
                                                         FontFamily.extraBold,
                                                     fontSize: 18.5.sp),
                                               ),
-                                              Divider(
+                                              const Divider(
                                                 color: AppColors.bgColor,
                                                 thickness: 0.5,
                                               ),
@@ -357,7 +358,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                     .extraBold,
                                                             fontSize: 18.5.sp),
                                                       ),
-                                                      Divider(
+                                                      const Divider(
                                                         color:
                                                             AppColors.bgColor,
                                                         thickness: 0.5,
@@ -465,7 +466,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                     .extraBold,
                                                             fontSize: 18.5.sp),
                                                       ),
-                                                      Divider(
+                                                      const Divider(
                                                         color:
                                                             AppColors.bgColor,
                                                         thickness: 0.5,
@@ -535,7 +536,8 @@ class _HomescreenState extends State<Homescreen> {
                                           children: [
                                             InkWell(
                                               onTap: () {
-                                                Get.to(membershipPageScreen());
+                                                Get.to(
+                                                    const membershipPageScreen());
                                               },
                                               child: Container(
                                                 width: Device.width * 0.47,
@@ -592,11 +594,12 @@ class _HomescreenState extends State<Homescreen> {
                                                       width: 35.w,
                                                       padding:
                                                           EdgeInsets.all(11.sp),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors
-                                                              .whiteColor,
-                                                          shape:
-                                                              BoxShape.circle),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              color: AppColors
+                                                                  .whiteColor,
+                                                              shape: BoxShape
+                                                                  .circle),
                                                       child: Stack(
                                                         children: [
                                                           SizedBox(
@@ -629,7 +632,10 @@ class _HomescreenState extends State<Homescreen> {
                                                                               totalAdviceTime) <
                                                                           60
                                                                       ? "${(totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime)}"
-                                                                      : "${((totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime) / 60).toStringAsFixed(0)}",
+                                                                      : ((totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime) /
+                                                                              60)
+                                                                          .toStringAsFixed(
+                                                                              0),
                                                                   style:
                                                                       TextStyle(
                                                                     color: AppColors
@@ -690,7 +696,7 @@ class _HomescreenState extends State<Homescreen> {
                                                       InkWell(
                                                         onTap: () {
                                                           Get.to(
-                                                              membershipPageScreen());
+                                                              const membershipPageScreen());
                                                         },
                                                         child: Container(
                                                           padding: EdgeInsets
@@ -736,7 +742,7 @@ class _HomescreenState extends State<Homescreen> {
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.to(
-                                                          membershipPageScreen());
+                                                          const membershipPageScreen());
                                                     },
                                                     child: Container(
                                                       width:
@@ -804,7 +810,7 @@ class _HomescreenState extends State<Homescreen> {
                                                           SizedBox(
                                                             height: 0.7.h,
                                                           ),
-                                                          Container(
+                                                          SizedBox(
                                                             height: 19.h,
                                                             child: Column(
                                                               mainAxisAlignment:
@@ -817,7 +823,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                               .status ==
                                                                           'cancelled'
                                                                       ? "N/A"
-                                                                      : '${daysRemaining}',
+                                                                      : '$daysRemaining',
                                                                   style: TextStyle(
                                                                       color: AppColors
                                                                           .orangeColor,
@@ -853,7 +859,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                               .status ==
                                                                           'cancelled'
                                                                       ? "Monthly renewal date:N/A"
-                                                                      : 'Monthly renewal date:${dayWithSuffix}',
+                                                                      : 'Monthly renewal date:$dayWithSuffix',
                                                                   style: TextStyle(
                                                                       color: AppColors
                                                                           .bgColor,
@@ -1005,7 +1011,7 @@ class _HomescreenState extends State<Homescreen> {
                                                         InkWell(
                                                           onTap: () {
                                                             Get.to(
-                                                                membershipPageScreen());
+                                                                const membershipPageScreen());
                                                             print(subscriptionsdateleft
                                                                 ?.subscriptions?[
                                                                     0]
@@ -1056,7 +1062,7 @@ class _HomescreenState extends State<Homescreen> {
                                                               Container(
                                                                 height: 3.5.w,
                                                                 width: 3.5.w,
-                                                                decoration: BoxDecoration(
+                                                                decoration: const BoxDecoration(
                                                                     shape: BoxShape
                                                                         .circle,
                                                                     color: AppColors
@@ -1092,7 +1098,7 @@ class _HomescreenState extends State<Homescreen> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Get.offAll(adviceTicketsScreen());
+                                  Get.offAll(const adviceTicketsScreen());
                                 },
                                 child: Container(
                                   width: Device.width,
@@ -1189,7 +1195,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                     color: AppColors
                                                                         .bgColor),
                                                               ),
-                                                              child: Icon(
+                                                              child: const Icon(
                                                                 CupertinoIcons
                                                                     .doc_richtext,
                                                                 color: AppColors
@@ -1207,7 +1213,10 @@ class _HomescreenState extends State<Homescreen> {
                                                                 SizedBox(
                                                                   width: 68.w,
                                                                   child: Text(
-                                                                    '${allTicket?.data?[i].subject ?? "N/A"}',
+                                                                    allTicket
+                                                                            ?.data?[i]
+                                                                            .subject ??
+                                                                        "N/A",
                                                                     style: TextStyle(
                                                                         color: AppColors
                                                                             .bgColor,
@@ -1268,26 +1277,28 @@ class _HomescreenState extends State<Homescreen> {
                                                   ),
                                                   actions: [
                                                     CupertinoDialogAction(
-                                                      child: Text('Cancel'),
+                                                      child:
+                                                          const Text('Cancel'),
                                                       onPressed: () {
                                                         Get.back(); // Dismiss dialog
                                                       },
                                                     ),
                                                     CupertinoDialogAction(
-                                                      child: Text('Upgrade'),
                                                       isDestructiveAction: true,
                                                       onPressed: () {
                                                         Get.back();
                                                         Get.to(
-                                                            membershipPageScreen());
+                                                            const membershipPageScreen());
                                                       },
+                                                      child:
+                                                          const Text('Upgrade'),
                                                     ),
                                                   ],
                                                 );
                                               },
                                             );
                                           } else {
-                                            Get.to(CreateTicketScreen());
+                                            Get.to(const CreateTicketScreen());
                                           }
                                         },
                                         child: Container(
@@ -1353,7 +1364,7 @@ class _HomescreenState extends State<Homescreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 2.w, vertical: 2.h),
                             width: Device.width,
-                            color: Color(0xff232f3f),
+                            color: const Color(0xff232f3f),
                             child: Column(
                               children: [
                                 Row(
@@ -1396,7 +1407,7 @@ class _HomescreenState extends State<Homescreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    amzAdviceFindOutMoreScreen());
+                                                    const amzAdviceFindOutMoreScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -1406,7 +1417,8 @@ class _HomescreenState extends State<Homescreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    color: Color(0xfff2811b)),
+                                                    color: const Color(
+                                                        0xfff2811b)),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -1444,7 +1456,7 @@ class _HomescreenState extends State<Homescreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    marketingAgencyFindOutMorePageScreen());
+                                                    const marketingAgencyFindOutMorePageScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -1454,7 +1466,8 @@ class _HomescreenState extends State<Homescreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    color: Color(0xff2070af)),
+                                                    color: const Color(
+                                                        0xff2070af)),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -1492,7 +1505,7 @@ class _HomescreenState extends State<Homescreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    amzAgencyFindOutMoreScreen());
+                                                    const amzAgencyFindOutMoreScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -1523,7 +1536,8 @@ class _HomescreenState extends State<Homescreen> {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.offAll(manageMembershipScreen());
+                                          Get.offAll(
+                                              const manageMembershipScreen());
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -1595,14 +1609,14 @@ class _HomescreenState extends State<Homescreen> {
                                   horizontal: 2.w, vertical: 1.h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     Color(0xFFFFE259),
                                     Color(0xFFFFA751)
                                   ], // yellow to orange
                                 ),
                               ),
-                              child: Text(
+                              child: const Text(
                                 "Join Alex’s FREE Online Amazon Training here",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -1624,7 +1638,7 @@ class _HomescreenState extends State<Homescreen> {
                                 horizontal: 2.w, vertical: 1.h),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xffe9e7e7)),
+                                color: const Color(0xffe9e7e7)),
                             child: Column(
                               children: [
                                 Text(
@@ -2213,7 +2227,7 @@ class _HomescreenState extends State<Homescreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          dev.log("error=====>>>>${stackTrace}");
+          dev.log("error=====>>>>$stackTrace");
           setState(() {
             isLoading = false;
           });
@@ -2317,7 +2331,7 @@ class _HomescreenState extends State<Homescreen> {
                 paymentLink: createSubscription?.hostedpage?.url ?? '',
               ),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
@@ -2430,7 +2444,7 @@ class _HomescreenState extends State<Homescreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(null),
+                      const Icon(null),
                       Text(
                         "Purchase Membership",
                         style: TextStyle(
@@ -2523,17 +2537,17 @@ class _HomescreenState extends State<Homescreen> {
                               filled: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.border),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.border),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.blackColor),
                               ),
                               errorBorder: OutlineInputBorder(
@@ -2714,7 +2728,7 @@ class _HomescreenState extends State<Homescreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -2723,7 +2737,7 @@ class _HomescreenState extends State<Homescreen> {
                       subscriptionResumeApi();
                     }
                   },
-                  child: Text('Done'),
+                  child: const Text('Done'),
                 ),
               ],
             );

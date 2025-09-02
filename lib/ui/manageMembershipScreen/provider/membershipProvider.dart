@@ -12,9 +12,9 @@ import '../../../../ApiCalling/response.dart';
 class ManageMembershipProvider extends ChangeNotifier {
   Future<http.Response> subscriptionsCancelApi(subcatiptionid) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
-    String url = "${apiEndpoints.subscriptionsApi}${subcatiptionid}/cancel";
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url = "${apiEndpoints.subscriptionsApi}$subcatiptionid/cancel";
     print(url);
 
     var responseJson;
@@ -69,9 +69,9 @@ class ManageMembershipProvider extends ChangeNotifier {
   Future<http.Response> subscriptionsPauseApi(
       Map<String, dynamic> bodyData, subcatiptionid) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
-    String url = "${apiEndpoints.subscriptionsApi}${subcatiptionid}/pause";
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url = "${apiEndpoints.subscriptionsApi}$subcatiptionid/pause";
     print(url);
 
     var responseJson;
@@ -95,9 +95,9 @@ class ManageMembershipProvider extends ChangeNotifier {
   Future<http.Response> subscriptionsResumeApi(
       Map<String, dynamic> bodyData, subcatiptionid) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
-    String url = "${apiEndpoints.subscriptionsApi}${subcatiptionid}/resume";
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url = "${apiEndpoints.subscriptionsApi}$subcatiptionid/resume";
     print(url);
 
     var responseJson;

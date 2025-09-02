@@ -25,7 +25,7 @@ class _IntroducerFindOutScreenState extends State<IntroducerFindOutScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -48,7 +48,7 @@ class _IntroducerFindOutScreenState extends State<IntroducerFindOutScreen> {
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -147,7 +147,7 @@ class _IntroducerFindOutScreenState extends State<IntroducerFindOutScreen> {
                       margin: EdgeInsets.symmetric(horizontal: 2.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color(0xffe9e7e7),
+                        color: const Color(0xffe9e7e7),
                       ),
                       child: Stack(
                         children: [
@@ -211,8 +211,8 @@ class _IntroducerFindOutScreenState extends State<IntroducerFindOutScreen> {
                                 height: 20.h,
                                 width: Device.width,
                                 margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                decoration:
-                                    BoxDecoration(color: Color(0xff232f3f)),
+                                decoration: const BoxDecoration(
+                                    color: Color(0xff232f3f)),
                               ),
                             ],
                           ),
@@ -275,7 +275,7 @@ class _IntroducerFindOutScreenState extends State<IntroducerFindOutScreen> {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.to(joinTodayPageScreen());
+                                          Get.to(const joinTodayPageScreen());
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -283,7 +283,7 @@ class _IntroducerFindOutScreenState extends State<IntroducerFindOutScreen> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: Color(0xfffff800)),
+                                              color: const Color(0xfffff800)),
                                           child: Text(
                                             "JOIN TODAY",
                                             style: TextStyle(

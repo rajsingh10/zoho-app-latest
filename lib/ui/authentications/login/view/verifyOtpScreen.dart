@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:zohosystem/main.dart';
 import 'package:zohosystem/ui/authentications/login/modal/checkIdModal.dart';
 import 'package:zohosystem/ui/authentications/login/modal/userDataModal.dart';
 import 'package:zohosystem/utils/colors.dart';
@@ -40,7 +41,7 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  TextEditingController _pinController = TextEditingController();
+  final TextEditingController _pinController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -58,7 +59,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       backgroundColor: AppColors.bgColor,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: Device.height,
             width: Device.width,
             child: Stack(
@@ -104,7 +105,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         color: AppColors.blackColor,
                         width: 7,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(50),
                         topRight: Radius.circular(50),
                       ),
@@ -248,15 +249,15 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                     fontWeight: FontWeight.bold,
                                     fontFamily: FontFamily.bold),
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Not Received?  ',
                                     style:
                                         TextStyle(color: AppColors.blackColor),
                                   ),
                                   TextSpan(
                                     text: 'Resend here.',
-                                    style:
-                                        TextStyle(color: AppColors.orangeColor),
+                                    style: const TextStyle(
+                                        color: AppColors.orangeColor),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         widget.type == "1"
@@ -432,6 +433,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'email': widget.emailAddress.toString(),
       'otp': _pinController.text.trim().toString(),
       "customer_id": widget.customerid.toString(),
+      "fcm_token": myDeviceToken ?? '',
     };
     print(data);
     checkInternet().then((internet) async {
@@ -503,8 +505,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'otp': _pinController.text.trim().toString(),
       'country_code': widget.countryCode.toString(),
       "customer_id": widget.customerid.toString(),
+      "fcm_token": myDeviceToken ?? '',
     };
-    print("=====>>>>>${data}");
+    print("=====>>>>>$data");
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().verifyOtpApi(data).then((response) async {
@@ -588,9 +591,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               isLoading = false;
             });
             Get.offAll(
-              Homescreen(),
+              const Homescreen(),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 422) {
             setState(() {

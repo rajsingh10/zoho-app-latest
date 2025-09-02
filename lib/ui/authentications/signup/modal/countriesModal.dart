@@ -9,14 +9,14 @@ class CountriesModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['msg'] = this.msg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['msg'] = msg;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -40,11 +40,11 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['iso2'] = this.iso2;
-    data['iso3'] = this.iso3;
-    data['country'] = this.country;
-    data['cities'] = this.cities;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['iso2'] = iso2;
+    data['iso3'] = iso3;
+    data['country'] = country;
+    data['cities'] = cities;
     return data;
   }
 }

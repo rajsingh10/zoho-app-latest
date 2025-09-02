@@ -11,15 +11,15 @@ class UserDataModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -123,38 +123,37 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_name'] = this.customerName;
-    data['display_name'] = this.displayName;
-    data['is_primary_associated'] = this.isPrimaryAssociated;
-    data['is_backup_associated'] = this.isBackupAssociated;
-    data['customer_id'] = this.customerId;
-    data['contact_id'] = this.contactId;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['status'] = this.status;
-    data['company_name'] = this.companyName;
-    data['unused_credits'] = this.unusedCredits;
-    data['outstanding_receivable_amount'] = this.outstandingReceivableAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['customer_name'] = customerName;
+    data['display_name'] = displayName;
+    data['is_primary_associated'] = isPrimaryAssociated;
+    data['is_backup_associated'] = isBackupAssociated;
+    data['customer_id'] = customerId;
+    data['contact_id'] = contactId;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['status'] = status;
+    data['company_name'] = companyName;
+    data['unused_credits'] = unusedCredits;
+    data['outstanding_receivable_amount'] = outstandingReceivableAmount;
     data['unused_credits_receivable_amount_bcy'] =
-        this.unusedCreditsReceivableAmountBcy;
-    data['outstanding_receivable_amount_bcy'] =
-        this.outstandingReceivableAmountBcy;
-    data['outstanding'] = this.outstanding;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['mobile'] = this.mobile;
-    data['website'] = this.website;
-    data['is_gapps_customer'] = this.isGappsCustomer;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['is_portal_invitation_accepted'] = this.isPortalInvitationAccepted;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    data['payment_terms'] = this.paymentTerms;
-    data['created_by'] = this.createdBy;
-    data['has_attachment'] = this.hasAttachment;
+        unusedCreditsReceivableAmountBcy;
+    data['outstanding_receivable_amount_bcy'] = outstandingReceivableAmountBcy;
+    data['outstanding'] = outstanding;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['mobile'] = mobile;
+    data['website'] = website;
+    data['is_gapps_customer'] = isGappsCustomer;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['is_portal_invitation_accepted'] = isPortalInvitationAccepted;
+    data['payment_terms_label'] = paymentTermsLabel;
+    data['payment_terms'] = paymentTerms;
+    data['created_by'] = createdBy;
+    data['has_attachment'] = hasAttachment;
     return data;
   }
 }

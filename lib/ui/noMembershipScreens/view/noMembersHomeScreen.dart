@@ -97,7 +97,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                 width: Device.width,
-                decoration: BoxDecoration(color: AppColors.orangeColor),
+                decoration: const BoxDecoration(color: AppColors.orangeColor),
                 child: Column(
                   children: [
                     SizedBox(
@@ -108,7 +108,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.offAll(LandingScreen());
+                            Get.offAll(const LandingScreen());
                           },
                           child: Image.asset(
                             Imgs.backIcon,
@@ -120,7 +120,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                           scale: 5.5,
                           color: AppColors.whiteColor,
                         ),
-                        Icon(null),
+                        const Icon(null),
                       ],
                     ),
                   ],
@@ -209,7 +209,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(50),
-                                                color: Color(0xff22a34d)),
+                                                color: const Color(0xff22a34d)),
                                             child: Text(
                                               "Book now",
                                               style: TextStyle(
@@ -296,7 +296,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                 height: 23.w,
                                 width: 23.w,
                                 padding: EdgeInsets.symmetric(horizontal: 1.w),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: AppColors.bgColor,
                                     shape: BoxShape.circle),
                                 child: Center(
@@ -361,7 +361,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           horizontal: 4.w, vertical: 1.h),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        gradient: LinearGradient(
+                                        gradient: const LinearGradient(
                                           colors: [
                                             Color(0xff0097b2),
                                             Color(0xff7ed957),
@@ -411,7 +411,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     horizontal: 2.5.w, vertical: 1.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: Color(0xff22a34d)),
+                                        width: 0.5.w,
+                                        color: const Color(0xff22a34d)),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -427,7 +428,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(
-                                            membershipFindOutMorePageScreen());
+                                            const membershipFindOutMorePageScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -435,7 +436,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(50),
-                                            color: Color(0xff22a34d)),
+                                            color: const Color(0xff22a34d)),
                                         child: Text(
                                           "Find Out More",
                                           style: TextStyle(
@@ -474,7 +475,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.to(amzAdviceFindOutMoreScreen());
+                                        Get.to(
+                                            const amzAdviceFindOutMoreScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -521,7 +523,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.to(amzAgencyFindOutMoreScreen());
+                                        Get.to(
+                                            const amzAgencyFindOutMoreScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -552,7 +555,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     horizontal: 2.5.w, vertical: 1.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: Color(0xff2274bb)),
+                                        width: 0.5.w,
+                                        color: const Color(0xff2274bb)),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -568,7 +572,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(
-                                            marketingAgencyFindOutMorePageScreen());
+                                            const marketingAgencyFindOutMorePageScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -576,7 +580,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(50),
-                                            color: Color(0xff2274bb)),
+                                            color: const Color(0xff2274bb)),
                                         child: Text(
                                           "Find Out More",
                                           style: TextStyle(
@@ -599,7 +603,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     horizontal: 1.w, vertical: 0.5.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: Color(0xff2274bb)),
+                                        width: 0.5.w,
+                                        color: const Color(0xff2274bb)),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -612,7 +617,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(
-                                            JustAskAlexFindOutMorePageScreen());
+                                            const JustAskAlexFindOutMorePageScreen());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -620,7 +625,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(50),
-                                            color: Color(0xff2274bb)),
+                                            color: const Color(0xff2274bb)),
                                         child: Text(
                                           "Find Out More",
                                           style: TextStyle(
@@ -640,7 +645,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Get.to(IntroducersFindOutMorePageScreen());
+                                  Get.to(
+                                      const IntroducersFindOutMorePageScreen());
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -648,7 +654,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           width: 0.5.w,
-                                          color: Color(0xff2274bb)),
+                                          color: const Color(0xff2274bb)),
                                       borderRadius: BorderRadius.circular(20),
                                       color: AppColors.whiteColor),
                                   child: Column(
@@ -665,7 +671,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       InkWell(
                                         onTap: () {
                                           Get.to(
-                                              IntroducersFindOutMorePageScreen());
+                                              const IntroducersFindOutMorePageScreen());
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -673,7 +679,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(50),
-                                              color: Color(0xff2274bb)),
+                                              color: const Color(0xff2274bb)),
                                           child: Text(
                                             "Find Out More",
                                             style: TextStyle(
@@ -760,7 +766,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4.w),
                                           alignment: Alignment.center,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                               gradient: LinearGradient(colors: [
                                                 Color(0xffffde59),
@@ -790,7 +796,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4.w),
                                           alignment: Alignment.center,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                               gradient: LinearGradient(colors: [
                                                 Color(0xff0097b2),
@@ -830,7 +836,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                 ),
                               ],
                             ),
-                            Container(
+                            SizedBox(
                               height: 42.h,
                               child: Stack(
                                 children: [
@@ -941,16 +947,16 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () => Get.to(
-                joinTodayButtonPage(),
+                const joinTodayButtonPage(),
                 transition: Transition.rightToLeft,
-                duration: Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 250),
               ),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
                 margin: EdgeInsets.only(bottom: 1.5.h),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Color(0xffffde59),
                       Color(0xfff1811b),

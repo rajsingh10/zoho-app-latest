@@ -20,7 +20,7 @@ Widget Loader() {
           child: SizedBox(
             height: 4.5.h, // Smaller loader size
             width: 4.5.h,
-            child: CircularProgressIndicator(color: AppColors.primary),
+            child: const CircularProgressIndicator(color: AppColors.primary),
           ),
         ),
       ),

@@ -13,24 +13,23 @@ class SubscriptionsDateModal {
     if (json['subscriptions'] != null) {
       subscriptions = <Subscriptions>[];
       json['subscriptions'].forEach((v) {
-        subscriptions!.add(new Subscriptions.fromJson(v));
+        subscriptions!.add(Subscriptions.fromJson(v));
       });
     }
     pageContext = json['page_context'] != null
-        ? new PageContext.fromJson(json['page_context'])
+        ? PageContext.fromJson(json['page_context'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.subscriptions != null) {
-      data['subscriptions'] =
-          this.subscriptions!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (subscriptions != null) {
+      data['subscriptions'] = subscriptions!.map((v) => v.toJson()).toList();
     }
-    if (this.pageContext != null) {
-      data['page_context'] = this.pageContext!.toJson();
+    if (pageContext != null) {
+      data['page_context'] = pageContext!.toJson();
     }
     return data;
   }
@@ -212,64 +211,64 @@ class Subscriptions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_id'] = this.customerId;
-    data['customer_name'] = this.customerName;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['trial_remaining_days'] = this.source;
-    data['mobile_phone'] = this.mobilePhone;
-    data['plan_name'] = this.planName;
-    data['plan_code'] = this.planCode;
-    data['pricebook_id'] = this.pricebookId;
-    data['name'] = this.name;
-    data['crm_owner_id'] = this.crmOwnerId;
-    data['zcrm_potential_id'] = this.zcrmPotentialId;
-    data['zcrm_potential_name'] = this.zcrmPotentialName;
-    data['sub_total'] = this.subTotal;
-    data['current_term_starts_at'] = this.currentTermStartsAt;
-    data['current_term_ends_at'] = this.currentTermEndsAt;
-    data['interval'] = this.interval;
-    data['interval_unit'] = this.intervalUnit;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['customer_id'] = customerId;
+    data['customer_name'] = customerName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['trial_remaining_days'] = source;
+    data['mobile_phone'] = mobilePhone;
+    data['plan_name'] = planName;
+    data['plan_code'] = planCode;
+    data['pricebook_id'] = pricebookId;
+    data['name'] = name;
+    data['crm_owner_id'] = crmOwnerId;
+    data['zcrm_potential_id'] = zcrmPotentialId;
+    data['zcrm_potential_name'] = zcrmPotentialName;
+    data['sub_total'] = subTotal;
+    data['current_term_starts_at'] = currentTermStartsAt;
+    data['current_term_ends_at'] = currentTermEndsAt;
+    data['interval'] = interval;
+    data['interval_unit'] = intervalUnit;
     if (customFieldHash != null) {
       data['custom_field_hash'] = customFieldHash!.toJson();
     }
 
-    data['shipping_interval'] = this.shippingInterval;
-    data['shipping_interval_unit'] = this.shippingIntervalUnit;
-    data['billing_mode'] = this.billingMode;
-    data['auto_collect'] = this.autoCollect;
-    data['salesperson_id'] = this.salespersonId;
-    data['salesperson_name'] = this.salespersonName;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['coupon_duration'] = this.couponDuration;
-    data['scheduled_cancellation_date'] = this.scheduledCancellationDate;
-    data['subscription_id'] = this.subscriptionId;
-    data['subscription_number'] = this.subscriptionNumber;
-    data['is_metered_billing'] = this.isMeteredBilling;
-    data['created_at'] = this.createdAt;
-    data['activated_at'] = this.activatedAt;
-    data['status'] = this.status;
-    data['expires_at'] = this.expiresAt;
-    data['amount'] = this.amount;
-    data['last_billing_at'] = this.lastBillingAt;
-    data['next_billing_at'] = this.nextBillingAt;
-    data['total_orders'] = this.totalOrders;
-    data['orders_created'] = this.ordersCreated;
-    data['orders_remaining'] = this.ordersRemaining;
-    data['pause_date'] = this.pauseDate;
-    data['resume_date'] = this.resumeDate;
-    data['reference_id'] = this.referenceId;
-    data['next_shipment_at'] = this.nextShipmentAt;
-    data['last_shipment_at'] = this.lastShipmentAt;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['next_shipment_day'] = this.nextShipmentDay;
-    data['last_shipment_day'] = this.lastShipmentDay;
-    data['payment_terms'] = this.paymentTerms;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    data['created_by'] = this.createdBy;
+    data['shipping_interval'] = shippingInterval;
+    data['shipping_interval_unit'] = shippingIntervalUnit;
+    data['billing_mode'] = billingMode;
+    data['auto_collect'] = autoCollect;
+    data['salesperson_id'] = salespersonId;
+    data['salesperson_name'] = salespersonName;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['coupon_duration'] = couponDuration;
+    data['scheduled_cancellation_date'] = scheduledCancellationDate;
+    data['subscription_id'] = subscriptionId;
+    data['subscription_number'] = subscriptionNumber;
+    data['is_metered_billing'] = isMeteredBilling;
+    data['created_at'] = createdAt;
+    data['activated_at'] = activatedAt;
+    data['status'] = status;
+    data['expires_at'] = expiresAt;
+    data['amount'] = amount;
+    data['last_billing_at'] = lastBillingAt;
+    data['next_billing_at'] = nextBillingAt;
+    data['total_orders'] = totalOrders;
+    data['orders_created'] = ordersCreated;
+    data['orders_remaining'] = ordersRemaining;
+    data['pause_date'] = pauseDate;
+    data['resume_date'] = resumeDate;
+    data['reference_id'] = referenceId;
+    data['next_shipment_at'] = nextShipmentAt;
+    data['last_shipment_at'] = lastShipmentAt;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['next_shipment_day'] = nextShipmentDay;
+    data['last_shipment_day'] = lastShipmentDay;
+    data['payment_terms'] = paymentTerms;
+    data['payment_terms_label'] = paymentTermsLabel;
+    data['created_by'] = createdBy;
     return data;
   }
 }
@@ -324,23 +323,22 @@ class PageContext {
     if (json['search_criteria'] != null) {
       searchCriteria = <SearchCriteria>[];
       json['search_criteria'].forEach((v) {
-        searchCriteria!.add(new SearchCriteria.fromJson(v));
+        searchCriteria!.add(SearchCriteria.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['has_more_page'] = this.hasMorePage;
-    data['report_name'] = this.reportName;
-    data['applied_filter'] = this.appliedFilter;
-    data['sort_column'] = this.sortColumn;
-    data['sort_order'] = this.sortOrder;
-    if (this.searchCriteria != null) {
-      data['search_criteria'] =
-          this.searchCriteria!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['per_page'] = perPage;
+    data['has_more_page'] = hasMorePage;
+    data['report_name'] = reportName;
+    data['applied_filter'] = appliedFilter;
+    data['sort_column'] = sortColumn;
+    data['sort_order'] = sortOrder;
+    if (searchCriteria != null) {
+      data['search_criteria'] = searchCriteria!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -366,11 +364,11 @@ class SearchCriteria {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['column_name'] = this.columnName;
-    data['search_text'] = this.searchText;
-    data['search_text_formatted'] = this.searchTextFormatted;
-    data['comparator'] = this.comparator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['column_name'] = columnName;
+    data['search_text'] = searchText;
+    data['search_text_formatted'] = searchTextFormatted;
+    data['comparator'] = comparator;
     return data;
   }
 }

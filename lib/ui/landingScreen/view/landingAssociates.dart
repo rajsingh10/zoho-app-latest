@@ -20,7 +20,7 @@ class _landingAssociatesState extends State<landingAssociates> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      body: Container(
+      body: SizedBox(
         height: Device.height,
         width: Device.width,
         child: Stack(
@@ -83,7 +83,7 @@ class _landingAssociatesState extends State<landingAssociates> {
                         onTap: () {
                           Get.back();
                         },
-                        child: Text(
+                        child: const Text(
                           'Looking for Expert Advice?',
                           style: TextStyle(
                               color: AppColors.whiteColor,
@@ -96,7 +96,7 @@ class _landingAssociatesState extends State<landingAssociates> {
                     onTap: () {
                       Get.back();
                     },
-                    child: Text(
+                    child: const Text(
                       'Return to the Dashboard here',
                       style: TextStyle(
                           color: AppColors.whiteColor,
@@ -109,7 +109,7 @@ class _landingAssociatesState extends State<landingAssociates> {
             Positioned(
               top: 32.h,
               left: 3.w,
-              child: Container(
+              child: SizedBox(
                 height: 90.w,
                 width: 87.w,
                 child: Container(
@@ -123,7 +123,7 @@ class _landingAssociatesState extends State<landingAssociates> {
                       fontSize: 22.sp,
                       shadows: [
                         Shadow(
-                          offset: Offset(2.0, 2.0),
+                          offset: const Offset(2.0, 2.0),
                           blurRadius: 5.0,
                           color: Colors.black.withOpacity(0.8),
                         ),
@@ -143,7 +143,7 @@ class _landingAssociatesState extends State<landingAssociates> {
                         'https://accounts.zoho.eu/signin?serviceurl=https://associates.theadvicecentre.ltd&servicename=ZohoChat&zsrc=fromproduct',
                   ),
                   transition: Transition.rightToLeft,
-                  duration: Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 250),
                 ),
                 child: Container(
                   margin: EdgeInsets.only(left: 8.w),
@@ -152,7 +152,7 @@ class _landingAssociatesState extends State<landingAssociates> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xff0097b2),
                         Color(0xff7ed957),
                       ]),
@@ -194,7 +194,7 @@ class _landingAssociatesState extends State<landingAssociates> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xffffde59),
                         Color(0xfff1811b),
                         Color(0xfff1811b),

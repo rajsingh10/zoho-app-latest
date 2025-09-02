@@ -27,7 +27,8 @@ class _TheAdviceCentreAcademyScreenState
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: double.infinity,
-            decoration: BoxDecoration(color: AppColors.alternativeBlueColor),
+            decoration:
+                const BoxDecoration(color: AppColors.alternativeBlueColor),
             child: Column(
               children: [
                 SizedBox(height: 5.h),
@@ -67,7 +68,7 @@ class _TheAdviceCentreAcademyScreenState
                       width: double.infinity,
                       height: double.infinity,
                       color: AppColors.whiteColor,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.alternativeBlueColor,
                         ),

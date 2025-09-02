@@ -73,17 +73,18 @@ class _RegisterscreenState extends State<Registerscreen> {
   final LayerLink _cityLayerLink = LayerLink();
   OverlayEntry? _cityOverlayEntry;
   final GlobalKey _cityFieldKey = GlobalKey();
-  TextEditingController _citySearchController = TextEditingController();
+  final TextEditingController _citySearchController = TextEditingController();
   List<String> filteredCities = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (mounted)
+    if (mounted) {
       setState(() {
         isLoading = true;
       });
+    }
     getPlansApi();
   }
 
@@ -100,7 +101,7 @@ class _RegisterscreenState extends State<Registerscreen> {
         },
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               height: Device.height,
               width: Device.width,
               child: Stack(
@@ -147,7 +148,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                           color: AppColors.blackColor,
                           width: 7,
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50),
                         ),
@@ -157,7 +158,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                         child: Form(
                           key: _formKey,
                           child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -292,10 +293,11 @@ class _RegisterscreenState extends State<Registerscreen> {
                 );
               }).toList(),
               onChanged: (value) {
-                if (mounted)
+                if (mounted) {
                   setState(() {
                     selectedMembership = value;
                   });
+                }
               },
               validator: (value) {
                 if (value == null) {
@@ -311,16 +313,18 @@ class _RegisterscreenState extends State<Registerscreen> {
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.w),
-                  borderSide: BorderSide(width: 1.5, color: AppColors.border),
+                  borderSide:
+                      const BorderSide(width: 1.5, color: AppColors.border),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.w),
-                  borderSide: BorderSide(width: 1.5, color: AppColors.border),
+                  borderSide:
+                      const BorderSide(width: 1.5, color: AppColors.border),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.w),
                   borderSide:
-                      BorderSide(width: 1.5, color: AppColors.blackColor),
+                      const BorderSide(width: 1.5, color: AppColors.blackColor),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.w),
@@ -342,7 +346,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'First Name',
           isTextavailable: true,
           textInputType: TextInputType.text,
-          prefix: Icon(Icons.person),
+          prefix: const Icon(Icons.person),
           validator: (value) => value == null || value.isEmpty
               ? 'Please enter your first name'
               : null,
@@ -354,7 +358,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'Last Name',
           isTextavailable: true,
           textInputType: TextInputType.text,
-          prefix: Icon(Icons.person),
+          prefix: const Icon(Icons.person),
           validator: (value) => value == null || value.isEmpty
               ? 'Please enter your last name'
               : null,
@@ -366,7 +370,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'Company Name (If Applicable)',
           isTextavailable: true,
           textInputType: TextInputType.text,
-          prefix: Icon(Icons.business),
+          prefix: const Icon(Icons.business),
         ),
         SizedBox(height: 2.h),
         AppTextField(
@@ -375,11 +379,12 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'Email',
           isTextavailable: true,
           textInputType: TextInputType.emailAddress,
-          prefix: Icon(Icons.email_outlined),
+          prefix: const Icon(Icons.email_outlined),
           validator: (value) {
             if (value == null || value.isEmpty) return 'Please enter email';
-            if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value))
+            if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
               return 'Enter valid email';
+            }
             return null;
           },
         ),
@@ -413,15 +418,16 @@ class _RegisterscreenState extends State<Registerscreen> {
                 child: IntlPhoneField(
                   controller: _phoneNumber,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    border:
+                        const OutlineInputBorder(borderSide: BorderSide.none),
                     disabledBorder:
-                        OutlineInputBorder(borderSide: BorderSide.none),
+                        const OutlineInputBorder(borderSide: BorderSide.none),
                     enabledBorder:
-                        OutlineInputBorder(borderSide: BorderSide.none),
+                        const OutlineInputBorder(borderSide: BorderSide.none),
                     errorBorder:
-                        OutlineInputBorder(borderSide: BorderSide.none),
+                        const OutlineInputBorder(borderSide: BorderSide.none),
                     focusedBorder:
-                        OutlineInputBorder(borderSide: BorderSide.none),
+                        const OutlineInputBorder(borderSide: BorderSide.none),
                     hintText: 'Enter Your Phone Number',
                     hintStyle: TextStyle(
                       color: AppColors.border,
@@ -433,10 +439,11 @@ class _RegisterscreenState extends State<Registerscreen> {
                   initialCountryCode: 'GB',
                   onChanged: (phone) {
                     if (_countryCode == '') {
-                      if (mounted)
+                      if (mounted) {
                         setState(() {
                           _countryCode = phone.countryCode;
                         });
+                      }
                       log(_countryCode);
                     }
                   },
@@ -445,7 +452,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                   showDropdownIcon: true,
                   showCountryFlag: false,
                   dropdownIconPosition: IconPosition.trailing,
-                  dropdownTextStyle: TextStyle(color: Colors.black),
+                  dropdownTextStyle: const TextStyle(color: Colors.black),
                 ),
               ),
             ],
@@ -486,10 +493,11 @@ class _RegisterscreenState extends State<Registerscreen> {
         InkWell(
           onTap: () {
             if (_formKey.currentState!.validate()) {
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   step++;
                 });
+              }
             }
           },
           child: Container(
@@ -519,19 +527,19 @@ class _RegisterscreenState extends State<Registerscreen> {
                 fontFamily: FontFamily.regular,
               ),
               children: [
-                TextSpan(
+                const TextSpan(
                   text: 'Already a member? Log-in ',
                   style: TextStyle(color: AppColors.blackColor),
                 ),
                 TextSpan(
                   text: 'here.',
-                  style: TextStyle(color: AppColors.orangeColor),
+                  style: const TextStyle(color: AppColors.orangeColor),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       Get.to(
-                        SendOtpScreen(),
+                        const SendOtpScreen(),
                         transition: Transition.rightToLeft,
-                        duration: Duration(milliseconds: 250),
+                        duration: const Duration(milliseconds: 250),
                       );
                     },
                 ),
@@ -601,24 +609,26 @@ class _RegisterscreenState extends State<Registerscreen> {
                 controller: TextEditingController(text: selectedCountry),
                 decoration: InputDecoration(
                   hintText: "Select Country/Region",
-                  prefixIcon: Icon(Icons.flag),
-                  suffixIcon: Icon(CupertinoIcons.chevron_down),
+                  prefixIcon: const Icon(Icons.flag),
+                  suffixIcon: const Icon(CupertinoIcons.chevron_down),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   filled: true,
                   fillColor: AppColors.whiteColor,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(3.w),
-                    borderSide: BorderSide(width: 1.5, color: AppColors.border),
+                    borderSide:
+                        const BorderSide(width: 1.5, color: AppColors.border),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(3.w),
-                    borderSide: BorderSide(width: 1.5, color: AppColors.border),
+                    borderSide:
+                        const BorderSide(width: 1.5, color: AppColors.border),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(3.w),
-                    borderSide:
-                        BorderSide(width: 1.5, color: AppColors.blackColor),
+                    borderSide: const BorderSide(
+                        width: 1.5, color: AppColors.blackColor),
                   ),
                 ),
                 validator: (value) {
@@ -638,7 +648,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'Billing Address',
           isTextavailable: true,
           textInputType: TextInputType.text,
-          prefix: Icon(Icons.location_history),
+          prefix: const Icon(Icons.location_history),
           validator: (value) => value == null || value.isEmpty
               ? 'Please enter your billing address'
               : null,
@@ -650,7 +660,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'Country/State',
           isTextavailable: true,
           textInputType: TextInputType.text,
-          prefix: Icon(Icons.location_pin),
+          prefix: const Icon(Icons.location_pin),
           validator: (value) => value == null || value.isEmpty
               ? 'Please enter your country/state'
               : null,
@@ -680,8 +690,8 @@ class _RegisterscreenState extends State<Registerscreen> {
                 text: 'City',
                 isTextavailable: true,
                 textInputType: TextInputType.text,
-                prefix: Icon(Icons.business),
-                suffix: Icon(CupertinoIcons.chevron_down),
+                prefix: const Icon(Icons.business),
+                suffix: const Icon(CupertinoIcons.chevron_down),
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Please enter city' : null,
               ),
@@ -695,10 +705,11 @@ class _RegisterscreenState extends State<Registerscreen> {
           text: 'Postal/Zip Code',
           isTextavailable: true,
           textInputType: TextInputType.text,
-          prefix: Icon(Icons.my_location_rounded),
+          prefix: const Icon(Icons.my_location_rounded),
           validator: (value) {
-            if (value == null || value.isEmpty)
+            if (value == null || value.isEmpty) {
               return 'Please enter postal/zip code';
+            }
 
             return null;
           },
@@ -768,7 +779,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                   children: [
                     TextSpan(
                       text: 'Terms & Conditions',
-                      style: TextStyle(
+                      style: const TextStyle(
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.bold,
                         color: AppColors
@@ -783,12 +794,12 @@ class _RegisterscreenState extends State<Registerscreen> {
                           ));
                         },
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: ' and ',
                     ),
                     TextSpan(
                       text: 'Privacy Policy',
-                      style: TextStyle(
+                      style: const TextStyle(
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primary,
@@ -802,7 +813,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                           ));
                         },
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: '.',
                     ),
                   ],
@@ -818,10 +829,11 @@ class _RegisterscreenState extends State<Registerscreen> {
           children: [
             InkWell(
               onTap: () {
-                if (mounted)
+                if (mounted) {
                   setState(() {
                     step--;
                   });
+                }
               },
               child: Container(
                 width: 38.w,
@@ -885,19 +897,19 @@ class _RegisterscreenState extends State<Registerscreen> {
                 fontFamily: FontFamily.regular,
               ),
               children: [
-                TextSpan(
+                const TextSpan(
                   text: 'Already a member? Log-in ',
                   style: TextStyle(color: AppColors.blackColor),
                 ),
                 TextSpan(
                   text: 'here.',
-                  style: TextStyle(color: AppColors.orangeColor),
+                  style: const TextStyle(color: AppColors.orangeColor),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       Get.to(
-                        SendOtpScreen(),
+                        const SendOtpScreen(),
                         transition: Transition.rightToLeft,
-                        duration: Duration(milliseconds: 250),
+                        duration: const Duration(milliseconds: 250),
                       );
                     },
                 ),
@@ -912,10 +924,11 @@ class _RegisterscreenState extends State<Registerscreen> {
 
   checkEmailApi() {
     if (_formKey.currentState!.validate()) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isLoading = true;
         });
+      }
 
       checkInternet().then((internet) async {
         if (internet) {
@@ -927,10 +940,11 @@ class _RegisterscreenState extends State<Registerscreen> {
               if (checkEmail?.customers?.length == 0) {
                 checkPhoneApi();
               } else {
-                if (mounted)
+                if (mounted) {
                   setState(() {
                     isLoading = false;
                   });
+                }
                 showCustomErrorSnackbar(
                   title: 'Email Address',
                   message:
@@ -938,49 +952,55 @@ class _RegisterscreenState extends State<Registerscreen> {
                 );
               }
             } else if (response.statusCode == 422) {
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             } else {
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             }
           }).catchError((error) {
             showCustomErrorSnackbar(
               title: 'Login Error',
-              message: '${error.toString()}',
+              message: error.toString(),
             );
             log("error=====>>>>${error.toString()}");
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           });
         } else {
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
           buildErrorDialog(context, 'Error', "Internet Required");
         }
       });
     } else {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isLoading = false;
         });
+      }
     }
   }
 
   checkPhoneApi() {
     if (_formKey.currentState!.validate()) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isLoading = true;
         });
+      }
 
       checkInternet().then((internet) async {
         if (internet) {
@@ -992,10 +1012,11 @@ class _RegisterscreenState extends State<Registerscreen> {
               if (checkEmail?.customers?.length == 0) {
                 signUpApi();
               } else {
-                if (mounted)
+                if (mounted) {
                   setState(() {
                     isLoading = false;
                   });
+                }
                 showCustomErrorSnackbar(
                   title: 'Mobile Number',
                   message:
@@ -1003,40 +1024,45 @@ class _RegisterscreenState extends State<Registerscreen> {
                 );
               }
             } else if (response.statusCode == 422) {
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             } else {
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             }
           }).catchError((error) {
             showCustomErrorSnackbar(
               title: 'Login Error',
-              message: '${error.toString()}',
+              message: error.toString(),
             );
             log("error=====>>>>${error.toString()}");
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           });
         } else {
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
           buildErrorDialog(context, 'Error', "Internet Required");
         }
       });
     } else {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isLoading = false;
         });
+      }
     }
   }
 
@@ -1061,19 +1087,21 @@ class _RegisterscreenState extends State<Registerscreen> {
             } else if (response.statusCode == 422) {
               showCustomErrorSnackbar(
                   title: "Register Error", message: register?.message ?? '');
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             } else {
               showCustomErrorSnackbar(
                 title: 'Register Error',
                 message: register?.message ?? '',
               );
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             }
           }).catchError((error) {
             showCustomErrorSnackbar(
@@ -1081,24 +1109,27 @@ class _RegisterscreenState extends State<Registerscreen> {
               message: error.toString(),
             );
             log("Error ========>>>>>>>>${error.toString()}");
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           });
         } else {
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
           buildErrorDialog(context, 'Error', "Internet Required");
         }
       });
     } else {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isLoading = false;
         });
+      }
     }
   }
 
@@ -1160,19 +1191,21 @@ class _RegisterscreenState extends State<Registerscreen> {
             } else if (response.statusCode == 422) {
               showCustomErrorSnackbar(
                   title: "Register Error", message: register?.message ?? '');
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             } else {
               showCustomErrorSnackbar(
                 title: 'Register Error',
                 message: register?.message ?? '',
               );
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isLoading = false;
                 });
+              }
             }
           }).catchError((error) {
             showCustomErrorSnackbar(
@@ -1180,24 +1213,27 @@ class _RegisterscreenState extends State<Registerscreen> {
               message: error.toString(),
             );
             log("Error ========>>>>>>>>${error.toString()}");
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           });
         } else {
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
           buildErrorDialog(context, 'Error', "Internet Required");
         }
       });
     } else {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isLoading = false;
         });
+      }
     }
   }
 
@@ -1224,33 +1260,36 @@ class _RegisterscreenState extends State<Registerscreen> {
           createSubscription =
               CreateSubscriptionModal.fromJson(json.decode(response.body));
           if (response.statusCode == 201) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
             Get.to(
               VerifyPaymentScreen(
                 paymentLink: createSubscription?.hostedpage?.url ?? '',
               ),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Register Error", message: register?.message ?? '');
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           } else {
             showCustomErrorSnackbar(
               title: 'Register Error',
               message: register?.message ?? '',
             );
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           }
         }).catchError((error) {
           showCustomErrorSnackbar(
@@ -1258,16 +1297,18 @@ class _RegisterscreenState extends State<Registerscreen> {
             message: error.toString(),
           );
           log("Error ========>>>>>>>>${error.toString()}");
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
         });
       } else {
-        if (mounted)
+        if (mounted) {
           setState(() {
             isLoading = false;
           });
+        }
         buildErrorDialog(context, 'Error', "Internet Required");
       }
     });
@@ -1279,7 +1320,7 @@ class _RegisterscreenState extends State<Registerscreen> {
         Signupprovider().fetchCountriesApi().then((response) async {
           countries = CountriesModal.fromJson(json.decode(response.body));
           if (response.statusCode == 200) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 countriesList = countries?.data ?? [];
                 allCountries =
@@ -1291,33 +1332,38 @@ class _RegisterscreenState extends State<Registerscreen> {
 
                 filteredCountries = List.from(allCountries);
               });
+            }
           } else if (response.statusCode == 422) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           } else {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           }
         }).catchError((error) {
           showCustomErrorSnackbar(
             title: 'Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}");
-          if (mounted) if (mounted)
+          if (mounted) if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
         });
       } else {
-        if (mounted)
+        if (mounted) {
           setState(() {
             isLoading = false;
           });
+        }
         buildErrorDialog(context, 'Error', "Internet Required");
       }
     });
@@ -1360,7 +1406,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             elevation: 4,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              constraints: BoxConstraints(maxHeight: 350),
+              constraints: const BoxConstraints(maxHeight: 350),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -1372,12 +1418,12 @@ class _RegisterscreenState extends State<Registerscreen> {
                   TextField(
                     controller: _citySearchController,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       hintText: 'Search City',
                       fillColor: AppColors.whiteColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3.w),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 1.5,
                           style: BorderStyle.solid,
                           color: AppColors.border,
@@ -1395,7 +1441,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3.w),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 1.5,
                           style: BorderStyle.solid,
                           color: AppColors.border,
@@ -1403,7 +1449,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3.w),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 1.5,
                           style: BorderStyle.solid,
                           color: AppColors.blackColor,
@@ -1434,10 +1480,11 @@ class _RegisterscreenState extends State<Registerscreen> {
                         return ListTile(
                           title: Text(filteredCities[index]),
                           onTap: () {
-                            if (mounted)
+                            if (mounted) {
                               setState(() {
                                 _city.text = filteredCities[index];
                               });
+                            }
                             _removeCityOverlay();
                           },
                         );
@@ -1476,7 +1523,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             elevation: 4,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              constraints: BoxConstraints(maxHeight: 400),
+              constraints: const BoxConstraints(maxHeight: 400),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -1488,12 +1535,12 @@ class _RegisterscreenState extends State<Registerscreen> {
                   TextField(
                     controller: searchController,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       fillColor: AppColors.whiteColor,
                       hintText: 'Search Country',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3.w),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 1.5,
                           style: BorderStyle.solid,
                           color: AppColors.border,
@@ -1511,7 +1558,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3.w),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 1.5,
                           style: BorderStyle.solid,
                           color: AppColors.border,
@@ -1519,7 +1566,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3.w),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 1.5,
                           style: BorderStyle.solid,
                           color: AppColors.blackColor,
@@ -1552,12 +1599,13 @@ class _RegisterscreenState extends State<Registerscreen> {
                         return ListTile(
                           title: Text(filteredCountries[index]),
                           onTap: () {
-                            if (mounted)
+                            if (mounted) {
                               setState(() {
                                 selectedCountry = filteredCountries[index];
                                 getCitiesFromSelectedCountry(
                                     selectedCountry ?? '');
                               });
+                            }
                             _removeOverlay();
                           },
                         );
@@ -1581,44 +1629,49 @@ class _RegisterscreenState extends State<Registerscreen> {
         LoginProvider().refreshTokenApi().then((response) async {
           authtoken = AuthtokenModal.fromJson(json.decode(response.body));
           if (response.statusCode == 200) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
             SaveAuthtokenData.saveAuthData(authtoken!);
             getPlansApi();
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Token Error", message: sendOtp?.message ?? '');
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           } else {
             showCustomErrorSnackbar(
               title: 'Token Error',
               message: 'Internal Server Error',
             );
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           }
         }).catchError((error) {
           showCustomErrorSnackbar(
             title: 'Token Error',
             message: 'Internal Server Error',
           );
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
         });
       } else {
-        if (mounted)
+        if (mounted) {
           setState(() {
             isLoading = false;
           });
+        }
         buildErrorDialog(context, 'Error', "Internet Required");
       }
     });
@@ -1642,17 +1695,19 @@ class _RegisterscreenState extends State<Registerscreen> {
         Signupprovider().fetchPlansApi().then((response) async {
           allPlans = AllPlansModal.fromJson(json.decode(response.body));
           if (response.statusCode == 200) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 plansList = allPlans?.plans ?? [];
                 isLoading = false;
                 getCountriesApi();
               });
+            }
           } else if (response.statusCode == 422) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isLoading = false;
               });
+            }
           } else {
             setState(() {
               isLoading = false;
@@ -1670,16 +1725,18 @@ class _RegisterscreenState extends State<Registerscreen> {
             return;
           }
 
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
         });
       } else {
-        if (mounted)
+        if (mounted) {
           setState(() {
             isLoading = false;
           });
+        }
         buildErrorDialog(context, 'Error', "Internet Required");
       }
     });

@@ -8,18 +8,18 @@ class CheckIdModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     count = json['count'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['count'] = this.count;
+    data['count'] = count;
     return data;
   }
 }
@@ -36,9 +36,9 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['id'] = this.id;
+    data['id'] = id;
 
     return data;
   }
@@ -59,10 +59,10 @@ class CustomerHappiness {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['badPercentage'] = this.badPercentage;
-    data['okPercentage'] = this.okPercentage;
-    data['goodPercentage'] = this.goodPercentage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['badPercentage'] = badPercentage;
+    data['okPercentage'] = okPercentage;
+    data['goodPercentage'] = goodPercentage;
     return data;
   }
 }
@@ -93,13 +93,13 @@ class Owner {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['photoURL'] = this.photoURL;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['emailId'] = this.emailId;
-    data['id'] = this.id;
-    data['zuid'] = this.zuid;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['photoURL'] = photoURL;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['emailId'] = emailId;
+    data['id'] = id;
+    data['zuid'] = zuid;
     return data;
   }
 }

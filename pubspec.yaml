@@ -55,11 +55,11 @@ dependencies:
   salesiq_mobilisten: ^6.0.0
   auto_size_text:
   firebase_core: 
-  firebase_messaging: 
-  awesome_notifications: 
+  firebase_messaging:
   googleapis: 
-  googleapis_auth: 
-  image_picker: 
+  googleapis_auth:
+  image_picker:
+  flutter_local_notifications:
 
 
 dev_dependencies:

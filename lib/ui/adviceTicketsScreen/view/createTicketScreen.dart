@@ -38,8 +38,8 @@ class CreateTicketScreen extends StatefulWidget {
 }
 
 class _CreateTicketScreenState extends State<CreateTicketScreen> {
-  TextEditingController _subjectController = TextEditingController();
-  TextEditingController _bodyController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _bodyController = TextEditingController();
   List<AllDeparmentModal.Data> customerList = [];
   String? selectedCustomer;
   final List<SupportDepartment> departments = [
@@ -97,7 +97,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
   bool isAdding = false;
   final ImagePicker _picker = ImagePicker();
 
-  List<PlatformFile> _pickedFiles = [];
+  final List<PlatformFile> _pickedFiles = [];
 
   Future<void> _pickFiles() async {
     showModalBottomSheet(
@@ -109,39 +109,36 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(null),
+                  const SizedBox(width: 24), // instead of Icon(null)
                   Text(
                     "Choose an Option",
                     style: TextStyle(
-                        fontFamily: FontFamily.bold,
-                        color: AppColors.bgColor,
-                        fontSize: 17.sp),
+                      fontFamily: FontFamily.bold,
+                      color: AppColors.bgColor,
+                      fontSize: 17.sp,
+                    ),
                   ),
                   InkWell(
                     onTap: () {
                       Get.back();
                     },
-                    child: Icon(Icons.close, color: AppColors.bgColor),
+                    child: const Icon(Icons.close, color: AppColors.bgColor),
                   ).paddingOnly(right: 4.w)
                 ],
               ).paddingOnly(top: 1.5.h),
               ListTile(
-                leading:
-                    Icon(Icons.insert_drive_file, color: AppColors.bgColor),
-                title: Text("Pick a File"),
+                leading: const Icon(Icons.insert_drive_file,
+                    color: AppColors.bgColor),
+                title: const Text("Pick a File"),
                 onTap: () async {
                   Navigator.pop(context);
+
+                  /// Only **documents**, not images/videos
                   FilePickerResult? result =
                       await FilePicker.platform.pickFiles(
                     type: FileType.custom,
                     allowMultiple: true,
                     allowedExtensions: [
-                      'jpg',
-                      'jpeg',
-                      'png',
-                      'mp4',
-                      'mov',
-                      'avi',
                       'pdf',
                       'doc',
                       'docx',
@@ -156,8 +153,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo, color: AppColors.bgColor),
-                title: Text("Pick Image (Gallery)"),
+                leading: const Icon(Icons.photo, color: AppColors.bgColor),
+                title: const Text("Pick Image (Gallery)"),
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? picked = await _picker.pickImage(
@@ -177,8 +174,9 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.video_library, color: AppColors.bgColor),
-                title: Text("Pick Video (Gallery)"),
+                leading:
+                    const Icon(Icons.video_library, color: AppColors.bgColor),
+                title: const Text("Pick Video (Gallery)"),
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? video = await _picker.pickVideo(
@@ -198,8 +196,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.camera_alt, color: AppColors.bgColor),
-                title: Text("Open Camera"),
+                leading: const Icon(Icons.camera_alt, color: AppColors.bgColor),
+                title: const Text("Open Camera"),
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? photo = await _picker.pickImage(
@@ -219,8 +217,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.videocam, color: AppColors.bgColor),
-                title: Text("Record Video"),
+                leading: const Icon(Icons.videocam, color: AppColors.bgColor),
+                title: const Text("Record Video"),
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? video = await _picker.pickVideo(
@@ -278,8 +276,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                       width: double.infinity,
-                      decoration:
-                          BoxDecoration(color: AppColors.alternativeBlueColor),
+                      decoration: const BoxDecoration(
+                          color: AppColors.alternativeBlueColor),
                       child: Column(
                         children: [
                           SizedBox(height: 5.h),
@@ -304,7 +302,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                   fontSize: 19.sp,
                                 ),
                               ),
-                              Icon(null),
+                              const Icon(null),
                             ],
                           ),
                         ],
@@ -327,7 +325,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                         horizontal: 4.w, vertical: 1.h),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(25),
-                                        color: Color(0xffE9E7E7)),
+                                        color: const Color(0xffE9E7E7)),
                                     child: Column(
                                       children: [
                                         Row(
@@ -428,7 +426,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                               },
                                               child: Icon(
                                                 Icons.filter_alt,
-                                                color: Color(0xff545454),
+                                                color: const Color(0xff545454),
                                                 size: 25.sp,
                                               ),
                                             ),
@@ -436,13 +434,13 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                               Imgs.namedLogo,
                                               scale: 4.5,
                                             ),
-                                            Icon(null),
+                                            const Icon(null),
                                           ],
                                         ),
                                         SizedBox(
                                           height: 1.h,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           thickness: 0.5,
                                           color: AppColors.blackColor,
                                         ),
@@ -480,7 +478,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                           },
                                           textInputType: TextInputType.text,
                                           suffix: IconButton(
-                                            icon: Icon(Icons.attach_file,
+                                            icon: const Icon(Icons.attach_file,
                                                 color: AppColors.bgColor),
                                             onPressed: _pickFiles,
                                           ),
@@ -527,12 +525,12 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                         file.extension ==
                                                             'mov' ||
                                                         file.extension == 'avi')
-                                                      Icon(Icons.videocam,
+                                                      const Icon(Icons.videocam,
                                                           color:
                                                               AppColors.bgColor,
                                                           size: 40)
                                                     else
-                                                      Icon(
+                                                      const Icon(
                                                           Icons
                                                               .insert_drive_file,
                                                           color:
@@ -559,7 +557,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
 
                                                     // Delete Button
                                                     IconButton(
-                                                      icon: Icon(Icons.delete,
+                                                      icon: const Icon(
+                                                          Icons.delete,
                                                           color: Colors.red),
                                                       onPressed: () =>
                                                           _removeFile(index),
@@ -610,7 +609,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                     CupertinoIcons.chevron_down,
                                                     size: 16.sp,
                                                   ),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: AppColors.bgColor),
                                                   value: selectedCustomer,
                                                   items: customerList
@@ -640,7 +639,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                     }
                                                     return null;
                                                   },
-                                                  decoration: InputDecoration(
+                                                  decoration:
+                                                      const InputDecoration(
                                                     border: InputBorder.none,
                                                     // No underline
                                                     contentPadding:
@@ -906,7 +906,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
           message: 'Ticket created successfully!',
         );
         Get.offAll(
-          adviceTicketsScreen(),
+          const adviceTicketsScreen(),
           transition: Transition.rightToLeft,
           duration: const Duration(milliseconds: 250),
         );

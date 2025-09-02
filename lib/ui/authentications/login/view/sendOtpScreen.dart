@@ -29,8 +29,8 @@ class SendOtpScreen extends StatefulWidget {
 }
 
 class _SendOtpScreenState extends State<SendOtpScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneCnotroller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneCnotroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   String _countryCode = '';
@@ -41,7 +41,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
       backgroundColor: AppColors.bgColor,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: Device.height,
             width: Device.width,
             child: Stack(
@@ -92,7 +92,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                           color: AppColors.blackColor,
                           width: 7,
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50),
                         ),
@@ -114,7 +114,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                 ),
                               ),
                               SizedBox(height: 3.h),
-                              Center(
+                              const Center(
                                 child: TabBar(
                                   labelColor: AppColors.blackColor,
                                   unselectedLabelColor: AppColors.border,
@@ -140,16 +140,20 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                           text: 'Email Address',
                                           isTextavailable: true,
                                           validator: (value) {
-                                            if (value == null || value.isEmpty)
+                                            if (value == null ||
+                                                value.isEmpty) {
                                               return 'Please enter email';
+                                            }
                                             if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                                .hasMatch(value))
+                                                .hasMatch(value)) {
                                               return 'Enter valid email';
+                                            }
                                             return null;
                                           },
                                           textInputType:
                                               TextInputType.emailAddress,
-                                          prefix: Icon(Icons.email_outlined),
+                                          prefix:
+                                              const Icon(Icons.email_outlined),
                                         ),
                                         SizedBox(height: 3.h),
                                         InkWell(
@@ -194,7 +198,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 fontFamily: FontFamily.regular,
                                               ),
                                               children: [
-                                                TextSpan(
+                                                const TextSpan(
                                                   text: 'Create an account ',
                                                   style: TextStyle(
                                                       color:
@@ -202,19 +206,20 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 ),
                                                 TextSpan(
                                                   text: 'here.',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: AppColors
                                                           .orangeColor),
                                                   recognizer:
                                                       TapGestureRecognizer()
                                                         ..onTap = () => Get.to(
-                                                              Registerscreen(),
+                                                              const Registerscreen(),
                                                               transition:
                                                                   Transition
                                                                       .rightToLeft,
-                                                              duration: Duration(
-                                                                  milliseconds:
-                                                                      250),
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          250),
                                                             ),
                                                 ),
                                               ],
@@ -255,26 +260,28 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 child: IntlPhoneField(
                                                   controller: _phoneCnotroller,
                                                   decoration: InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                        borderSide:
-                                                            BorderSide.none),
+                                                    border:
+                                                        const OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide
+                                                                    .none),
                                                     disabledBorder:
-                                                        OutlineInputBorder(
+                                                        const OutlineInputBorder(
                                                             borderSide:
                                                                 BorderSide
                                                                     .none),
                                                     enabledBorder:
-                                                        OutlineInputBorder(
+                                                        const OutlineInputBorder(
                                                             borderSide:
                                                                 BorderSide
                                                                     .none),
                                                     errorBorder:
-                                                        OutlineInputBorder(
+                                                        const OutlineInputBorder(
                                                             borderSide:
                                                                 BorderSide
                                                                     .none),
                                                     focusedBorder:
-                                                        OutlineInputBorder(
+                                                        const OutlineInputBorder(
                                                             borderSide:
                                                                 BorderSide
                                                                     .none),
@@ -304,8 +311,9 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                   showCountryFlag: false,
                                                   dropdownIconPosition:
                                                       IconPosition.trailing,
-                                                  dropdownTextStyle: TextStyle(
-                                                      color: Colors.black),
+                                                  dropdownTextStyle:
+                                                      const TextStyle(
+                                                          color: Colors.black),
                                                 ),
                                               ),
                                             ],
@@ -354,7 +362,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 fontFamily: FontFamily.regular,
                                               ),
                                               children: [
-                                                TextSpan(
+                                                const TextSpan(
                                                   text: 'Create an account ',
                                                   style: TextStyle(
                                                       color:
@@ -362,19 +370,20 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 ),
                                                 TextSpan(
                                                   text: 'here.',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: AppColors
                                                           .orangeColor),
                                                   recognizer:
                                                       TapGestureRecognizer()
                                                         ..onTap = () => Get.to(
-                                                              Registerscreen(),
+                                                              const Registerscreen(),
                                                               transition:
                                                                   Transition
                                                                       .rightToLeft,
-                                                              duration: Duration(
-                                                                  milliseconds:
-                                                                      250),
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          250),
                                                             ),
                                                 ),
                                               ],
@@ -457,7 +466,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                   customerid: sendOtp?.customerId,
                 ),
                 transition: Transition.rightToLeft,
-                duration: Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 250),
               );
               showCustomSuccessSnackbar(
                 title: 'OTP Sent',
@@ -542,7 +551,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                   customerid: sendOtp?.customerId,
                 ),
                 transition: Transition.rightToLeft,
-                duration: Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 250),
               );
               showCustomSuccessSnackbar(
                 title: 'OTP Sent',

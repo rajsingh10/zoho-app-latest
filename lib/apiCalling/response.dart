@@ -25,14 +25,14 @@ responses(http.Response response) {
       throw UnauthorisedException(response.body.toString());
     case 404:
       throw UnauthorisedException(
-        "${response.body.toString()}",
+        response.body.toString(),
       );
     case 429:
       Get.snackbar(
         "Server Unavailable",
         "Server's are Unavailable Please Try Again Later",
         snackPosition: SnackPosition.TOP,
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

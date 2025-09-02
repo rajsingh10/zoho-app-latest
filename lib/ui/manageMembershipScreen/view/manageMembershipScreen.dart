@@ -41,6 +41,7 @@ class manageMembershipScreen extends StatefulWidget {
 }
 
 class _manageMembershipScreenState extends State<manageMembershipScreen> {
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -58,8 +59,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   width: double.infinity,
-                  decoration:
-                      BoxDecoration(color: AppColors.alternativeBlueColor),
+                  decoration: const BoxDecoration(
+                      color: AppColors.alternativeBlueColor),
                   child: Column(
                     children: [
                       SizedBox(height: 5.h),
@@ -97,7 +98,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                 horizontal: 6.w, vertical: 1.h),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                color: Color(0xffE9E7E7)),
+                                color: const Color(0xffE9E7E7)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -208,11 +209,11 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                         ? Container()
                                         : InkWell(
                                             onTap: () => Get.to(
-                                              membershipPageScreen(),
+                                              const membershipPageScreen(),
                                               transition:
                                                   Transition.rightToLeft,
-                                              duration:
-                                                  Duration(milliseconds: 250),
+                                              duration: const Duration(
+                                                  milliseconds: 250),
                                             ),
                                             child: Container(
                                               padding: EdgeInsets.symmetric(
@@ -386,7 +387,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    amzAdviceFindOutMoreScreen());
+                                                    const amzAdviceFindOutMoreScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -396,7 +397,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    color: Color(0xfff2811b)),
+                                                    color: const Color(
+                                                        0xfff2811b)),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -431,7 +433,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    marketingAgencyFindOutMorePageScreen());
+                                                    const marketingAgencyFindOutMorePageScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -441,7 +443,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    color: Color(0xff2070af)),
+                                                    color: const Color(
+                                                        0xff2070af)),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -480,7 +483,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                         InkWell(
                                           onTap: () {
                                             Get.to(
-                                                amzAgencyFindOutMoreScreen());
+                                                const amzAgencyFindOutMoreScreen());
                                           },
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
@@ -530,7 +533,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    JustAskAlexFindOutMorePageScreen());
+                                                    const JustAskAlexFindOutMorePageScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -540,7 +543,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    color: Color(0xff2070af)),
+                                                    color: const Color(
+                                                        0xff2070af)),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -575,7 +579,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             InkWell(
                                               onTap: () {
                                                 Get.to(
-                                                    IntroducersFindOutMorePageScreen());
+                                                    const IntroducersFindOutMorePageScreen());
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -585,7 +589,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    color: Color(0xff8ebcd9)),
+                                                    color: const Color(
+                                                        0xff8ebcd9)),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -712,9 +717,9 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
         }).catchError((error, stackTrace) {
           showCustomErrorSnackbar(
             title: 'Login Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
-          log("error=====>>>>${stackTrace}");
+          log("error=====>>>>$stackTrace");
           setState(() {
             isLoading = false;
           });
@@ -762,7 +767,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                 paymentLink: createSubscription?.hostedpage?.url ?? '',
               ),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
@@ -821,7 +826,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(null),
+                      const Icon(null),
                       Text(
                         "Purchase Membership",
                         style: TextStyle(
@@ -914,17 +919,17 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                               filled: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.border),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.border),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.blackColor),
                               ),
                               errorBorder: OutlineInputBorder(
@@ -1012,7 +1017,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
               title: 'Membership Resumed',
               message: 'Your membership has been successfully resumed.',
             );
-            Get.offAll(Homescreen());
+            Get.offAll(const Homescreen());
           } else if (response.statusCode == 422) {
             setState(() {
               isLoading = false;
@@ -1042,9 +1047,9 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
   }
 
   int selectedPauseOption = 1;
-  TextEditingController _reasonController = TextEditingController();
+  final TextEditingController _reasonController = TextEditingController();
   DateTime? selectedDate;
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -1171,7 +1176,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -1180,7 +1185,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                       subscriptionResumeApi();
                     }
                   },
-                  child: Text('Done'),
+                  child: const Text('Done'),
                 ),
               ],
             );

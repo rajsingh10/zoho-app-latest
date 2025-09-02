@@ -25,7 +25,8 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.alternativeBlueColor),
+            decoration:
+                const BoxDecoration(color: AppColors.alternativeBlueColor),
             child: Column(
               children: [
                 SizedBox(
@@ -48,7 +49,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null)
+                    const Icon(null)
                   ],
                 ),
               ],
@@ -109,7 +110,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                       color: AppColors.blackColor,
                     ),
@@ -144,7 +145,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                       color: AppColors.blackColor,
                     ),
@@ -179,7 +180,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                       color: AppColors.blackColor,
                     ),
@@ -214,7 +215,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                       color: AppColors.blackColor,
                     ),
@@ -249,7 +250,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                       color: AppColors.blackColor,
                     ),
@@ -284,7 +285,7 @@ class _FormsApprovalScreenState extends State<FormsApprovalScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                       color: AppColors.blackColor,
                     ),

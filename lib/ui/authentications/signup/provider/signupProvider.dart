@@ -13,10 +13,10 @@ import '../../../homeScreen/provider/homeProvider.dart';
 class Signupprovider extends ChangeNotifier {
   Future<http.Response> checkEmailApi(String email) async {
     String url =
-        "https://www.zohoapis.eu/subscriptions/v1/customers?email=${email}";
+        "https://www.zohoapis.eu/subscriptions/v1/customers?email=$email";
     print(url);
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
+    log('Api Header Data = $headers');
     var responseJson;
     final response = await http
         .get(
@@ -36,10 +36,10 @@ class Signupprovider extends ChangeNotifier {
 
   Future<http.Response> checkPhoneApi(String phone) async {
     String url =
-        "https://www.zohoapis.eu/subscriptions/v1/customers?phone=${phone}";
+        "https://www.zohoapis.eu/subscriptions/v1/customers?phone=$phone";
     print(url);
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
+    log('Api Header Data = $headers');
     var responseJson;
     final response = await http
         .get(
@@ -270,7 +270,7 @@ class Signupprovider extends ChangeNotifier {
     String url = apiEndpoints.plansApi;
     print(url);
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
+    log('Api Header Data = $headers');
     var responseJson;
     final response = await http
         .get(

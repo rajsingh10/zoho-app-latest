@@ -223,7 +223,7 @@ class _membershipFindOutMorePageScreenState
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                 width: Device.width,
-                decoration: BoxDecoration(color: AppColors.orangeColor),
+                decoration: const BoxDecoration(color: AppColors.orangeColor),
                 child: Column(
                   children: [
                     SizedBox(
@@ -246,7 +246,7 @@ class _membershipFindOutMorePageScreenState
                           scale: 5.5,
                           color: AppColors.whiteColor,
                         ),
-                        Icon(null),
+                        const Icon(null),
                       ],
                     ),
                   ],
@@ -268,7 +268,7 @@ class _membershipFindOutMorePageScreenState
                                   horizontal: 2.w, vertical: 4.h),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Color(0xff232f3f)),
+                                  color: const Color(0xff232f3f)),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -291,7 +291,7 @@ class _membershipFindOutMorePageScreenState
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            gradient: LinearGradient(
+                                            gradient: const LinearGradient(
                                               colors: [
                                                 Color(0xFF00B4DB),
                                                 Color(0xFF38EF7D)
@@ -374,7 +374,7 @@ class _membershipFindOutMorePageScreenState
                                 "Unlock the Power of Ai in Your Digital Marketing Strategy",
                                 style: TextStyle(
                                     fontSize: 14.5.sp,
-                                    color: Color(0xff594faf),
+                                    color: const Color(0xff594faf),
                                     fontWeight: FontWeight.bold,
                                     fontFamily: FontFamily.bold),
                               ),
@@ -399,7 +399,7 @@ class _membershipFindOutMorePageScreenState
                                   "Ai isn't just for tech giants-it's a powerful tool that all businesses can use to work smarter.Form automating repetitive tasks to predicting customer behaviour, AI can help you make better marketing decisions,faster...",
                                   style: TextStyle(
                                       fontSize: 14.sp,
-                                      color: Color(0xff0b3a51),
+                                      color: const Color(0xff0b3a51),
                                       fontWeight: FontWeight.bold,
                                       fontFamily: FontFamily.regular),
                                 ),
@@ -416,7 +416,7 @@ class _membershipFindOutMorePageScreenState
                               margin: EdgeInsets.symmetric(horizontal: 2.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xffe9e7e7),
+                                color: const Color(0xffe9e7e7),
                               ),
                               child: Column(
                                 children: [
@@ -427,7 +427,7 @@ class _membershipFindOutMorePageScreenState
                                         "Work with a professional Marketing",
                                         style: TextStyle(
                                             fontSize: 17.sp,
-                                            color: Color(0xff0b3a51),
+                                            color: const Color(0xff0b3a51),
                                             fontWeight: FontWeight.bold,
                                             fontFamily: FontFamily.regular),
                                       ),
@@ -440,7 +440,7 @@ class _membershipFindOutMorePageScreenState
                                         "Consultant and grow your business",
                                         style: TextStyle(
                                             fontSize: 17.sp,
-                                            color: Color(0xff0b3a51),
+                                            color: const Color(0xff0b3a51),
                                             fontWeight: FontWeight.bold,
                                             fontFamily: FontFamily.regular),
                                       ),
@@ -453,7 +453,7 @@ class _membershipFindOutMorePageScreenState
                                         "for just £47+VAT a month.",
                                         style: TextStyle(
                                             fontSize: 17.sp,
-                                            color: Color(0xff0b3a51),
+                                            color: const Color(0xff0b3a51),
                                             fontWeight: FontWeight.bold,
                                             fontFamily: FontFamily.regular),
                                       ),
@@ -480,7 +480,7 @@ class _membershipFindOutMorePageScreenState
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Color(0xffe9e7e7),
+                                    color: const Color(0xffe9e7e7),
                                   ),
                                   child: Column(
                                     children: [
@@ -518,7 +518,7 @@ class _membershipFindOutMorePageScreenState
                               padding: EdgeInsets.symmetric(
                                   horizontal: 1.w, vertical: 1.h),
                               width: Device.width,
-                              color: Color(0xff63A9D6),
+                              color: const Color(0xff63A9D6),
                               child: Wrap(
                                 spacing: 2.w,
                                 runSpacing: 1.h,
@@ -536,7 +536,7 @@ class _membershipFindOutMorePageScreenState
                                         children: [
                                           Icon(
                                             card.icon,
-                                            color: Color(0xff01A44E),
+                                            color: const Color(0xff01A44E),
                                             size: 18.sp,
                                           ),
                                           SizedBox(
@@ -547,7 +547,7 @@ class _membershipFindOutMorePageScreenState
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 15.sp,
-                                              color: Color(0xff3c4576),
+                                              color: const Color(0xff3c4576),
                                               fontWeight: FontWeight.normal,
                                               fontFamily: FontFamily.regular,
                                             ),
@@ -562,7 +562,7 @@ class _membershipFindOutMorePageScreenState
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: 13.sp,
-                                                color: Color(0xff3c4576),
+                                                color: const Color(0xff3c4576),
                                                 fontWeight: FontWeight.normal,
                                                 fontFamily: FontFamily.regular,
                                               ),
@@ -593,7 +593,7 @@ class _membershipFindOutMorePageScreenState
                                 ),
                               ],
                             ),
-                            Container(
+                            SizedBox(
                               height: 20.h,
                               child: Stack(
                                 children: [
@@ -616,7 +616,8 @@ class _membershipFindOutMorePageScreenState
                                               width: 42.w,
                                               margin: EdgeInsets.all(10.sp),
                                               decoration: BoxDecoration(
-                                                  color: Color(0xffe9e7e7),
+                                                  color:
+                                                      const Color(0xffe9e7e7),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
@@ -692,7 +693,7 @@ class _membershipFindOutMorePageScreenState
                               margin: EdgeInsets.symmetric(horizontal: 2.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xffe9e7e7),
+                                color: const Color(0xffe9e7e7),
                               ),
                               child: Stack(
                                 children: [
@@ -843,7 +844,7 @@ class _membershipFindOutMorePageScreenState
                                         width: Device.width,
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 2.w),
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                             color: Color(0xff232f3f)),
                                       ),
                                     ],
@@ -1211,7 +1212,7 @@ class _membershipFindOutMorePageScreenState
                                                 scale: 30),
                                           ),
                                         ),
-                                        SizedBox(width: 8),
+                                        const SizedBox(width: 8),
 
                                         // Horizontal Plans List
                                         Expanded(
@@ -1237,11 +1238,12 @@ class _membershipFindOutMorePageScreenState
                                                                 .size
                                                                 .width *
                                                             .65,
-                                                        margin: EdgeInsets
+                                                        margin: const EdgeInsets
                                                             .symmetric(
-                                                                horizontal: 8),
+                                                            horizontal: 8),
                                                         padding:
-                                                            EdgeInsets.all(16),
+                                                            const EdgeInsets
+                                                                .all(16),
                                                         decoration:
                                                             BoxDecoration(
                                                           color: Colors.white,
@@ -1334,11 +1336,11 @@ class _membershipFindOutMorePageScreenState
                                                                   InkWell(
                                                                     onTap: () {
                                                                       Get.to(
-                                                                        joinTodayPageScreen(),
+                                                                        const joinTodayPageScreen(),
                                                                         transition:
                                                                             Transition.rightToLeft,
                                                                         duration:
-                                                                            Duration(milliseconds: 250),
+                                                                            const Duration(milliseconds: 250),
                                                                       );
                                                                     },
                                                                     child:
@@ -1373,7 +1375,7 @@ class _membershipFindOutMorePageScreenState
                                                               SizedBox(
                                                                 height: 1.h,
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                   height: 10),
                                                               ...List.generate(
                                                                   (plan["features"]
@@ -1382,14 +1384,14 @@ class _membershipFindOutMorePageScreenState
                                                                   (fIndex) {
                                                                 return Row(
                                                                   children: [
-                                                                    Icon(
+                                                                    const Icon(
                                                                         Icons
                                                                             .check,
                                                                         color: AppColors
                                                                             .blackColor,
                                                                         size:
                                                                             16),
-                                                                    SizedBox(
+                                                                    const SizedBox(
                                                                         width:
                                                                             4),
                                                                     Expanded(
@@ -1431,11 +1433,12 @@ class _membershipFindOutMorePageScreenState
                                                                 .size
                                                                 .width *
                                                             .65,
-                                                        margin: EdgeInsets
+                                                        margin: const EdgeInsets
                                                             .symmetric(
-                                                                horizontal: 8),
+                                                            horizontal: 8),
                                                         padding:
-                                                            EdgeInsets.all(16),
+                                                            const EdgeInsets
+                                                                .all(16),
                                                         decoration:
                                                             BoxDecoration(
                                                           color: Colors.white,
@@ -1528,11 +1531,11 @@ class _membershipFindOutMorePageScreenState
                                                                   InkWell(
                                                                     onTap: () {
                                                                       Get.to(
-                                                                        joinTodayPageScreen(),
+                                                                        const joinTodayPageScreen(),
                                                                         transition:
                                                                             Transition.rightToLeft,
                                                                         duration:
-                                                                            Duration(milliseconds: 250),
+                                                                            const Duration(milliseconds: 250),
                                                                       );
                                                                     },
                                                                     child:
@@ -1567,7 +1570,7 @@ class _membershipFindOutMorePageScreenState
                                                               SizedBox(
                                                                 height: 1.h,
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                   height: 10),
                                                               ...List.generate(
                                                                   (plan["features"]
@@ -1576,14 +1579,14 @@ class _membershipFindOutMorePageScreenState
                                                                   (fIndex) {
                                                                 return Row(
                                                                   children: [
-                                                                    Icon(
+                                                                    const Icon(
                                                                         Icons
                                                                             .check,
                                                                         color: AppColors
                                                                             .blackColor,
                                                                         size:
                                                                             16),
-                                                                    SizedBox(
+                                                                    const SizedBox(
                                                                         width:
                                                                             4),
                                                                     Expanded(
@@ -1612,7 +1615,7 @@ class _membershipFindOutMorePageScreenState
                                           ),
                                         ),
 
-                                        SizedBox(width: 8),
+                                        const SizedBox(width: 8),
 
                                         // Right fixed button
                                         InkWell(
@@ -1680,16 +1683,16 @@ class _membershipFindOutMorePageScreenState
             alignment: Alignment.bottomCenter,
             child: InkWell(
               onTap: () => Get.to(
-                Registerscreen(),
+                const Registerscreen(),
                 transition: Transition.rightToLeft,
-                duration: Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 250),
               ),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
                 margin: EdgeInsets.symmetric(vertical: 3.h),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Color(0xffffde59),
                       Color(0xfff1811b),

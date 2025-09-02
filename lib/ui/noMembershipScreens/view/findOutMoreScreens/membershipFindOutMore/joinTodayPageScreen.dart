@@ -22,7 +22,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -45,7 +45,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -70,7 +70,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff232f3f)),
+                            color: const Color(0xff232f3f)),
                         child: Row(
                           children: [
                             Image.asset(
@@ -102,7 +102,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xffe9e7e7)),
+                            color: const Color(0xffe9e7e7)),
                         child: Container(
                           width: Device.width,
                           alignment: Alignment.center,
@@ -160,7 +160,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 1.h),
                                 alignment: Alignment.center,
-                                color: Color(0xff232f3f),
+                                color: const Color(0xff232f3f),
                                 child: Text(
                                   "Here's Your Membership Package...",
                                   style: TextStyle(
@@ -178,7 +178,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                                 width: Device.width,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Color(0xfff6f9fb)),
+                                    color: const Color(0xfff6f9fb)),
                                 margin: EdgeInsets.symmetric(horizontal: 2.w),
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 2.w, vertical: 1.h),
@@ -197,7 +197,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                                       style: TextStyle(
                                         fontFamily: FontFamily.extraBold,
                                         fontWeight: FontWeight.bold,
-                                        color: Color(0XFF657482),
+                                        color: const Color(0XFF657482),
                                         fontSize: 17.sp,
                                       ),
                                     )
@@ -263,7 +263,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                                     SizedBox(
                                       height: 1.h,
                                     ),
-                                    Divider(
+                                    const Divider(
                                       color: Color(0xfffe7eef5),
                                       thickness: 1,
                                     ),
@@ -324,7 +324,7 @@ class _joinTodayPageScreenState extends State<joinTodayPageScreen> {
                                     SizedBox(
                                       height: 1.h,
                                     ),
-                                    Divider(
+                                    const Divider(
                                       color: Color(0xfffe7eef5),
                                       thickness: 1,
                                     ),

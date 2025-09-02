@@ -75,11 +75,12 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
   int daysRemaining = 0;
   bool isLoading = true;
   int selectedPauseOption = 1;
-  TextEditingController _reasonController = TextEditingController();
+  final TextEditingController _reasonController = TextEditingController();
   DateTime? selectedDate;
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   final GlobalKey<FormState> _pauseFormKey = GlobalKey<FormState>();
 
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -103,8 +104,8 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                       width: double.infinity,
-                      decoration:
-                          BoxDecoration(color: AppColors.alternativeBlueColor),
+                      decoration: const BoxDecoration(
+                          color: AppColors.alternativeBlueColor),
                       child: Column(
                         children: [
                           SizedBox(height: 5.h),
@@ -207,7 +208,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                               fontFamily: FontFamily.light,
                                               fontSize: 15.sp),
                                         ),
-                                        Divider(
+                                        const Divider(
                                           color: AppColors.bgColor,
                                           thickness: 0.5,
                                         ),
@@ -232,7 +233,8 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             90),
-                                                    color: Color(0xff2273bb)),
+                                                    color: const Color(
+                                                        0xff2273bb)),
                                                 child: Text(
                                                   "Upgrade Membership",
                                                   style: TextStyle(
@@ -263,7 +265,8 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             90),
-                                                    color: Color(0xff2273bb)),
+                                                    color: const Color(
+                                                        0xff2273bb)),
                                                 child: Text(
                                                   "Downgrade Membership",
                                                   style: TextStyle(
@@ -330,7 +333,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                       height: 35.w,
                                       width: 35.w,
                                       padding: EdgeInsets.all(11.sp),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: AppColors.whiteColor,
                                           shape: BoxShape.circle),
                                       child: Stack(
@@ -360,7 +363,12 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                                   totalAdviceTime) <
                                                           60
                                                       ? "${(totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime)}"
-                                                      : "${((totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime) / 60).toStringAsFixed(0)}",
+                                                      : ((totalAdviceTime -
+                                                                      totalSpentTime)
+                                                                  .clamp(0,
+                                                                      totalAdviceTime) /
+                                                              60)
+                                                          .toStringAsFixed(0),
                                                   style: TextStyle(
                                                     color: AppColors.bgColor,
                                                     fontWeight: FontWeight.bold,
@@ -416,7 +424,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                           Container(
                                             height: 3.5.w,
                                             width: 3.5.w,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: AppColors.bgColor),
                                           ),
@@ -455,7 +463,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(90),
-                                                color: Color(0xff2273bb)),
+                                                color: const Color(0xff2273bb)),
                                             child: Text(
                                               "Renew Membership",
                                               style: TextStyle(
@@ -518,7 +526,11 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                                 ?.isEmpty ??
                                                             true
                                                         ? "N/A"
-                                                        : '${subscriptionsDate?.subscriptions?[0].nextBillingAt ?? ""}',
+                                                        : subscriptionsDate
+                                                                ?.subscriptions?[
+                                                                    0]
+                                                                .nextBillingAt ??
+                                                            "",
                                                     style: TextStyle(
                                                         color:
                                                             AppColors.bgColor,
@@ -539,7 +551,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                                   ?.isEmpty ??
                                                               true
                                                           ? "N/A"
-                                                          : "${daysRemaining}",
+                                                          : "$daysRemaining",
                                                       style: TextStyle(
                                                           color: AppColors
                                                               .orangeColor,
@@ -578,9 +590,12 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                 Container(
                                                   height: 3.5.w,
                                                   width: 3.5.w,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: AppColors.bgColor),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: AppColors
+                                                              .bgColor),
                                                 ),
                                                 SizedBox(
                                                   width: 1.w,
@@ -642,7 +657,11 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                                 ?.isEmpty ??
                                                             true
                                                         ? "N/A"
-                                                        : '${subscriptionsDate?.subscriptions?[0].pauseDate ?? ""}',
+                                                        : subscriptionsDate
+                                                                ?.subscriptions?[
+                                                                    0]
+                                                                .pauseDate ??
+                                                            "",
                                                     style: TextStyle(
                                                         color:
                                                             AppColors.bgColor,
@@ -708,9 +727,12 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                 Container(
                                                   height: 3.5.w,
                                                   width: 3.5.w,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: AppColors.bgColor),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: AppColors
+                                                              .bgColor),
                                                 ),
                                                 SizedBox(
                                                   width: 1.w,
@@ -760,18 +782,18 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                           ),
                                           actions: [
                                             CupertinoDialogAction(
-                                              child: Text('No'),
+                                              child: const Text('No'),
                                               onPressed: () {
                                                 Get.back();
                                               },
                                             ),
                                             CupertinoDialogAction(
-                                              child: Text('Yes'),
                                               isDestructiveAction: true,
                                               onPressed: () {
                                                 Get.back();
                                                 stopPausingApi();
                                               },
+                                              child: const Text('Yes'),
                                             ),
                                           ],
                                         );
@@ -814,7 +836,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Get.to(BillsnPaymentsscreen());
+                                  Get.to(const BillsnPaymentsscreen());
                                 },
                                 child: Container(
                                   width: Device.width,
@@ -850,7 +872,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Get.offAll(adviceTicketsScreen());
+                                  Get.offAll(const adviceTicketsScreen());
                                 },
                                 child: Container(
                                   width: Device.width,
@@ -928,7 +950,8 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                 height: 1.h,
                               ),
                               cancelSubscriptionData
-                                  ? Center(child: CircularProgressIndicator())
+                                  ? const Center(
+                                      child: CircularProgressIndicator())
                                   : InkWell(
                                       onTap: () {
                                         if (daysRemaining < 7) {
@@ -954,18 +977,18 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                                 ),
                                                 actions: [
                                                   CupertinoDialogAction(
-                                                    child: Text('No'),
+                                                    child: const Text('No'),
                                                     onPressed: () {
                                                       Get.back();
                                                     },
                                                   ),
                                                   CupertinoDialogAction(
-                                                    child: Text('Yes'),
                                                     isDestructiveAction: true,
                                                     onPressed: () {
                                                       Get.back();
                                                       subscriptionCancelApi(); // Call your cancel API
                                                     },
+                                                    child: const Text('Yes'),
                                                   ),
                                                 ],
                                               );
@@ -1046,7 +1069,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             setState(() {
               isPlanChange = false;
             });
-            Get.offAll(Homescreen());
+            Get.offAll(const Homescreen());
             showCustomSuccessSnackbar(
                 title: 'Subscriptions',
                 message: cancelSubscription?.message ?? "");
@@ -1066,7 +1089,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Subscriptions cancel Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -1157,7 +1180,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Subscriptions Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -1198,9 +1221,9 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, stackTrace) {
           showCustomErrorSnackbar(
             title: 'Login Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
-          log("error=====>>>>${stackTrace}");
+          log("error=====>>>>$stackTrace");
           setState(() {
             isLoading = false;
           });
@@ -1245,7 +1268,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                 paymentLink: createSubscription?.hostedpage?.url ?? '',
               ),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
@@ -1312,7 +1335,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                 paymentLink: createSubscription?.hostedpage?.url ?? '',
               ),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
@@ -1384,7 +1407,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                 paymentLink: updateSubscription?.hostedpage?.url ?? '',
               ),
               transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
             );
           } else if (response.statusCode == 400) {
             updateSubscription?.message ==
@@ -1453,7 +1476,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             setState(() {
               isPlanChange = false;
             });
-            Get.offAll(Homescreen());
+            Get.offAll(const Homescreen());
             showCustomSuccessSnackbar(
               title: 'Membership Paused',
               message:
@@ -1475,7 +1498,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Subscriptions Pause Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -1533,7 +1556,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Subscriptions Pause Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -1580,7 +1603,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Subscriptions cancel Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -1630,7 +1653,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Subscriptions cancel Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -1669,7 +1692,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(null),
+                      const Icon(null),
                       Text(
                         fromButton == 'upgrade'
                             ? "Upgrade Membership"
@@ -1779,17 +1802,17 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                               filled: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.border),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.border),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3.w),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 1.5, color: AppColors.blackColor),
                               ),
                               errorBorder: OutlineInputBorder(
@@ -1960,7 +1983,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -1970,21 +1993,21 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(
-                            title: Text('Confirm Pause'),
-                            content: Text(
+                            title: const Text('Confirm Pause'),
+                            content: const Text(
                                 'Are you sure you want to pause your membership?'),
                             actions: [
                               CupertinoDialogAction(
-                                child: Text('No'),
+                                child: const Text('No'),
                                 onPressed: () => Get.back(),
                               ),
                               CupertinoDialogAction(
-                                child: Text('Yes'),
                                 isDestructiveAction: true,
                                 onPressed: () {
                                   Get.back();
                                   subscriptionPauseApi();
                                 },
+                                child: const Text('Yes'),
                               ),
                             ],
                           );
@@ -1992,7 +2015,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                       );
                     }
                   },
-                  child: Text('Done'),
+                  child: const Text('Done'),
                 ),
               ],
             );
@@ -2030,7 +2053,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          log("error=====>>>>${stackTrace}");
+          log("error=====>>>>$stackTrace");
           setState(() {
             isLoading = false;
           });

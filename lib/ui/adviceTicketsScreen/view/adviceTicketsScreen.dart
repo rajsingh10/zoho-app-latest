@@ -114,7 +114,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
     });
   }
 
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +126,8 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   width: double.infinity,
-                  decoration:
-                      BoxDecoration(color: AppColors.alternativeBlueColor),
+                  decoration: const BoxDecoration(
+                      color: AppColors.alternativeBlueColor),
                   child: Column(
                     children: [
                       SizedBox(height: 5.h),
@@ -138,7 +138,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                             onTap: () {
                               // Get.back();
                             },
-                            child: Icon(null),
+                            child: const Icon(null),
                           ),
                           Text(
                             "Advice Tickets",
@@ -149,7 +149,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                               fontSize: 19.sp,
                             ),
                           ),
-                          Icon(null),
+                          const Icon(null),
                         ],
                       ),
                     ],
@@ -190,7 +190,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                   horizontal: 4.w, vertical: 1.h),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Color(0xffE9E7E7)),
+                                  color: const Color(0xffE9E7E7)),
                               child: Column(
                                 children: [
                                   Row(
@@ -211,7 +211,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                                 child: StatefulBuilder(
                                                   builder:
                                                       (context, setStatePopup) {
-                                                    return Container(
+                                                    return SizedBox(
                                                       width: 60.w,
                                                       child: TextField(
                                                         controller:
@@ -236,12 +236,12 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                                                       ''); // or retain previous filter
                                                                   Get.back(); // close popup
                                                                 },
-                                                                child: Icon(
+                                                                child: const Icon(
                                                                     Icons
                                                                         .search,
                                                                     size: 20),
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                   width: 10),
                                                               // Clear icon
                                                               InkWell(
@@ -257,7 +257,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                                                       'All Time');
                                                                   Get.back(); // close popup
                                                                 },
-                                                                child: Icon(
+                                                                child: const Icon(
                                                                     Icons.close,
                                                                     size: 20),
                                                               ),
@@ -372,7 +372,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                         },
                                         child: Icon(
                                           Icons.filter_alt,
-                                          color: Color(0xff545454),
+                                          color: const Color(0xff545454),
                                           size: 25.sp,
                                         ),
                                       ),
@@ -380,13 +380,13 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                         Imgs.namedLogo,
                                         scale: 4.5,
                                       ),
-                                      Icon(null),
+                                      const Icon(null),
                                     ],
                                   ),
                                   SizedBox(
                                     height: 1.h,
                                   ),
-                                  Divider(
+                                  const Divider(
                                     thickness: 0.5,
                                     color: AppColors.blackColor,
                                   ),
@@ -445,7 +445,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                                               color: AppColors
                                                                   .bgColor),
                                                         ),
-                                                        child: Icon(
+                                                        child: const Icon(
                                                           CupertinoIcons
                                                               .doc_richtext,
                                                           color:
@@ -463,7 +463,10 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                                           SizedBox(
                                                             width: 60.w,
                                                             child: Text(
-                                                              '${filteredTicketList[i].subject ?? "N/A"}',
+                                                              filteredTicketList[
+                                                                          i]
+                                                                      .subject ??
+                                                                  "N/A",
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                       .bgColor,
@@ -527,25 +530,26 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                                         ),
                                         actions: [
                                           CupertinoDialogAction(
-                                            child: Text('Cancel'),
+                                            child: const Text('Cancel'),
                                             onPressed: () {
                                               Get.back(); // Dismiss dialog
                                             },
                                           ),
                                           CupertinoDialogAction(
-                                            child: Text('Upgrade'),
                                             isDestructiveAction: true,
                                             onPressed: () {
                                               Get.back();
-                                              Get.to(membershipPageScreen());
+                                              Get.to(
+                                                  const membershipPageScreen());
                                             },
+                                            child: const Text('Upgrade'),
                                           ),
                                         ],
                                       );
                                     },
                                   );
                                 } else {
-                                  Get.to(CreateTicketScreen());
+                                  Get.to(const CreateTicketScreen());
                                 }
                               },
                               child: Container(
@@ -594,7 +598,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
           builder: (context, scrollController) {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 2.w),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.whiteColor,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
@@ -604,7 +608,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                     width: Device.width,
                     padding:
                         EdgeInsets.symmetric(vertical: 4.h, horizontal: 3.w),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10)),
@@ -613,7 +617,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(null),
+                        const Icon(null),
                         Text(
                           "Chat With Support",
                           style: TextStyle(
@@ -626,7 +630,8 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                             onTap: () {
                               Get.back();
                             },
-                            child: Icon(Icons.close, color: Colors.white)),
+                            child:
+                                const Icon(Icons.close, color: Colors.white)),
                       ],
                     ),
                   ),
@@ -634,7 +639,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                   Expanded(
                     child: ListView(
                       controller: scrollController,
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       children: [
                         _chatBubble(
                           isUser: true,
@@ -673,19 +678,19 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                             child: Container(
                           margin: EdgeInsets.only(left: 10.w),
                           decoration: BoxDecoration(
-                            color: Color(0xffececec),
+                            color: const Color(0xffececec),
                             borderRadius:
                                 BorderRadius.circular(25), // Rounded border
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: TextField(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: const TextField(
                             decoration: InputDecoration(
                               hintText: "Type here to chat...",
                               border: InputBorder.none, // Remove underline
                             ),
                           ),
                         )),
-                        Icon(Icons.send, color: Colors.grey),
+                        const Icon(Icons.send, color: Colors.grey),
                       ],
                     ),
                   ),
@@ -696,10 +701,10 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                     width: Device.width,
                     padding:
                         EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.orangeColor,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(null),

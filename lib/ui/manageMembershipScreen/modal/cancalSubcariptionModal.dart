@@ -9,16 +9,16 @@ class CancelSubscriptionModal {
     code = json['code'];
     message = json['message'];
     subscription = json['subscription'] != null
-        ? new Subscription.fromJson(json['subscription'])
+        ? Subscription.fromJson(json['subscription'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.subscription != null) {
-      data['subscription'] = this.subscription!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (subscription != null) {
+      data['subscription'] = subscription!.toJson();
     }
     return data;
   }
@@ -260,10 +260,10 @@ class Subscription {
     if (json['line_items'] != null) {
       lineItems = <LineItems>[];
       json['line_items'].forEach((v) {
-        lineItems!.add(new LineItems.fromJson(v));
+        lineItems!.add(LineItems.fromJson(v));
       });
     }
-    plan = json['plan'] != null ? new Plan.fromJson(json['plan']) : null;
+    plan = json['plan'] != null ? Plan.fromJson(json['plan']) : null;
     discountTotal = json['discount_total'];
     discountPercent = json['discount_percent'];
     discount = json['discount'];
@@ -285,29 +285,28 @@ class Subscription {
     createdDate = json['created_date'];
     startDate = json['start_date'];
     customerId = json['customer_id'];
-    customer = json['customer'] != null
-        ? new Customer.fromJson(json['customer'])
-        : null;
+    customer =
+        json['customer'] != null ? Customer.fromJson(json['customer']) : null;
     invoiceNotes = json['invoice_notes'];
     reactivateDate = json['reactivate_date'];
     if (json['contactpersons'] != null) {
       contactpersons = <Contactpersons>[];
       json['contactpersons'].forEach((v) {
-        contactpersons!.add(new Contactpersons.fromJson(v));
+        contactpersons!.add(Contactpersons.fromJson(v));
       });
     }
     if (json['contact_persons_associated'] != null) {
       contactPersonsAssociated = <ContactPersonsAssociated>[];
       json['contact_persons_associated'].forEach((v) {
-        contactPersonsAssociated!.add(new ContactPersonsAssociated.fromJson(v));
+        contactPersonsAssociated!.add(ContactPersonsAssociated.fromJson(v));
       });
     }
-    card = json['card'] != null ? new Card.fromJson(json['card']) : null;
+    card = json['card'] != null ? Card.fromJson(json['card']) : null;
     allowPartialPayments = json['allow_partial_payments'];
     if (json['payment_gateways'] != null) {
       paymentGateways = <PaymentGateways>[];
       json['payment_gateways'].forEach((v) {
-        paymentGateways!.add(new PaymentGateways.fromJson(v));
+        paymentGateways!.add(PaymentGateways.fromJson(v));
       });
     }
     isAdvanceInvoicePresent = json['is_advance_invoice_present'];
@@ -321,114 +320,112 @@ class Subscription {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['subscription_id'] = this.subscriptionId;
-    data['name'] = this.name;
-    data['crm_owner_id'] = this.crmOwnerId;
-    data['zcrm_potential_id'] = this.zcrmPotentialId;
-    data['zcrm_potential_name'] = this.zcrmPotentialName;
-    data['subscription_number'] = this.subscriptionNumber;
-    data['is_metered_billing'] = this.isMeteredBilling;
-    data['status'] = this.status;
-    data['source'] = this.source;
-    data['sub_total'] = this.subTotal;
-    data['amount'] = this.amount;
-    data['created_at'] = this.createdAt;
-    data['activated_at'] = this.activatedAt;
-    data['current_term_starts_at'] = this.currentTermStartsAt;
-    data['current_term_ends_at'] = this.currentTermEndsAt;
-    data['last_billing_at'] = this.lastBillingAt;
-    data['cancelled_at'] = this.cancelledAt;
-    data['expires_at'] = this.expiresAt;
-    data['interval'] = this.interval;
-    data['interval_unit'] = this.intervalUnit;
-    data['shipping_interval'] = this.shippingInterval;
-    data['shipping_interval_unit'] = this.shippingIntervalUnit;
-    data['billing_mode'] = this.billingMode;
-    data['total_orders'] = this.totalOrders;
-    data['orders_created'] = this.ordersCreated;
-    data['orders_remaining'] = this.ordersRemaining;
-    data['last_shipment_at'] = this.lastShipmentAt;
-    data['last_shipment_day'] = this.lastShipmentDay;
-    data['auto_collect'] = this.autoCollect;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['reference_id'] = this.referenceId;
-    data['salesperson_id'] = this.salespersonId;
-    data['salesperson_name'] = this.salespersonName;
-    data['child_invoice_id'] = this.childInvoiceId;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['coupon_duration'] = this.couponDuration;
-    data['is_item_subscriptions'] = this.isItemSubscriptions;
-    data['trial_extended_count'] = this.trialExtendedCount;
-    data['end_of_term'] = this.endOfTerm;
-    data['remaining_billing_cycles'] = this.remainingBillingCycles;
-    data['product_id'] = this.productId;
-    data['product_name'] = this.productName;
-    data['pricebook_id'] = this.pricebookId;
-    data['channel_source'] = this.channelSource;
-    data['channel_reference_id'] = this.channelReferenceId;
-    data['cancel_reason'] = this.cancelReason;
-    data['can_prorate'] = this.canProrate;
-    data['can_invoice_prorated_amount'] = this.canInvoiceProratedAmount;
-    if (this.lineItems != null) {
-      data['line_items'] = this.lineItems!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['subscription_id'] = subscriptionId;
+    data['name'] = name;
+    data['crm_owner_id'] = crmOwnerId;
+    data['zcrm_potential_id'] = zcrmPotentialId;
+    data['zcrm_potential_name'] = zcrmPotentialName;
+    data['subscription_number'] = subscriptionNumber;
+    data['is_metered_billing'] = isMeteredBilling;
+    data['status'] = status;
+    data['source'] = source;
+    data['sub_total'] = subTotal;
+    data['amount'] = amount;
+    data['created_at'] = createdAt;
+    data['activated_at'] = activatedAt;
+    data['current_term_starts_at'] = currentTermStartsAt;
+    data['current_term_ends_at'] = currentTermEndsAt;
+    data['last_billing_at'] = lastBillingAt;
+    data['cancelled_at'] = cancelledAt;
+    data['expires_at'] = expiresAt;
+    data['interval'] = interval;
+    data['interval_unit'] = intervalUnit;
+    data['shipping_interval'] = shippingInterval;
+    data['shipping_interval_unit'] = shippingIntervalUnit;
+    data['billing_mode'] = billingMode;
+    data['total_orders'] = totalOrders;
+    data['orders_created'] = ordersCreated;
+    data['orders_remaining'] = ordersRemaining;
+    data['last_shipment_at'] = lastShipmentAt;
+    data['last_shipment_day'] = lastShipmentDay;
+    data['auto_collect'] = autoCollect;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['reference_id'] = referenceId;
+    data['salesperson_id'] = salespersonId;
+    data['salesperson_name'] = salespersonName;
+    data['child_invoice_id'] = childInvoiceId;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['coupon_duration'] = couponDuration;
+    data['is_item_subscriptions'] = isItemSubscriptions;
+    data['trial_extended_count'] = trialExtendedCount;
+    data['end_of_term'] = endOfTerm;
+    data['remaining_billing_cycles'] = remainingBillingCycles;
+    data['product_id'] = productId;
+    data['product_name'] = productName;
+    data['pricebook_id'] = pricebookId;
+    data['channel_source'] = channelSource;
+    data['channel_reference_id'] = channelReferenceId;
+    data['cancel_reason'] = cancelReason;
+    data['can_prorate'] = canProrate;
+    data['can_invoice_prorated_amount'] = canInvoiceProratedAmount;
+    if (lineItems != null) {
+      data['line_items'] = lineItems!.map((v) => v.toJson()).toList();
     }
-    if (this.plan != null) {
-      data['plan'] = this.plan!.toJson();
+    if (plan != null) {
+      data['plan'] = plan!.toJson();
     }
-    data['discount_total'] = this.discountTotal;
-    data['discount_percent'] = this.discountPercent;
-    data['discount'] = this.discount;
-    data['discount_applied_on_amount'] = this.discountAppliedOnAmount;
-    data['discount_type'] = this.discountType;
-    data['is_discount_before_tax'] = this.isDiscountBeforeTax;
-    data['bcy_discount_total'] = this.bcyDiscountTotal;
-    data['exchange_rate'] = this.exchangeRate;
-    data['is_inclusive_tax'] = this.isInclusiveTax;
-    data['tax_rounding'] = this.taxRounding;
-    data['roundoff_value'] = this.roundoffValue;
-    data['transaction_rounding_type'] = this.transactionRoundingType;
-    data['payment_terms'] = this.paymentTerms;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    data['template_id'] = this.templateId;
-    data['can_add_bank_account'] = this.canAddBankAccount;
-    data['created_by_id'] = this.createdById;
-    data['last_modified_by_id'] = this.lastModifiedById;
-    data['created_date'] = this.createdDate;
-    data['start_date'] = this.startDate;
-    data['customer_id'] = this.customerId;
-    if (this.customer != null) {
-      data['customer'] = this.customer!.toJson();
+    data['discount_total'] = discountTotal;
+    data['discount_percent'] = discountPercent;
+    data['discount'] = discount;
+    data['discount_applied_on_amount'] = discountAppliedOnAmount;
+    data['discount_type'] = discountType;
+    data['is_discount_before_tax'] = isDiscountBeforeTax;
+    data['bcy_discount_total'] = bcyDiscountTotal;
+    data['exchange_rate'] = exchangeRate;
+    data['is_inclusive_tax'] = isInclusiveTax;
+    data['tax_rounding'] = taxRounding;
+    data['roundoff_value'] = roundoffValue;
+    data['transaction_rounding_type'] = transactionRoundingType;
+    data['payment_terms'] = paymentTerms;
+    data['payment_terms_label'] = paymentTermsLabel;
+    data['template_id'] = templateId;
+    data['can_add_bank_account'] = canAddBankAccount;
+    data['created_by_id'] = createdById;
+    data['last_modified_by_id'] = lastModifiedById;
+    data['created_date'] = createdDate;
+    data['start_date'] = startDate;
+    data['customer_id'] = customerId;
+    if (customer != null) {
+      data['customer'] = customer!.toJson();
     }
-    data['invoice_notes'] = this.invoiceNotes;
-    data['reactivate_date'] = this.reactivateDate;
-    if (this.contactpersons != null) {
-      data['contactpersons'] =
-          this.contactpersons!.map((v) => v.toJson()).toList();
+    data['invoice_notes'] = invoiceNotes;
+    data['reactivate_date'] = reactivateDate;
+    if (contactpersons != null) {
+      data['contactpersons'] = contactpersons!.map((v) => v.toJson()).toList();
     }
-    if (this.contactPersonsAssociated != null) {
+    if (contactPersonsAssociated != null) {
       data['contact_persons_associated'] =
-          this.contactPersonsAssociated!.map((v) => v.toJson()).toList();
+          contactPersonsAssociated!.map((v) => v.toJson()).toList();
     }
-    if (this.card != null) {
-      data['card'] = this.card!.toJson();
+    if (card != null) {
+      data['card'] = card!.toJson();
     }
-    data['allow_partial_payments'] = this.allowPartialPayments;
-    if (this.paymentGateways != null) {
+    data['allow_partial_payments'] = allowPartialPayments;
+    if (paymentGateways != null) {
       data['payment_gateways'] =
-          this.paymentGateways!.map((v) => v.toJson()).toList();
+          paymentGateways!.map((v) => v.toJson()).toList();
     }
-    data['is_advance_invoice_present'] = this.isAdvanceInvoicePresent;
-    data['apply_changes_on'] = this.applyChangesOn;
-    data['is_scheduled_update'] = this.isScheduledUpdate;
-    data['allow_in_term_reactivation'] = this.allowInTermReactivation;
-    data['last_child_inv_balance'] = this.lastChildInvBalance;
-    data['last_child_inv_status'] = this.lastChildInvStatus;
-    data['is_in_term_reactivation_scheduled'] =
-        this.isInTermReactivationScheduled;
-    data['max_date_for_in_term'] = this.maxDateForInTerm;
+    data['is_advance_invoice_present'] = isAdvanceInvoicePresent;
+    data['apply_changes_on'] = applyChangesOn;
+    data['is_scheduled_update'] = isScheduledUpdate;
+    data['allow_in_term_reactivation'] = allowInTermReactivation;
+    data['last_child_inv_balance'] = lastChildInvBalance;
+    data['last_child_inv_status'] = lastChildInvStatus;
+    data['is_in_term_reactivation_scheduled'] = isInTermReactivationScheduled;
+    data['max_date_for_in_term'] = maxDateForInTerm;
     return data;
   }
 }
@@ -534,38 +531,38 @@ class LineItems {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['line_item_id'] = this.lineItemId;
-    data['item_id'] = this.itemId;
-    data['code'] = this.code;
-    data['item_order'] = this.itemOrder;
-    data['name'] = this.name;
-    data['internal_name'] = this.internalName;
-    data['description'] = this.description;
-    data['type'] = this.type;
-    data['unit'] = this.unit;
-    data['quantity'] = this.quantity;
-    data['discount_amount'] = this.discountAmount;
-    data['discount'] = this.discount;
-    data['bcy_rate'] = this.bcyRate;
-    data['rate'] = this.rate;
-    data['account_id'] = this.accountId;
-    data['account_name'] = this.accountName;
-    data['header_id'] = this.headerId;
-    data['header_name'] = this.headerName;
-    data['pricebook_id'] = this.pricebookId;
-    data['tax_id'] = this.taxId;
-    data['tax_name'] = this.taxName;
-    data['tax_type'] = this.taxType;
-    data['tax_percentage'] = this.taxPercentage;
-    data['item_total'] = this.itemTotal;
-    data['pricing_scheme'] = this.pricingScheme;
-    data['expense_id'] = this.expenseId;
-    data['item_type'] = this.itemType;
-    data['expense_receipt_name'] = this.expenseReceiptName;
-    data['salesorder_item_id'] = this.salesorderItemId;
-    data['cost_amount'] = this.costAmount;
-    data['markup_percent'] = this.markupPercent;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['line_item_id'] = lineItemId;
+    data['item_id'] = itemId;
+    data['code'] = code;
+    data['item_order'] = itemOrder;
+    data['name'] = name;
+    data['internal_name'] = internalName;
+    data['description'] = description;
+    data['type'] = type;
+    data['unit'] = unit;
+    data['quantity'] = quantity;
+    data['discount_amount'] = discountAmount;
+    data['discount'] = discount;
+    data['bcy_rate'] = bcyRate;
+    data['rate'] = rate;
+    data['account_id'] = accountId;
+    data['account_name'] = accountName;
+    data['header_id'] = headerId;
+    data['header_name'] = headerName;
+    data['pricebook_id'] = pricebookId;
+    data['tax_id'] = taxId;
+    data['tax_name'] = taxName;
+    data['tax_type'] = taxType;
+    data['tax_percentage'] = taxPercentage;
+    data['item_total'] = itemTotal;
+    data['pricing_scheme'] = pricingScheme;
+    data['expense_id'] = expenseId;
+    data['item_type'] = itemType;
+    data['expense_receipt_name'] = expenseReceiptName;
+    data['salesorder_item_id'] = salesorderItemId;
+    data['cost_amount'] = costAmount;
+    data['markup_percent'] = markupPercent;
     return data;
   }
 }
@@ -644,29 +641,29 @@ class Plan {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['plan_id'] = this.planId;
-    data['plan_code'] = this.planCode;
-    data['name'] = this.name;
-    data['internal_name'] = this.internalName;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['quantity'] = this.quantity;
-    data['discount_formatted'] = this.discountFormatted;
-    data['discount_amount'] = this.discountAmount;
-    data['discount'] = this.discount;
-    data['total'] = this.total;
-    data['setup_fee'] = this.setupFee;
-    data['tax_id'] = this.taxId;
-    data['tax_name'] = this.taxName;
-    data['tax_percentage'] = this.taxPercentage;
-    data['tax_type'] = this.taxType;
-    data['setup_fee_tax_id'] = this.setupFeeTaxId;
-    data['setup_fee_tax_name'] = this.setupFeeTaxName;
-    data['setup_fee_tax_percentage'] = this.setupFeeTaxPercentage;
-    data['setup_fee_tax_type'] = this.setupFeeTaxType;
-    data['unit'] = this.unit;
-    data['pricing_scheme'] = this.pricingScheme;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['plan_id'] = planId;
+    data['plan_code'] = planCode;
+    data['name'] = name;
+    data['internal_name'] = internalName;
+    data['description'] = description;
+    data['price'] = price;
+    data['quantity'] = quantity;
+    data['discount_formatted'] = discountFormatted;
+    data['discount_amount'] = discountAmount;
+    data['discount'] = discount;
+    data['total'] = total;
+    data['setup_fee'] = setupFee;
+    data['tax_id'] = taxId;
+    data['tax_name'] = taxName;
+    data['tax_percentage'] = taxPercentage;
+    data['tax_type'] = taxType;
+    data['setup_fee_tax_id'] = setupFeeTaxId;
+    data['setup_fee_tax_name'] = setupFeeTaxName;
+    data['setup_fee_tax_percentage'] = setupFeeTaxPercentage;
+    data['setup_fee_tax_type'] = setupFeeTaxType;
+    data['unit'] = unit;
+    data['pricing_scheme'] = pricingScheme;
     return data;
   }
 }
@@ -730,60 +727,59 @@ class Customer {
     zcrmAccountId = json['zcrm_account_id'];
     zcrmContactId = json['zcrm_contact_id'];
     billingAddress = json['billing_address'] != null
-        ? new BillingAddress.fromJson(json['billing_address'])
+        ? BillingAddress.fromJson(json['billing_address'])
         : null;
     shippingAddress = json['shipping_address'] != null
-        ? new BillingAddress.fromJson(json['shipping_address'])
+        ? BillingAddress.fromJson(json['shipping_address'])
         : null;
     paymentTerms = json['payment_terms'];
     paymentTermsLabel = json['payment_terms_label'];
     if (json['custom_fields'] != null) {
       customFields = <CustomFields>[];
       json['custom_fields'].forEach((v) {
-        customFields!.add(new CustomFields.fromJson(v));
+        customFields!.add(CustomFields.fromJson(v));
       });
     }
     cfEmailAddress = json['cf_email_address'];
     cfEmailAddressUnformatted = json['cf_email_address_unformatted'];
     customFieldHash = json['custom_field_hash'] != null
-        ? new CustomFieldHash.fromJson(json['custom_field_hash'])
+        ? CustomFieldHash.fromJson(json['custom_field_hash'])
         : null;
     channelReferenceId = json['channel_reference_id'];
     channelCustomerId = json['channel_customer_id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_id'] = this.customerId;
-    data['display_name'] = this.displayName;
-    data['company_name'] = this.companyName;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['salutation'] = this.salutation;
-    data['email'] = this.email;
-    data['website'] = this.website;
-    data['ip_address'] = this.ipAddress;
-    data['zcrm_account_id'] = this.zcrmAccountId;
-    data['zcrm_contact_id'] = this.zcrmContactId;
-    if (this.billingAddress != null) {
-      data['billing_address'] = this.billingAddress!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['customer_id'] = customerId;
+    data['display_name'] = displayName;
+    data['company_name'] = companyName;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['salutation'] = salutation;
+    data['email'] = email;
+    data['website'] = website;
+    data['ip_address'] = ipAddress;
+    data['zcrm_account_id'] = zcrmAccountId;
+    data['zcrm_contact_id'] = zcrmContactId;
+    if (billingAddress != null) {
+      data['billing_address'] = billingAddress!.toJson();
     }
-    if (this.shippingAddress != null) {
-      data['shipping_address'] = this.shippingAddress!.toJson();
+    if (shippingAddress != null) {
+      data['shipping_address'] = shippingAddress!.toJson();
     }
-    data['payment_terms'] = this.paymentTerms;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    if (this.customFields != null) {
-      data['custom_fields'] =
-          this.customFields!.map((v) => v.toJson()).toList();
+    data['payment_terms'] = paymentTerms;
+    data['payment_terms_label'] = paymentTermsLabel;
+    if (customFields != null) {
+      data['custom_fields'] = customFields!.map((v) => v.toJson()).toList();
     }
-    data['cf_email_address'] = this.cfEmailAddress;
-    data['cf_email_address_unformatted'] = this.cfEmailAddressUnformatted;
-    if (this.customFieldHash != null) {
-      data['custom_field_hash'] = this.customFieldHash!.toJson();
+    data['cf_email_address'] = cfEmailAddress;
+    data['cf_email_address_unformatted'] = cfEmailAddressUnformatted;
+    if (customFieldHash != null) {
+      data['custom_field_hash'] = customFieldHash!.toJson();
     }
-    data['channel_reference_id'] = this.channelReferenceId;
-    data['channel_customer_id'] = this.channelCustomerId;
+    data['channel_reference_id'] = channelReferenceId;
+    data['channel_customer_id'] = channelCustomerId;
     return data;
   }
 }
@@ -823,16 +819,16 @@ class BillingAddress {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['street'] = this.street;
-    data['street2'] = this.street2;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['zip'] = this.zip;
-    data['country'] = this.country;
-    data['fax'] = this.fax;
-    data['phone'] = this.phone;
-    data['attention'] = this.attention;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['street'] = street;
+    data['street2'] = street2;
+    data['city'] = city;
+    data['state'] = state;
+    data['zip'] = zip;
+    data['country'] = country;
+    data['fax'] = fax;
+    data['phone'] = phone;
+    data['attention'] = attention;
     return data;
   }
 }
@@ -899,25 +895,25 @@ class CustomFields {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['field_id'] = this.fieldId;
-    data['customfield_id'] = this.customfieldId;
-    data['show_in_store'] = this.showInStore;
-    data['show_in_portal'] = this.showInPortal;
-    data['is_active'] = this.isActive;
-    data['index'] = this.index;
-    data['label'] = this.label;
-    data['show_on_pdf'] = this.showOnPdf;
-    data['edit_on_portal'] = this.editOnPortal;
-    data['edit_on_store'] = this.editOnStore;
-    data['api_name'] = this.apiName;
-    data['show_in_all_pdf'] = this.showInAllPdf;
-    data['value_formatted'] = this.valueFormatted;
-    data['search_entity'] = this.searchEntity;
-    data['data_type'] = this.dataType;
-    data['placeholder'] = this.placeholder;
-    data['value'] = this.value;
-    data['is_dependent_field'] = this.isDependentField;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['field_id'] = fieldId;
+    data['customfield_id'] = customfieldId;
+    data['show_in_store'] = showInStore;
+    data['show_in_portal'] = showInPortal;
+    data['is_active'] = isActive;
+    data['index'] = index;
+    data['label'] = label;
+    data['show_on_pdf'] = showOnPdf;
+    data['edit_on_portal'] = editOnPortal;
+    data['edit_on_store'] = editOnStore;
+    data['api_name'] = apiName;
+    data['show_in_all_pdf'] = showInAllPdf;
+    data['value_formatted'] = valueFormatted;
+    data['search_entity'] = searchEntity;
+    data['data_type'] = dataType;
+    data['placeholder'] = placeholder;
+    data['value'] = value;
+    data['is_dependent_field'] = isDependentField;
     return data;
   }
 }
@@ -934,9 +930,9 @@ class CustomFieldHash {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cf_email_address'] = this.cfEmailAddress;
-    data['cf_email_address_unformatted'] = this.cfEmailAddressUnformatted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cf_email_address'] = cfEmailAddress;
+    data['cf_email_address_unformatted'] = cfEmailAddressUnformatted;
     return data;
   }
 }
@@ -970,14 +966,14 @@ class Contactpersons {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['contactperson_id'] = this.contactpersonId;
-    data['email'] = this.email;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['phone'] = this.phone;
-    data['mobile'] = this.mobile;
-    data['zcrm_contact_id'] = this.zcrmContactId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['contactperson_id'] = contactpersonId;
+    data['email'] = email;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['phone'] = phone;
+    data['mobile'] = mobile;
+    data['zcrm_contact_id'] = zcrmContactId;
     return data;
   }
 }
@@ -1014,22 +1010,22 @@ class ContactPersonsAssociated {
     mobile = json['mobile'];
     zcrmContactId = json['zcrm_contact_id'];
     communicationPreference = json['communication_preference'] != null
-        ? new CommunicationPreference.fromJson(json['communication_preference'])
+        ? CommunicationPreference.fromJson(json['communication_preference'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['contact_person_id'] = this.contactPersonId;
-    data['contact_person_name'] = this.contactPersonName;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['contact_person_email'] = this.contactPersonEmail;
-    data['phone'] = this.phone;
-    data['mobile'] = this.mobile;
-    data['zcrm_contact_id'] = this.zcrmContactId;
-    if (this.communicationPreference != null) {
-      data['communication_preference'] = this.communicationPreference!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['contact_person_id'] = contactPersonId;
+    data['contact_person_name'] = contactPersonName;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['contact_person_email'] = contactPersonEmail;
+    data['phone'] = phone;
+    data['mobile'] = mobile;
+    data['zcrm_contact_id'] = zcrmContactId;
+    if (communicationPreference != null) {
+      data['communication_preference'] = communicationPreference!.toJson();
     }
     return data;
   }
@@ -1045,8 +1041,8 @@ class CommunicationPreference {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['is_email_enabled'] = this.isEmailEnabled;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['is_email_enabled'] = isEmailEnabled;
     return data;
   }
 }
@@ -1092,18 +1088,18 @@ class Card {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['card_id'] = this.cardId;
-    data['last_four_digits'] = this.lastFourDigits;
-    data['expiry_month'] = this.expiryMonth;
-    data['expiry_year'] = this.expiryYear;
-    data['is_primary'] = this.isPrimary;
-    data['is_backup'] = this.isBackup;
-    data['funding'] = this.funding;
-    data['card_type'] = this.cardType;
-    data['payment_gateway'] = this.paymentGateway;
-    data['gateway_card_id'] = this.gatewayCardId;
-    data['gateway_customer_id'] = this.gatewayCustomerId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['card_id'] = cardId;
+    data['last_four_digits'] = lastFourDigits;
+    data['expiry_month'] = expiryMonth;
+    data['expiry_year'] = expiryYear;
+    data['is_primary'] = isPrimary;
+    data['is_backup'] = isBackup;
+    data['funding'] = funding;
+    data['card_type'] = cardType;
+    data['payment_gateway'] = paymentGateway;
+    data['gateway_card_id'] = gatewayCardId;
+    data['gateway_customer_id'] = gatewayCustomerId;
     return data;
   }
 }
@@ -1120,9 +1116,9 @@ class PaymentGateways {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['payment_gateway'] = this.paymentGateway;
-    data['gateway_name'] = this.gatewayName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['payment_gateway'] = paymentGateway;
+    data['gateway_name'] = gatewayName;
     return data;
   }
 }

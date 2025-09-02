@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io' as io;
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:salesiq_mobilisten/salesiq_mobilisten.dart';
 import 'package:sizer/sizer.dart';
@@ -9,17 +12,132 @@ import 'package:zohosystem/ui/welcomeScreen/view/welcomeScreen.dart';
 
 import 'firebase_options.dart';
 
+String? myDeviceToken;
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+/// Initialize Local Notifications
+Future<void> initLocalNotifications() async {
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
+
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+}
+
+/// Background handler for FCM
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  log("🔧 Handling background message: ${message.messageId}");
+
+  if (message.data['sender_token'] != myDeviceToken) {
+    await _showLocalNotification(message);
+  }
+}
+
+/// Show notification with image support
+Future<void> _showLocalNotification(RemoteMessage message) async {
+  String? title = message.notification?.title ?? message.data['title'] ?? '';
+  String? body = message.notification?.body ?? message.data['body'] ?? '';
+
+  String? bigImage =
+      message.data['bigImage'] ?? message.notification?.android?.imageUrl;
+  String? smallImage = message.data['smallImage'];
+
+  log("🔔 Showing Local Notification - Title: $title, Body: $body, BigImage: $bigImage, SmallImage: $smallImage");
+
+  final AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    'basic_channel',
+    'Basic Notifications',
+    channelDescription: 'Used for basic notifications',
+    importance: Importance.high,
+    priority: Priority.high,
+    playSound: true,
+    styleInformation: bigImage != null
+        ? BigPictureStyleInformation(
+            FilePathAndroidBitmap(bigImage),
+            contentTitle: title,
+            summaryText: body,
+            largeIcon:
+                smallImage != null ? FilePathAndroidBitmap(smallImage) : null,
+          )
+        : null,
+  );
+
+  const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+      DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+
+  final NotificationDetails platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
+
+  await flutterLocalNotificationsPlugin.show(
+    DateTime.now().millisecondsSinceEpoch ~/ 1000,
+    title,
+    body,
+    platformChannelSpecifics,
+    payload: message.data.toString(),
+  );
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print("✅ Firebase initialized successfully");
+    log("✅ Firebase initialized successfully");
   } catch (e, stack) {
-    print("❌ Firebase initialization failed: $e");
-    print(stack); // optional, shows where the error came from
+    log("❌ Firebase initialization failed: $e");
+    log(stack.toString());
   }
+
+  await initLocalNotifications();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+    announcement: true,
+    carPlay: true,
+    criticalAlert: true,
+    provisional: false,
+  );
+
+  switch (settings.authorizationStatus) {
+    case AuthorizationStatus.authorized:
+      log('✅ User granted permission');
+      break;
+    case AuthorizationStatus.provisional:
+      log('🟡 User granted provisional permission');
+      break;
+    case AuthorizationStatus.denied:
+    case AuthorizationStatus.notDetermined:
+      log('❌ User denied or has not accepted notification permission');
+      break;
+  }
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }
 
@@ -35,6 +153,38 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initMobilisten();
+
+    FirebaseMessaging.instance.getToken().then((token) {
+      myDeviceToken = token;
+      log("📱 Device Token: $myDeviceToken");
+    });
+
+    /// Foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      log('📩 Foreground message received: ${message.notification?.title}');
+      log('📦 Data: ${message.data}');
+
+      if (message.data['sender_token'] != myDeviceToken) {
+        await _showLocalNotification(message);
+      }
+    });
+
+    /// Background messages handled above in main()
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      log("🟢 Notification tapped from background: ${message.notification?.title}");
+    });
+
+    checkInitialMessage();
+  }
+
+  Future<void> checkInitialMessage() async {
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null &&
+        initialMessage.data['sender_token'] != myDeviceToken) {
+      await _showLocalNotification(initialMessage);
+    }
   }
 
   Future<void> initMobilisten() async {
@@ -74,7 +224,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Welcomescreen(),
+        home: const Welcomescreen(),
       );
     });
   }

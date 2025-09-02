@@ -44,8 +44,8 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   width: double.infinity,
-                  decoration:
-                      BoxDecoration(color: AppColors.alternativeBlueColor),
+                  decoration: const BoxDecoration(
+                      color: AppColors.alternativeBlueColor),
                   child: Column(
                     children: [
                       SizedBox(height: 5.h),
@@ -70,7 +70,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
                               fontSize: 19.sp,
                             ),
                           ),
-                          Icon(null),
+                          const Icon(null),
                         ],
                       ),
                     ],
@@ -91,7 +91,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
                                   horizontal: 4.w, vertical: 1.h),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Color(0xffE9E7E7)),
+                                  color: const Color(0xffE9E7E7)),
                               child: Column(
                                 children: [
                                   Row(
@@ -201,7 +201,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
                                         },
                                         child: Icon(
                                           Icons.filter_alt,
-                                          color: Color(0xff545454),
+                                          color: const Color(0xff545454),
                                           size: 25.sp,
                                         ),
                                       ),
@@ -209,13 +209,13 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
                                         Imgs.namedLogo,
                                         scale: 4.5,
                                       ),
-                                      Icon(null),
+                                      const Icon(null),
                                     ],
                                   ),
                                   SizedBox(
                                     height: 1.h,
                                   ),
-                                  Divider(
+                                  const Divider(
                                     thickness: 0.5,
                                     color: AppColors.blackColor,
                                   ),
@@ -319,7 +319,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
                                                     vertical: 1.h,
                                                     horizontal: 4.w),
                                               ),
-                                              Divider(
+                                              const Divider(
                                                 thickness: 0.5,
                                                 color: AppColors.blackColor,
                                               ),
@@ -388,7 +388,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Invoice Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
@@ -435,7 +435,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
         }).catchError((error, straceTrace) {
           showCustomErrorSnackbar(
             title: 'Invoice Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {

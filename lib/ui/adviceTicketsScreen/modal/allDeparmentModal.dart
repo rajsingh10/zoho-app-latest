@@ -7,13 +7,13 @@ class AllDeparmentModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -68,20 +68,20 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['createdTime'] = this.createdTime;
-    data['creatorId'] = this.creatorId;
-    data['nameInCustomerPortal'] = this.nameInCustomerPortal;
-    data['chatStatus'] = this.chatStatus;
-    data['sanitizedName'] = this.sanitizedName;
-    data['isVisibleInCustomerPortal'] = this.isVisibleInCustomerPortal;
-    data['isAssignToTeamEnabled'] = this.isAssignToTeamEnabled;
-    data['hasLogo'] = this.hasLogo;
-    data['isEnabled'] = this.isEnabled;
-    data['isDefault'] = this.isDefault;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['createdTime'] = createdTime;
+    data['creatorId'] = creatorId;
+    data['nameInCustomerPortal'] = nameInCustomerPortal;
+    data['chatStatus'] = chatStatus;
+    data['sanitizedName'] = sanitizedName;
+    data['isVisibleInCustomerPortal'] = isVisibleInCustomerPortal;
+    data['isAssignToTeamEnabled'] = isAssignToTeamEnabled;
+    data['hasLogo'] = hasLogo;
+    data['isEnabled'] = isEnabled;
+    data['isDefault'] = isDefault;
     return data;
   }
 }

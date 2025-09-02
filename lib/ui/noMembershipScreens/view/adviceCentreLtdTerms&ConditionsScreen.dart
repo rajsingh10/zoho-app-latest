@@ -89,7 +89,7 @@ class _AdviceCentreLtdTermsConditionsScreenState
                         if (_isLoading)
                           Container(
                             color: Colors.white,
-                            child: Center(
+                            child: const Center(
                               child: CircularProgressIndicator(
                                 color: AppColors.orangeColor,
                               ),

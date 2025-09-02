@@ -7,13 +7,13 @@ class MyTickitModal {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -126,8 +126,7 @@ class Data {
     relationshipType = json['relationshipType'];
     channelCode = json['channelCode'];
     isSpam = json['isSpam'];
-    source =
-        json['source'] != null ? new Source.fromJson(json['source']) : null;
+    source = json['source'] != null ? Source.fromJson(json['source']) : null;
     lastThread = json['lastThread'];
     customerResponseTime = json['customerResponseTime'];
     isArchived = json['isArchived'];
@@ -135,44 +134,44 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ticketNumber'] = this.ticketNumber;
-    data['layoutId'] = this.layoutId;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['subject'] = this.subject;
-    data['status'] = this.status;
-    data['statusType'] = this.statusType;
-    data['createdTime'] = this.createdTime;
-    data['category'] = this.category;
-    data['language'] = this.language;
-    data['subCategory'] = this.subCategory;
-    data['priority'] = this.priority;
-    data['channel'] = this.channel;
-    data['dueDate'] = this.dueDate;
-    data['responseDueDate'] = this.responseDueDate;
-    data['commentCount'] = this.commentCount;
-    data['sentiment'] = this.sentiment;
-    data['threadCount'] = this.threadCount;
-    data['closedTime'] = this.closedTime;
-    data['onholdTime'] = this.onholdTime;
-    data['accountId'] = this.accountId;
-    data['departmentId'] = this.departmentId;
-    data['contactId'] = this.contactId;
-    data['productId'] = this.productId;
-    data['assigneeId'] = this.assigneeId;
-    data['teamId'] = this.teamId;
-    data['relationshipType'] = this.relationshipType;
-    data['channelCode'] = this.channelCode;
-    data['isSpam'] = this.isSpam;
-    if (this.source != null) {
-      data['source'] = this.source!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['ticketNumber'] = ticketNumber;
+    data['layoutId'] = layoutId;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['subject'] = subject;
+    data['status'] = status;
+    data['statusType'] = statusType;
+    data['createdTime'] = createdTime;
+    data['category'] = category;
+    data['language'] = language;
+    data['subCategory'] = subCategory;
+    data['priority'] = priority;
+    data['channel'] = channel;
+    data['dueDate'] = dueDate;
+    data['responseDueDate'] = responseDueDate;
+    data['commentCount'] = commentCount;
+    data['sentiment'] = sentiment;
+    data['threadCount'] = threadCount;
+    data['closedTime'] = closedTime;
+    data['onholdTime'] = onholdTime;
+    data['accountId'] = accountId;
+    data['departmentId'] = departmentId;
+    data['contactId'] = contactId;
+    data['productId'] = productId;
+    data['assigneeId'] = assigneeId;
+    data['teamId'] = teamId;
+    data['relationshipType'] = relationshipType;
+    data['channelCode'] = channelCode;
+    data['isSpam'] = isSpam;
+    if (source != null) {
+      data['source'] = source!.toJson();
     }
-    data['lastThread'] = this.lastThread;
-    data['customerResponseTime'] = this.customerResponseTime;
-    data['isArchived'] = this.isArchived;
-    data['webUrl'] = this.webUrl;
+    data['lastThread'] = lastThread;
+    data['customerResponseTime'] = customerResponseTime;
+    data['isArchived'] = isArchived;
+    data['webUrl'] = webUrl;
     return data;
   }
 }
@@ -196,12 +195,12 @@ class Source {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['extId'] = this.extId;
-    data['appName'] = this.appName;
-    data['appPhotoURL'] = this.appPhotoURL;
-    data['permalink'] = this.permalink;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['extId'] = extId;
+    data['appName'] = appName;
+    data['appPhotoURL'] = appPhotoURL;
+    data['permalink'] = permalink;
+    data['type'] = type;
     return data;
   }
 }

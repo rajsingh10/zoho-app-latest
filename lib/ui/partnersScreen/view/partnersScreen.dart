@@ -23,7 +23,8 @@ class _partnersScreenState extends State<partnersScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: double.infinity,
-            decoration: BoxDecoration(color: AppColors.alternativeBlueColor),
+            decoration:
+                const BoxDecoration(color: AppColors.alternativeBlueColor),
             child: Column(
               children: [
                 SizedBox(height: 5.h),

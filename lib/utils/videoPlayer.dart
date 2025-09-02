@@ -5,7 +5,7 @@ import 'package:video_player/video_player.dart';
 class VideoWidget extends StatefulWidget {
   final String? video;
 
-  VideoWidget({Key? key, required this.video}) : super(key: key);
+  const VideoWidget({super.key, required this.video});
 
   @override
   State<VideoWidget> createState() => _VideoWidgetState();
@@ -77,7 +77,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                           ),
                           if (!_controller.value.isPlaying)
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.black38,
                                 shape: BoxShape.circle,
                               ),
@@ -91,7 +91,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                         ],
                       ),
                     )
-                  : CircularProgressIndicator.adaptive(),
+                  : const CircularProgressIndicator.adaptive(),
             ),
     );
   }

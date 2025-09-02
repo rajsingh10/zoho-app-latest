@@ -560,7 +560,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                                   height: 22.h,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                       colors: [
                                         AppColors.bgColor,
                                         AppColors.appBlueColor
@@ -568,7 +568,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                     ),
-                                    boxShadow: [
+                                    boxShadow: const [
                                       BoxShadow(
                                         color: Colors.black26,
                                         offset: Offset(0, 4),
@@ -657,7 +657,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                                       borderRadius: BorderRadius.circular(3.w),
                                     ),
                                     child: isAdding
-                                        ? Center(
+                                        ? const Center(
                                             child: CircularProgressIndicator(
                                               color: Colors.white,
                                             ),
@@ -782,7 +782,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                 onPressed: () => Get.back(),
               ),
               CupertinoDialogAction(
-                child: const Text('Update & Logout'),
                 isDestructiveAction: true,
                 onPressed: () async {
                   Get.back(); // close dialog
@@ -794,6 +793,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                     checkPhoneApi();
                   }
                 },
+                child: const Text('Update & Logout'),
               ),
             ],
           );
@@ -1182,7 +1182,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
           }).catchError((error) {
             showCustomErrorSnackbar(
               title: 'Login Error',
-              message: '${error.toString()}',
+              message: error.toString(),
             );
             log("error=====>>>>${error.toString()}");
             if (mounted) setState(() => isAdding = false);
@@ -1208,10 +1208,11 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
             if (checkEmail?.customers?.length == 0) {
               updateContractApi();
             } else {
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isAdding = false;
                 });
+              }
               showCustomErrorSnackbar(
                 title: 'Mobile Number',
                 message:
@@ -1219,32 +1220,36 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
               );
             }
           } else if (response.statusCode == 422) {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isAdding = false;
               });
+            }
           } else {
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isAdding = false;
               });
+            }
           }
         }).catchError((error) {
           showCustomErrorSnackbar(
             title: 'Login Error',
-            message: '${error.toString()}',
+            message: error.toString(),
           );
           log("error=====>>>>${error.toString()}");
-          if (mounted)
+          if (mounted) {
             setState(() {
               isAdding = false;
             });
+          }
         });
       } else {
-        if (mounted)
+        if (mounted) {
           setState(() {
             isAdding = false;
           });
+        }
         buildErrorDialog(context, 'Error', "Internet Required");
       }
     });
@@ -1275,19 +1280,21 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
               showCustomErrorSnackbar(
                   title: "Update Error",
                   message: 'There was an error. Please try again.');
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isAdding = false;
                 });
+              }
             } else {
               showCustomErrorSnackbar(
                 title: 'Update Error',
                 message: 'There was an error. Please try again.',
               );
-              if (mounted)
+              if (mounted) {
                 setState(() {
                   isAdding = false;
                 });
+              }
             }
           }).catchError((error) {
             showCustomErrorSnackbar(
@@ -1295,24 +1302,27 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
               message: error.toString(),
             );
             log("Error ========>>>>>>>>${error.toString()}");
-            if (mounted)
+            if (mounted) {
               setState(() {
                 isAdding = false;
               });
+            }
           });
         } else {
-          if (mounted)
+          if (mounted) {
             setState(() {
               isAdding = false;
             });
+          }
           buildErrorDialog(context, 'Error', "Internet Required");
         }
       });
     } else {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isAdding = false;
         });
+      }
     }
   }
 
@@ -1449,7 +1459,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
 
                 SaveAuthtokenData.clearUserData();
                 SaveDataLocal.clearUserData();
-                Get.offAll(LandingScreen());
+                Get.offAll(const LandingScreen());
               } else {
                 // if no email/phone change → go home
                 showCustomSuccessSnackbar(
@@ -1458,7 +1468,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                       "Your personal information has been updated successfully.",
                 );
 
-                Get.offAll(Homescreen()); // or whatever home screen is
+                Get.offAll(const Homescreen()); // or whatever home screen is
               }
             } else if (response.statusCode == 422) {
               showCustomErrorSnackbar(

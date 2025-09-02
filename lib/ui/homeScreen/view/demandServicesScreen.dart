@@ -24,7 +24,7 @@ class _DemandServicesScreenState extends State<DemandServicesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      body: Container(
+      body: SizedBox(
         height: Device.height,
         width: Device.width,
         child: Stack(
@@ -75,7 +75,7 @@ class _DemandServicesScreenState extends State<DemandServicesScreen> {
             Positioned(
               top: 42.h,
               left: 7.w,
-              child: Container(
+              child: SizedBox(
                 height: 90.w,
                 width: 90.w,
                 child: Container(
@@ -89,7 +89,7 @@ class _DemandServicesScreenState extends State<DemandServicesScreen> {
                       fontSize: 23.sp,
                       shadows: [
                         Shadow(
-                          offset: Offset(2.0, 2.0),
+                          offset: const Offset(2.0, 2.0),
                           blurRadius: 5.0,
                           color: Colors.black.withOpacity(0.8),
                         ),
@@ -116,7 +116,7 @@ class _DemandServicesScreenState extends State<DemandServicesScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Color(0xfff1811b),
+                      color: const Color(0xfff1811b),
                       borderRadius: BorderRadius.circular(30)),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +156,7 @@ class _DemandServicesScreenState extends State<DemandServicesScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Color(0xfff004aad),
+                      color: const Color(0xfff004aad),
                       borderRadius: BorderRadius.circular(30)),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

@@ -12,8 +12,8 @@ import '../../../../ApiCalling/response.dart';
 class Adviceprovider extends ChangeNotifier {
   Future<http.Response> departments() async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
     String url = apiEndpoints.departments;
     print(url);
 
@@ -36,9 +36,9 @@ class Adviceprovider extends ChangeNotifier {
 
   Future<http.Response> viewtikitdetaisl(id) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
-    String url = "${apiEndpoints.ticketsviw}${id}";
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url = "${apiEndpoints.ticketsviw}$id";
     print(url);
 
     var responseJson;
@@ -60,9 +60,9 @@ class Adviceprovider extends ChangeNotifier {
 
   Future<http.Response> viewtikitrepliesdetaisl(id) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
-    String url = "${apiEndpoints.ticketsviw}${id}/threads";
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url = "${apiEndpoints.ticketsviw}$id/threads";
     print(url);
 
     var responseJson;

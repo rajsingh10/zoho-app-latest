@@ -9,15 +9,15 @@ class PdfViewModal {
     code = json['code'];
     message = json['message'];
     invoice =
-        json['invoice'] != null ? new Invoice.fromJson(json['invoice']) : null;
+        json['invoice'] != null ? Invoice.fromJson(json['invoice']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.invoice != null) {
-      data['invoice'] = this.invoice!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (invoice != null) {
+      data['invoice'] = invoice!.toJson();
     }
     return data;
   }
@@ -293,13 +293,13 @@ class Invoice {
     if (json['invoice_items'] != null) {
       invoiceItems = <InvoiceItems>[];
       json['invoice_items'].forEach((v) {
-        invoiceItems!.add(new InvoiceItems.fromJson(v));
+        invoiceItems!.add(InvoiceItems.fromJson(v));
       });
     }
     if (json['taxes'] != null) {
       taxes = <Taxes>[];
       json['taxes'].forEach((v) {
-        taxes!.add(new Taxes.fromJson(v));
+        taxes!.add(Taxes.fromJson(v));
       });
     }
     isTaxable = json['is_taxable'];
@@ -344,7 +344,7 @@ class Invoice {
     if (json['credits'] != null) {
       credits = <Credits>[];
       json['credits'].forEach((v) {
-        credits!.add(new Credits.fromJson(v));
+        credits!.add(Credits.fromJson(v));
       });
     }
     pricePrecision = json['price_precision'];
@@ -362,15 +362,15 @@ class Invoice {
     invoiceUrl = json['invoice_url'];
     referenceId = json['reference_id'];
     billingAddress = json['billing_address'] != null
-        ? new BillingAddress.fromJson(json['billing_address'])
+        ? BillingAddress.fromJson(json['billing_address'])
         : null;
     shippingAddress = json['shipping_address'] != null
-        ? new BillingAddress.fromJson(json['shipping_address'])
+        ? BillingAddress.fromJson(json['shipping_address'])
         : null;
     if (json['subscriptions'] != null) {
       subscriptions = <Subscriptions>[];
       json['subscriptions'].forEach((v) {
-        subscriptions!.add(new Subscriptions.fromJson(v));
+        subscriptions!.add(Subscriptions.fromJson(v));
       });
     }
     templateType = json['template_type'];
@@ -384,26 +384,25 @@ class Invoice {
     if (json['contactpersons'] != null) {
       contactpersons = <Contactpersons>[];
       json['contactpersons'].forEach((v) {
-        contactpersons!.add(new Contactpersons.fromJson(v));
+        contactpersons!.add(Contactpersons.fromJson(v));
       });
     }
     if (json['contact_persons_associated'] != null) {
       contactPersonsAssociated = <ContactPersonsAssociated>[];
       json['contact_persons_associated'].forEach((v) {
-        contactPersonsAssociated!.add(new ContactPersonsAssociated.fromJson(v));
+        contactPersonsAssociated!.add(ContactPersonsAssociated.fromJson(v));
       });
     }
     contact =
-        json['contact'] != null ? new Contact.fromJson(json['contact']) : null;
+        json['contact'] != null ? Contact.fromJson(json['contact']) : null;
     if (json['payment_gateways'] != null) {
       paymentGateways = <PaymentGateways>[];
       json['payment_gateways'].forEach((v) {
-        paymentGateways!.add(new PaymentGateways.fromJson(v));
+        paymentGateways!.add(PaymentGateways.fromJson(v));
       });
     }
     canSendInMail = json['can_send_in_mail'];
-    qrCode =
-        json['qr_code'] != null ? new QrCode.fromJson(json['qr_code']) : null;
+    qrCode = json['qr_code'] != null ? QrCode.fromJson(json['qr_code']) : null;
     tdsCalculationType = json['tds_calculation_type'];
     totalRetentionAmount = json['total_retention_amount'];
     retentionOverridePreference = json['retention_override_preference'];
@@ -411,154 +410,146 @@ class Invoice {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['invoice_id'] = this.invoiceId;
-    data['unbilled_charges_id'] = this.unbilledChargesId;
-    data['exchange_rate'] = this.exchangeRate;
-    data['number'] = this.number;
-    data['invoice_number'] = this.invoiceNumber;
-    data['invoice_date'] = this.invoiceDate;
-    data['date'] = this.date;
-    data['due_date'] = this.dueDate;
-    data['reference_number'] = this.referenceNumber;
-    data['zcrm_potential_id'] = this.zcrmPotentialId;
-    data['payment_expected_date'] = this.paymentExpectedDate;
-    data['can_send_invoice_sms'] = this.canSendInvoiceSms;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['invoice_id'] = invoiceId;
+    data['unbilled_charges_id'] = unbilledChargesId;
+    data['exchange_rate'] = exchangeRate;
+    data['number'] = number;
+    data['invoice_number'] = invoiceNumber;
+    data['invoice_date'] = invoiceDate;
+    data['date'] = date;
+    data['due_date'] = dueDate;
+    data['reference_number'] = referenceNumber;
+    data['zcrm_potential_id'] = zcrmPotentialId;
+    data['payment_expected_date'] = paymentExpectedDate;
+    data['can_send_invoice_sms'] = canSendInvoiceSms;
     data['stop_reminder_until_payment_expected_date'] =
-        this.stopReminderUntilPaymentExpectedDate;
-    data['status'] = this.status;
-    data['can_edit_items'] = this.canEditItems;
-    data['can_skip_payment_info'] = this.canSkipPaymentInfo;
-    data['inprocess_transaction_present'] = this.inprocessTransactionPresent;
-    data['unprocessed_payment_amount'] = this.unprocessedPaymentAmount;
-    data['ach_payment_initiated'] = this.achPaymentInitiated;
-    data['allow_partial_payments'] = this.allowPartialPayments;
-    data['transaction_type'] = this.transactionType;
-    data['customer_id'] = this.customerId;
-    data['customer_name'] = this.customerName;
-    data['vat_treatment'] = this.vatTreatment;
-    data['email'] = this.email;
-    data['pricebook_id'] = this.pricebookId;
-    data['currency_id'] = this.currencyId;
-    data['currency_code'] = this.currencyCode;
-    data['currency_symbol'] = this.currencySymbol;
-    data['is_inclusive_tax'] = this.isInclusiveTax;
-    data['tax_rounding'] = this.taxRounding;
-    data['is_viewed_by_client'] = this.isViewedByClient;
-    data['client_viewed_time'] = this.clientViewedTime;
-    data['is_viewed_in_mail'] = this.isViewedInMail;
-    data['mail_first_viewed_time'] = this.mailFirstViewedTime;
-    data['mail_last_viewed_time'] = this.mailLastViewedTime;
-    data['is_reverse_charge_applied'] = this.isReverseChargeApplied;
-    if (this.invoiceItems != null) {
-      data['invoice_items'] =
-          this.invoiceItems!.map((v) => v.toJson()).toList();
+        stopReminderUntilPaymentExpectedDate;
+    data['status'] = status;
+    data['can_edit_items'] = canEditItems;
+    data['can_skip_payment_info'] = canSkipPaymentInfo;
+    data['inprocess_transaction_present'] = inprocessTransactionPresent;
+    data['unprocessed_payment_amount'] = unprocessedPaymentAmount;
+    data['ach_payment_initiated'] = achPaymentInitiated;
+    data['allow_partial_payments'] = allowPartialPayments;
+    data['transaction_type'] = transactionType;
+    data['customer_id'] = customerId;
+    data['customer_name'] = customerName;
+    data['vat_treatment'] = vatTreatment;
+    data['email'] = email;
+    data['pricebook_id'] = pricebookId;
+    data['currency_id'] = currencyId;
+    data['currency_code'] = currencyCode;
+    data['currency_symbol'] = currencySymbol;
+    data['is_inclusive_tax'] = isInclusiveTax;
+    data['tax_rounding'] = taxRounding;
+    data['is_viewed_by_client'] = isViewedByClient;
+    data['client_viewed_time'] = clientViewedTime;
+    data['is_viewed_in_mail'] = isViewedInMail;
+    data['mail_first_viewed_time'] = mailFirstViewedTime;
+    data['mail_last_viewed_time'] = mailLastViewedTime;
+    data['is_reverse_charge_applied'] = isReverseChargeApplied;
+    if (invoiceItems != null) {
+      data['invoice_items'] = invoiceItems!.map((v) => v.toJson()).toList();
     }
-    if (this.taxes != null) {
-      data['taxes'] = this.taxes!.map((v) => v.toJson()).toList();
+    if (taxes != null) {
+      data['taxes'] = taxes!.map((v) => v.toJson()).toList();
     }
-    data['is_taxable'] = this.isTaxable;
-    data['shipping_charge_tax_id'] = this.shippingChargeTaxId;
-    data['shipping_charge_tax_name'] = this.shippingChargeTaxName;
-    data['shipping_charge_tax_type'] = this.shippingChargeTaxType;
-    data['shipping_charge_tax_percentage'] = this.shippingChargeTaxPercentage;
-    data['shipping_charge_tax_exemption_id'] =
-        this.shippingChargeTaxExemptionId;
-    data['shipping_charge_tax_exemption_code'] =
-        this.shippingChargeTaxExemptionCode;
-    data['shipping_charge_tax'] = this.shippingChargeTax;
-    data['bcy_shipping_charge_tax'] = this.bcyShippingChargeTax;
-    data['shipping_charge_exclusive_of_tax'] =
-        this.shippingChargeExclusiveOfTax;
-    data['shipping_charge_inclusive_of_tax'] =
-        this.shippingChargeInclusiveOfTax;
-    data['shipping_charge_tax_formatted'] = this.shippingChargeTaxFormatted;
+    data['is_taxable'] = isTaxable;
+    data['shipping_charge_tax_id'] = shippingChargeTaxId;
+    data['shipping_charge_tax_name'] = shippingChargeTaxName;
+    data['shipping_charge_tax_type'] = shippingChargeTaxType;
+    data['shipping_charge_tax_percentage'] = shippingChargeTaxPercentage;
+    data['shipping_charge_tax_exemption_id'] = shippingChargeTaxExemptionId;
+    data['shipping_charge_tax_exemption_code'] = shippingChargeTaxExemptionCode;
+    data['shipping_charge_tax'] = shippingChargeTax;
+    data['bcy_shipping_charge_tax'] = bcyShippingChargeTax;
+    data['shipping_charge_exclusive_of_tax'] = shippingChargeExclusiveOfTax;
+    data['shipping_charge_inclusive_of_tax'] = shippingChargeInclusiveOfTax;
+    data['shipping_charge_tax_formatted'] = shippingChargeTaxFormatted;
     data['shipping_charge_exclusive_of_tax_formatted'] =
-        this.shippingChargeExclusiveOfTaxFormatted;
+        shippingChargeExclusiveOfTaxFormatted;
     data['shipping_charge_inclusive_of_tax_formatted'] =
-        this.shippingChargeInclusiveOfTaxFormatted;
-    data['shipping_charge_account_id'] = this.shippingChargeAccountId;
-    data['shipping_charge_account_name'] = this.shippingChargeAccountName;
-    data['shipping_charge'] = this.shippingCharge;
-    data['adjustment'] = this.adjustment;
-    data['sub_total'] = this.subTotal;
-    data['tax_total'] = this.taxTotal;
-    data['discount_total'] = this.discountTotal;
-    data['payment_reminder_enabled'] = this.paymentReminderEnabled;
-    data['auto_reminders_configured'] = this.autoRemindersConfigured;
-    data['total'] = this.total;
-    data['discount_percent'] = this.discountPercent;
-    data['bcy_shipping_charge'] = this.bcyShippingCharge;
-    data['bcy_adjustment'] = this.bcyAdjustment;
-    data['adjustment_description'] = this.adjustmentDescription;
-    data['subject_content'] = this.subjectContent;
-    data['bcy_sub_total'] = this.bcySubTotal;
-    data['bcy_discount_total'] = this.bcyDiscountTotal;
-    data['bcy_tax_total'] = this.bcyTaxTotal;
-    data['bcy_total'] = this.bcyTotal;
-    data['payment_made'] = this.paymentMade;
-    data['unused_credits_receivable_amount'] =
-        this.unusedCreditsReceivableAmount;
-    data['credits_applied'] = this.creditsApplied;
-    data['tax_amount_withheld'] = this.taxAmountWithheld;
-    if (this.credits != null) {
-      data['credits'] = this.credits!.map((v) => v.toJson()).toList();
+        shippingChargeInclusiveOfTaxFormatted;
+    data['shipping_charge_account_id'] = shippingChargeAccountId;
+    data['shipping_charge_account_name'] = shippingChargeAccountName;
+    data['shipping_charge'] = shippingCharge;
+    data['adjustment'] = adjustment;
+    data['sub_total'] = subTotal;
+    data['tax_total'] = taxTotal;
+    data['discount_total'] = discountTotal;
+    data['payment_reminder_enabled'] = paymentReminderEnabled;
+    data['auto_reminders_configured'] = autoRemindersConfigured;
+    data['total'] = total;
+    data['discount_percent'] = discountPercent;
+    data['bcy_shipping_charge'] = bcyShippingCharge;
+    data['bcy_adjustment'] = bcyAdjustment;
+    data['adjustment_description'] = adjustmentDescription;
+    data['subject_content'] = subjectContent;
+    data['bcy_sub_total'] = bcySubTotal;
+    data['bcy_discount_total'] = bcyDiscountTotal;
+    data['bcy_tax_total'] = bcyTaxTotal;
+    data['bcy_total'] = bcyTotal;
+    data['payment_made'] = paymentMade;
+    data['unused_credits_receivable_amount'] = unusedCreditsReceivableAmount;
+    data['credits_applied'] = creditsApplied;
+    data['tax_amount_withheld'] = taxAmountWithheld;
+    if (credits != null) {
+      data['credits'] = credits!.map((v) => v.toJson()).toList();
     }
-    data['price_precision'] = this.pricePrecision;
-    data['balance'] = this.balance;
-    data['write_off_amount'] = this.writeOffAmount;
-    data['salesperson_id'] = this.salespersonId;
-    data['salesperson_name'] = this.salespersonName;
-    data['submitter_id'] = this.submitterId;
-    data['approver_id'] = this.approverId;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['created_date'] = this.createdDate;
-    data['created_by_id'] = this.createdById;
-    data['last_modified_by_id'] = this.lastModifiedById;
-    data['invoice_url'] = this.invoiceUrl;
-    data['reference_id'] = this.referenceId;
-    if (this.billingAddress != null) {
-      data['billing_address'] = this.billingAddress!.toJson();
+    data['price_precision'] = pricePrecision;
+    data['balance'] = balance;
+    data['write_off_amount'] = writeOffAmount;
+    data['salesperson_id'] = salespersonId;
+    data['salesperson_name'] = salespersonName;
+    data['submitter_id'] = submitterId;
+    data['approver_id'] = approverId;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['created_date'] = createdDate;
+    data['created_by_id'] = createdById;
+    data['last_modified_by_id'] = lastModifiedById;
+    data['invoice_url'] = invoiceUrl;
+    data['reference_id'] = referenceId;
+    if (billingAddress != null) {
+      data['billing_address'] = billingAddress!.toJson();
     }
-    if (this.shippingAddress != null) {
-      data['shipping_address'] = this.shippingAddress!.toJson();
+    if (shippingAddress != null) {
+      data['shipping_address'] = shippingAddress!.toJson();
     }
-    if (this.subscriptions != null) {
-      data['subscriptions'] =
-          this.subscriptions!.map((v) => v.toJson()).toList();
+    if (subscriptions != null) {
+      data['subscriptions'] = subscriptions!.map((v) => v.toJson()).toList();
     }
-    data['template_type'] = this.templateType;
-    data['page_width'] = this.pageWidth;
-    data['template_id'] = this.templateId;
-    data['template_name'] = this.templateName;
-    data['notes'] = this.notes;
-    data['terms'] = this.terms;
-    data['payment_terms'] = this.paymentTerms;
-    data['payment_terms_label'] = this.paymentTermsLabel;
-    if (this.contactpersons != null) {
-      data['contactpersons'] =
-          this.contactpersons!.map((v) => v.toJson()).toList();
+    data['template_type'] = templateType;
+    data['page_width'] = pageWidth;
+    data['template_id'] = templateId;
+    data['template_name'] = templateName;
+    data['notes'] = notes;
+    data['terms'] = terms;
+    data['payment_terms'] = paymentTerms;
+    data['payment_terms_label'] = paymentTermsLabel;
+    if (contactpersons != null) {
+      data['contactpersons'] = contactpersons!.map((v) => v.toJson()).toList();
     }
-    if (this.contactPersonsAssociated != null) {
+    if (contactPersonsAssociated != null) {
       data['contact_persons_associated'] =
-          this.contactPersonsAssociated!.map((v) => v.toJson()).toList();
+          contactPersonsAssociated!.map((v) => v.toJson()).toList();
     }
-    if (this.contact != null) {
-      data['contact'] = this.contact!.toJson();
+    if (contact != null) {
+      data['contact'] = contact!.toJson();
     }
-    if (this.paymentGateways != null) {
+    if (paymentGateways != null) {
       data['payment_gateways'] =
-          this.paymentGateways!.map((v) => v.toJson()).toList();
+          paymentGateways!.map((v) => v.toJson()).toList();
     }
-    data['can_send_in_mail'] = this.canSendInMail;
-    if (this.qrCode != null) {
-      data['qr_code'] = this.qrCode!.toJson();
+    data['can_send_in_mail'] = canSendInMail;
+    if (qrCode != null) {
+      data['qr_code'] = qrCode!.toJson();
     }
-    data['tds_calculation_type'] = this.tdsCalculationType;
-    data['total_retention_amount'] = this.totalRetentionAmount;
-    data['retention_override_preference'] = this.retentionOverridePreference;
-    data['roundoff_value'] = this.roundoffValue;
+    data['tds_calculation_type'] = tdsCalculationType;
+    data['total_retention_amount'] = totalRetentionAmount;
+    data['retention_override_preference'] = retentionOverridePreference;
+    data['roundoff_value'] = roundoffValue;
     return data;
   }
 }
@@ -628,26 +619,26 @@ class InvoiceItems {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['project_id'] = this.projectId;
-    data['item_id'] = this.itemId;
-    data['product_id'] = this.productId;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['unit'] = this.unit;
-    data['code'] = this.code;
-    data['subscription_id'] = this.subscriptionId;
-    data['account_id'] = this.accountId;
-    data['account_name'] = this.accountName;
-    data['price'] = this.price;
-    data['quantity'] = this.quantity;
-    data['discount_amount'] = this.discountAmount;
-    data['item_total'] = this.itemTotal;
-    data['tax_name'] = this.taxName;
-    data['tax_type'] = this.taxType;
-    data['tax_percentage'] = this.taxPercentage;
-    data['tax_id'] = this.taxId;
-    data['product_type'] = this.productType;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['project_id'] = projectId;
+    data['item_id'] = itemId;
+    data['product_id'] = productId;
+    data['name'] = name;
+    data['description'] = description;
+    data['unit'] = unit;
+    data['code'] = code;
+    data['subscription_id'] = subscriptionId;
+    data['account_id'] = accountId;
+    data['account_name'] = accountName;
+    data['price'] = price;
+    data['quantity'] = quantity;
+    data['discount_amount'] = discountAmount;
+    data['item_total'] = itemTotal;
+    data['tax_name'] = taxName;
+    data['tax_type'] = taxType;
+    data['tax_percentage'] = taxPercentage;
+    data['tax_id'] = taxId;
+    data['product_type'] = productType;
     return data;
   }
 }
@@ -664,9 +655,9 @@ class Taxes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tax_name'] = this.taxName;
-    data['tax_amount'] = this.taxAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['tax_name'] = taxName;
+    data['tax_amount'] = taxAmount;
     return data;
   }
 }
@@ -697,13 +688,13 @@ class Credits {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['creditnote_id'] = this.creditnoteId;
-    data['creditnotes_invoice_id'] = this.creditnotesInvoiceId;
-    data['creditnotes_number'] = this.creditnotesNumber;
-    data['invoice_id'] = this.invoiceId;
-    data['credited_date'] = this.creditedDate;
-    data['credited_amount'] = this.creditedAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['creditnote_id'] = creditnoteId;
+    data['creditnotes_invoice_id'] = creditnotesInvoiceId;
+    data['creditnotes_number'] = creditnotesNumber;
+    data['invoice_id'] = invoiceId;
+    data['credited_date'] = creditedDate;
+    data['credited_amount'] = creditedAmount;
     return data;
   }
 }
@@ -749,18 +740,18 @@ class BillingAddress {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['street'] = this.street;
-    data['address'] = this.address;
-    data['street2'] = this.street2;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['zip'] = this.zip;
-    data['country'] = this.country;
-    data['country_code'] = this.countryCode;
-    data['fax'] = this.fax;
-    data['phone'] = this.phone;
-    data['attention'] = this.attention;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['street'] = street;
+    data['address'] = address;
+    data['street2'] = street2;
+    data['city'] = city;
+    data['state'] = state;
+    data['zip'] = zip;
+    data['country'] = country;
+    data['country_code'] = countryCode;
+    data['fax'] = fax;
+    data['phone'] = phone;
+    data['attention'] = attention;
     return data;
   }
 }
@@ -777,9 +768,9 @@ class Subscriptions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['subscription_id'] = this.subscriptionId;
-    data['subscription_status'] = this.subscriptionStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['subscription_id'] = subscriptionId;
+    data['subscription_status'] = subscriptionStatus;
     return data;
   }
 }
@@ -807,12 +798,12 @@ class Contactpersons {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['contactperson_id'] = this.contactpersonId;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['mobile'] = this.mobile;
-    data['zcrm_contact_id'] = this.zcrmContactId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['contactperson_id'] = contactpersonId;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['mobile'] = mobile;
+    data['zcrm_contact_id'] = zcrmContactId;
     return data;
   }
 }
@@ -840,19 +831,19 @@ class ContactPersonsAssociated {
     contactPersonEmail = json['contact_person_email'];
     mobile = json['mobile'];
     communicationPreference = json['communication_preference'] != null
-        ? new CommunicationPreference.fromJson(json['communication_preference'])
+        ? CommunicationPreference.fromJson(json['communication_preference'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['contact_person_id'] = this.contactPersonId;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['contact_person_email'] = this.contactPersonEmail;
-    data['mobile'] = this.mobile;
-    if (this.communicationPreference != null) {
-      data['communication_preference'] = this.communicationPreference!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['contact_person_id'] = contactPersonId;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['contact_person_email'] = contactPersonEmail;
+    data['mobile'] = mobile;
+    if (communicationPreference != null) {
+      data['communication_preference'] = communicationPreference!.toJson();
     }
     return data;
   }
@@ -868,8 +859,8 @@ class CommunicationPreference {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['is_email_enabled'] = this.isEmailEnabled;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['is_email_enabled'] = isEmailEnabled;
     return data;
   }
 }
@@ -895,12 +886,12 @@ class Contact {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_balance'] = this.customerBalance;
-    data['credit_limit'] = this.creditLimit;
-    data['unused_customer_credits'] = this.unusedCustomerCredits;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['customer_balance'] = customerBalance;
+    data['credit_limit'] = creditLimit;
+    data['unused_customer_credits'] = unusedCustomerCredits;
     data['is_credit_limit_migration_completed'] =
-        this.isCreditLimitMigrationCompleted;
+        isCreditLimitMigrationCompleted;
     return data;
   }
 }
@@ -917,9 +908,9 @@ class PaymentGateways {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['payment_gateway'] = this.paymentGateway;
-    data['gateway_name'] = this.gatewayName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['payment_gateway'] = paymentGateway;
+    data['gateway_name'] = gatewayName;
     return data;
   }
 }
@@ -940,11 +931,11 @@ class QrCode {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['qr_source'] = this.qrSource;
-    data['is_qr_enabled'] = this.isQrEnabled;
-    data['qr_value'] = this.qrValue;
-    data['qr_description'] = this.qrDescription;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['qr_source'] = qrSource;
+    data['is_qr_enabled'] = isQrEnabled;
+    data['qr_value'] = qrValue;
+    data['qr_description'] = qrDescription;
     return data;
   }
 }

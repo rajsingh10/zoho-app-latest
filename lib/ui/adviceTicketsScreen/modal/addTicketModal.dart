@@ -111,8 +111,7 @@ class AddTicketModal {
     channel = json['channel'];
     onholdTime = json['onholdTime'];
     language = json['language'];
-    source =
-        json['source'] != null ? new Source.fromJson(json['source']) : null;
+    source = json['source'] != null ? Source.fromJson(json['source']) : null;
     resolution = json['resolution'];
     closedTime = json['closedTime'];
     approvalCount = json['approvalCount'];
@@ -145,7 +144,7 @@ class AddTicketModal {
     modifiedBy = json['modifiedBy'];
     email = json['email'];
     layoutDetails = json['layoutDetails'] != null
-        ? new LayoutDetails.fromJson(json['layoutDetails'])
+        ? LayoutDetails.fromJson(json['layoutDetails'])
         : null;
     channelCode = json['channelCode'];
     slaId = json['slaId'];
@@ -158,63 +157,63 @@ class AddTicketModal {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['modifiedTime'] = this.modifiedTime;
-    data['subCategory'] = this.subCategory;
-    data['statusType'] = this.statusType;
-    data['subject'] = this.subject;
-    data['dueDate'] = this.dueDate;
-    data['departmentId'] = this.departmentId;
-    data['channel'] = this.channel;
-    data['onholdTime'] = this.onholdTime;
-    data['language'] = this.language;
-    if (this.source != null) {
-      data['source'] = this.source!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['modifiedTime'] = modifiedTime;
+    data['subCategory'] = subCategory;
+    data['statusType'] = statusType;
+    data['subject'] = subject;
+    data['dueDate'] = dueDate;
+    data['departmentId'] = departmentId;
+    data['channel'] = channel;
+    data['onholdTime'] = onholdTime;
+    data['language'] = language;
+    if (source != null) {
+      data['source'] = source!.toJson();
     }
-    data['resolution'] = this.resolution;
-    data['closedTime'] = this.closedTime;
-    data['approvalCount'] = this.approvalCount;
-    data['isOverDue'] = this.isOverDue;
-    data['isTrashed'] = this.isTrashed;
-    data['createdTime'] = this.createdTime;
-    data['id'] = this.id;
-    data['isResponseOverdue'] = this.isResponseOverdue;
-    data['customerResponseTime'] = this.customerResponseTime;
-    data['productId'] = this.productId;
-    data['contactId'] = this.contactId;
-    data['threadCount'] = this.threadCount;
-    data['priority'] = this.priority;
-    data['classification'] = this.classification;
-    data['commentCount'] = this.commentCount;
-    data['taskCount'] = this.taskCount;
-    data['accountId'] = this.accountId;
-    data['phone'] = this.phone;
-    data['webUrl'] = this.webUrl;
-    data['isSpam'] = this.isSpam;
-    data['status'] = this.status;
-    data['ticketNumber'] = this.ticketNumber;
+    data['resolution'] = resolution;
+    data['closedTime'] = closedTime;
+    data['approvalCount'] = approvalCount;
+    data['isOverDue'] = isOverDue;
+    data['isTrashed'] = isTrashed;
+    data['createdTime'] = createdTime;
+    data['id'] = id;
+    data['isResponseOverdue'] = isResponseOverdue;
+    data['customerResponseTime'] = customerResponseTime;
+    data['productId'] = productId;
+    data['contactId'] = contactId;
+    data['threadCount'] = threadCount;
+    data['priority'] = priority;
+    data['classification'] = classification;
+    data['commentCount'] = commentCount;
+    data['taskCount'] = taskCount;
+    data['accountId'] = accountId;
+    data['phone'] = phone;
+    data['webUrl'] = webUrl;
+    data['isSpam'] = isSpam;
+    data['status'] = status;
+    data['ticketNumber'] = ticketNumber;
     // if (this.customFields != null) {
     //   data['customFields'] = this.customFields!.toJson();
     // }
-    data['isArchived'] = this.isArchived;
-    data['description'] = this.description;
-    data['timeEntryCount'] = this.timeEntryCount;
-    data['channelRelatedInfo'] = this.channelRelatedInfo;
-    data['responseDueDate'] = this.responseDueDate;
-    data['isDeleted'] = this.isDeleted;
-    data['modifiedBy'] = this.modifiedBy;
-    data['email'] = this.email;
-    if (this.layoutDetails != null) {
-      data['layoutDetails'] = this.layoutDetails!.toJson();
+    data['isArchived'] = isArchived;
+    data['description'] = description;
+    data['timeEntryCount'] = timeEntryCount;
+    data['channelRelatedInfo'] = channelRelatedInfo;
+    data['responseDueDate'] = responseDueDate;
+    data['isDeleted'] = isDeleted;
+    data['modifiedBy'] = modifiedBy;
+    data['email'] = email;
+    if (layoutDetails != null) {
+      data['layoutDetails'] = layoutDetails!.toJson();
     }
-    data['channelCode'] = this.channelCode;
-    data['slaId'] = this.slaId;
-    data['layoutId'] = this.layoutId;
-    data['assigneeId'] = this.assigneeId;
-    data['teamId'] = this.teamId;
-    data['attachmentCount'] = this.attachmentCount;
-    data['isEscalated'] = this.isEscalated;
-    data['category'] = this.category;
+    data['channelCode'] = channelCode;
+    data['slaId'] = slaId;
+    data['layoutId'] = layoutId;
+    data['assigneeId'] = assigneeId;
+    data['teamId'] = teamId;
+    data['attachmentCount'] = attachmentCount;
+    data['isEscalated'] = isEscalated;
+    data['category'] = category;
     return data;
   }
 }
@@ -238,12 +237,12 @@ class Source {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['appName'] = this.appName;
-    data['extId'] = this.extId;
-    data['permalink'] = this.permalink;
-    data['type'] = this.type;
-    data['appPhotoURL'] = this.appPhotoURL;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['appName'] = appName;
+    data['extId'] = extId;
+    data['permalink'] = permalink;
+    data['type'] = type;
+    data['appPhotoURL'] = appPhotoURL;
     return data;
   }
 }
@@ -274,9 +273,9 @@ class LayoutDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['layoutName'] = this.layoutName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['layoutName'] = layoutName;
     return data;
   }
 }

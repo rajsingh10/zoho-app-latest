@@ -80,7 +80,7 @@ class _marketingAgencyFindOutMorePageScreenState
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -103,7 +103,7 @@ class _marketingAgencyFindOutMorePageScreenState
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -132,7 +132,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                 horizontal: 2.w, vertical: 2.h),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xff232f3f)),
+                                color: const Color(0xff232f3f)),
                             child: Row(
                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -147,7 +147,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                        gradient: LinearGradient(
+                                        gradient: const LinearGradient(
                                           colors: [
                                             Color(0xFF00B4DB),
                                             Color(0xFF38EF7D)
@@ -203,7 +203,7 @@ class _marketingAgencyFindOutMorePageScreenState
                             padding: EdgeInsets.symmetric(
                                 vertical: 3.h, horizontal: 1.w),
                             decoration: BoxDecoration(
-                              color: Color(0xffE7E6E6),
+                              color: const Color(0xffE7E6E6),
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Row(
@@ -257,7 +257,7 @@ class _marketingAgencyFindOutMorePageScreenState
                             width: 96.w,
                             padding: EdgeInsets.symmetric(vertical: 1.h),
                             decoration: BoxDecoration(
-                              color: Color(0xffE7E6E6),
+                              color: const Color(0xffE7E6E6),
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Row(
@@ -319,7 +319,7 @@ class _marketingAgencyFindOutMorePageScreenState
                             margin: EdgeInsets.symmetric(horizontal: 2.w),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Color(0xffe9e7e7),
+                              color: const Color(0xffe9e7e7),
                             ),
                             child: Stack(
                               children: [
@@ -385,7 +385,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                       width: Device.width,
                                       margin:
                                           EdgeInsets.symmetric(horizontal: 2.w),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: Color(0xff232f3f)),
                                     ),
                                   ],
@@ -415,7 +415,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                               scale: 30),
                                         ),
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
 
                                       // Horizontal Plans List
                                       Expanded(
@@ -436,9 +436,10 @@ class _marketingAgencyFindOutMorePageScreenState
                                                           .size
                                                           .width *
                                                       .65,
-                                                  margin: EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                                  padding: EdgeInsets.all(16),
+                                                  margin: const EdgeInsets
+                                                      .symmetric(horizontal: 8),
+                                                  padding:
+                                                      const EdgeInsets.all(16),
                                                   decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
@@ -528,11 +529,11 @@ class _marketingAgencyFindOutMorePageScreenState
                                                             InkWell(
                                                               onTap: () {
                                                                 Get.to(
-                                                                  marketingAgencyJoinTodayPageScreen(),
+                                                                  const marketingAgencyJoinTodayPageScreen(),
                                                                   transition:
                                                                       Transition
                                                                           .rightToLeft,
-                                                                  duration: Duration(
+                                                                  duration: const Duration(
                                                                       milliseconds:
                                                                           250),
                                                                 );
@@ -575,7 +576,8 @@ class _marketingAgencyFindOutMorePageScreenState
                                                         SizedBox(
                                                           height: 1.h,
                                                         ),
-                                                        SizedBox(height: 10),
+                                                        const SizedBox(
+                                                            height: 10),
                                                         ...List.generate(
                                                             (plan["features"]
                                                                     as List)
@@ -583,11 +585,12 @@ class _marketingAgencyFindOutMorePageScreenState
                                                             (fIndex) {
                                                           return Row(
                                                             children: [
-                                                              Icon(Icons.check,
+                                                              const Icon(
+                                                                  Icons.check,
                                                                   color: AppColors
                                                                       .blackColor,
                                                                   size: 16),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                   width: 4),
                                                               Expanded(
                                                                 child: Text(
@@ -617,7 +620,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                             )),
                                       ),
 
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
 
                                       // Right fixed button
                                       InkWell(

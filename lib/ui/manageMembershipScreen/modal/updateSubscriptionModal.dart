@@ -9,16 +9,16 @@ class UpdateSubscriptionModal {
     code = json['code'];
     message = json['message'];
     hostedpage = json['hostedpage'] != null
-        ? new Hostedpage.fromJson(json['hostedpage'])
+        ? Hostedpage.fromJson(json['hostedpage'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.hostedpage != null) {
-      data['hostedpage'] = this.hostedpage!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (hostedpage != null) {
+      data['hostedpage'] = hostedpage!.toJson();
     }
     return data;
   }
@@ -53,14 +53,14 @@ class Hostedpage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['hostedpage_id'] = this.hostedpageId;
-    data['decrypted_hosted_page_id'] = this.decryptedHostedPageId;
-    data['status'] = this.status;
-    data['url'] = this.url;
-    data['action'] = this.action;
-    data['expiring_time'] = this.expiringTime;
-    data['created_time'] = this.createdTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['hostedpage_id'] = hostedpageId;
+    data['decrypted_hosted_page_id'] = decryptedHostedPageId;
+    data['status'] = status;
+    data['url'] = url;
+    data['action'] = action;
+    data['expiring_time'] = expiringTime;
+    data['created_time'] = createdTime;
     return data;
   }
 }

@@ -104,7 +104,7 @@ class _AppTextFieldState extends State<AppTextField> {
             keyboardType: widget.textInputType,
             controller: widget.controller,
             validator: widget.validator,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: FontFamily.regular,
             ),
             inputFormatters: [
@@ -134,7 +134,7 @@ class _AppTextFieldState extends State<AppTextField> {
               fillColor: AppColors.whiteColor,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(3.w),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: AppColors.border,
@@ -151,7 +151,7 @@ class _AppTextFieldState extends State<AppTextField> {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(3.w),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: AppColors.border,
@@ -159,7 +159,7 @@ class _AppTextFieldState extends State<AppTextField> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(3.w),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: AppColors.blackColor,

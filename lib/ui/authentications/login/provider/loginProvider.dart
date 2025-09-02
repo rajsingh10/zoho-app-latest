@@ -69,9 +69,9 @@ class LoginProvider extends ChangeNotifier {
 
   Future<http.Response> contackid(email) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
-    String url = "https://desk.zoho.eu/api/v1/contacts/search?email=${email}";
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url = "https://desk.zoho.eu/api/v1/contacts/search?email=$email";
     print(url);
 
     var responseJson;

@@ -95,7 +95,7 @@ class CreateContractModal {
     ownerId = json['ownerId'];
     accountId = json['accountId'];
     layoutDetails = json['layoutDetails'] != null
-        ? new LayoutDetails.fromJson(json['layoutDetails'])
+        ? LayoutDetails.fromJson(json['layoutDetails'])
         : null;
     isTrashed = json['isTrashed'];
     isSpam = json['isSpam'];
@@ -106,51 +106,51 @@ class CreateContractModal {
     isDeleted = json['isDeleted'];
     photoURL = json['photoURL'];
     customerHappiness = json['customerHappiness'] != null
-        ? new CustomerHappiness.fromJson(json['customerHappiness'])
+        ? CustomerHappiness.fromJson(json['customerHappiness'])
         : null;
     webUrl = json['webUrl'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['layoutId'] = this.layoutId;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['facebook'] = this.facebook;
-    data['twitter'] = this.twitter;
-    data['accountCount'] = this.accountCount;
-    data['email'] = this.email;
-    data['secondaryEmail'] = this.secondaryEmail;
-    data['mobile'] = this.mobile;
-    data['phone'] = this.phone;
-    data['city'] = this.city;
-    data['country'] = this.country;
-    data['state'] = this.state;
-    data['street'] = this.street;
-    data['zip'] = this.zip;
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['type'] = this.type;
-    data['createdTime'] = this.createdTime;
-    data['modifiedTime'] = this.modifiedTime;
-    data['ownerId'] = this.ownerId;
-    data['accountId'] = this.accountId;
-    if (this.layoutDetails != null) {
-      data['layoutDetails'] = this.layoutDetails!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['layoutId'] = layoutId;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['facebook'] = facebook;
+    data['twitter'] = twitter;
+    data['accountCount'] = accountCount;
+    data['email'] = email;
+    data['secondaryEmail'] = secondaryEmail;
+    data['mobile'] = mobile;
+    data['phone'] = phone;
+    data['city'] = city;
+    data['country'] = country;
+    data['state'] = state;
+    data['street'] = street;
+    data['zip'] = zip;
+    data['description'] = description;
+    data['title'] = title;
+    data['type'] = type;
+    data['createdTime'] = createdTime;
+    data['modifiedTime'] = modifiedTime;
+    data['ownerId'] = ownerId;
+    data['accountId'] = accountId;
+    if (layoutDetails != null) {
+      data['layoutDetails'] = layoutDetails!.toJson();
     }
-    data['isTrashed'] = this.isTrashed;
-    data['isSpam'] = this.isSpam;
-    data['isFollowing'] = this.isFollowing;
-    data['zohoCRMContact'] = this.zohoCRMContact;
-    data['isAnonymous'] = this.isAnonymous;
-    data['isEndUser'] = this.isEndUser;
-    data['isDeleted'] = this.isDeleted;
-    data['photoURL'] = this.photoURL;
-    if (this.customerHappiness != null) {
-      data['customerHappiness'] = this.customerHappiness!.toJson();
+    data['isTrashed'] = isTrashed;
+    data['isSpam'] = isSpam;
+    data['isFollowing'] = isFollowing;
+    data['zohoCRMContact'] = zohoCRMContact;
+    data['isAnonymous'] = isAnonymous;
+    data['isEndUser'] = isEndUser;
+    data['isDeleted'] = isDeleted;
+    data['photoURL'] = photoURL;
+    if (customerHappiness != null) {
+      data['customerHappiness'] = customerHappiness!.toJson();
     }
-    data['webUrl'] = this.webUrl;
+    data['webUrl'] = webUrl;
     return data;
   }
 }
@@ -167,9 +167,9 @@ class LayoutDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['layoutName'] = this.layoutName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['layoutName'] = layoutName;
     return data;
   }
 }
@@ -189,10 +189,10 @@ class CustomerHappiness {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['badPercentage'] = this.badPercentage;
-    data['okPercentage'] = this.okPercentage;
-    data['goodPercentage'] = this.goodPercentage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['badPercentage'] = badPercentage;
+    data['okPercentage'] = okPercentage;
+    data['goodPercentage'] = goodPercentage;
     return data;
   }
 }

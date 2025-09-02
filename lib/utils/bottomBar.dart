@@ -162,8 +162,8 @@ class _AppBottombarState extends State<AppBottombar> {
       StatefulBuilder(
         builder: (context, setState) {
           return Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
@@ -174,7 +174,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(null),
+                    const Icon(null),
                     Text(
                       "Select Support Department",
                       style: TextStyle(
@@ -335,8 +335,8 @@ class _AppBottombarState extends State<AppBottombar> {
       StatefulBuilder(
         builder: (context, setState) {
           return Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
@@ -347,7 +347,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(null),
+                    const Icon(null),
                     Text(
                       "Select Support Department",
                       style: TextStyle(
@@ -473,7 +473,7 @@ class _AppBottombarState extends State<AppBottombar> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.whiteColor,
       ),
       height: Platform.isAndroid ? 13.h : 14.h,
@@ -488,7 +488,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 setState(() {
                   selected = 1;
                 });
-                Get.offAll(() => Homescreen());
+                Get.offAll(() => const Homescreen());
               }
             },
             child: Column(
@@ -520,7 +520,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 setState(() {
                   selected = 2;
                 });
-                Get.offAll(() => manageMembershipScreen());
+                Get.offAll(() => const manageMembershipScreen());
               }
             },
             child: Column(
@@ -576,7 +576,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 setState(() {
                   selected = 4;
                 });
-                Get.offAll(adviceTicketsScreen());
+                Get.offAll(const adviceTicketsScreen());
               }
             },
             child: Column(
@@ -648,7 +648,7 @@ class _AppBottombarState extends State<AppBottombar> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
@@ -670,7 +670,7 @@ class _AppBottombarState extends State<AppBottombar> {
                           alignment: Alignment.centerRight,
                           child: InkWell(
                             onTap: () => Get.back(),
-                            child: Icon(CupertinoIcons.clear),
+                            child: const Icon(CupertinoIcons.clear),
                           ),
                         ),
                         SizedBox(
@@ -680,13 +680,13 @@ class _AppBottombarState extends State<AppBottombar> {
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4),
                           children: [
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(TheAdviceCentreAcademyScreen());
+                                Get.to(const TheAdviceCentreAcademyScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -712,7 +712,7 @@ class _AppBottombarState extends State<AppBottombar> {
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(partnersScreen());
+                                Get.to(const partnersScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -738,7 +738,7 @@ class _AppBottombarState extends State<AppBottombar> {
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(BillsnPaymentsscreen());
+                                Get.to(const BillsnPaymentsscreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -842,7 +842,7 @@ class _AppBottombarState extends State<AppBottombar> {
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(DemandServicesScreen());
+                                Get.to(const DemandServicesScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -868,7 +868,7 @@ class _AppBottombarState extends State<AppBottombar> {
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(moreScreen());
+                                Get.to(const moreScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -894,7 +894,7 @@ class _AppBottombarState extends State<AppBottombar> {
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(PersonalDetailsScreen());
+                                Get.to(const PersonalDetailsScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -920,7 +920,7 @@ class _AppBottombarState extends State<AppBottombar> {
                             GestureDetector(
                               onTap: () {
                                 Get.back();
-                                Get.to(FormsApprovalScreen());
+                                Get.to(const FormsApprovalScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -959,19 +959,19 @@ class _AppBottombarState extends State<AppBottombar> {
                                       ),
                                       actions: [
                                         CupertinoDialogAction(
-                                          child: Text('No'),
+                                          child: const Text('No'),
                                           onPressed: () {
                                             Get.back();
                                           },
                                         ),
                                         CupertinoDialogAction(
-                                          child: Text('Yes'),
                                           isDestructiveAction: true,
                                           onPressed: () {
                                             SaveAuthtokenData.clearUserData();
                                             SaveDataLocal.clearUserData();
-                                            Get.offAll(LandingScreen());
+                                            Get.offAll(const LandingScreen());
                                           },
+                                          child: const Text('Yes'),
                                         ),
                                       ],
                                     );

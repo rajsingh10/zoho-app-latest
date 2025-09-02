@@ -35,7 +35,7 @@ class _webViewAssociatesState extends State<webViewAssociates> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -58,7 +58,7 @@ class _webViewAssociatesState extends State<webViewAssociates> {
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -73,7 +73,7 @@ class _webViewAssociatesState extends State<webViewAssociates> {
                 children: [
                   InAppWebView(
                     initialUrlRequest: URLRequest(
-                      url: WebUri.uri(Uri.parse('${widget.link}')),
+                      url: WebUri.uri(Uri.parse(widget.link)),
                     ),
                     onWebViewCreated: (controller) {
                       webViewController = controller;
@@ -87,7 +87,7 @@ class _webViewAssociatesState extends State<webViewAssociates> {
                   if (_isLoading)
                     Container(
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.orangeColor,
                         ),

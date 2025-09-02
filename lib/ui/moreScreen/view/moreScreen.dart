@@ -27,13 +27,14 @@ class _moreScreenState extends State<moreScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
               width: Device.width,
-              decoration: BoxDecoration(color: AppColors.alternativeBlueColor),
+              decoration:
+                  const BoxDecoration(color: AppColors.alternativeBlueColor),
               child: Column(
                 children: [
                   SizedBox(
@@ -56,7 +57,7 @@ class _moreScreenState extends State<moreScreen> {
                         scale: 5.5,
                         color: AppColors.whiteColor,
                       ),
-                      Icon(null)
+                      const Icon(null)
                     ],
                   ),
                 ],
@@ -87,7 +88,7 @@ class _moreScreenState extends State<moreScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -118,7 +119,7 @@ class _moreScreenState extends State<moreScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -148,7 +149,7 @@ class _moreScreenState extends State<moreScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -179,7 +180,7 @@ class _moreScreenState extends State<moreScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.5,
                     color: AppColors.blackColor,
                   ),
@@ -203,19 +204,19 @@ class _moreScreenState extends State<moreScreen> {
                               ),
                               actions: [
                                 CupertinoDialogAction(
-                                  child: Text('No'),
+                                  child: const Text('No'),
                                   onPressed: () {
                                     Get.back();
                                   },
                                 ),
                                 CupertinoDialogAction(
-                                  child: Text('Yes'),
                                   isDestructiveAction: true,
                                   onPressed: () {
                                     SaveAuthtokenData.clearUserData();
                                     SaveDataLocal.clearUserData();
-                                    Get.offAll(LandingScreen());
+                                    Get.offAll(const LandingScreen());
                                   },
+                                  child: const Text('Yes'),
                                 ),
                               ],
                             );

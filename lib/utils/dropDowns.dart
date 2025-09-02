@@ -96,15 +96,16 @@ class AppDropdownField<T> extends StatelessWidget {
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(3.w),
-              borderSide: BorderSide(width: 1.5, color: AppColors.border),
+              borderSide: const BorderSide(width: 1.5, color: AppColors.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(3.w),
-              borderSide: BorderSide(width: 1.5, color: AppColors.border),
+              borderSide: const BorderSide(width: 1.5, color: AppColors.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(3.w),
-              borderSide: BorderSide(width: 1.5, color: AppColors.blackColor),
+              borderSide:
+                  const BorderSide(width: 1.5, color: AppColors.blackColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(3.w),

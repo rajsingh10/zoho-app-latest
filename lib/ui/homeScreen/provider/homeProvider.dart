@@ -13,8 +13,8 @@ import '../../../../ApiCalling/response.dart';
 class HomeProvider extends ChangeNotifier {
   Future<http.Response> subscriptionsViewApi() async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
     String url =
         "${apiEndpoints.subscriptionsCustomeridApi}${userData?.data?[0].customerId}";
     print(url);
@@ -43,11 +43,11 @@ class HomeProvider extends ChangeNotifier {
 
   Future<http.Response> Viewalltikit() async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
+    log('Api Header Data = $headers');
     String? storedId = await getId();
     print("Stored ID =====>>> $storedId");
-    print("header pass====>>>${headers}");
-    String url = "https://desk.zoho.eu/api/v1/contacts/${storedId}/tickets";
+    print("header pass====>>>$headers");
+    String url = "https://desk.zoho.eu/api/v1/contacts/$storedId/tickets";
     print(url);
 
     var responseJson;
@@ -68,10 +68,10 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<http.Response> planDetailsApi(plancode) async {
-    String url = apiEndpoints.planDetailsApi + "$plancode";
+    String url = "${apiEndpoints.planDetailsApi}$plancode";
     print(url);
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
+    log('Api Header Data = $headers');
     var responseJson;
     final response = await http
         .get(
@@ -90,7 +90,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<http.Response> getTimeEntryApi(id) async {
-    String url = apiEndpoints.tickets + "/${id}/timeEntry";
+    String url = "${apiEndpoints.tickets}/$id/timeEntry";
     print("API URL: $url");
 
     Map<String, String> headers = await apiConfig.getAuthHeader();
@@ -152,7 +152,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<http.Response> getCard(id) async {
-    String url = apiEndpoints.registerApi + "/${id}/cards";
+    String url = "${apiEndpoints.registerApi}/$id/cards";
     print("API URL: $url");
 
     Map<String, String> headers = await apiConfig.getAuthHeader();

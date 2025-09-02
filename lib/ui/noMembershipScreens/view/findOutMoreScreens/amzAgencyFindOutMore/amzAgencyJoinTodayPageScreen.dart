@@ -24,7 +24,7 @@ class _amzAgencyJoinTodayPageScreenState
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -47,7 +47,7 @@ class _amzAgencyJoinTodayPageScreenState
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -72,7 +72,7 @@ class _amzAgencyJoinTodayPageScreenState
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff232f3f)),
+                            color: const Color(0xff232f3f)),
                         child: Row(
                           children: [
                             Image.asset(
@@ -102,10 +102,10 @@ class _amzAgencyJoinTodayPageScreenState
                             horizontal: 5.w, vertical: 2.h),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xffe9e7e7)),
+                            color: const Color(0xffe9e7e7)),
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 1.h),
-                          decoration: BoxDecoration(color: Colors.white),
+                          decoration: const BoxDecoration(color: Colors.white),
                           child: Column(
                             children: [
                               Padding(
@@ -227,7 +227,8 @@ class _amzAgencyJoinTodayPageScreenState
                                 ),
                               ),
                               SizedBox(height: 1.h),
-                              Divider(color: Color(0xfffe7eef5), thickness: 1),
+                              const Divider(
+                                  color: Color(0xfffe7eef5), thickness: 1),
                               SizedBox(height: 1.h),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 2.w),
@@ -328,7 +329,8 @@ class _amzAgencyJoinTodayPageScreenState
                                 ),
                               ),
                               SizedBox(height: 1.h),
-                              Divider(color: Color(0xfffe7eef5), thickness: 1),
+                              const Divider(
+                                  color: Color(0xfffe7eef5), thickness: 1),
                               SizedBox(height: 1.h),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 2.w),

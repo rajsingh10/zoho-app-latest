@@ -12,23 +12,23 @@ class GetCardModal {
     if (json['cards'] != null) {
       cards = <Cards>[];
       json['cards'].forEach((v) {
-        cards!.add(new Cards.fromJson(v));
+        cards!.add(Cards.fromJson(v));
       });
     }
     pageContext = json['page_context'] != null
-        ? new PageContext.fromJson(json['page_context'])
+        ? PageContext.fromJson(json['page_context'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.cards != null) {
-      data['cards'] = this.cards!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (cards != null) {
+      data['cards'] = cards!.map((v) => v.toJson()).toList();
     }
-    if (this.pageContext != null) {
-      data['page_context'] = this.pageContext!.toJson();
+    if (pageContext != null) {
+      data['page_context'] = pageContext!.toJson();
     }
     return data;
   }
@@ -78,19 +78,19 @@ class Cards {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['card_id'] = this.cardId;
-    data['customer_id'] = this.customerId;
-    data['status'] = this.status;
-    data['last_four_digits'] = this.lastFourDigits;
-    data['expiry_month'] = this.expiryMonth;
-    data['expiry_year'] = this.expiryYear;
-    data['funding'] = this.funding;
-    data['payment_gateway'] = this.paymentGateway;
-    data['created_time'] = this.createdTime;
-    data['updated_time'] = this.updatedTime;
-    data['is_primary'] = this.isPrimary;
-    data['is_backup'] = this.isBackup;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['card_id'] = cardId;
+    data['customer_id'] = customerId;
+    data['status'] = status;
+    data['last_four_digits'] = lastFourDigits;
+    data['expiry_month'] = expiryMonth;
+    data['expiry_year'] = expiryYear;
+    data['funding'] = funding;
+    data['payment_gateway'] = paymentGateway;
+    data['created_time'] = createdTime;
+    data['updated_time'] = updatedTime;
+    data['is_primary'] = isPrimary;
+    data['is_backup'] = isBackup;
     return data;
   }
 }
@@ -118,12 +118,12 @@ class PageContext {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['has_more_page'] = this.hasMorePage;
-    data['sort_column'] = this.sortColumn;
-    data['sort_order'] = this.sortOrder;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['per_page'] = perPage;
+    data['has_more_page'] = hasMorePage;
+    data['sort_column'] = sortColumn;
+    data['sort_order'] = sortOrder;
     return data;
   }
 }

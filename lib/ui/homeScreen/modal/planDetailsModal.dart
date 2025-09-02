@@ -12,23 +12,23 @@ class PlanDetailsModal {
     if (json['plans'] != null) {
       plans = <Plans>[];
       json['plans'].forEach((v) {
-        plans!.add(new Plans.fromJson(v));
+        plans!.add(Plans.fromJson(v));
       });
     }
     pageContext = json['page_context'] != null
-        ? new PageContext.fromJson(json['page_context'])
+        ? PageContext.fromJson(json['page_context'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
-    if (this.plans != null) {
-      data['plans'] = this.plans!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['message'] = message;
+    if (plans != null) {
+      data['plans'] = plans!.map((v) => v.toJson()).toList();
     }
-    if (this.pageContext != null) {
-      data['page_context'] = this.pageContext!.toJson();
+    if (pageContext != null) {
+      data['page_context'] = pageContext!.toJson();
     }
     return data;
   }
@@ -158,7 +158,7 @@ class Plans {
     if (json['price_brackets'] != null) {
       priceBrackets = <PriceBrackets>[];
       json['price_brackets'].forEach((v) {
-        priceBrackets!.add(new PriceBrackets.fromJson(v));
+        priceBrackets!.add(PriceBrackets.fromJson(v));
       });
     }
     unit = json['unit'];
@@ -187,65 +187,63 @@ class Plans {
     if (json['custom_fields'] != null) {
       customFields = <CustomFields>[];
       json['custom_fields'].forEach((v) {
-        customFields!.add(new CustomFields.fromJson(v));
+        customFields!.add(CustomFields.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['plan_code'] = this.planCode;
-    data['plan_id'] = this.planId;
-    data['name'] = this.name;
-    data['product_name'] = this.productName;
-    data['billing_mode'] = this.billingMode;
-    data['description'] = this.description;
-    data['status'] = this.status;
-    data['status_formatted'] = this.statusFormatted;
-    data['product_id'] = this.productId;
-    data['tax_id'] = this.taxId;
-    data['tax_name'] = this.taxName;
-    data['tax_percentage'] = this.taxPercentage;
-    data['tax_type'] = this.taxType;
-    data['trial_period'] = this.trialPeriod;
-    data['setup_fee'] = this.setupFee;
-    data['setup_fee_account_id'] = this.setupFeeAccountId;
-    data['setup_fee_account_name'] = this.setupFeeAccountName;
-    data['account_id'] = this.accountId;
-    data['account'] = this.account;
-    data['recurring_price'] = this.recurringPrice;
-    data['pricing_scheme'] = this.pricingScheme;
-    data['pricing_scheme_formatted'] = this.pricingSchemeFormatted;
-    if (this.priceBrackets != null) {
-      data['price_brackets'] =
-          this.priceBrackets!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['plan_code'] = planCode;
+    data['plan_id'] = planId;
+    data['name'] = name;
+    data['product_name'] = productName;
+    data['billing_mode'] = billingMode;
+    data['description'] = description;
+    data['status'] = status;
+    data['status_formatted'] = statusFormatted;
+    data['product_id'] = productId;
+    data['tax_id'] = taxId;
+    data['tax_name'] = taxName;
+    data['tax_percentage'] = taxPercentage;
+    data['tax_type'] = taxType;
+    data['trial_period'] = trialPeriod;
+    data['setup_fee'] = setupFee;
+    data['setup_fee_account_id'] = setupFeeAccountId;
+    data['setup_fee_account_name'] = setupFeeAccountName;
+    data['account_id'] = accountId;
+    data['account'] = account;
+    data['recurring_price'] = recurringPrice;
+    data['pricing_scheme'] = pricingScheme;
+    data['pricing_scheme_formatted'] = pricingSchemeFormatted;
+    if (priceBrackets != null) {
+      data['price_brackets'] = priceBrackets!.map((v) => v.toJson()).toList();
     }
-    data['unit'] = this.unit;
-    data['interval'] = this.interval;
-    data['interval_unit'] = this.intervalUnit;
-    data['interval_unit_formatted'] = this.intervalUnitFormatted;
-    data['is_usage_enabled'] = this.isUsageEnabled;
-    data['billing_cycles'] = this.billingCycles;
-    data['product_type'] = this.productType;
-    data['show_in_widget'] = this.showInWidget;
-    data['store_description'] = this.storeDescription;
-    data['store_markup_description'] = this.storeMarkupDescription;
-    data['url'] = this.url;
-    data['image_id'] = this.imageId;
-    data['shipping_interval'] = this.shippingInterval;
-    data['shipping_interval_unit'] = this.shippingIntervalUnit;
-    data['group_name'] = this.groupName;
-    data['internal_name'] = this.internalName;
-    data['is_free_plan'] = this.isFreePlan;
-    data['created_time'] = this.createdTime;
-    data['created_time_formatted'] = this.createdTimeFormatted;
-    data['created_at'] = this.createdAt;
-    data['created_at_formatted'] = this.createdAtFormatted;
-    data['updated_time'] = this.updatedTime;
-    data['updated_time_formatted'] = this.updatedTimeFormatted;
-    if (this.customFields != null) {
-      data['custom_fields'] =
-          this.customFields!.map((v) => v.toJson()).toList();
+    data['unit'] = unit;
+    data['interval'] = interval;
+    data['interval_unit'] = intervalUnit;
+    data['interval_unit_formatted'] = intervalUnitFormatted;
+    data['is_usage_enabled'] = isUsageEnabled;
+    data['billing_cycles'] = billingCycles;
+    data['product_type'] = productType;
+    data['show_in_widget'] = showInWidget;
+    data['store_description'] = storeDescription;
+    data['store_markup_description'] = storeMarkupDescription;
+    data['url'] = url;
+    data['image_id'] = imageId;
+    data['shipping_interval'] = shippingInterval;
+    data['shipping_interval_unit'] = shippingIntervalUnit;
+    data['group_name'] = groupName;
+    data['internal_name'] = internalName;
+    data['is_free_plan'] = isFreePlan;
+    data['created_time'] = createdTime;
+    data['created_time_formatted'] = createdTimeFormatted;
+    data['created_at'] = createdAt;
+    data['created_at_formatted'] = createdAtFormatted;
+    data['updated_time'] = updatedTime;
+    data['updated_time_formatted'] = updatedTimeFormatted;
+    if (customFields != null) {
+      data['custom_fields'] = customFields!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -261,8 +259,8 @@ class PriceBrackets {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['price'] = this.price;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['price'] = price;
     return data;
   }
 }
@@ -329,25 +327,25 @@ class CustomFields {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['field_id'] = this.fieldId;
-    data['customfield_id'] = this.customfieldId;
-    data['show_in_store'] = this.showInStore;
-    data['show_in_portal'] = this.showInPortal;
-    data['is_active'] = this.isActive;
-    data['index'] = this.index;
-    data['label'] = this.label;
-    data['show_on_pdf'] = this.showOnPdf;
-    data['edit_on_portal'] = this.editOnPortal;
-    data['edit_on_store'] = this.editOnStore;
-    data['api_name'] = this.apiName;
-    data['show_in_all_pdf'] = this.showInAllPdf;
-    data['value_formatted'] = this.valueFormatted;
-    data['search_entity'] = this.searchEntity;
-    data['data_type'] = this.dataType;
-    data['placeholder'] = this.placeholder;
-    data['value'] = this.value;
-    data['is_dependent_field'] = this.isDependentField;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['field_id'] = fieldId;
+    data['customfield_id'] = customfieldId;
+    data['show_in_store'] = showInStore;
+    data['show_in_portal'] = showInPortal;
+    data['is_active'] = isActive;
+    data['index'] = index;
+    data['label'] = label;
+    data['show_on_pdf'] = showOnPdf;
+    data['edit_on_portal'] = editOnPortal;
+    data['edit_on_store'] = editOnStore;
+    data['api_name'] = apiName;
+    data['show_in_all_pdf'] = showInAllPdf;
+    data['value_formatted'] = valueFormatted;
+    data['search_entity'] = searchEntity;
+    data['data_type'] = dataType;
+    data['placeholder'] = placeholder;
+    data['value'] = value;
+    data['is_dependent_field'] = isDependentField;
     return data;
   }
 }
@@ -380,22 +378,21 @@ class PageContext {
     if (json['search_criteria'] != null) {
       searchCriteria = <SearchCriteria>[];
       json['search_criteria'].forEach((v) {
-        searchCriteria!.add(new SearchCriteria.fromJson(v));
+        searchCriteria!.add(SearchCriteria.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['has_more_page'] = this.hasMorePage;
-    data['applied_filter'] = this.appliedFilter;
-    data['sort_column'] = this.sortColumn;
-    data['sort_order'] = this.sortOrder;
-    if (this.searchCriteria != null) {
-      data['search_criteria'] =
-          this.searchCriteria!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['per_page'] = perPage;
+    data['has_more_page'] = hasMorePage;
+    data['applied_filter'] = appliedFilter;
+    data['sort_column'] = sortColumn;
+    data['sort_order'] = sortOrder;
+    if (searchCriteria != null) {
+      data['search_criteria'] = searchCriteria!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -421,11 +418,11 @@ class SearchCriteria {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['column_name'] = this.columnName;
-    data['search_text'] = this.searchText;
-    data['search_text_formatted'] = this.searchTextFormatted;
-    data['comparator'] = this.comparator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['column_name'] = columnName;
+    data['search_text'] = searchText;
+    data['search_text_formatted'] = searchTextFormatted;
+    data['comparator'] = comparator;
     return data;
   }
 }

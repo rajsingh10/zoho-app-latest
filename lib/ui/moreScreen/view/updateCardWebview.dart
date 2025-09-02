@@ -34,7 +34,7 @@ class _UpdateCardWebVewState extends State<UpdateCardWebVew> {
     Future.delayed(const Duration(seconds: 1), () {
       Get.back();
       Get.back();
-      Get.to(PersonalDetailsScreen());
+      Get.to(const PersonalDetailsScreen());
     });
   }
 
@@ -47,7 +47,7 @@ class _UpdateCardWebVewState extends State<UpdateCardWebVew> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(height: 5.h),
@@ -138,7 +138,7 @@ class _UpdateCardWebVewState extends State<UpdateCardWebVew> {
                   if (_isLoading)
                     Container(
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.orangeColor,
                         ),

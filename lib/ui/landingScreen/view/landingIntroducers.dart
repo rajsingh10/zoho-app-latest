@@ -21,7 +21,7 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      body: Container(
+      body: SizedBox(
         height: Device.height,
         width: Device.width,
         child: Stack(
@@ -82,9 +82,9 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.offAll(Nomembershomescreen());
+                          Get.offAll(const Nomembershomescreen());
                         },
-                        child: Text(
+                        child: const Text(
                           'Looking for Expert Advice?',
                           style: TextStyle(
                               color: AppColors.whiteColor,
@@ -95,9 +95,9 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.offAll(Nomembershomescreen());
+                      Get.offAll(const Nomembershomescreen());
                     },
-                    child: Text(
+                    child: const Text(
                       'Return to the Dashboard here',
                       style: TextStyle(
                           color: AppColors.whiteColor,
@@ -110,7 +110,7 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
             Positioned(
               top: 36.h,
               left: 3.w,
-              child: Container(
+              child: SizedBox(
                 height: 90.w,
                 width: 87.w,
                 child: Container(
@@ -124,7 +124,7 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
                       fontSize: 22.sp,
                       shadows: [
                         Shadow(
-                          offset: Offset(2.0, 2.0),
+                          offset: const Offset(2.0, 2.0),
                           blurRadius: 5.0,
                           color: Colors.black.withOpacity(0.8),
                         ),
@@ -150,7 +150,7 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xff0097b2),
                         Color(0xff7ed957),
                       ]),
@@ -200,7 +200,7 @@ class _LandingIntroducersState extends State<LandingIntroducers> {
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xffffde59),
                         Color(0xfff1811b),
                         Color(0xfff1811b),

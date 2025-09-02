@@ -24,7 +24,7 @@ class _marketingAgencyJoinTodayPageScreenState
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -47,7 +47,7 @@ class _marketingAgencyJoinTodayPageScreenState
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -72,7 +72,7 @@ class _marketingAgencyJoinTodayPageScreenState
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff232f3f)),
+                            color: const Color(0xff232f3f)),
                         child: Row(
                           children: [
                             Image.asset(
@@ -153,7 +153,8 @@ class _marketingAgencyJoinTodayPageScreenState
                               ],
                             ),
                             SizedBox(height: 1.h),
-                            Divider(color: Color(0xfffe7eef5), thickness: 1),
+                            const Divider(
+                                color: Color(0xfffe7eef5), thickness: 1),
                             SizedBox(height: 1.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +243,8 @@ class _marketingAgencyJoinTodayPageScreenState
                               ],
                             ),
                             SizedBox(height: 1.h),
-                            Divider(color: Color(0xfffe7eef5), thickness: 1),
+                            const Divider(
+                                color: Color(0xfffe7eef5), thickness: 1),
                             SizedBox(height: 1.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

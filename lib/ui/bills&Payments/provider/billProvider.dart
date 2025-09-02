@@ -11,8 +11,8 @@ import '../../../../ApiCalling/response.dart';
 class billProvider extends ChangeNotifier {
   Future<http.Response> invoiceapi() async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
     String url = apiEndpoints.viewinvoiceapi;
     print(url);
 
@@ -35,8 +35,8 @@ class billProvider extends ChangeNotifier {
 
   Future<http.Response> pdfviewapi(String invoicefile) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
-    log('Api Header Data = ${headers}');
-    print("header pass====>>>${headers}");
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
     String url = "${apiEndpoints.singleInvoiceApi}$invoicefile";
     print(url);
 

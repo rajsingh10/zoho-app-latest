@@ -11,7 +11,7 @@ import '../../homeScreen/view/homeScreen.dart';
 class VerifyPaymentScripationScreen extends StatefulWidget {
   final String? paymentLink;
 
-  VerifyPaymentScripationScreen({super.key, this.paymentLink});
+  const VerifyPaymentScripationScreen({super.key, this.paymentLink});
 
   @override
   State<VerifyPaymentScripationScreen> createState() =>
@@ -56,9 +56,9 @@ class _VerifyPaymentScripationScreenState
                         Future.delayed(const Duration(seconds: 3), () {
                           if (mounted) {
                             Get.offAll(
-                              Homescreen(),
+                              const Homescreen(),
                               transition: Transition.rightToLeft,
-                              duration: Duration(milliseconds: 250),
+                              duration: const Duration(milliseconds: 250),
                             );
 
                             showCustomSuccessSnackbar(
@@ -74,7 +74,7 @@ class _VerifyPaymentScripationScreenState
                   if (_isLoading)
                     Container(
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.orangeColor,
                         ),

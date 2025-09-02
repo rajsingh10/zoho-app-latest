@@ -191,7 +191,7 @@ class _amzAdviceFindOutMoreScreenState
           Container(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             width: Device.width,
-            decoration: BoxDecoration(color: AppColors.orangeColor),
+            decoration: const BoxDecoration(color: AppColors.orangeColor),
             child: Column(
               children: [
                 SizedBox(
@@ -214,7 +214,7 @@ class _amzAdviceFindOutMoreScreenState
                       scale: 5.5,
                       color: AppColors.whiteColor,
                     ),
-                    Icon(null),
+                    const Icon(null),
                   ],
                 ),
               ],
@@ -236,7 +236,7 @@ class _amzAdviceFindOutMoreScreenState
                               horizontal: 2.w, vertical: 2.h),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff232f3f)),
+                              color: const Color(0xff232f3f)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -316,7 +316,7 @@ class _amzAdviceFindOutMoreScreenState
                         Container(
                           width: 96.w,
                           decoration: BoxDecoration(
-                            color: Color(0xffE7E6E6),
+                            color: const Color(0xffE7E6E6),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
@@ -380,7 +380,7 @@ class _amzAdviceFindOutMoreScreenState
                                     SizedBox(
                                       height: 1.h,
                                     ),
-                                    AutoSizeText(
+                                    const AutoSizeText(
                                       'Our unique ‘Product Finder Pro’ services means that we’ll undertake your product research for you and help you to find the right products to sell on Amazon!',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -405,7 +405,7 @@ class _amzAdviceFindOutMoreScreenState
                         Container(
                           width: 96.w,
                           decoration: BoxDecoration(
-                            color: Color(0xffE7E6E6),
+                            color: const Color(0xffE7E6E6),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
@@ -447,7 +447,7 @@ class _amzAdviceFindOutMoreScreenState
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Center(
+                                    const Center(
                                       child: AutoSizeText(
                                         'Pro-Active Amazon Support: We will pro-actively contact you!',
                                         style: TextStyle(
@@ -506,7 +506,7 @@ class _amzAdviceFindOutMoreScreenState
                           width: 96.w,
                           padding: EdgeInsets.symmetric(vertical: 1.h),
                           decoration: BoxDecoration(
-                            color: Color(0xffE7E6E6),
+                            color: const Color(0xffE7E6E6),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
@@ -559,7 +559,7 @@ class _amzAdviceFindOutMoreScreenState
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Center(
+                                    const Center(
                                       child: AutoSizeText(
                                         'We teach the Ultimate Selling System',
                                         textAlign: TextAlign.center,
@@ -576,7 +576,7 @@ class _amzAdviceFindOutMoreScreenState
                                     SizedBox(
                                       height: 1.h,
                                     ),
-                                    AutoSizeText(
+                                    const AutoSizeText(
                                       'The Selling System used and created by our Founder, Alex Shelton. The Ultimate Selling System has been designed to teach anyone to build a Successful Business on Amazon.',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -604,7 +604,7 @@ class _amzAdviceFindOutMoreScreenState
                               padding: EdgeInsets.symmetric(
                                   vertical: 1.2.h, horizontal: 2.w),
                               decoration: BoxDecoration(
-                                color: Color(0xffE7E6E6),
+                                color: const Color(0xffE7E6E6),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: SizedBox(
@@ -632,9 +632,11 @@ class _amzAdviceFindOutMoreScreenState
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Icon(Icons.check_circle_outline,
-                                                color: Colors.purple, size: 20),
-                                            SizedBox(width: 8),
+                                            const Icon(
+                                                Icons.check_circle_outline,
+                                                color: Colors.purple,
+                                                size: 20),
+                                            const SizedBox(width: 8),
                                             Expanded(
                                               child: Text(
                                                 'Work directly with our Founder &\nLeading UK Amazon Consultant',
@@ -649,14 +651,16 @@ class _amzAdviceFindOutMoreScreenState
                                             ),
                                           ],
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Icon(Icons.check_circle_outline,
-                                                color: Colors.purple, size: 20),
-                                            SizedBox(width: 8),
+                                            const Icon(
+                                                Icons.check_circle_outline,
+                                                color: Colors.purple,
+                                                size: 20),
+                                            const SizedBox(width: 8),
                                             Expanded(
                                               child: Text(
                                                 'Online or at our Advice Centre\nin Sheffield',
@@ -671,14 +675,16 @@ class _amzAdviceFindOutMoreScreenState
                                             ),
                                           ],
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Icon(Icons.check_circle_outline,
-                                                color: Colors.purple, size: 20),
-                                            SizedBox(width: 8),
+                                            const Icon(
+                                                Icons.check_circle_outline,
+                                                color: Colors.purple,
+                                                size: 20),
+                                            const SizedBox(width: 8),
                                             Expanded(
                                               child: Text(
                                                 'Receive tailored advice to keep you on\ntrack with your Selling on Amazon Goals!',
@@ -711,7 +717,7 @@ class _amzAdviceFindOutMoreScreenState
                         SizedBox(
                           height: 1.h,
                         ),
-                        Container(
+                        SizedBox(
                           height: 20.h,
                           child: Stack(
                             children: [
@@ -734,7 +740,7 @@ class _amzAdviceFindOutMoreScreenState
                                           width: 42.w,
                                           margin: EdgeInsets.all(10.sp),
                                           decoration: BoxDecoration(
-                                              color: Color(0xffe9e7e7),
+                                              color: const Color(0xffe9e7e7),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           padding: EdgeInsets.symmetric(
@@ -804,7 +810,7 @@ class _amzAdviceFindOutMoreScreenState
                           margin: EdgeInsets.symmetric(horizontal: 2.w),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xffe9e7e7),
+                            color: const Color(0xffe9e7e7),
                           ),
                           child: Stack(
                             children: [
@@ -941,8 +947,8 @@ class _amzAdviceFindOutMoreScreenState
                                     width: Device.width,
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 2.w),
-                                    decoration:
-                                        BoxDecoration(color: Color(0xff232f3f)),
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xff232f3f)),
                                   ),
                                 ],
                               ),
@@ -970,7 +976,7 @@ class _amzAdviceFindOutMoreScreenState
                                             scale: 30),
                                       ),
                                     ),
-                                    SizedBox(width: 8),
+                                    const SizedBox(width: 8),
 
                                     // Horizontal Plans List
                                     Expanded(
@@ -993,10 +999,12 @@ class _amzAdviceFindOutMoreScreenState
                                                                 .size
                                                                 .width *
                                                             .65,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 8),
-                                                    padding: EdgeInsets.all(16),
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 8),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
@@ -1117,7 +1125,7 @@ class _amzAdviceFindOutMoreScreenState
                                                               InkWell(
                                                                 onTap: () {
                                                                   Get.to(
-                                                                      amzAdviceJoinTodayPageScreen());
+                                                                      const amzAdviceJoinTodayPageScreen());
                                                                 },
                                                                 child:
                                                                     Container(
@@ -1155,7 +1163,8 @@ class _amzAdviceFindOutMoreScreenState
                                                           SizedBox(
                                                             height: 1.h,
                                                           ),
-                                                          SizedBox(height: 10),
+                                                          const SizedBox(
+                                                              height: 10),
                                                           ...List.generate(
                                                               (plan["features"]
                                                                       as List)
@@ -1163,12 +1172,12 @@ class _amzAdviceFindOutMoreScreenState
                                                               (fIndex) {
                                                             return Row(
                                                               children: [
-                                                                Icon(
+                                                                const Icon(
                                                                     Icons.check,
                                                                     color: AppColors
                                                                         .blackColor,
                                                                     size: 16),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                     width: 4),
                                                                 Expanded(
                                                                   child: Text(
@@ -1209,10 +1218,12 @@ class _amzAdviceFindOutMoreScreenState
                                                                 .size
                                                                 .width *
                                                             .65,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 8),
-                                                    padding: EdgeInsets.all(16),
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 8),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
@@ -1334,7 +1345,7 @@ class _amzAdviceFindOutMoreScreenState
                                                               InkWell(
                                                                 onTap: () {
                                                                   Get.to(
-                                                                      amzAdviceJoinTodayPageScreen());
+                                                                      const amzAdviceJoinTodayPageScreen());
                                                                 },
                                                                 child:
                                                                     Container(
@@ -1372,7 +1383,8 @@ class _amzAdviceFindOutMoreScreenState
                                                           SizedBox(
                                                             height: 1.h,
                                                           ),
-                                                          SizedBox(height: 10),
+                                                          const SizedBox(
+                                                              height: 10),
                                                           ...List.generate(
                                                               (plan["features"]
                                                                       as List)
@@ -1380,12 +1392,12 @@ class _amzAdviceFindOutMoreScreenState
                                                               (fIndex) {
                                                             return Row(
                                                               children: [
-                                                                Icon(
+                                                                const Icon(
                                                                     Icons.check,
                                                                     color: AppColors
                                                                         .blackColor,
                                                                     size: 16),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                     width: 4),
                                                                 Expanded(
                                                                   child: Text(
@@ -1416,7 +1428,7 @@ class _amzAdviceFindOutMoreScreenState
                                       ),
                                     ),
 
-                                    SizedBox(width: 8),
+                                    const SizedBox(width: 8),
 
                                     // Right fixed button
                                     InkWell(
@@ -1484,7 +1496,7 @@ class _amzAdviceFindOutMoreScreenState
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [Color(0xFF00B4DB), Color(0xFF38EF7D)],
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
