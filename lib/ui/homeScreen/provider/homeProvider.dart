@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -90,6 +91,65 @@ class HomeProvider extends ChangeNotifier {
 
   Future<http.Response> getTimeEntryApi(id) async {
     String url = apiEndpoints.tickets + "/${id}/timeEntry";
+    print("API URL: $url");
+
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    headers['Content-Type'] = 'application/json'; // ensure proper content type
+    log('API Headers: $headers');
+
+    try {
+      final response = await http
+          .get(
+        Uri.parse(url),
+        headers: headers,
+      )
+          .timeout(
+        const Duration(seconds: 60),
+        onTimeout: () {
+          throw const SocketException('Request timed out');
+        },
+      );
+
+      log('Response Status: ${response.statusCode}');
+
+      return response; // 🔁 returning full response directly
+    } catch (error) {
+      log("Error During Communication: $error");
+      rethrow; // 👈 rethrow for catchError() to handle
+    }
+  }
+   Future<http.Response> updatePaymentMethod(Map<String, dynamic> bodyData) async {
+    String url = apiEndpoints.updatePaymentMethod;
+    log("API URL: $url");
+
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    headers['Content-Type'] = 'application/json'; // ensure proper content type
+    log('API Headers: $headers');
+
+    try {
+      final response = await http
+          .post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(bodyData),
+      )
+          .timeout(
+        const Duration(seconds: 60),
+        onTimeout: () {
+          throw const SocketException('Request timed out');
+        },
+      );
+
+      log('Response Status: ${response.statusCode}');
+
+      return response; // 🔁 returning full response directly
+    } catch (error) {
+      log("Error During Communication: $error");
+      rethrow; // 👈 rethrow for catchError() to handle
+    }
+  }
+    Future<http.Response> getCard(id) async {
+    String url = apiEndpoints.registerApi + "/${id}/cards";
     print("API URL: $url");
 
     Map<String, String> headers = await apiConfig.getAuthHeader();

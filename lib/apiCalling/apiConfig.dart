@@ -8,7 +8,9 @@ import 'package:zohosystem/ui/authentications/signup/modal/createContractModal.d
 import 'package:zohosystem/ui/authentications/signup/modal/createSubscriptionModal.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/modal/pauseSubscriptionModal.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/modal/resumeSubscriptionModal.dart';
+import 'package:zohosystem/ui/moreScreen/modal/getCardModal.dart';
 import 'package:zohosystem/ui/moreScreen/modal/updateCustomerModal.dart';
+import 'package:zohosystem/ui/moreScreen/modal/updatePaymentMethod.dart';
 
 import '../ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart';
 import '../ui/adviceTicketsScreen/modal/addTicketModal.dart';
@@ -79,3 +81,5 @@ GetTimeEntryModal? getTimeEntry;
 GetCustomerDataModal? getCustomer;
 UpdateCustomerModal? updateCustomer;
 TicketRepliesModal? ticketReplies;
+UpdatePaymentMethodModal? updatePaymentMethod;
+GetCardModal? getCard;

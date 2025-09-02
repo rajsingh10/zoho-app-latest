@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/ui/authentications/signup/view/registerScreen.dart';
 import 'package:zohosystem/ui/landingScreen/view/webViewAssociates.dart';
+import 'package:zohosystem/ui/noMembershipScreens/view/webviewScreen.dart';
 import 'package:zohosystem/utils/colors.dart';
 import 'package:zohosystem/utils/images.dart';
 
@@ -138,7 +139,10 @@ class _landingAssociatesState extends State<landingAssociates> {
               left: 2.w,
               child: InkWell(
                 onTap: () => Get.to(
-                  Registerscreen(),
+                  WebviewScreen(
+                    link:
+                        'https://accounts.zoho.eu/signin?serviceurl=https://associates.theadvicecentre.ltd&servicename=ZohoChat&zsrc=fromproduct',
+                  ),
                   transition: Transition.rightToLeft,
                   duration: Duration(milliseconds: 250),
                 ),

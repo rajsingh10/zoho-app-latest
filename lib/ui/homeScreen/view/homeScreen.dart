@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:developer'as dev;
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -1164,10 +1165,13 @@ class _HomescreenState extends State<Homescreen> {
                                                 : Column(
                                                     children: [
                                                       for (int i = 0;
-                                                          i <
-                                                              (allTicket?.data
-                                                                      ?.length ??
-                                                                  0);
+                                                         i <
+                                                              min(
+                                                                  (allTicket
+                                                                          ?.data
+                                                                          ?.length ??
+                                                                      0),
+                                                                  5); // show only 5 or less
                                                           i++) ...[
                                                         Row(
                                                           children: [
@@ -1704,11 +1708,11 @@ class _HomescreenState extends State<Homescreen> {
               allTicketApi();
               planDetailsApi(subscriptionsdateleft?.subscriptions?[0].planCode);
 
-              log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
-              log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].nextBillingAt}");
+              dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
+              dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].nextBillingAt}");
               if (subscriptionsdateleft?.subscriptions?[0].status == "trial") {
-                log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
-                log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].trialendsat}");
+                dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].createdAt}");
+                dev.log("subscription date===>>>>${subscriptionsdateleft?.subscriptions?[0].trialendsat}");
                 lastBillingAtStr =
                     subscriptionsdateleft?.subscriptions?[0].createdAt;
                 nextBillingAtStr =
@@ -1723,16 +1727,16 @@ class _HomescreenState extends State<Homescreen> {
                     setState(() {
                       dayWithSuffix = getDayWithSuffix(parsedDate);
                     });
-                    log("Subscription Day Only ===>>>> $dayWithSuffix");
+                    dev.log("Subscription Day Only ===>>>> $dayWithSuffix");
                   }
                   setState(() {
                     daysRemaining =
                         nextBillingAt.difference(DateTime.now()).inDays;
                   });
 
-                  log("Total Days: $daysRemaining");
+                  dev.log("Total Days: $daysRemaining");
                 } else {
-                  log("No Date Available");
+                  dev.log("No Date Available");
                 }
               } else {
                 lastBillingAtStr =
@@ -1749,16 +1753,16 @@ class _HomescreenState extends State<Homescreen> {
                     setState(() {
                       dayWithSuffix = getDayWithSuffix(parsedDate);
                     });
-                    log("Subscription Day Only ===>>>> $dayWithSuffix");
+                   dev.log("Subscription Day Only ===>>>> $dayWithSuffix");
                   }
                   setState(() {
                     daysRemaining =
                         nextBillingAt.difference(DateTime.now()).inDays;
                   });
 
-                  log("Total Days: $daysRemaining");
+                  dev.log("Total Days: $daysRemaining");
                 } else {
-                  log("No Date Available");
+                  dev.log("No Date Available");
                 }
               }
             } else {
@@ -1781,11 +1785,11 @@ class _HomescreenState extends State<Homescreen> {
           }
         }).catchError((error, straceTrace) {
           final errorMessage = error.toString();
-          log("error=====>>>>$errorMessage  $straceTrace");
+          dev.log("error=====>>>>$errorMessage  $straceTrace");
 
           if (errorMessage
               .contains("You are not authorized to perform this operation")) {
-            log("User not authorized, retaking token...");
+            dev.log("User not authorized, retaking token...");
             fetchAuthtokenApi();
 
             return;
@@ -1973,7 +1977,7 @@ class _HomescreenState extends State<Homescreen> {
                         "Start Date (cfStartDateTime): ${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
                     print(
                         "End Date (currentTermEndsAt): ${subscriptionsdateleft?.subscriptions?[0].currentTermEndsAt}");
-                    log("subscription Start===>>>>${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
+                    dev.log("subscription Start===>>>>${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
 
                     await HomeProvider()
                         .getTimeEntryApi(ticketId)
@@ -2057,7 +2061,7 @@ class _HomescreenState extends State<Homescreen> {
                         }
                       }
                     }).catchError((error) {
-                      log("❗ Error fetching time entry for ticket ID $ticketId: $error");
+                      dev.log("❗ Error fetching time entry for ticket ID $ticketId: $error");
                     });
                   }
                 }
@@ -2093,7 +2097,7 @@ class _HomescreenState extends State<Homescreen> {
 
           if (errorMessage
               .contains("You are not authorized to perform this operation")) {
-            log("🔐 User not authorized, retaking token...");
+            dev.log("🔐 User not authorized, retaking token...");
             fetchAuthtokenApi();
             return;
           }
@@ -2102,7 +2106,7 @@ class _HomescreenState extends State<Homescreen> {
             setState(() {
               isLoading = false;
             });
-            log('Error : ${stackTrace.toString()}');
+            dev.log('Error : ${stackTrace.toString()}');
           }
         });
       } else {
@@ -2203,7 +2207,7 @@ class _HomescreenState extends State<Homescreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          log("error=====>>>>${stackTrace}");
+          dev.log("error=====>>>>${stackTrace}");
           setState(() {
             isLoading = false;
           });
@@ -2266,7 +2270,7 @@ class _HomescreenState extends State<Homescreen> {
         });
       }
     } catch (error, stackTrace) {
-      log("error=====>>>>$stackTrace");
+      dev.log("error=====>>>>$stackTrace");
       setState(() {
         isLoading = false;
       });
@@ -2325,7 +2329,7 @@ class _HomescreenState extends State<Homescreen> {
             });
           }
         }).catchError((error) {
-          log("Error ========>>>>>>>>${error.toString()}");
+          dev.log("Error ========>>>>>>>>${error.toString()}");
           setState(() {
             isLoading = false;
           });
@@ -2383,7 +2387,7 @@ class _HomescreenState extends State<Homescreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          log("error=====>>>>${error.toString()}  $straceTrace");
+          dev.log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isLoading = false;
           });
@@ -2754,7 +2758,7 @@ class _HomescreenState extends State<Homescreen> {
             title: 'Fetch Error',
             message: error.toString(),
           );
-          log("Error ========>>>>>>>>${stackTrace.toString()}");
+          dev.log("Error ========>>>>>>>>${stackTrace.toString()}");
           if (mounted) {
             setState(() {
               isLoading = false;

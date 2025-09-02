@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart'
@@ -41,37 +42,210 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
   TextEditingController _bodyController = TextEditingController();
   List<AllDeparmentModal.Data> customerList = [];
   String? selectedCustomer;
-
+  final List<SupportDepartment> departments = [
+    SupportDepartment(
+      name: 'AMZ Advice Centre',
+      email: 'support@amzadvicecentre.com',
+      subject: 'AMZ\tAdvice\tCentre\tSupport',
+      whatsAppNumber: '+44-114-405-5024',
+    ),
+    SupportDepartment(
+      name: 'AMZ Agency',
+      email: 'support@amzagency.co.uk',
+      subject: 'AMZAgency\tSupport',
+    ),
+    SupportDepartment(
+      name: 'Marketing Advice Centre',
+      email: 'support@marketingadvicecentre.co.uk',
+      subject: 'Marketing\tAdvice\tCentre\tSupport',
+      whatsAppNumber: '+44-114-405-5021',
+    ),
+    SupportDepartment(
+      name: 'The Marketing Agency',
+      email: 'support@the-marketingagency.co.uk',
+      subject: 'The\tMarketing\tAgency\tSupport',
+    ),
+    SupportDepartment(
+      name: 'The Advice Centre: Accounts',
+      email: 'accounts@theadvicecentre.ltd',
+      subject: 'Accounts\tSupport',
+    ),
+    SupportDepartment(
+      name: 'The Advice Centre: Introducers',
+      email: 'support@amzadvicecentre.com',
+      subject: 'Introducers\tSupport',
+    ),
+    SupportDepartment(
+      name: 'Just Ask Alex',
+      email: 'support@amzadvicecentre.com',
+      subject: 'Just\tAsk\tAlex\tSupport',
+    ),
+    SupportDepartment(
+      name: 'AMZBuddy',
+      email: 'support@amzbuddy.ai',
+      subject: 'AMZBuddy\tSupport',
+    ),
+    SupportDepartment(
+      name: 'The Advice Centre Ltd',
+      email: 'support@amzbuddy.ai',
+      subject: 'AMZBuddy\tSupport',
+    ),
+  ];
   final _formKey = GlobalKey<FormState>();
   bool _showError = false;
   bool isLoading = true;
   bool isAdding = false;
+  final ImagePicker _picker = ImagePicker();
 
   List<PlatformFile> _pickedFiles = [];
 
-  Future<void> _pickFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowMultiple: true,
-      allowedExtensions: [
-        'jpg',
-        'jpeg',
-        'png',
-        'mp4',
-        'mov',
-        'avi',
-        'pdf',
-        'doc',
-        'docx'
-      ],
-    );
+Future<void> _pickFiles() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(null),
+                  Text(
+                    "Choose an Option",
+                    style: TextStyle(
+                        fontFamily: FontFamily.bold,
+                        color: AppColors.bgColor,
+                        fontSize: 17.sp),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(Icons.close, color: AppColors.bgColor),
+                  ).paddingOnly(right: 4.w)
+                ],
+              ).paddingOnly(top: 1.5.h),
+              ListTile(
+                leading:
+                    Icon(Icons.insert_drive_file, color: AppColors.bgColor),
+                title: Text("Pick a File"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowMultiple: true,
+                    allowedExtensions: [
+                      'jpg',
+                      'jpeg',
+                      'png',
+                      'mp4',
+                      'mov',
+                      'avi',
+                      'pdf',
+                      'doc',
+                      'docx',
+                    ],
+                  );
 
-    if (result != null) {
-      setState(() {
-        _pickedFiles.addAll(result.files);
-      });
-    }
+                  if (result != null) {
+                    setState(() {
+                      _pickedFiles.addAll(result.files);
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo, color: AppColors.bgColor),
+                title: Text("Pick Image (Gallery)"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? picked = await _picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+                  if (picked != null) {
+                    setState(() {
+                      _pickedFiles.add(
+                        PlatformFile(
+                          name: picked.name,
+                          path: picked.path,
+                          size: File(picked.path).lengthSync(),
+                        ),
+                      );
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.video_library, color: AppColors.bgColor),
+                title: Text("Pick Video (Gallery)"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? video = await _picker.pickVideo(
+                    source: ImageSource.gallery,
+                  );
+                  if (video != null) {
+                    setState(() {
+                      _pickedFiles.add(
+                        PlatformFile(
+                          name: video.name,
+                          path: video.path,
+                          size: File(video.path).lengthSync(),
+                        ),
+                      );
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.camera_alt, color: AppColors.bgColor),
+                title: Text("Open Camera"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? photo = await _picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+                  if (photo != null) {
+                    setState(() {
+                      _pickedFiles.add(
+                        PlatformFile(
+                          name: photo.name,
+                          path: photo.path,
+                          size: File(photo.path).lengthSync(),
+                        ),
+                      );
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.videocam, color: AppColors.bgColor),
+                title: Text("Record Video"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? video = await _picker.pickVideo(
+                    source: ImageSource.camera,
+                  );
+                  if (video != null) {
+                    setState(() {
+                      _pickedFiles.add(
+                        PlatformFile(
+                          name: video.name,
+                          path: video.path,
+                          size: File(video.path).lengthSync(),
+                        ),
+                      );
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
+
 
   void _removeFile(int index) {
     setState(() {
@@ -560,7 +734,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
     );
   }
 
-  deparmentallapi() {
+deparmentallapi() {
     checkInternet().then((internet) async {
       if (internet) {
         Adviceprovider().departments().then((response) async {
@@ -568,10 +742,16 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
             allDepartment = AllDeparmentModal.AllDeparmentModal.fromJson(
               json.decode(response.body),
             );
-            print("Staff Data Fetched");
+           
 
             setState(() {
               customerList = allDepartment?.data ?? [];
+              final matchedList = (allDepartment?.data ?? []).where((apiDept) {
+                return departments.any((staticDept) =>
+                    apiDept.name?.toLowerCase().trim() ==
+                    staticDept.name.toLowerCase().trim());
+              }).toList();
+              customerList = matchedList;
               isLoading = false;
             });
           } else if (response.statusCode == 422) {

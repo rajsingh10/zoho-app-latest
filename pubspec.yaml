@@ -59,6 +59,7 @@ dependencies:
   awesome_notifications: 
   googleapis: 
   googleapis_auth: 
+  image_picker: 
 
 
 dev_dependencies:

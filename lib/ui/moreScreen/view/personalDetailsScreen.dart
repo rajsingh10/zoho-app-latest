@@ -9,8 +9,12 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/apiCalling/Loader.dart';
 import 'package:zohosystem/ui/authentications/signup/modal/countriesModal.dart';
+import 'package:zohosystem/ui/homeScreen/provider/homeProvider.dart';
 import 'package:zohosystem/ui/homeScreen/view/homeScreen.dart';
+import 'package:zohosystem/ui/moreScreen/modal/getCardModal.dart';
 import 'package:zohosystem/ui/moreScreen/modal/getCustomerDataModal.dart';
+import 'package:zohosystem/ui/moreScreen/modal/updatePaymentMethod.dart';
+import 'package:zohosystem/ui/moreScreen/view/updateCardWebview.dart';
 import 'package:zohosystem/utils/countryIsoCodes.dart';
 
 import '../../../apiCalling/apiConfig.dart';
@@ -50,7 +54,7 @@ final TextEditingController _zipCode = TextEditingController();
 TextEditingController searchController = TextEditingController();
 List<Products> productsList = [];
 List<Data> countriesList = [];
-
+Cards? selectedPrimaryCard; 
 String _countryCode = '';
 String _initialCountryCode = '';
 String? selectedCountry;
@@ -337,6 +341,30 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
                               ),
+                              SizedBox(height: 2.h),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Country/Region',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: FontFamily.light,
+                                        color: AppColors.blackColor,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(
+                                        color: AppColors.redColor,
+                                        fontSize: 16.sp,
+                                        fontFamily: FontFamily.light,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: 1.h),
                               CompositedTransformTarget(
                                 link: _layerLink,
@@ -500,6 +528,118 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                                   }
                                 },
                               ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'Card Information :',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.bold,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.bgColor,
+                                  fontSize: 19.sp,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Center(
+                                child: Text(
+                                  '* Tap on the card to edit its details. *',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.bold,
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.bgColor,
+                                    fontSize: 15.sp,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              InkWell(
+                                onTap: () {
+                                  updatePaymentMethodApi();
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 22.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColors.bgColor,
+                                        AppColors.appBlueColor
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        offset: Offset(0, 4),
+                                        blurRadius: 6,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(3.w),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          selectedPrimaryCard?.paymentGateway
+                                                  ?.toUpperCase() ??
+                                              'CARD',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          "**** **** **** ${selectedPrimaryCard?.lastFourDigits ?? ''}",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 2,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Expiry',
+                                                  style: TextStyle(
+                                                    color: Colors.white70,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${selectedPrimaryCard?.expiryMonth?.toString().padLeft(2, '0')}/${selectedPrimaryCard?.expiryYear ?? ''}',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Icon(
+                                              Icons.credit_card,
+                                              color: Colors.white,
+                                              size: 24.sp,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 4.h),
                               if (_isChanged)
                                 InkWell(
@@ -568,6 +708,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
 
                 filteredCountries = List.from(allCountries);
                 fetchContractApi(userData?.data?[0].customerId);
+                getCardsApi();
               });
             }
           } else if (response.statusCode == 422) {
@@ -1175,6 +1316,71 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
     }
   }
 
+  getCardsApi() {
+    checkInternet().then((internet) async {
+      if (internet) {
+        HomeProvider()
+            .getCard(userData?.data?[0].customerId)
+            .then((response) async {
+          getCard = GetCardModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 200) {
+            // filter only primary cards
+            var primaryCards = getCard?.cards
+                ?.where((card) => card.isPrimary == true)
+                .toList();
+
+            if (primaryCards != null && primaryCards.isNotEmpty) {
+              // get latest by created_time
+              primaryCards.sort((a, b) => DateTime.parse(b.createdTime!)
+                  .compareTo(DateTime.parse(a.createdTime!)));
+
+              setState(() {
+                selectedPrimaryCard = primaryCards.first;
+                log('Card Selected: ${selectedPrimaryCard?.lastFourDigits}');
+              });
+            }
+          } else if (response.statusCode == 422) {
+            showCustomErrorSnackbar(
+                title: "Fetch Error", message: getCard?.message ?? '');
+            if (mounted) {
+              setState(() {
+                isLoading = false;
+              });
+            }
+          } else {
+            showCustomErrorSnackbar(
+              title: 'Fetch Error',
+              message: getCustomer?.message ?? '',
+            );
+            if (mounted) {
+              setState(() {
+                isLoading = false;
+              });
+            }
+          }
+        }).catchError((error, stackTrace) {
+          showCustomErrorSnackbar(
+            title: 'Fetch Error',
+            message: error.toString(),
+          );
+          log("Error ========>>>>>>>>${stackTrace.toString()}");
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        });
+      } else {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
   updateInformationApi() {
     if (_formKey.currentState!.validate()) {
       final Map<String, dynamic> data = {
@@ -1282,6 +1488,48 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
       });
     } else {
       if (mounted) setState(() => isLoading = false);
+    }
+  }
+  updatePaymentMethodApi() async {
+    setState(() => isAdding = true);
+
+    final Map<String, dynamic> data = {
+      "customer_id": userData?.data?[0].customerId,
+      "card_id": selectedPrimaryCard?.cardId,
+      "redirect_url":
+          "https://api.theadvicecentre.ltd/card_details_updated_success"
+    };
+
+    log("📤 Final Ticket Request Body: ${jsonEncode(data)}");
+
+    // Step 3: Call your wrapper
+    try {
+      final response = await HomeProvider().updatePaymentMethod(data);
+
+      updatePaymentMethod =
+          UpdatePaymentMethodModal.fromJson(json.decode(response.body));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        setState(() => isAdding = false);
+        log('hosted url: ${updatePaymentMethod?.hostedpage?.url}');
+        Get.to(
+          UpdateCardWebVew(link: updatePaymentMethod?.hostedpage?.url ?? ''),
+          transition: Transition.rightToLeft,
+          duration: const Duration(milliseconds: 250),
+        );
+      } else {
+        showCustomErrorSnackbar(
+          title: 'Add Ticket Error',
+          message: response.body,
+        );
+      }
+    } catch (e) {
+      showCustomErrorSnackbar(
+        title: 'Add Ticket Error',
+        message: e.toString(),
+      );
+    } finally {
+      setState(() => isAdding = false);
     }
   }
 }

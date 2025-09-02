@@ -167,6 +167,27 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                             SizedBox(height: 2.h),
                             Container(
                               padding: EdgeInsets.symmetric(
+                                  horizontal: 4.w, vertical: 2.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: AppColors.bgColor,
+                              ),
+                              child: Text(
+                                'Welcome to your Advice Centre Tickets page.\n'
+                                'This is your \'all in one\' place to manage your advice tickets with us.\n'
+                                '- To create a new ticket, click "Create a New Ticket" below. We\'ll send you an acknowledgement email with your ticket details.\n'
+                                '- To reply to an existing ticket or add more information, simply reply to the original email (please make sure to use the correct ticket number).\n'
+                                '- If you need any help, our team is available via the live chat.',
+                                style: TextStyle(
+                                  fontSize: 14.5.sp,
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
+                            ),
+                            
+                            SizedBox(height: 2.h),
+                            Container(
+                              padding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
