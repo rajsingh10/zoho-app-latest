@@ -1,2 +1,0 @@
-D:/zoho-app/android/app/.cxx/Debug/2d3r2a4h/x86/CMakeFiles/edit_cache.dir
-D:/zoho-app/android/app/.cxx/Debug/2d3r2a4h/x86/CMakeFiles/rebuild_cache.dir
