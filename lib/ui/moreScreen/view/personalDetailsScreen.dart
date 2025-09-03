@@ -1523,7 +1523,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         setState(() => isAdding = false);
         log('hosted url: ${updatePaymentMethod?.hostedpage?.url}');
-        Get.to(
+        Get.off(
           UpdateCardWebVew(link: updatePaymentMethod?.hostedpage?.url ?? ''),
           transition: Transition.rightToLeft,
           duration: const Duration(milliseconds: 250),

@@ -6,6 +6,7 @@ import 'package:zohosystem/apiCalling/apiConfig.dart';
 import 'package:zohosystem/apiCalling/saveUserData.dart';
 import 'package:zohosystem/apiCalling/saveUserToken.dart';
 import 'package:zohosystem/ui/landingScreen/view/landingScreen.dart';
+import 'package:zohosystem/ui/moreScreen/view/myMessagesScreen.dart';
 import 'package:zohosystem/utils/colors.dart';
 
 import '../../../utils/bottomBar.dart';
@@ -22,6 +23,8 @@ class moreScreen extends StatefulWidget {
 }
 
 class _moreScreenState extends State<moreScreen> {
+  bool _marketingNotifications = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,17 +75,22 @@ class _moreScreenState extends State<moreScreen> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Center(
-                    child: Text(
-                      'My Messages',
-                      style: TextStyle(
-                        fontFamily: FontFamily.regular,
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.blackColor,
-                        fontSize: 16.sp,
+                  InkWell(
+                    onTap: () {
+                      Get.to(const MyMessagesScreen());
+                    },
+                    child: Center(
+                      child: Text(
+                        'My Messages',
+                        style: TextStyle(
+                          fontFamily: FontFamily.regular,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.blackColor,
+                          fontSize: 16.sp,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
                       ),
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
                     ),
                   ),
                   SizedBox(
@@ -176,6 +184,52 @@ class _moreScreenState extends State<moreScreen> {
                         overflow: TextOverflow.visible,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  const Divider(
+                    thickness: 0.5,
+                    color: AppColors.blackColor,
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(null),
+                      const Icon(null),
+                      Text(
+                        'Marketing Notifications',
+                        style: TextStyle(
+                          fontFamily: FontFamily.regular,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.blackColor,
+                          fontSize: 16.sp,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Switch.adaptive(
+                        value: _marketingNotifications,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _marketingNotifications = value;
+                          });
+                        },
+                        activeColor: AppColors.whiteColor,
+                        // thumb color ON
+                        activeTrackColor: AppColors.bgColor,
+                        // track ON
+                        inactiveThumbColor: AppColors.whiteColor,
+                        // thumb OFF
+                        inactiveTrackColor: Colors.grey.shade400,
+                        // track OFF
+                        materialTapTargetSize:
+                            MaterialTapTargetSize.shrinkWrap, // reduces height
+                      ).paddingOnly(right: 3.w),
+                    ],
                   ),
                   SizedBox(
                     height: 1.h,

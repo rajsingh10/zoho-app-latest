@@ -32,9 +32,7 @@ class _UpdateCardWebVewState extends State<UpdateCardWebVew> {
     );
 
     Future.delayed(const Duration(seconds: 1), () {
-      Get.back();
-      Get.back();
-      Get.to(const PersonalDetailsScreen());
+      Get.off(const PersonalDetailsScreen());
     });
   }
 

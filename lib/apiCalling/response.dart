@@ -15,6 +15,8 @@ responses(http.Response response) {
         }
         return response;
       }
+    case 204:
+      return response;
     case 400:
     case 422:
       return response;

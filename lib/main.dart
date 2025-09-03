@@ -24,10 +24,11 @@ Future<void> initLocalNotifications() async {
 
   const DarwinInitializationSettings initializationSettingsIOS =
       DarwinInitializationSettings(
-    requestAlertPermission: true,
-    requestBadgePermission: true,
-    requestSoundPermission: true,
-  );
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+          defaultPresentSound: true,
+          requestCriticalPermission: true);
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
@@ -79,10 +80,10 @@ Future<void> _showLocalNotification(RemoteMessage message) async {
 
   const DarwinNotificationDetails iOSPlatformChannelSpecifics =
       DarwinNotificationDetails(
-    presentAlert: true,
-    presentBadge: true,
-    presentSound: true,
-  );
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          criticalSoundVolume: 100);
 
   final NotificationDetails platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,

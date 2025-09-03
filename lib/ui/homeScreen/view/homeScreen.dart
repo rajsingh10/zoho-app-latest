@@ -1970,9 +1970,11 @@ class _HomescreenState extends State<Homescreen> {
       if (internet) {
         print('Hellooo ki he');
         HomeProvider().Viewalltikit().then((response) async {
-          allTicket = MyTickitModal.fromJson(json.decode(response.body));
+          // allTicket = MyTickitModal.fromJson(json.decode(response.body));
           print('Hellooo');
-          if (response.statusCode == 200) {
+          if (response.statusCode == 200 && response.body.isNotEmpty) {
+            print('andar');
+            allTicket = MyTickitModal.fromJson(json.decode(response.body));
             if (subscriptionsdateleft?.subscriptions?[0].status ==
                 'cancelled') {
               print('Here');
@@ -2269,7 +2271,7 @@ class _HomescreenState extends State<Homescreen> {
           print("totalAdviceTime : $totalAdviceTime");
 
           setState(() {
-            // Optionally update UI if needed
+            isTimeExceed = totalAdviceTime == 0;
           });
         } else {
           totalAdviceTime = 0;

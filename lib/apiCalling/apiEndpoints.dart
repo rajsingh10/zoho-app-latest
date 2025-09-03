@@ -30,4 +30,5 @@ class apiEndpoints {
   static String contract = "${zohoDeskBaseUrl}contacts";
   static String updatePaymentMethod =
       "${zohoBillingBaseUrl}hostedpages/updatepaymentmethod";
+  static String fetchNotify = "${baseUrl}get-notifications-for-customer";
 }
