@@ -776,6 +776,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
   }
 
   fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().refreshTokenApi().then((response) async {

@@ -210,4 +210,64 @@ class HomeProvider extends ChangeNotifier {
       rethrow; // 👈 rethrow for catchError() to handle
     }
   }
+
+  Future<http.Response> marketingOpt(Map<String, dynamic> bodyData) async {
+    String url = apiEndpoints.marketingOptIn;
+    log("API URL: $url");
+
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    log('API Headers: $headers');
+
+    try {
+      final response = await http
+          .post(
+        Uri.parse(url),
+        headers: headers,
+        body: bodyData,
+      )
+          .timeout(
+        const Duration(seconds: 60),
+        onTimeout: () {
+          throw const SocketException('Request timed out');
+        },
+      );
+
+      log('Response Status: ${response.statusCode}');
+
+      return response; // 🔁 returning full response directly
+    } catch (error) {
+      log("Error During Communication: $error");
+      rethrow; // 👈 rethrow for catchError() to handle
+    }
+  }
+
+  Future<http.Response> fetchMarketingOpt(Map<String, dynamic> bodyData) async {
+    String url = apiEndpoints.fetchMarketingOptIn;
+    log("API URL: $url");
+
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    log('API Headers: $headers');
+
+    try {
+      final response = await http
+          .post(
+        Uri.parse(url),
+        headers: headers,
+        body: bodyData,
+      )
+          .timeout(
+        const Duration(seconds: 60),
+        onTimeout: () {
+          throw const SocketException('Request timed out');
+        },
+      );
+
+      log('Response Status: ${response.statusCode}');
+
+      return response; // 🔁 returning full response directly
+    } catch (error) {
+      log("Error During Communication: $error");
+      rethrow; // 👈 rethrow for catchError() to handle
+    }
+  }
 }

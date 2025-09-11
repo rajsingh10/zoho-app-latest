@@ -31,4 +31,6 @@ class apiEndpoints {
   static String updatePaymentMethod =
       "${zohoBillingBaseUrl}hostedpages/updatepaymentmethod";
   static String fetchNotify = "${baseUrl}get-notifications-for-customer";
+  static String marketingOptIn = "${baseUrl}update-promotional-notification";
+  static String fetchMarketingOptIn = "${baseUrl}get-promotional-notification";
 }

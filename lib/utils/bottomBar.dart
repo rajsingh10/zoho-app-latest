@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salesiq_mobilisten/salesiq_mobilisten.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zohosystem/ui/bills&Payments/view/bills&PaymentsScreen.dart';
@@ -966,10 +967,14 @@ class _AppBottombarState extends State<AppBottombar> {
                                         ),
                                         CupertinoDialogAction(
                                           isDestructiveAction: true,
-                                          onPressed: () {
+                                          onPressed: () async {
+                                            clearId();
                                             SaveAuthtokenData.clearUserData();
                                             SaveDataLocal.clearUserData();
                                             Get.offAll(const LandingScreen());
+                                            String? storedId = await getId();
+                                            print(
+                                                "Stored ID =====>>> $storedId");
                                           },
                                           child: const Text('Yes'),
                                         ),
@@ -1012,5 +1017,15 @@ class _AppBottombarState extends State<AppBottombar> {
         );
       },
     );
+  }
+
+  Future clearId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.clear();
+  }
+
+  Future<String?> getId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('my_id');
   }
 }

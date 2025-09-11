@@ -29,6 +29,11 @@ class SaveAuthtokenData {
     }
   }
 
+  static Future<void> removeAuthToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(userData);
+  }
+
   static clearUserData() async {
     prefs = await SharedPreferences.getInstance();
     log('Data Cleared');

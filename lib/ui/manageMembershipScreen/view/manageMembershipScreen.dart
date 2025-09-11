@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as dev;
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -18,12 +19,15 @@ import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/market
 import '../../../apiCalling/apiConfig.dart';
 import '../../../apiCalling/buildErrorDialog.dart';
 import '../../../apiCalling/checkInternetModule.dart';
+import '../../../apiCalling/saveUserToken.dart';
 import '../../../utils/bottomBar.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/fontFamily.dart';
 import '../../../utils/images.dart';
 import '../../../utils/snackBars.dart';
 import '../../../utils/textFields.dart';
+import '../../authentications/login/modal/authTokenModal.dart';
+import '../../authentications/login/provider/loginProvider.dart';
 import '../../authentications/signup/modal/allPlansModal.dart';
 import '../../authentications/signup/modal/createSubscriptionModal.dart';
 import '../../authentications/signup/provider/signupProvider.dart';
@@ -45,7 +49,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    subscriptionsViewApi();
+    fetchAuthtokenApi();
     getPlansApi();
   }
 
@@ -672,11 +676,62 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          // showCustomErrorSnackbar(
-          //   title: 'Subscriptions Error',
-          //   message: '${error.toString()}',
-          // );
-          log("error=====>>>>${error.toString()}  $straceTrace");
+          final errorMessage = error.toString();
+          dev.log("error=====>>>>$errorMessage  $straceTrace");
+
+          if (errorMessage
+              .contains("You are not authorized to perform this operation")) {
+            dev.log("User not authorized, retaking token...");
+            fetchAuthtokenApi();
+
+            return;
+          }
+
+          setState(() {
+            isLoading = false;
+          });
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
+  fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
+    checkInternet().then((internet) async {
+      if (internet) {
+        LoginProvider().refreshTokenApi().then((response) async {
+          authtoken = AuthtokenModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 200) {
+            setState(() {
+              // isLoading = false;
+            });
+            SaveAuthtokenData.saveAuthData(authtoken!);
+            subscriptionsViewApi();
+          } else if (response.statusCode == 422) {
+            showCustomErrorSnackbar(
+                title: "Token Error", message: sendOtp?.message ?? '');
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            showCustomErrorSnackbar(
+              title: 'Token Error',
+              message: 'Internal Server Error',
+            );
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error) {
+          showCustomErrorSnackbar(
+            title: 'Token Error',
+            message: 'Internal Server Error',
+          );
           setState(() {
             isLoading = false;
           });
@@ -715,13 +770,13 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          showCustomErrorSnackbar(
-            title: 'Login Error',
-            message: error.toString(),
-          );
+          // showCustomErrorSnackbar(
+          //   title: 'Login Error',
+          //   message: error.toString(),
+          // );
           log("error=====>>>>$stackTrace");
           setState(() {
-            isLoading = false;
+            // isLoading = false;
           });
         });
       } else {
@@ -785,10 +840,10 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
             });
           }
         }).catchError((error) {
-          showCustomErrorSnackbar(
-            title: 'Create Subscription Error',
-            message: error.toString(),
-          );
+          // showCustomErrorSnackbar(
+          //   title: 'Create Subscription Error',
+          //   message: error.toString(),
+          // );
           log("Error ========>>>>>>>>${error.toString()}");
           setState(() {
             isLoading = false;

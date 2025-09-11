@@ -311,6 +311,7 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().refreshTokenApi().then((response) async {

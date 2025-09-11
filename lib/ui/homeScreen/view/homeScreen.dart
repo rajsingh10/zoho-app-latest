@@ -64,8 +64,8 @@ class _HomescreenState extends State<Homescreen> {
       totalAdviceTime = 0;
       totalSpentTime = 0;
     });
-    fetchContractApi(userData?.data?[0].customerId);
-    subscriptionsViewApi();
+
+    fetchAuthtokenApi();
     getPlansApi();
   }
 
@@ -1720,6 +1720,8 @@ class _HomescreenState extends State<Homescreen> {
             });
             if (subscriptionsdateleft?.subscriptions?.length != 0) {
               allTicketApi();
+              fetchContractApi(userData?.data?[0].customerId);
+
               planDetailsApi(subscriptionsdateleft?.subscriptions?[0].planCode);
 
               dev.log(
@@ -1826,150 +1828,15 @@ class _HomescreenState extends State<Homescreen> {
     });
   }
 
-//   allTicketApi() {
-//     checkInternet().then((internet) async {
-//       if (internet) {
-//         HomeProvider().Viewalltikit().then((response) async {
-//           allTicket = MyTickitModal.fromJson(json.decode(response.body));
-//
-//           if (response.statusCode == 200) {
-//             if (subscriptionsdateleft?.subscriptions?[0].status ==
-//                 'cancelled') {
-//               totalAdviceTime = 0;
-//               checkAndStoreTimeExceeded();
-//               bool status = await getTimeExceededStatus();
-//               setState(() {
-//                 isTimeExceed = status;
-//
-//                 isLoading = false;
-//               });
-//             } else {
-//               List<int> secondsSpentList = [];
-//
-//               if (allTicket?.data != null && allTicket!.data!.isNotEmpty) {
-//                 for (var ticket in allTicket!.data!) {
-//                   final ticketId = ticket.id;
-//                   if (ticketId != null) {
-//                     print(
-//                         "Start Date: ${subscriptionsdateleft?.subscriptions?[0].currentTermStartsAt}");
-//                     print(
-//                         "End Date: ${subscriptionsdateleft?.subscriptions?[0].currentTermEndsAt}");
-//                     log("subscription Start===>>>>${subscriptionsdateleft?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
-//                     await HomeProvider()
-//                         .getTimeEntryApi(ticketId)
-//                         .then((timeResponse) async {
-//                       getTimeEntry = GetTimeEntryModal.fromJson(
-//                           json.decode(timeResponse.body));
-//
-//                       if (timeResponse.statusCode == 200 &&
-//                           getTimeEntry?.data != null &&
-//                           getTimeEntry!.data!.isNotEmpty) {
-//                         for (var entry in getTimeEntry!.data!) {
-//                           print("🕓 Entry Created Time: ${entry.createdTime}");
-//
-//                           // Parse entry created time
-//                           DateTime? createdTime =
-//                               DateTime.tryParse(entry.createdTime.toString());
-//
-//                           // Parse subscription start and end as full DateTime
-//                           String? startDateStr = subscriptionsdateleft
-//                               ?.subscriptions?[0].currentTermStartsAt;
-//                           String? endDateStr = subscriptionsdateleft
-//                               ?.subscriptions?[0].currentTermEndsAt;
-//
-//                           DateTime? termStart = startDateStr != null
-//                               ? DateTime.tryParse(
-//                                   "${startDateStr}T00:00:00.000Z")
-//                               : null;
-//
-//                           DateTime? termEnd = endDateStr != null
-//                               ? DateTime.tryParse("${endDateStr}T23:59:59.999Z")
-//                               : null;
-//
-//                           if (createdTime != null &&
-//                               termStart != null &&
-//                               termEnd != null) {
-//                             if (createdTime.isAfter(termStart) &&
-//                                 createdTime.isBefore(termEnd)) {
-//                               final int seconds =
-//                                   int.tryParse(entry.secondsSpent.toString()) ??
-//                                       0;
-//                               final int minutes =
-//                                   int.tryParse(entry.minutesSpent.toString()) ??
-//                                       0;
-//                               final int hours =
-//                                   int.tryParse(entry.hoursSpent.toString()) ??
-//                                       0;
-//
-//                               int totalEntrySeconds =
-//                                   seconds + (minutes * 60) + (hours * 3600);
-//                               secondsSpentList.add(totalEntrySeconds);
-//                               print(
-//                                   "✅ Time counted: $totalEntrySeconds seconds");
-//                             } else {
-//                               print(
-//                                   "❌ Skipped: $createdTime not within $termStart → $termEnd");
-//                             }
-//                           } else {
-//                             print("⚠️ Date parsing failed");
-//                           }
-//                         }
-//                       }
-//                     }).catchError((error) {
-//                       log("Error fetching time entry for ticket ID $ticketId: $error");
-//                     });
-//                   }
-//                 }
-//               }
-//
-//               // 🔢 Calculate total seconds
-//               int totalSeconds =
-//                   secondsSpentList.fold(0, (sum, element) => sum + element);
-//               totalSpentTime = totalSeconds;
-//               checkAndStoreTimeExceeded();
-//               isTimeExceed = await getTimeExceededStatus();
-//               print("Is time exceeded: $isTimeExceed");
-//               print("All seconds spent list: $secondsSpentList");
-//               print("Total seconds spent: $totalSpentTime");
-//
-//               setState(() {
-//                 isLoading = false;
-//               });
-//             }
-//           } else {
-//             setState(() {
-//               isLoading = false;
-//             });
-//           }
-//         }).catchError((error, straceTrace) {
-//           final errorMessage = error.toString();
-//
-//           if (errorMessage
-//               .contains("You are not authorized to perform this operation")) {
-//             log("User not authorized, retaking token...");
-//             fetchAuthtokenApi();
-//             return;
-//           }
-// if(mounted)
-//           setState(() {
-//             isLoading = false;
-//           });
-//         });
-//       } else {
-//         setState(() {
-//           isLoading = false;
-//         });
-//         buildErrorDialog(context, 'Error', "Internet Required");
-//       }
-//     });
-//   }
-
   void allTicketApi() {
     print('Hellooo kaa');
     checkInternet().then((internet) async {
       if (internet) {
         print('Hellooo ki he');
         HomeProvider().Viewalltikit().then((response) async {
+          setState(() {
+            allTicket = null;
+          });
           // allTicket = MyTickitModal.fromJson(json.decode(response.body));
           print('Hellooo');
           if (response.statusCode == 200 && response.body.isNotEmpty) {
@@ -2160,6 +2027,7 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().refreshTokenApi().then((response) async {
@@ -2231,7 +2099,7 @@ class _HomescreenState extends State<Homescreen> {
         }).catchError((error, stackTrace) {
           dev.log("error=====>>>>$stackTrace");
           setState(() {
-            isLoading = false;
+            // isLoading = false;
           });
         });
       } else {
@@ -2390,7 +2258,7 @@ class _HomescreenState extends State<Homescreen> {
             setState(() {
               isLoading = false;
             });
-            subscriptionsViewApi();
+            fetchAuthtokenApi();
             showCustomSuccessSnackbar(
               title: 'Membership Resumed',
               message: 'Your membership has been successfully resumed.',
@@ -2776,10 +2644,10 @@ class _HomescreenState extends State<Homescreen> {
             }
           }
         }).catchError((error, stackTrace) {
-          showCustomErrorSnackbar(
-            title: 'Fetch Error',
-            message: error.toString(),
-          );
+          // showCustomErrorSnackbar(
+          //   title: 'Fetch Error',
+          //   message: error.toString(),
+          // );
           dev.log("Error ========>>>>>>>>${stackTrace.toString()}");
           if (mounted) {
             setState(() {

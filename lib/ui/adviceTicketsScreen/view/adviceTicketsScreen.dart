@@ -41,7 +41,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
       isLoading = true;
     });
     checkTimeStatus();
-    allTicketApi();
+    fetchAuthtokenApi();
   }
 
   void checkTimeStatus() async {
@@ -838,6 +838,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
   }
 
   fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().refreshTokenApi().then((response) async {

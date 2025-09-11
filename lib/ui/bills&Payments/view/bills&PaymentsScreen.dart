@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as dev show log;
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -10,11 +11,14 @@ import 'package:zohosystem/ui/bills&Payments/view/pdfviewWebView.dart';
 import '../../../apiCalling/apiConfig.dart';
 import '../../../apiCalling/buildErrorDialog.dart';
 import '../../../apiCalling/checkInternetModule.dart';
+import '../../../apiCalling/saveUserToken.dart';
 import '../../../utils/bottomBar.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/fontFamily.dart';
 import '../../../utils/images.dart';
 import '../../../utils/snackBars.dart';
+import '../../authentications/login/modal/authTokenModal.dart';
+import '../../authentications/login/provider/loginProvider.dart';
 import '../modal/allInvoiceModal.dart';
 import '../modal/viewPdfModal.dart';
 import '../provider/billProvider.dart';
@@ -31,7 +35,7 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    allinvoiceAPi();
+    fetchAuthtokenApi();
   }
 
   @override
@@ -360,6 +364,51 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
 
   bool isLoading = true;
 
+  fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
+    checkInternet().then((internet) async {
+      if (internet) {
+        LoginProvider().refreshTokenApi().then((response) async {
+          authtoken = AuthtokenModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 200) {
+            setState(() {
+              // isLoading = false;
+            });
+            SaveAuthtokenData.saveAuthData(authtoken!);
+            allinvoiceAPi();
+          } else if (response.statusCode == 422) {
+            showCustomErrorSnackbar(
+                title: "Token Error", message: sendOtp?.message ?? '');
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            showCustomErrorSnackbar(
+              title: 'Token Error',
+              message: 'Internal Server Error',
+            );
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error) {
+          showCustomErrorSnackbar(
+            title: 'Token Error',
+            message: 'Internal Server Error',
+          );
+          setState(() {
+            isLoading = false;
+          });
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
   allinvoiceAPi() {
     checkInternet().then((internet) async {
       if (internet) {
@@ -386,11 +435,17 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Invoice Error',
-            message: error.toString(),
-          );
-          log("error=====>>>>${error.toString()}  $straceTrace");
+          final errorMessage = error.toString();
+          dev.log("error=====>>>>$errorMessage  $straceTrace");
+
+          if (errorMessage
+              .contains("You are not authorized to perform this operation")) {
+            dev.log("User not authorized, retaking token...");
+            fetchAuthtokenApi();
+
+            return;
+          }
+
           setState(() {
             isLoading = false;
           });
@@ -433,10 +488,6 @@ class _BillsnPaymentsscreenState extends State<BillsnPaymentsscreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Invoice Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isLoading = false;

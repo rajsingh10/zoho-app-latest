@@ -1624,6 +1624,7 @@ class _RegisterscreenState extends State<Registerscreen> {
   }
 
   fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().refreshTokenApi().then((response) async {

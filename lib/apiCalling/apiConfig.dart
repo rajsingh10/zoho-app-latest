@@ -29,6 +29,7 @@ import '../ui/homeScreen/modal/subscriptionsDateModal.dart';
 import '../ui/manageMembershipScreen/modal/cancalSubcariptionModal.dart';
 import '../ui/manageMembershipScreen/modal/updateSubscriptionModal.dart';
 import '../ui/moreScreen/modal/getCustomerDataModal.dart';
+import '../ui/moreScreen/modal/marketingOptModal.dart';
 
 String organizationId = '20092882029';
 String testOrganizationId = '20107247529';
@@ -85,3 +86,4 @@ TicketRepliesModal? ticketReplies;
 UpdatePaymentMethodModal? updatePaymentMethod;
 GetCardModal? getCard;
 FetchNotificationsModal? fetchNotifications;
+MarketingOptModal? marketingOpt;

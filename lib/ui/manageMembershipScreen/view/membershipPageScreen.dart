@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as dev show log;
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -88,7 +89,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
       totalAdviceTime = 0;
       totalSpentTime = 0;
     });
-    subscriptionsViewApi();
+    fetchAuthtokenApi();
   }
 
   @override
@@ -1087,10 +1088,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Subscriptions cancel Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isPlanChange = false;
@@ -1178,11 +1175,17 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Subscriptions Error',
-            message: error.toString(),
-          );
-          log("error=====>>>>${error.toString()}  $straceTrace");
+          final errorMessage = error.toString();
+          dev.log("error=====>>>>$errorMessage  $straceTrace");
+
+          if (errorMessage
+              .contains("You are not authorized to perform this operation")) {
+            dev.log("User not authorized, retaking token...");
+            fetchAuthtokenApi();
+
+            return;
+          }
+
           setState(() {
             isLoading = false;
           });
@@ -1219,10 +1222,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, stackTrace) {
-          showCustomErrorSnackbar(
-            title: 'Login Error',
-            message: error.toString(),
-          );
           log("error=====>>>>$stackTrace");
           setState(() {
             isLoading = false;
@@ -1286,10 +1285,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error) {
-          showCustomErrorSnackbar(
-            title: 'Register Error',
-            message: error.toString(),
-          );
           log("Error ========>>>>>>>>${error.toString()}");
           setState(() {
             isPlanChange = false;
@@ -1353,10 +1348,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error) {
-          showCustomErrorSnackbar(
-            title: 'Register Error',
-            message: error.toString(),
-          );
           log("Error ========>>>>>>>>${error.toString()}");
           setState(() {
             isPlanChange = false;
@@ -1433,10 +1424,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error) {
-          showCustomErrorSnackbar(
-            title: 'Update subscription Error',
-            message: error.toString(),
-          );
           log("Error ========>>>>>>>>${error.toString()}");
           setState(() {
             isLoading = false;
@@ -1496,10 +1483,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Subscriptions Pause Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isPlanChange = false;
@@ -1554,10 +1537,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Subscriptions Pause Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isPlanChange = false;
@@ -1601,10 +1580,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Subscriptions cancel Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isLoading = false;
@@ -1651,10 +1626,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             });
           }
         }).catchError((error, straceTrace) {
-          showCustomErrorSnackbar(
-            title: 'Subscriptions cancel Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}  $straceTrace");
           setState(() {
             isLoading = false;
@@ -2346,6 +2317,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
   }
 
   fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
         LoginProvider().refreshTokenApi().then((response) async {

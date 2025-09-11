@@ -28,6 +28,8 @@ import '../../../utils/fontFamily.dart';
 import '../../../utils/images.dart';
 import '../../../utils/snackBars.dart';
 import '../../../utils/textFields.dart';
+import '../../authentications/login/modal/authTokenModal.dart';
+import '../../authentications/login/provider/loginProvider.dart';
 import '../../authentications/signup/modal/allProductsModal.dart';
 import '../../authentications/signup/modal/checkEmailModal.dart';
 import '../../authentications/signup/modal/createContractModal.dart';
@@ -88,7 +90,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
       _isChanged = false;
       isAdding = false;
     });
-    getCountriesApi();
+    fetchAuthtokenApi();
   }
 
   @override
@@ -690,6 +692,51 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
     );
   }
 
+  fetchAuthtokenApi() {
+    SaveAuthtokenData.removeAuthToken();
+    checkInternet().then((internet) async {
+      if (internet) {
+        LoginProvider().refreshTokenApi().then((response) async {
+          authtoken = AuthtokenModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 200) {
+            setState(() {
+              // isLoading = false;
+            });
+            SaveAuthtokenData.saveAuthData(authtoken!);
+            getCountriesApi();
+          } else if (response.statusCode == 422) {
+            showCustomErrorSnackbar(
+                title: "Token Error", message: sendOtp?.message ?? '');
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            showCustomErrorSnackbar(
+              title: 'Token Error',
+              message: 'Internal Server Error',
+            );
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error) {
+          showCustomErrorSnackbar(
+            title: 'Token Error',
+            message: 'Internal Server Error',
+          );
+          setState(() {
+            isLoading = false;
+          });
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
   getCountriesApi() {
     checkInternet().then((internet) async {
       if (internet) {
@@ -725,10 +772,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
             }
           }
         }).catchError((error) {
-          showCustomErrorSnackbar(
-            title: 'Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}");
           if (mounted) {
             setState(() {
@@ -857,10 +900,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
             }
           }
         }).catchError((error, stackTrace) {
-          showCustomErrorSnackbar(
-            title: 'Fetch Error',
-            message: error.toString(),
-          );
           log("Error ========>>>>>>>>${stackTrace.toString()}");
           if (mounted) {
             setState(() {
@@ -1180,10 +1219,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
               if (mounted) setState(() => isAdding = false);
             }
           }).catchError((error) {
-            showCustomErrorSnackbar(
-              title: 'Login Error',
-              message: error.toString(),
-            );
             log("error=====>>>>${error.toString()}");
             if (mounted) setState(() => isAdding = false);
           });
@@ -1233,10 +1268,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
             }
           }
         }).catchError((error) {
-          showCustomErrorSnackbar(
-            title: 'Login Error',
-            message: error.toString(),
-          );
           log("error=====>>>>${error.toString()}");
           if (mounted) {
             setState(() {
@@ -1297,10 +1328,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
               }
             }
           }).catchError((error) {
-            showCustomErrorSnackbar(
-              title: 'Update Error',
-              message: error.toString(),
-            );
             log("Error ========>>>>>>>>${error.toString()}");
             if (mounted) {
               setState(() {
@@ -1369,10 +1396,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
             }
           }
         }).catchError((error, stackTrace) {
-          showCustomErrorSnackbar(
-            title: 'Fetch Error',
-            message: error.toString(),
-          );
           log("Error ========>>>>>>>>${stackTrace.toString()}");
           if (mounted) {
             setState(() {
@@ -1484,10 +1507,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
               if (mounted) setState(() => isLoading = false);
             }
           }).catchError((error) {
-            showCustomErrorSnackbar(
-              title: 'Update Error',
-              message: error.toString(),
-            );
             log("Error ========>>>>>>>>${error.toString()}");
             if (mounted) setState(() => isLoading = false);
           });
