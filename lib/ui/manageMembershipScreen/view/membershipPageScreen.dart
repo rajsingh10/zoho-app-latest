@@ -445,38 +445,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 0.7.h,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            cancelAndRenewApi();
-                                          },
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 7.w, vertical: 1.h),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(90),
-                                                color: const Color(0xff2273bb)),
-                                            child: Text(
-                                              "Renew Membership",
-                                              style: TextStyle(
-                                                  color: AppColors.whiteColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: FontFamily.bold,
-                                                  fontSize: 14.5.sp),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                   ],
                                 ),
                               ),
@@ -1299,69 +1267,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
     });
   }
 
-  renewSubscriptionApi() {
-    final Map<String, dynamic> data = {
-      'customer_id': userData?.data?[0].customerId,
-      'plan': {
-        "plan_code": subscriptionsDate?.subscriptions?[0].planCode,
-      },
-      "starts_at": DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      "can_charge_setup_fee_immediately": true,
-      "custom_fields": [
-        {
-          "label": "Start Date/Time",
-          "value": DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())
-        }
-      ]
-    };
-
-    print(data);
-    checkInternet().then((internet) async {
-      if (internet) {
-        Signupprovider().createSubscriptionApi(data).then((response) async {
-          createSubscription =
-              CreateSubscriptionModal.fromJson(json.decode(response.body));
-          if (response.statusCode == 201) {
-            setState(() {
-              isPlanChange = false;
-            });
-            Get.to(
-              VerifyPaymentScripationScreen(
-                paymentLink: createSubscription?.hostedpage?.url ?? '',
-              ),
-              transition: Transition.rightToLeft,
-              duration: const Duration(milliseconds: 250),
-            );
-          } else if (response.statusCode == 422) {
-            showCustomErrorSnackbar(
-                title: "Register Error", message: register?.message ?? '');
-            setState(() {
-              isPlanChange = false;
-            });
-          } else {
-            showCustomErrorSnackbar(
-              title: 'Register Error',
-              message: register?.message ?? '',
-            );
-            setState(() {
-              isPlanChange = false;
-            });
-          }
-        }).catchError((error) {
-          log("Error ========>>>>>>>>${error.toString()}");
-          setState(() {
-            isPlanChange = false;
-          });
-        });
-      } else {
-        setState(() {
-          isPlanChange = false;
-        });
-        buildErrorDialog(context, 'Error', "Internet Required");
-      }
-    });
-  }
-
   updateSubscriptionApi() {
     setState(() {
       isPlanChange = true;
@@ -1566,52 +1471,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
               cancelSubscriptionData = false;
             });
             createSubscriptionApi();
-          } else if (response.statusCode == 422) {
-            setState(() {
-              cancelSubscriptionData = false;
-            });
-          } else {
-            showCustomErrorSnackbar(
-              title: 'Subscriptions cancel Error',
-              message: 'Internal Server Error',
-            );
-            setState(() {
-              cancelSubscriptionData = false;
-            });
-          }
-        }).catchError((error, straceTrace) {
-          log("error=====>>>>${error.toString()}  $straceTrace");
-          setState(() {
-            isLoading = false;
-          });
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        buildErrorDialog(context, 'Error', "Internet Required");
-      }
-    });
-  }
-
-  cancelAndRenewApi() {
-    setState(() {
-      isPlanChange = true;
-    });
-    checkInternet().then((internet) async {
-      if (internet) {
-        ManageMembershipProvider()
-            .subscriptionsCancelApi(
-                subscriptionsDate?.subscriptions?[0].subscriptionId)
-            .then((response) async {
-          cancelSubscription =
-              CancelSubscriptionModal.fromJson(json.decode(response.body));
-
-          if (response.statusCode == 200) {
-            setState(() {
-              cancelSubscriptionData = false;
-            });
-            renewSubscriptionApi();
           } else if (response.statusCode == 422) {
             setState(() {
               cancelSubscriptionData = false;

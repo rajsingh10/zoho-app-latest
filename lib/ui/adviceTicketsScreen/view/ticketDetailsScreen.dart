@@ -14,6 +14,7 @@ import '../../../apiCalling/checkInternetModule.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/fontFamily.dart';
 import '../../../utils/images.dart';
+import '../../homeScreen/modal/getTimeEntryModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
 import '../modal/viewDetailsTikitModal.dart';
 import '../provider/adviceProvider.dart';
@@ -179,6 +180,28 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                 text: viewDetailsTikitModal
                                                         ?.description ??
                                                     "",
+                                                style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 16.sp,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 1.h), // Time-Entry
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: "Total Time Spent :- ",
+                                                style: TextStyle(
+                                                  color: AppColors.blackColor,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: totalTimeString,
                                                 style: TextStyle(
                                                   color: Colors.black54,
                                                   fontSize: 16.sp,
@@ -511,6 +534,74 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
               TicketRepliesModal.fromJson(json.decode(response.body));
           if (response.statusCode == 200) {
             setState(() {
+              ticketTimeEntryApi();
+              // isLoading = false;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error, stackTrace) {
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+            log('Error : ${stackTrace.toString()}');
+          }
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
+      }
+    });
+  }
+
+  // void ticketTimeEntryApi() {
+  //   checkInternet().then((internet) async {
+  //     if (internet) {
+  //       HomeProvider().getTimeEntryApi(widget.tickitid).then((response) async {
+  //         getTimeEntry = GetTimeEntryModal.fromJson(json.decode(response.body));
+  //         if (response.statusCode == 200) {
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         } else {
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         }
+  //       }).catchError((error, stackTrace) {
+  //         if (mounted) {
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           log('Error : ${stackTrace.toString()}');
+  //         }
+  //       });
+  //     } else {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
+  //     }
+  //   });
+  // }
+  String totalTimeString = "00:00:00"; // declare this at class level
+
+  void ticketTimeEntryApi() {
+    checkInternet().then((internet) async {
+      if (internet) {
+        HomeProvider().getTimeEntryApi(widget.tickitid).then((response) async {
+          getTimeEntry = GetTimeEntryModal.fromJson(json.decode(response.body));
+
+          if (response.statusCode == 200) {
+            // calculate total time here
+            totalTimeString = calculateTotalTime(getTimeEntry!);
+
+            setState(() {
               isLoading = false;
             });
           } else {
@@ -533,5 +624,29 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
         showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
       }
     });
+  }
+
+  /// function to calculate total time in hh:mm:ss
+  String calculateTotalTime(GetTimeEntryModal getTimeEntry) {
+    int totalSeconds = 0;
+
+    if (getTimeEntry.data != null) {
+      for (var entry in getTimeEntry.data!) {
+        int hours = int.tryParse(entry.hoursSpent ?? '0') ?? 0;
+        int minutes = int.tryParse(entry.minutesSpent ?? '0') ?? 0;
+        int seconds = int.tryParse(entry.secondsSpent ?? '0') ?? 0;
+
+        totalSeconds += (hours * 3600) + (minutes * 60) + seconds;
+      }
+    }
+
+    // convert total seconds into hh:mm:ss format
+    int hours = totalSeconds ~/ 3600;
+    int minutes = (totalSeconds % 3600) ~/ 60;
+    int seconds = totalSeconds % 60;
+
+    return "${hours.toString().padLeft(2, '0')}:"
+        "${minutes.toString().padLeft(2, '0')}:"
+        "${seconds.toString().padLeft(2, '0')}";
   }
 }
