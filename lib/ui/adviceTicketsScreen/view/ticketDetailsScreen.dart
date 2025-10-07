@@ -301,6 +301,29 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                     ),
                                   ),
                                   SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+
+                                    },
+                                    child: Container(
+                                      height: 5.5.h,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.bgColor,
+                                          borderRadius: BorderRadius.circular(3.w)),
+                                      child: Text(
+                                        'Send Ticket Reply',
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: FontFamily.bold),
+                                      ),
+                                    ),
+                                  ).marginSymmetric(horizontal: 2.w),
+                                  SizedBox(
                                     height: 1.h,
                                   ),
                                   Row(
