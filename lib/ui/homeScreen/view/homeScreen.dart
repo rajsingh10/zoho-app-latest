@@ -64,8 +64,8 @@ class _HomescreenState extends State<Homescreen> {
       totalAdviceTime = 0;
       totalSpentTime = 0;
     });
-
-    fetchAuthtokenApi();
+    subscriptionsViewApi();
+    // fetchAuthtokenApi();
     getPlansApi();
   }
 

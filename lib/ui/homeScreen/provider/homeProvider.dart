@@ -16,7 +16,7 @@ class HomeProvider extends ChangeNotifier {
     log('Api Header Data = $headers');
     print("header pass====>>>$headers");
     String url =
-        "${apiEndpoints.subscriptionsCustomeridApi}${userData?.data?[0].customerId}";
+        "${apiEndpoints.subscriptionsCustomeridApi}${userData?.data?[0].customerId}&filter_by=SubscriptionStatus.LIVE";
     print(url);
 
     var responseJson;

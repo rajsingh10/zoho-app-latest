@@ -14,6 +14,7 @@ import '../../../apiCalling/checkInternetModule.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/fontFamily.dart';
 import '../../../utils/images.dart';
+import '../../../utils/textFields.dart';
 import '../../homeScreen/modal/getTimeEntryModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
 import '../modal/viewDetailsTikitModal.dart';
@@ -28,6 +29,8 @@ class TicketDetailsScreen extends StatefulWidget {
   @override
   State<TicketDetailsScreen> createState() => _TicketDetailsScreenState();
 }
+
+final TextEditingController _bodyController = TextEditingController();
 
 class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   @override
@@ -300,29 +303,118 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-
-                                    },
-                                    child: Container(
-                                      height: 5.5.h,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.bgColor,
-                                          borderRadius: BorderRadius.circular(3.w)),
-                                      child: Text(
-                                        'Send Ticket Reply',
-                                        style: TextStyle(
-                                            fontSize: 17.sp,
-                                            color: AppColors.whiteColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.bold),
-                                      ),
-                                    ),
-                                  ).marginSymmetric(horizontal: 2.w),
+                                  // SizedBox(
+                                  //   height: 1.5.h,
+                                  // ),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     showModalBottomSheet(
+                                  //       context: context,
+                                  //       isScrollControlled: true,
+                                  //       // lets sheet expand when keyboard opens
+                                  //       shape: RoundedRectangleBorder(
+                                  //         borderRadius: BorderRadius.vertical(
+                                  //             top: Radius.circular(20)),
+                                  //       ),
+                                  //       builder: (context) {
+                                  //         return Padding(
+                                  //           padding: EdgeInsets.only(
+                                  //             bottom: MediaQuery.of(context)
+                                  //                 .viewInsets
+                                  //                 .bottom, // handle keyboard
+                                  //             top: 2.h,
+                                  //             left: 2.w,
+                                  //             right: 2.w,
+                                  //           ),
+                                  //           child: Column(
+                                  //             mainAxisSize: MainAxisSize.min,
+                                  //             children: [
+                                  //               // Top title
+                                  //               Text(
+                                  //                 'Send Ticket Reply',
+                                  //                 style: TextStyle(
+                                  //                   fontSize: 18.sp,
+                                  //                   fontWeight: FontWeight.bold,
+                                  //                 ),
+                                  //               ),
+                                  //               SizedBox(height: 2.h),
+                                  //
+                                  //               // Message TextField
+                                  //               AppTextField(
+                                  //                 controller: _bodyController,
+                                  //                 hintText: 'Enter Reply',
+                                  //                 text: 'Reply body',
+                                  //                 isTextavailable: true,
+                                  //                 maxline: 5,
+                                  //                 validator: (value) {
+                                  //                   if (value == null ||
+                                  //                       value.trim().isEmpty) {
+                                  //                     return 'Reply Message is required';
+                                  //                   }
+                                  //                   return null;
+                                  //                 },
+                                  //                 textInputType:
+                                  //                     TextInputType.text,
+                                  //               ),
+                                  //               SizedBox(height: 3.h),
+                                  //
+                                  //               // Send button
+                                  //               GestureDetector(
+                                  //                 onTap: () {
+                                  //                   // Handle send logic
+                                  //                   Navigator.of(context)
+                                  //                       .pop(); // close bottom sheet
+                                  //                 },
+                                  //                 child: Container(
+                                  //                   height: 5.5.h,
+                                  //                   alignment: Alignment.center,
+                                  //                   decoration: BoxDecoration(
+                                  //                     color: AppColors.bgColor,
+                                  //                     borderRadius:
+                                  //                         BorderRadius.circular(
+                                  //                             3.w),
+                                  //                   ),
+                                  //                   child: Text(
+                                  //                     'Send',
+                                  //                     style: TextStyle(
+                                  //                       fontSize: 17.sp,
+                                  //                       color: AppColors
+                                  //                           .whiteColor,
+                                  //                       fontWeight:
+                                  //                           FontWeight.bold,
+                                  //                       fontFamily:
+                                  //                           FontFamily.bold,
+                                  //                     ),
+                                  //                   ),
+                                  //                 ).marginSymmetric(
+                                  //                     horizontal: 2.w),
+                                  //               ),
+                                  //               SizedBox(height: 2.h),
+                                  //             ],
+                                  //           ),
+                                  //         );
+                                  //       },
+                                  //     );
+                                  //   },
+                                  //   child: Container(
+                                  //     height: 5.5.h,
+                                  //     alignment: Alignment.center,
+                                  //     decoration: BoxDecoration(
+                                  //       color: AppColors.bgColor,
+                                  //       borderRadius:
+                                  //           BorderRadius.circular(3.w),
+                                  //     ),
+                                  //     child: Text(
+                                  //       'Send Ticket Reply',
+                                  //       style: TextStyle(
+                                  //         fontSize: 17.sp,
+                                  //         color: AppColors.whiteColor,
+                                  //         fontWeight: FontWeight.bold,
+                                  //         fontFamily: FontFamily.bold,
+                                  //       ),
+                                  //     ),
+                                  //   ).marginSymmetric(horizontal: 2.w),
+                                  // ),
                                   SizedBox(
                                     height: 1.h,
                                   ),
@@ -582,36 +674,6 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     });
   }
 
-  // void ticketTimeEntryApi() {
-  //   checkInternet().then((internet) async {
-  //     if (internet) {
-  //       HomeProvider().getTimeEntryApi(widget.tickitid).then((response) async {
-  //         getTimeEntry = GetTimeEntryModal.fromJson(json.decode(response.body));
-  //         if (response.statusCode == 200) {
-  //           setState(() {
-  //             isLoading = false;
-  //           });
-  //         } else {
-  //           setState(() {
-  //             isLoading = false;
-  //           });
-  //         }
-  //       }).catchError((error, stackTrace) {
-  //         if (mounted) {
-  //           setState(() {
-  //             isLoading = false;
-  //           });
-  //           log('Error : ${stackTrace.toString()}');
-  //         }
-  //       });
-  //     } else {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       showCustomErrorSnackbar(title: 'Error', message: 'Internet Required');
-  //     }
-  //   });
-  // }
   String totalTimeString = "00:00:00"; // declare this at class level
 
   void ticketTimeEntryApi() {
