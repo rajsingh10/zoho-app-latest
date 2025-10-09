@@ -16,6 +16,31 @@ class HomeProvider extends ChangeNotifier {
     log('Api Header Data = $headers');
     print("header pass====>>>$headers");
     String url =
+        "${apiEndpoints.subscriptionsCustomeridApi}${userData?.data?[0].customerId}&filter_by=SubscriptionStatus.All";
+    print(url);
+
+    var responseJson;
+    final response = await http
+        .get(
+      Uri.parse(url),
+      headers: headers,
+    )
+        .timeout(
+      const Duration(seconds: 60),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+    responseJson = responses(response);
+
+    return responseJson;
+  }
+
+  Future<http.Response> subscriptionsLiveViewApi() async {
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url =
         "${apiEndpoints.subscriptionsCustomeridApi}${userData?.data?[0].customerId}&filter_by=SubscriptionStatus.LIVE";
     print(url);
 
@@ -41,13 +66,10 @@ class HomeProvider extends ChangeNotifier {
     return prefs.getString('my_id');
   }
 
-  Future<http.Response> Viewalltikit() async {
+  Future<http.Response> Viewalltikit(id) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = $headers');
-    String? storedId = await getId();
-    print("Stored ID =====>>> $storedId");
-    print("header pass====>>>$headers");
-    String url = "https://desk.zoho.eu/api/v1/contacts/$storedId/tickets";
+    String url = apiEndpoints.fetchTickets + "${id}";
     print(url);
 
     var responseJson;

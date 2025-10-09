@@ -1,4 +1,5 @@
 import 'package:zohosystem/apiCalling/saveUserToken.dart';
+import 'package:zohosystem/ui/adviceTicketsScreen/modal/singleDepartmentModal.dart';
 import 'package:zohosystem/ui/authentications/login/modal/authTokenModal.dart';
 import 'package:zohosystem/ui/authentications/login/modal/sendOtpModal.dart';
 import 'package:zohosystem/ui/authentications/login/modal/userDataModal.dart';
@@ -15,6 +16,7 @@ import 'package:zohosystem/ui/moreScreen/modal/updatePaymentMethod.dart';
 
 import '../ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart';
 import '../ui/adviceTicketsScreen/modal/addTicketModal.dart';
+import '../ui/adviceTicketsScreen/modal/replyTikitModal.dart';
 import '../ui/adviceTicketsScreen/modal/ticketRepliesModal.dart';
 import '../ui/authentications/login/modal/checkIdModal.dart';
 import '../ui/authentications/signup/modal/checkEmailModal.dart';
@@ -87,3 +89,5 @@ UpdatePaymentMethodModal? updatePaymentMethod;
 GetCardModal? getCard;
 FetchNotificationsModal? fetchNotifications;
 MarketingOptModal? marketingOpt;
+SingleDepartmentModal? singleDepartment;
+ReplyTicketModal? replyTicket;

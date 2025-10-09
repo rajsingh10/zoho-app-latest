@@ -26,9 +26,9 @@ import '../../../utils/images.dart';
 import '../../../utils/snackBars.dart';
 import '../../authentications/login/modal/authTokenModal.dart';
 import '../../authentications/login/provider/loginProvider.dart';
+import '../../homeScreen/view/homeScreen.dart';
 import '../modal/addTicketModal.dart';
 import '../provider/adviceProvider.dart';
-import 'adviceTicketsScreen.dart';
 
 class CreateTicketScreen extends StatefulWidget {
   const CreateTicketScreen({super.key});
@@ -869,6 +869,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
   }
 
   addTicketApi() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedId = prefs.getString('selectedSubscriptionId');
     setState(() => isAdding = true);
 
     String? storedId = await getId();
@@ -889,6 +891,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
       "priority": "High",
       "channel": "Email",
       if (uploadIds.isNotEmpty) "uploads": uploadIds,
+      "cf": {"cf_plan_id": savedId}
     };
 
     log("📤 Final Ticket Request Body: ${jsonEncode(data)}");
@@ -907,7 +910,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
           message: 'Ticket created successfully!',
         );
         Get.offAll(
-          const adviceTicketsScreen(),
+          const Homescreen(),
           transition: Transition.rightToLeft,
           duration: const Duration(milliseconds: 250),
         );

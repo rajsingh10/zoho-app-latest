@@ -33,4 +33,6 @@ class apiEndpoints {
   static String fetchNotify = "${baseUrl}get-notifications-for-customer";
   static String marketingOptIn = "${baseUrl}update-promotional-notification";
   static String fetchMarketingOptIn = "${baseUrl}get-promotional-notification";
+  static String fetchTickets =
+      "${zohoDeskBaseUrl}tickets/search?customField1=cf_plan_id:";
 }

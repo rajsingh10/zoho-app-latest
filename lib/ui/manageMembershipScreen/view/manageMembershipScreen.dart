@@ -49,8 +49,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchAuthtokenApi();
-    getPlansApi();
+    subscriptionsViewApi();
   }
 
   @override
@@ -634,7 +633,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
   subscriptionsViewApi() {
     checkInternet().then((internet) async {
       if (internet) {
-        HomeProvider().subscriptionsViewApi().then((response) async {
+        HomeProvider().subscriptionsLiveViewApi().then((response) async {
           subscriptionsdateleft =
               SubscriptionsDateModal.fromJson(json.decode(response.body));
 

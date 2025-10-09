@@ -437,15 +437,13 @@ class _RegisterscreenState extends State<Registerscreen> {
                     ),
                   ),
                   initialCountryCode: 'GB',
-                  onChanged: (phone) {
-                    if (_countryCode == '') {
-                      if (mounted) {
-                        setState(() {
-                          _countryCode = phone.countryCode;
-                        });
-                      }
-                      log(_countryCode);
+                  onCountryChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        _countryCode = value.displayCC;
+                      });
                     }
+                    log(_countryCode);
                   },
                   disableLengthCheck: true,
                   // optional: disable length restrictions
@@ -1176,7 +1174,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           },
           {
             "api_name": "cf_country_code",
-            "value": _countryCode.toString(),
+            "value": '+$_countryCode',
           }
         ]
       };

@@ -41,7 +41,7 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
       isLoading = true;
     });
     checkTimeStatus();
-    fetchAuthtokenApi();
+    allTicketApi();
   }
 
   void checkTimeStatus() async {
@@ -795,7 +795,9 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
   allTicketApi() {
     checkInternet().then((internet) async {
       if (internet) {
-        HomeProvider().Viewalltikit().then((response) async {
+        final prefs = await SharedPreferences.getInstance();
+        final savedId = prefs.getString('selectedSubscriptionId');
+        HomeProvider().Viewalltikit(savedId).then((response) async {
           allTicket = MyTickitModal.fromJson(json.decode(response.body));
 
           if (response.statusCode == 200 || response.statusCode == 204) {
@@ -823,10 +825,10 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
 
             return;
           }
-
-          setState(() {
-            isLoading = false;
-          });
+          if (mounted)
+            setState(() {
+              isLoading = false;
+            });
         });
       } else {
         setState(() {

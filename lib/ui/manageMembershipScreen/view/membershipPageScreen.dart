@@ -38,8 +38,18 @@ import '../../homeScreen/modal/planDetailsModal.dart';
 import '../../homeScreen/modal/subscriptionsDateModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
 import '../modal/cancalSubcariptionModal.dart';
+import '../modal/resumeSubscriptionModal.dart';
 import '../modal/updateSubscriptionModal.dart';
 import '../provider/membershipProvider.dart';
+
+class SubscriptionTimeData {
+  int totalAdviceTime = 0;
+  int totalSpentTime = 0;
+  bool isTimeExceed = false;
+  String subscriptionId;
+
+  SubscriptionTimeData({required this.subscriptionId});
+}
 
 class membershipPageScreen extends StatefulWidget {
   const membershipPageScreen({super.key});
@@ -57,6 +67,97 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
   List<Products> productsList = [];
   List<Pllans.Plans> plansList = [];
   bool isTimeExceed = false;
+
+  // Add page controller and current page index for membership section only
+  PageController _membershipPageController = PageController();
+  int _currentMembershipPage = 0;
+
+  // Subscription time tracking
+  Map<String, SubscriptionTimeData> _subscriptionTimeData = {};
+
+  // Helper method to get current subscription
+  Subscriptions? _getCurrentSubscription() {
+    if (subscriptionsDate?.subscriptions == null ||
+        subscriptionsDate!.subscriptions!.isEmpty) {
+      return null;
+    }
+    return subscriptionsDate!.subscriptions![_currentMembershipPage];
+  }
+
+  // Helper method to check if there are active subscriptions
+  bool _hasActiveSubscription() {
+    return subscriptionsDate?.subscriptions != null &&
+        subscriptionsDate!.subscriptions!.isNotEmpty;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _membershipPageController = PageController();
+    _initializePageController();
+    setState(() {
+      totalAdviceTime = 0;
+      totalSpentTime = 0;
+    });
+    subscriptionsViewApi();
+  }
+
+  void _initializePageController() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedId = prefs.getString('selectedSubscriptionId');
+    int initialPage = 0;
+
+    // Calculate initial page based on saved ID
+    if (savedId != null && subscriptionsDate?.subscriptions != null) {
+      final savedIndex = subscriptionsDate!.subscriptions!
+          .indexWhere((sub) => sub.subscriptionId == savedId);
+      if (savedIndex != -1) {
+        initialPage = savedIndex;
+      }
+    }
+
+    _membershipPageController = PageController(initialPage: initialPage);
+    setState(() {
+      _currentMembershipPage = initialPage;
+    });
+  }
+
+  @override
+  void dispose() {
+    _membershipPageController.dispose();
+    super.dispose();
+  }
+
+  // Update time data for current subscription
+  void _updateTimeDataForCurrentSubscription() {
+    final currentSubscription = _getCurrentSubscription();
+    if (currentSubscription != null) {
+      final subscriptionId = currentSubscription.subscriptionId ?? '';
+
+      // Initialize if not exists
+      if (!_subscriptionTimeData.containsKey(subscriptionId)) {
+        _subscriptionTimeData[subscriptionId] = SubscriptionTimeData(
+          subscriptionId: subscriptionId,
+        );
+      }
+
+      // Update UI with current subscription's data
+      final currentTimeData = _subscriptionTimeData[subscriptionId]!;
+      setState(() {
+        totalAdviceTime = currentTimeData.totalAdviceTime;
+        totalSpentTime = currentTimeData.totalSpentTime;
+        isTimeExceed = currentTimeData.isTimeExceed;
+      });
+
+      // Fetch fresh data for this subscription
+      allTicketApi();
+      if (currentSubscription.planCode != null) {
+        planDetailsApi(currentSubscription.planCode);
+      }
+      _calculateDaysRemaining(currentSubscription);
+    }
+  }
 
   Future<bool> getTimeExceededStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -80,17 +181,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
   DateTime? selectedDate;
   final TextEditingController _dateController = TextEditingController();
   final GlobalKey<FormState> _pauseFormKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      totalAdviceTime = 0;
-      totalSpentTime = 0;
-    });
-    fetchAuthtokenApi();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,127 +260,72 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              Container(
-                                width: Device.width,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 1.2.h, horizontal: 3.w),
-                                decoration: BoxDecoration(
-                                    color: AppColors.cardBgColor,
-                                    borderRadius: BorderRadius.circular(5.w)),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Your Active Memberships',
-                                      style: TextStyle(
-                                          color: AppColors.bgColor,
-                                          fontWeight: FontWeight.w100,
-                                          fontFamily: FontFamily.extraBold,
-                                          fontSize: 17.5.sp),
+                              // Swipeable Membership Section Only
+                              _buildSwipeableMembershipSection(),
+                              SizedBox(height: 2.h),
+
+                              // Upgrade/Downgrade Buttons
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedButton = 'upgrade';
+                                      });
+                                      _showStatefulBottomSheet(
+                                          context, selectedButton);
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 3.5.w, vertical: 1.h),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(90),
+                                          color: const Color(0xff2273bb)),
+                                      child: Text(
+                                        "Upgrade Membership",
+                                        style: TextStyle(
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: FontFamily.bold,
+                                            fontSize: 14.sp),
+                                      ),
                                     ),
-                                    SizedBox(
-                                      height: 1.h,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedButton = 'downgrade';
+                                      });
+                                      _showStatefulBottomSheet(
+                                          context, selectedButton);
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 3.w, vertical: 1.h),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(90),
+                                          color: const Color(0xff2273bb)),
+                                      child: Text(
+                                        "Downgrade Membership",
+                                        style: TextStyle(
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: FontFamily.bold,
+                                            fontSize: 14.sp),
+                                      ),
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          subscriptionsDate?.subscriptions
-                                                      ?.isEmpty ??
-                                                  true
-                                              ? "N/A"
-                                              : subscriptionsDate
-                                                      ?.subscriptions?[0]
-                                                      .name ??
-                                                  "N/A",
-                                          style: TextStyle(
-                                              color: AppColors.bgColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: FontFamily.light,
-                                              fontSize: 15.sp),
-                                        ),
-                                        const Divider(
-                                          color: AppColors.bgColor,
-                                          thickness: 0.5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedButton = 'upgrade';
-                                                });
-                                                _showStatefulBottomSheet(
-                                                    context, selectedButton);
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 3.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            90),
-                                                    color: const Color(
-                                                        0xff2273bb)),
-                                                child: Text(
-                                                  "Upgrade Membership",
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.whiteColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.bold,
-                                                      fontSize: 14.sp),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedButton = 'downgrade';
-                                                });
-                                                _showStatefulBottomSheet(
-                                                    context, selectedButton);
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 3.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            90),
-                                                    color: const Color(
-                                                        0xff2273bb)),
-                                                child: Text(
-                                                  "Downgrade Membership",
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.whiteColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.bold,
-                                                      fontSize: 14.sp),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
+                              SizedBox(height: 2.h),
+
+                              // Monthly Advice Time Section
                               Container(
                                 width: Device.width,
                                 padding: EdgeInsets.symmetric(
@@ -298,708 +333,173 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                 decoration: BoxDecoration(
                                     color: AppColors.cardBgColor,
                                     borderRadius: BorderRadius.circular(5.w)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Monthly Advice Time",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: AppColors.bgColor,
-                                          fontWeight: FontWeight.w100,
-                                          fontFamily: FontFamily.extraBold,
-                                          fontSize: 20.sp),
-                                    ).paddingSymmetric(horizontal: 3.w),
-                                    SizedBox(
-                                      height: 1.h,
-                                    ),
-                                    Text(
-                                      subscriptionsDate
-                                                  ?.subscriptions?.isEmpty ??
-                                              true
-                                          ? "N/A"
-                                          : subscriptionsDate?.subscriptions?[0]
-                                                  .planName ??
-                                              "N/A",
-                                      style: TextStyle(
-                                          color: AppColors.bgColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: FontFamily.light,
-                                          fontSize: 15.sp),
-                                    ),
-                                    SizedBox(
-                                      height: 0.7.h,
-                                    ),
-                                    Container(
-                                      height: 35.w,
-                                      width: 35.w,
-                                      padding: EdgeInsets.all(11.sp),
-                                      decoration: const BoxDecoration(
-                                          color: AppColors.whiteColor,
-                                          shape: BoxShape.circle),
-                                      child: Stack(
+                                child: isTicketLoad
+                                    ? Loader()
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          SizedBox(
-                                            height: 35.w,
-                                            width: 35.w,
-                                            child: CircularProgressIndicator(
-                                              value: (totalAdviceTime > 0 &&
-                                                      totalSpentTime <=
-                                                          totalAdviceTime)
-                                                  ? totalSpentTime /
-                                                      totalAdviceTime.toDouble()
-                                                  : 1.0,
-                                              strokeWidth: 6,
-                                              color: AppColors.bgColor,
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  (totalAdviceTime -
-                                                                  totalSpentTime)
-                                                              .clamp(0,
-                                                                  totalAdviceTime) <
-                                                          60
-                                                      ? "${(totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime)}"
-                                                      : ((totalAdviceTime -
-                                                                      totalSpentTime)
-                                                                  .clamp(0,
-                                                                      totalAdviceTime) /
-                                                              60)
-                                                          .toStringAsFixed(0),
-                                                  style: TextStyle(
-                                                    color: AppColors.bgColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: FontFamily.bold,
-                                                    fontSize: 22.sp,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  (totalAdviceTime -
-                                                                  totalSpentTime)
-                                                              .clamp(0,
-                                                                  totalAdviceTime) <
-                                                          60
-                                                      ? "secs"
-                                                      : "mins",
+                                          Text(
+                                            "Monthly Advice Time",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: AppColors.bgColor,
+                                                fontWeight: FontWeight.w100,
+                                                fontFamily:
+                                                    FontFamily.extraBold,
+                                                fontSize: 20.sp),
+                                          ).paddingSymmetric(horizontal: 3.w),
+                                          SizedBox(height: 1.h),
+                                          _getCurrentSubscription()?.status ==
+                                                  'paused'
+                                              ? Text(
+                                                  'Membership is currently paused please resume it to see details',
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: AppColors.bgColor,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontFamily:
-                                                          FontFamily.regular,
-                                                      fontSize: 16.sp),
-                                                ),
-                                                Text(
-                                                  "Remaining",
+                                                          FontFamily.light,
+                                                      fontSize: 17.sp),
+                                                )
+                                              : Text(
+                                                  _getCurrentSubscription()
+                                                          ?.planName ??
+                                                      "N/A",
                                                   style: TextStyle(
                                                       color: AppColors.bgColor,
                                                       fontWeight:
-                                                          FontWeight.w100,
+                                                          FontWeight.bold,
                                                       fontFamily:
-                                                          FontFamily.extraBold,
-                                                      fontSize: 16.sp),
+                                                          FontFamily.light,
+                                                      fontSize: 15.sp),
                                                 ),
-                                                SizedBox(
-                                                  height: 1.5.h,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 0.7.h,
-                                    ),
-                                    Center(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 3.5.w,
-                                            width: 3.5.w,
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: AppColors.bgColor),
-                                          ),
-                                          SizedBox(
-                                            width: 1.w,
-                                          ),
-                                          Container(
-                                            height: 3.5.w,
-                                            width: 3.5.w,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                    color: AppColors.blackColor,
-                                                    width: 7.sp),
-                                                color: AppColors.whiteColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              subscriptionsDate?.subscriptions?[0].pauseDate ==
-                                          '' ||
-                                      subscriptionsDate
-                                              ?.subscriptions?[0].pauseDate ==
-                                          null
-                                  ? Container(
-                                      width: Device.width,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 2.h, horizontal: 4.w),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.cardBgColor,
-                                          borderRadius:
-                                              BorderRadius.circular(5.w)),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    'Next Billing Date',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.bgColor,
-                                                        fontWeight:
-                                                            FontWeight.w100,
-                                                        fontFamily: FontFamily
-                                                            .extraBold,
-                                                        fontSize: 18.5.sp),
-                                                  ).paddingSymmetric(
-                                                      horizontal: 3.w),
-                                                  Text(
-                                                    subscriptionsDate
-                                                                ?.subscriptions
-                                                                ?.isEmpty ??
-                                                            true
-                                                        ? "N/A"
-                                                        : subscriptionsDate
-                                                                ?.subscriptions?[
-                                                                    0]
-                                                                .nextBillingAt ??
-                                                            "",
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.bgColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontFamily:
-                                                            FontFamily.light,
-                                                        fontSize: 15.sp),
-                                                  ),
-                                                ],
-                                              ),
-                                              Container(
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      subscriptionsDate
-                                                                  ?.subscriptions
-                                                                  ?.isEmpty ??
-                                                              true
-                                                          ? "N/A"
-                                                          : "$daysRemaining",
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .orangeColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily:
-                                                              FontFamily.bold,
-                                                          fontSize: 30.sp),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 2.w,
-                                                    ),
-                                                    Text(
-                                                      'days left',
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .orangeColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily:
-                                                              FontFamily.light,
-                                                          fontSize: 16.sp),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Center(
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 3.5.w,
-                                                  width: 3.5.w,
+                                          SizedBox(height: 0.7.h),
+                                          _getCurrentSubscription()?.status ==
+                                                  'paused'
+                                              ? Container()
+                                              : Container(
+                                                  height: 35.w,
+                                                  width: 35.w,
+                                                  padding:
+                                                      EdgeInsets.all(11.sp),
                                                   decoration:
                                                       const BoxDecoration(
+                                                          color: AppColors
+                                                              .whiteColor,
                                                           shape:
-                                                              BoxShape.circle,
-                                                          color: AppColors
-                                                              .bgColor),
+                                                              BoxShape.circle),
+                                                  child: Stack(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 35.w,
+                                                        width: 35.w,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value: (totalAdviceTime >
+                                                                      0 &&
+                                                                  totalSpentTime <=
+                                                                      totalAdviceTime)
+                                                              ? totalSpentTime /
+                                                                  totalAdviceTime
+                                                                      .toDouble()
+                                                              : 1.0,
+                                                          strokeWidth: 6,
+                                                          color:
+                                                              AppColors.bgColor,
+                                                        ),
+                                                      ),
+                                                      Center(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                              (totalAdviceTime -
+                                                                              totalSpentTime)
+                                                                          .clamp(
+                                                                              0,
+                                                                              totalAdviceTime) <
+                                                                      60
+                                                                  ? "${(totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime)}"
+                                                                  : ((totalAdviceTime - totalSpentTime).clamp(
+                                                                              0,
+                                                                              totalAdviceTime) /
+                                                                          60)
+                                                                      .toStringAsFixed(
+                                                                          0),
+                                                              style: TextStyle(
+                                                                color: AppColors
+                                                                    .bgColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .bold,
+                                                                fontSize: 22.sp,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              (totalAdviceTime -
+                                                                              totalSpentTime)
+                                                                          .clamp(
+                                                                              0,
+                                                                              totalAdviceTime) <
+                                                                      60
+                                                                  ? "secs"
+                                                                  : "mins",
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .bgColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontFamily:
+                                                                      FontFamily
+                                                                          .regular,
+                                                                  fontSize:
+                                                                      16.sp),
+                                                            ),
+                                                            Text(
+                                                              "Remaining",
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .bgColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w100,
+                                                                  fontFamily:
+                                                                      FontFamily
+                                                                          .extraBold,
+                                                                  fontSize:
+                                                                      16.sp),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 1.5.h)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  width: 1.w,
-                                                ),
-                                                Container(
-                                                  height: 3.5.w,
-                                                  width: 3.5.w,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      border: Border.all(
-                                                          color: AppColors
-                                                              .blackColor,
-                                                          width: 7.sp),
-                                                      color:
-                                                          AppColors.whiteColor),
-                                                ),
-                                              ],
-                                            ),
-                                          )
                                         ],
                                       ),
-                                    )
-                                  : Container(
-                                      width: Device.width,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 2.h, horizontal: 5.w),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.cardBgColor,
-                                          borderRadius:
-                                              BorderRadius.circular(5.w)),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    'Plan is pausing',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.bgColor,
-                                                        fontWeight:
-                                                            FontWeight.w100,
-                                                        fontFamily: FontFamily
-                                                            .extraBold,
-                                                        fontSize: 18.5.sp),
-                                                  ).paddingSymmetric(
-                                                      horizontal: 3.w),
-                                                  Text(
-                                                    subscriptionsDate
-                                                                ?.subscriptions
-                                                                ?.isEmpty ??
-                                                            true
-                                                        ? "N/A"
-                                                        : subscriptionsDate
-                                                                ?.subscriptions?[
-                                                                    0]
-                                                                .pauseDate ??
-                                                            "",
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.bgColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontFamily:
-                                                            FontFamily.light,
-                                                        fontSize: 15.sp),
-                                                  ),
-                                                ],
-                                              ),
-                                              Container(
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      DateTime.parse(subscriptionsDate
-                                                                  ?.subscriptions?[
-                                                                      0]
-                                                                  .pauseDate ??
-                                                              '')
-                                                          .difference(DateTime
-                                                              .parse(DateFormat(
-                                                                      'yyyy-MM-dd')
-                                                                  .format(DateTime
-                                                                      .now())))
-                                                          .inDays
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .orangeColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily:
-                                                              FontFamily.bold,
-                                                          fontSize: 30.sp),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 2.w,
-                                                    ),
-                                                    Text(
-                                                      'days left',
-                                                      style: TextStyle(
-                                                          color: AppColors
-                                                              .orangeColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily:
-                                                              FontFamily.light,
-                                                          fontSize: 16.sp),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Center(
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 3.5.w,
-                                                  width: 3.5.w,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: AppColors
-                                                              .bgColor),
-                                                ),
-                                                SizedBox(
-                                                  width: 1.w,
-                                                ),
-                                                Container(
-                                                  height: 3.5.w,
-                                                  width: 3.5.w,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      border: Border.all(
-                                                          color: AppColors
-                                                              .blackColor,
-                                                          width: 7.sp),
-                                                      color:
-                                                          AppColors.whiteColor),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                              if (subscriptionsDate
-                                          ?.subscriptions?[0].pauseDate ==
-                                      '' ||
-                                  subscriptionsDate
-                                          ?.subscriptions?[0].pauseDate ==
-                                      null)
-                                ...[]
-                              else ...[
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    showCupertinoDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return CupertinoAlertDialog(
-                                          title: Text(
-                                            'Stop Pausing',
-                                            style: TextStyle(fontSize: 18.sp),
-                                          ),
-                                          content: Text(
-                                            'Are you sure you want to stop your membership from pausing?',
-                                            style: TextStyle(fontSize: 17.sp),
-                                          ),
-                                          actions: [
-                                            CupertinoDialogAction(
-                                              child: const Text('No'),
-                                              onPressed: () {
-                                                Get.back();
-                                              },
-                                            ),
-                                            CupertinoDialogAction(
-                                              isDestructiveAction: true,
-                                              onPressed: () {
-                                                Get.back();
-                                                stopPausingApi();
-                                              },
-                                              child: const Text('Yes'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: Device.width,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 1.h, horizontal: 5.w),
-                                    decoration: BoxDecoration(
-                                        color: AppColors.cardBgColor,
-                                        borderRadius:
-                                            BorderRadius.circular(5.w)),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Click here to',
-                                          style: TextStyle(
-                                              color: AppColors.blackColor,
-                                              fontWeight: FontWeight.normal,
-                                              fontFamily: FontFamily.regular,
-                                              fontSize: 17.sp),
-                                        ),
-                                        Text(
-                                          'Stop Pausing',
-                                          style: TextStyle(
-                                              color: AppColors.blackColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: FontFamily.extraBold,
-                                              fontSize: 17.sp),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              SizedBox(
-                                height: 1.h,
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(const BillsnPaymentsscreen());
-                                },
-                                child: Container(
-                                  width: Device.width,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 1.h, horizontal: 5.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cardBgColor,
-                                      borderRadius: BorderRadius.circular(5.w)),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Click here to view your recent',
-                                        style: TextStyle(
-                                            color: AppColors.blackColor,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: FontFamily.regular,
-                                            fontSize: 17.sp),
-                                      ),
-                                      Text(
-                                        'Bills & Payments',
-                                        style: TextStyle(
-                                            color: AppColors.blackColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.extraBold,
-                                            fontSize: 17.sp),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.offAll(const adviceTicketsScreen());
-                                },
-                                child: Container(
-                                  width: Device.width,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 1.h, horizontal: 5.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cardBgColor,
-                                      borderRadius: BorderRadius.circular(5.w)),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Click here to view your recent',
-                                        style: TextStyle(
-                                            color: AppColors.blackColor,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: FontFamily.regular,
-                                            fontSize: 17.sp),
-                                      ),
-                                      Text(
-                                        'Tickets',
-                                        style: TextStyle(
-                                            color: AppColors.blackColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.extraBold,
-                                            fontSize: 17.sp),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (daysRemaining < 7) {
-                                    showCustomErrorSnackbar(
-                                        title: 'Sorry',
-                                        message:
-                                            'You Can\'t Pause Your Membership Before 7 Days');
-                                  } else {
-                                    showPauseMembershipDialog(context);
-                                  }
-                                },
-                                child: Container(
-                                  width: Device.width,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 1.h, horizontal: 5.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cardBgColor,
-                                      borderRadius: BorderRadius.circular(5.w)),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Click here to',
-                                        style: TextStyle(
-                                            color: AppColors.blackColor,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: FontFamily.regular,
-                                            fontSize: 17.sp),
-                                      ),
-                                      Text(
-                                        'Pause Your Membership',
-                                        style: TextStyle(
-                                            color: AppColors.blackColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.extraBold,
-                                            fontSize: 17.sp),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              cancelSubscriptionData
-                                  ? const Center(
-                                      child: CircularProgressIndicator())
-                                  : InkWell(
-                                      onTap: () {
-                                        if (daysRemaining < 7) {
-                                          showCustomErrorSnackbar(
-                                            title: 'Sorry',
-                                            message:
-                                                'You Can\'t Cancel Your Membership Before 7 Days',
-                                          );
-                                        } else {
-                                          showCupertinoDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CupertinoAlertDialog(
-                                                title: Text(
-                                                  'Confirm Cancellation',
-                                                  style: TextStyle(
-                                                      fontSize: 18.sp),
-                                                ),
-                                                content: Text(
-                                                  'Are you sure you want to cancel your membership?',
-                                                  style: TextStyle(
-                                                      fontSize: 17.sp),
-                                                ),
-                                                actions: [
-                                                  CupertinoDialogAction(
-                                                    child: const Text('No'),
-                                                    onPressed: () {
-                                                      Get.back();
-                                                    },
-                                                  ),
-                                                  CupertinoDialogAction(
-                                                    isDestructiveAction: true,
-                                                    onPressed: () {
-                                                      Get.back();
-                                                      subscriptionCancelApi(); // Call your cancel API
-                                                    },
-                                                    child: const Text('Yes'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }
-                                      },
-                                      child: Container(
-                                        width: Device.width,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 1.h, horizontal: 5.w),
-                                        decoration: BoxDecoration(
-                                            color: AppColors.cardBgColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5.w)),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'Click here to',
-                                              style: TextStyle(
-                                                  color: AppColors.blackColor,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontFamily:
-                                                      FontFamily.regular,
-                                                  fontSize: 17.sp),
-                                            ),
-                                            Text(
-                                              'Cancel Your Membership',
-                                              style: TextStyle(
-                                                  color: AppColors.redColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily:
-                                                      FontFamily.extraBold,
-                                                  fontSize: 17.sp),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
+                              _getCurrentSubscription()?.status == 'paused'
+                                  ? Container()
+                                  : SizedBox(height: 1.h),
+
+                              // Billing Section
+                              _getCurrentSubscription()?.status == 'paused'
+                                  ? Container()
+                                  : _buildBillingSection(),
+                              SizedBox(height: 1.h),
+
+                              // Additional Sections
+                              _buildAdditionalSections(),
+                              SizedBox(height: 2.h),
                             ],
                           ).paddingSymmetric(horizontal: 2.w, vertical: 2.h),
                         ),
@@ -1021,6 +521,986 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
     );
   }
 
+  // Swipeable Membership Section Only
+  Widget _buildSwipeableMembershipSection() {
+    if (!_hasActiveSubscription()) {
+      return Container(
+        width: Device.width,
+        padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 3.w),
+        decoration: BoxDecoration(
+            color: AppColors.cardBgColor,
+            borderRadius: BorderRadius.circular(5.w)),
+        child: Column(
+          children: [
+            Text(
+              'Your Active Memberships',
+              style: TextStyle(
+                  color: AppColors.bgColor,
+                  fontWeight: FontWeight.w100,
+                  fontFamily: FontFamily.extraBold,
+                  fontSize: 17.5.sp),
+            ),
+            SizedBox(height: 1.h),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "No Membership Available",
+                  style: TextStyle(
+                      color: AppColors.bgColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: FontFamily.light,
+                      fontSize: 15.sp),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Container(
+          width: Device.width,
+          padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 3.w),
+          decoration: BoxDecoration(
+              color: AppColors.cardBgColor,
+              borderRadius: BorderRadius.circular(5.w)),
+          child: Column(
+            children: [
+              Text(
+                'Your Active Memberships',
+                style: TextStyle(
+                    color: AppColors.bgColor,
+                    fontWeight: FontWeight.w100,
+                    fontFamily: FontFamily.extraBold,
+                    fontSize: 17.5.sp),
+              ),
+              SizedBox(height: 1.h),
+              SizedBox(
+                height: 11.h,
+                child: PageView.builder(
+                  controller: _membershipPageController,
+                  itemCount: subscriptionsDate!.subscriptions!.length,
+                  onPageChanged: (int page) {
+                    setState(() {
+                      _currentMembershipPage = page;
+                      _updateTimeDataForCurrentSubscription();
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    final subscription =
+                        subscriptionsDate!.subscriptions![index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          subscription.name ?? "N/A",
+                          style: TextStyle(
+                            color: AppColors.bgColor,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: FontFamily.light,
+                            fontSize: 15.sp,
+                          ),
+                        ),
+                        const Divider(
+                          color: AppColors.bgColor,
+                          thickness: 0.5,
+                        ),
+                        Text(
+                          subscription.planName ?? "N/A",
+                          style: TextStyle(
+                            color: AppColors.bgColor,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: FontFamily.light,
+                            fontSize: 15.sp,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Page Indicators only for membership section
+        if (_hasActiveSubscription() &&
+            subscriptionsDate!.subscriptions!.length > 1)
+          Padding(
+            padding: EdgeInsets.only(top: 1.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                subscriptionsDate!.subscriptions!.length,
+                (index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 1.w),
+                  width: 3.w,
+                  height: 3.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentMembershipPage == index
+                        ? AppColors.bgColor
+                        : AppColors.bgColor.withOpacity(0.3),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  // Billing Section
+  Widget _buildBillingSection() {
+    final currentSubscription = _getCurrentSubscription();
+
+    if (currentSubscription == null) {
+      return Container();
+    }
+
+    final hasPauseDate = currentSubscription.pauseDate != '' &&
+        currentSubscription.pauseDate != null;
+
+    if (!hasPauseDate) {
+      return _buildNormalBillingSection(currentSubscription);
+    } else {
+      return _buildPausingPlanSection(currentSubscription);
+    }
+  }
+
+  Widget _buildNormalBillingSection(Subscriptions subscription) {
+    return Container(
+      width: Device.width,
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
+      decoration: BoxDecoration(
+          color: AppColors.cardBgColor,
+          borderRadius: BorderRadius.circular(5.w)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    'Next Billing Date',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColors.bgColor,
+                        fontWeight: FontWeight.w100,
+                        fontFamily: FontFamily.extraBold,
+                        fontSize: 18.5.sp),
+                  ).paddingSymmetric(horizontal: 3.w),
+                  Text(
+                    subscription.nextBillingAt ?? "",
+                    style: TextStyle(
+                        color: AppColors.bgColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontFamily.light,
+                        fontSize: 15.sp),
+                  ),
+                ],
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Text(
+                      "$daysRemaining",
+                      style: TextStyle(
+                          color: AppColors.orangeColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: FontFamily.bold,
+                          fontSize: 30.sp),
+                    ),
+                    SizedBox(width: 2.w),
+                    Text(
+                      'days left',
+                      style: TextStyle(
+                          color: AppColors.orangeColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: FontFamily.light,
+                          fontSize: 16.sp),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPausingPlanSection(Subscriptions subscription) {
+    return Container(
+      width: Device.width,
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+      decoration: BoxDecoration(
+          color: AppColors.cardBgColor,
+          borderRadius: BorderRadius.circular(5.w)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    'Plan is pausing',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColors.bgColor,
+                        fontWeight: FontWeight.w100,
+                        fontFamily: FontFamily.extraBold,
+                        fontSize: 18.5.sp),
+                  ).paddingSymmetric(horizontal: 3.w),
+                  Text(
+                    subscription.pauseDate ?? "",
+                    style: TextStyle(
+                        color: AppColors.bgColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontFamily.light,
+                        fontSize: 15.sp),
+                  ),
+                ],
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Text(
+                      DateTime.parse(subscription.pauseDate ?? '')
+                          .difference(DateTime.parse(
+                              DateFormat('yyyy-MM-dd').format(DateTime.now())))
+                          .inDays
+                          .toString(),
+                      style: TextStyle(
+                          color: AppColors.orangeColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: FontFamily.bold,
+                          fontSize: 30.sp),
+                    ),
+                    SizedBox(width: 2.w),
+                    Text(
+                      'days left',
+                      style: TextStyle(
+                          color: AppColors.orangeColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: FontFamily.light,
+                          fontSize: 16.sp),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Additional Sections
+  Widget _buildAdditionalSections() {
+    final currentSubscription = _getCurrentSubscription();
+
+    return Column(
+      children: [
+        if (currentSubscription?.status == 'paused') ...[
+          _buildResumeSection(),
+          SizedBox(height: 1.h),
+        ],
+        if (currentSubscription?.pauseDate != null &&
+            currentSubscription!.pauseDate!.isNotEmpty &&
+            currentSubscription.pauseDate !=
+                DateFormat('yyyy-MM-dd').format(DateTime.now())) ...[
+          _buildStopPausingSection(),
+          SizedBox(height: 1.h),
+        ],
+        _buildBillsPaymentsSection(),
+        SizedBox(height: 1.h),
+        _buildTicketsSection(),
+        SizedBox(height: 1.h),
+        if (currentSubscription?.status != 'paused') ...[
+          _buildPauseMembershipSection(),
+          SizedBox(height: 1.h),
+        ],
+        _buildCancelMembershipSection(),
+      ],
+    );
+  }
+
+  Widget _buildResumeSection() {
+    return InkWell(
+      onTap: () {
+        showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(
+                'Resume Membership',
+                style: TextStyle(fontSize: 18.sp),
+              ),
+              content: Text(
+                'Are you sure you want to resume your paused membership?',
+                style: TextStyle(fontSize: 17.sp),
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text('No'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+                CupertinoDialogAction(
+                  isDestructiveAction: true,
+                  onPressed: () {
+                    Get.back();
+                    subscriptionResumeApi();
+                  },
+                  child: const Text('Yes'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Container(
+        width: Device.width,
+        padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+        decoration: BoxDecoration(
+            color: AppColors.cardBgColor,
+            borderRadius: BorderRadius.circular(5.w)),
+        child: Column(
+          children: [
+            Text(
+              'Click here to',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: FontFamily.regular,
+                  fontSize: 17.sp),
+            ),
+            Text(
+              'Resume Membership',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.extraBold,
+                  fontSize: 17.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStopPausingSection() {
+    return InkWell(
+      onTap: () {
+        showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(
+                'Stop Pausing',
+                style: TextStyle(fontSize: 18.sp),
+              ),
+              content: Text(
+                'Are you sure you want to stop your membership from pausing?',
+                style: TextStyle(fontSize: 17.sp),
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text('No'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+                CupertinoDialogAction(
+                  isDestructiveAction: true,
+                  onPressed: () {
+                    Get.back();
+                    stopPausingApi();
+                  },
+                  child: const Text('Yes'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Container(
+        width: Device.width,
+        padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+        decoration: BoxDecoration(
+            color: AppColors.cardBgColor,
+            borderRadius: BorderRadius.circular(5.w)),
+        child: Column(
+          children: [
+            Text(
+              'Click here to',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: FontFamily.regular,
+                  fontSize: 17.sp),
+            ),
+            Text(
+              'Stop Pausing',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.extraBold,
+                  fontSize: 17.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBillsPaymentsSection() {
+    return InkWell(
+      onTap: () {
+        Get.to(const BillsnPaymentsscreen());
+      },
+      child: Container(
+        width: Device.width,
+        padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+        decoration: BoxDecoration(
+            color: AppColors.cardBgColor,
+            borderRadius: BorderRadius.circular(5.w)),
+        child: Column(
+          children: [
+            Text(
+              'Click here to view your recent',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: FontFamily.regular,
+                  fontSize: 17.sp),
+            ),
+            Text(
+              'Bills & Payments',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.extraBold,
+                  fontSize: 17.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTicketsSection() {
+    return InkWell(
+      onTap: () {
+        Get.offAll(const adviceTicketsScreen());
+      },
+      child: Container(
+        width: Device.width,
+        padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+        decoration: BoxDecoration(
+            color: AppColors.cardBgColor,
+            borderRadius: BorderRadius.circular(5.w)),
+        child: Column(
+          children: [
+            Text(
+              'Click here to view your recent',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: FontFamily.regular,
+                  fontSize: 17.sp),
+            ),
+            Text(
+              'Tickets',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.extraBold,
+                  fontSize: 17.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPauseMembershipSection() {
+    return InkWell(
+      onTap: () {
+        if (daysRemaining < 7) {
+          showCustomErrorSnackbar(
+              title: 'Sorry',
+              message: 'You Can\'t Pause Your Membership Before 7 Days');
+        } else {
+          showPauseMembershipDialog(context);
+        }
+      },
+      child: Container(
+        width: Device.width,
+        padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+        decoration: BoxDecoration(
+            color: AppColors.cardBgColor,
+            borderRadius: BorderRadius.circular(5.w)),
+        child: Column(
+          children: [
+            Text(
+              'Click here to',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: FontFamily.regular,
+                  fontSize: 17.sp),
+            ),
+            Text(
+              'Pause Your Membership',
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.extraBold,
+                  fontSize: 17.sp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCancelMembershipSection() {
+    return cancelSubscriptionData
+        ? const Center(child: CircularProgressIndicator())
+        : InkWell(
+            onTap: () {
+              if (daysRemaining < 7) {
+                showCustomErrorSnackbar(
+                  title: 'Sorry',
+                  message: 'You Can\'t Cancel Your Membership Before 7 Days',
+                );
+              } else {
+                showCupertinoDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CupertinoAlertDialog(
+                      title: Text(
+                        'Confirm Cancellation',
+                        style: TextStyle(fontSize: 18.sp),
+                      ),
+                      content: Text(
+                        'Are you sure you want to cancel your membership?',
+                        style: TextStyle(fontSize: 17.sp),
+                      ),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: const Text('No'),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                        CupertinoDialogAction(
+                          isDestructiveAction: true,
+                          onPressed: () {
+                            Get.back();
+                            subscriptionCancelApi();
+                          },
+                          child: const Text('Yes'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Container(
+              width: Device.width,
+              padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+              decoration: BoxDecoration(
+                  color: AppColors.cardBgColor,
+                  borderRadius: BorderRadius.circular(5.w)),
+              child: Column(
+                children: [
+                  Text(
+                    'Click here to',
+                    style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: FontFamily.regular,
+                        fontSize: 17.sp),
+                  ),
+                  Text(
+                    'Cancel Your Membership',
+                    style: TextStyle(
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontFamily.extraBold,
+                        fontSize: 17.sp),
+                  ),
+                ],
+              ),
+            ),
+          );
+  }
+
+  subscriptionsViewApi() {
+    checkInternet().then((internet) async {
+      if (internet) {
+        HomeProvider().subscriptionsViewApi().then((response) async {
+          subscriptionsDate =
+              SubscriptionsDateModal.fromJson(json.decode(response.body));
+
+          if (response.statusCode == 200) {
+            // ✅ Remove all subscriptions with status == "cancelled"
+            subscriptionsDate?.subscriptions?.removeWhere(
+              (sub) => (sub.status?.toLowerCase() == 'cancelled'),
+            );
+
+            setState(() {});
+
+            if (subscriptionsDate?.subscriptions?.isNotEmpty ?? false) {
+              // Initialize time data map for all subscriptions
+              _subscriptionTimeData.clear();
+              for (var sub in subscriptionsDate!.subscriptions!) {
+                final subId = sub.subscriptionId ?? '';
+                _subscriptionTimeData[subId] =
+                    SubscriptionTimeData(subscriptionId: subId);
+              }
+
+              // ✅ Find and navigate to saved subscription index
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _navigateToSavedSubscription();
+              });
+              planDetailsApi(_getCurrentSubscription()?.planCode);
+              getPlansApi();
+              allTicketApi();
+
+              // Load data for current subscription
+              _updateTimeDataForCurrentSubscription();
+            } else {
+              // ✅ No valid subscriptions left
+              setState(() {
+                isLoading = false;
+              });
+            }
+          } else if (response.statusCode == 422) {
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error, straceTrace) {
+          final errorMessage = error.toString();
+          dev.log("error=====>>>>$errorMessage  $straceTrace");
+
+          if (errorMessage
+              .contains("You are not authorized to perform this operation")) {
+            dev.log("User not authorized, retaking token...");
+            fetchAuthtokenApi();
+            return;
+          }
+
+          setState(() {
+            isLoading = false;
+          });
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
+// ✅ New method to navigate to saved subscription
+  void _navigateToSavedSubscription() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedId = prefs.getString('selectedSubscriptionId');
+
+    if (savedId != null && savedId.isNotEmpty) {
+      final subscriptions = subscriptionsDate?.subscriptions ?? [];
+      final savedIndex = subscriptions.indexWhere(
+        (sub) => sub.subscriptionId == savedId,
+      );
+
+      if (savedIndex != -1) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // Ensure controller is attached
+          if (_membershipPageController.hasClients) {
+            _membershipPageController.animateToPage(
+              savedIndex,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+
+            setState(() {
+              _currentMembershipPage = savedIndex;
+            });
+          } else {
+            // Retry after a short delay if controller not ready
+            Future.delayed(const Duration(milliseconds: 50), () {
+              if (_membershipPageController.hasClients) {
+                _membershipPageController.animateToPage(
+                  savedIndex,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+
+                setState(() {
+                  _currentMembershipPage = savedIndex;
+                });
+              }
+            });
+          }
+        });
+      }
+    }
+  }
+
+  planDetailsApi(plancode) {
+    checkInternet().then((internet) async {
+      if (internet) {
+        HomeProvider().planDetailsApi(plancode).then((response) async {
+          planDetails = PlanDetailsModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 200) {
+            print("data=====>>>>>>>");
+            setState(() {
+              print(planDetails?.plans?[0].customFields?.length);
+
+              final currentSubscription = _getCurrentSubscription();
+              final currentSubscriptionId =
+                  currentSubscription?.subscriptionId ?? '';
+
+              if ((planDetails?.plans?[0].customFields)!.isNotEmpty) {
+                int totalAdviceTimeInMinutes = int.parse(
+                    (planDetails?.plans?[0].customFields?[0].value).toString());
+
+                // Update the specific subscription's data
+                if (_subscriptionTimeData.containsKey(currentSubscriptionId)) {
+                  _subscriptionTimeData[currentSubscriptionId]!
+                      .totalAdviceTime = totalAdviceTimeInMinutes * 60;
+
+                  // Update current display
+                  setState(() {
+                    totalAdviceTime =
+                        _subscriptionTimeData[currentSubscriptionId]!
+                            .totalAdviceTime;
+                  });
+                }
+              }
+            });
+          } else if (response.statusCode == 422) {
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error, stackTrace) {
+          log("error=====>>>>$stackTrace");
+          setState(() {
+            isLoading = false;
+          });
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
+  bool isTicketLoad = true;
+
+  void allTicketApi() {
+    setState(() {
+      isTicketLoad = true;
+    });
+    checkInternet().then((internet) async {
+      if (internet) {
+        final currentSubscription = _getCurrentSubscription();
+        final currentSubscriptionId = currentSubscription?.subscriptionId ?? '';
+
+        HomeProvider()
+            .Viewalltikit(currentSubscriptionId)
+            .then((response) async {
+          allTicket = MyTickitModal.fromJson(json.decode(response.body));
+
+          if (response.statusCode == 200) {
+            List<int> secondsSpentList = [];
+
+            if (allTicket?.data != null && allTicket!.data!.isNotEmpty) {
+              for (var ticket in allTicket!.data!) {
+                final ticketId = ticket.id;
+                if (ticketId != null) {
+                  await HomeProvider()
+                      .getTimeEntryApi(ticketId)
+                      .then((timeResponse) async {
+                    getTimeEntry = GetTimeEntryModal.fromJson(
+                        json.decode(timeResponse.body));
+
+                    if (timeResponse.statusCode == 200 &&
+                        getTimeEntry?.data != null &&
+                        getTimeEntry!.data!.isNotEmpty) {
+                      for (var entry in getTimeEntry!.data!) {
+                        DateTime? createdTime =
+                            DateTime.tryParse(entry.createdTime.toString());
+
+                        String? startDateStr = currentSubscription
+                            ?.customFieldHash?.cfStartDateTime;
+                        String? endDateStr =
+                            currentSubscription?.currentTermEndsAt;
+
+                        DateTime? termStart;
+                        if (startDateStr != null) {
+                          try {
+                            final DateFormat formatter =
+                                DateFormat('dd/MM/yyyy hh:mm a');
+                            termStart = formatter.parse(startDateStr).toUtc();
+                          } catch (e) {
+                            print("❌ Failed to parse cfStartDateTime: $e");
+                          }
+                        }
+
+                        DateTime? termEnd = endDateStr != null
+                            ? DateTime.tryParse("${endDateStr}T23:59:59.999Z")
+                            : null;
+
+                        if (createdTime != null &&
+                            termStart != null &&
+                            termEnd != null) {
+                          if (createdTime.isAfter(termStart) &&
+                              createdTime.isBefore(termEnd)) {
+                            final int seconds =
+                                int.tryParse(entry.secondsSpent.toString()) ??
+                                    0;
+                            final int minutes =
+                                int.tryParse(entry.minutesSpent.toString()) ??
+                                    0;
+                            final int hours =
+                                int.tryParse(entry.hoursSpent.toString()) ?? 0;
+
+                            int totalEntrySeconds =
+                                seconds + (minutes * 60) + (hours * 3600);
+                            secondsSpentList.add(totalEntrySeconds);
+                          }
+                        }
+                      }
+                    }
+                  }).catchError((error) {
+                    log("❗ Error fetching time entry for ticket ID $ticketId: $error");
+                  });
+                }
+              }
+
+              // Store results in the subscription-specific data
+              int totalSeconds =
+                  secondsSpentList.fold(0, (sum, element) => sum + element);
+
+              if (_subscriptionTimeData.containsKey(currentSubscriptionId)) {
+                _subscriptionTimeData[currentSubscriptionId]!.totalSpentTime =
+                    totalSeconds;
+                _subscriptionTimeData[currentSubscriptionId]!.isTimeExceed =
+                    _subscriptionTimeData[currentSubscriptionId]!
+                            .totalSpentTime >=
+                        _subscriptionTimeData[currentSubscriptionId]!
+                            .totalAdviceTime;
+
+                // Update current display values
+                setState(() {
+                  totalSpentTime = _subscriptionTimeData[currentSubscriptionId]!
+                      .totalSpentTime;
+                  isTimeExceed = _subscriptionTimeData[currentSubscriptionId]!
+                      .isTimeExceed;
+                });
+              }
+
+              checkAndStoreTimeExceeded();
+
+              final totalDuration = Duration(seconds: totalSpentTime);
+              final readableDuration =
+                  totalDuration.toString().split('.').first.padLeft(8, "0");
+
+              print("🧮 All seconds spent list: $secondsSpentList");
+              print(
+                  "⏱️ Total seconds spent for subscription $currentSubscriptionId: $totalSpentTime ($readableDuration)");
+              print("📛 Is time exceeded: $isTimeExceed");
+
+              setState(() {
+                isLoading = false;
+                isTicketLoad = false;
+              });
+            }
+          } else {
+            setState(() {
+              isLoading = false;
+              isTicketLoad = false;
+            });
+          }
+        }).catchError((error, stackTrace) {
+          final errorMessage = error.toString();
+
+          if (errorMessage
+              .contains("You are not authorized to perform this operation")) {
+            log("🔐 User not authorized, retaking token...");
+            fetchAuthtokenApi();
+            return;
+          }
+
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+              isTicketLoad = false;
+            });
+          }
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+          isTicketLoad = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
+  // Helper method to calculate days remaining for current subscription
+  void _calculateDaysRemaining(Subscriptions subscription) {
+    String? lastBillingAtStr;
+    String? nextBillingAtStr;
+
+    if (subscription.status == "trial") {
+      lastBillingAtStr = subscription.createdAt;
+      nextBillingAtStr = subscription.trialendsat;
+    } else {
+      lastBillingAtStr = subscription.createdAt;
+      nextBillingAtStr = subscription.nextBillingAt;
+    }
+
+    if (lastBillingAtStr != null && nextBillingAtStr != null) {
+      DateTime nextBillingAt = DateTime.parse(nextBillingAtStr);
+      setState(() {
+        daysRemaining = nextBillingAt.difference(DateTime.now()).inDays;
+      });
+      dev.log("Total Days: $daysRemaining");
+    } else {
+      dev.log("No Date Available");
+    }
+  }
+
   subscriptionCancelApi() {
     setState(() {
       isPlanChange = true;
@@ -1028,8 +1508,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
     checkInternet().then((internet) async {
       if (internet) {
         ManageMembershipProvider()
-            .subscriptionsCancelApi(
-                subscriptionsDate?.subscriptions?[0].subscriptionId)
+            .subscriptionsCancelApi(_getCurrentSubscription()?.subscriptionId)
             .then((response) async {
           cancelSubscription =
               CancelSubscriptionModal.fromJson(json.decode(response.body));
@@ -1070,102 +1549,9 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
     });
   }
 
-  subscriptionsViewApi() {
-    checkInternet().then((internet) async {
-      if (internet) {
-        HomeProvider().subscriptionsViewApi().then((response) async {
-          subscriptionsDate =
-              SubscriptionsDateModal.fromJson(json.decode(response.body));
-
-          if (response.statusCode == 200) {
-            setState(() {
-              // isLoading = false;
-            });
-            if (subscriptionsDate?.subscriptions != 0) {
-              planDetailsApi(subscriptionsDate?.subscriptions?[0].planCode);
-              getPlansApi();
-              allTicketApi();
-              log("subscription Start===>>>>${subscriptionsDate?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
-              log("subscription date===>>>>${subscriptionsDate?.subscriptions?[0].lastBillingAt}");
-              log("subscription date===>>>>${subscriptionsDate?.subscriptions?[0].nextBillingAt}");
-              log("subscription date===>>>>${subscriptionsDate?.subscriptions?[0].status}");
-
-              isTrial = subscriptionsDate?.subscriptions?[0].status == 'trial'
-                  ? true
-                  : false;
-              String? lastBillingAtStr =
-                  subscriptionsDate?.subscriptions?[0].lastBillingAt;
-              String? nextBillingAtStr =
-                  subscriptionsDate?.subscriptions?[0].nextBillingAt;
-
-              if (subscriptionsDate?.subscriptions?[0].status == "trial") {
-                log("subscription date===>>>>${subscriptionsDate?.subscriptions?[0].createdAt}");
-                log("subscription date===>>>>${subscriptionsDate?.subscriptions?[0].trialendsat}");
-                lastBillingAtStr =
-                    subscriptionsDate?.subscriptions?[0].createdAt;
-                nextBillingAtStr =
-                    subscriptionsDate?.subscriptions?[0].trialendsat;
-
-                if (lastBillingAtStr != null && nextBillingAtStr != null) {
-                  DateTime nextBillingAt = DateTime.parse(nextBillingAtStr);
-
-                  setState(() {
-                    daysRemaining =
-                        nextBillingAt.difference(DateTime.now()).inDays;
-                  });
-
-                  log("Total Days: $daysRemaining");
-                } else {
-                  log("No Date Available");
-                }
-              } else {
-                if (lastBillingAtStr != null && nextBillingAtStr != null) {
-                  DateTime nextBillingAt = DateTime.parse(nextBillingAtStr);
-
-                  setState(() {
-                    daysRemaining =
-                        nextBillingAt.difference(DateTime.now()).inDays;
-                  });
-
-                  log("Total Days: $daysRemaining");
-                } else {
-                  log("No Date Available");
-                }
-              }
-            }
-          } else if (response.statusCode == 422) {
-            setState(() {
-              isLoading = false;
-            });
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }).catchError((error, straceTrace) {
-          final errorMessage = error.toString();
-          dev.log("error=====>>>>$errorMessage  $straceTrace");
-
-          if (errorMessage
-              .contains("You are not authorized to perform this operation")) {
-            dev.log("User not authorized, retaking token...");
-            fetchAuthtokenApi();
-
-            return;
-          }
-
-          setState(() {
-            isLoading = false;
-          });
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        buildErrorDialog(context, 'Error', "Internet Required");
-      }
-    });
-  }
+  // Keep all your other existing methods (getPlansApi, createSubscriptionApi, updateSubscriptionApi,
+  // subscriptionPauseApi, stopPausingApi, cancelAndCreateApi, _showStatefulBottomSheet,
+  // showPauseMembershipDialog, fetchAuthtokenApi) exactly as they were in your original code
 
   getPlansApi() {
     checkInternet().then((internet) async {
@@ -1173,8 +1559,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         Signupprovider().fetchPlansApi().then((response) async {
           allPlans = Pllans.AllPlansModal.fromJson(json.decode(response.body));
           if (response.statusCode == 200) {
-            String? currentPlanCode =
-                subscriptionsDate?.subscriptions?[0].planCode;
+            String? currentPlanCode = _getCurrentSubscription()?.planCode;
 
             setState(() {
               plansList = (allPlans?.plans ?? []).where((plan) {
@@ -1182,7 +1567,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                 print('plan plan is : ${plan.planCode}');
                 return plan.planCode != currentPlanCode;
               }).toList();
-              // isLoading = false;
             });
           } else {
             setState(() {
@@ -1272,11 +1656,10 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
       isPlanChange = true;
     });
     final Map<String, dynamic> data = {
-      'subscription_id': subscriptionsDate?.subscriptions?[0].subscriptionId,
+      'subscription_id': _getCurrentSubscription()?.subscriptionId,
       'plan': {
         "plan_code": selectedMembership,
       },
-      // "starts_at": DateFormat('yyyy-MM-dd').format(DateTime.now()),
       "can_charge_setup_fee_immediately": true,
       "custom_fields": [
         {
@@ -1359,7 +1742,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
       if (internet) {
         ManageMembershipProvider()
             .subscriptionsPauseApi(
-                data, subscriptionsDate?.subscriptions?[0].subscriptionId)
+                data, _getCurrentSubscription()?.subscriptionId)
             .then((response) async {
           pauseMembership =
               PauseMembershipModal.fromJson(json.decode(response.body));
@@ -1368,7 +1751,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             setState(() {
               isPlanChange = false;
             });
-            Get.offAll(const Homescreen());
+            subscriptionsViewApi();
             showCustomSuccessSnackbar(
               title: 'Membership Paused',
               message:
@@ -1402,6 +1785,62 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
     });
   }
 
+  subscriptionResumeApi() {
+    setState(() {
+      isLoading = true;
+    });
+    final Map<String, dynamic> data = {
+      "resume_at": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      "reason": ''
+    };
+
+    print(data);
+    checkInternet().then((internet) async {
+      if (internet) {
+        ManageMembershipProvider()
+            .subscriptionsResumeApi(
+                data, _getCurrentSubscription()?.subscriptionId)
+            .then((response) async {
+          resumeMembership =
+              ResumeMembershipModal.fromJson(json.decode(response.body));
+
+          if (response.statusCode == 200) {
+            setState(() {
+              isLoading = false;
+            });
+            subscriptionsViewApi();
+            showCustomSuccessSnackbar(
+              title: 'Membership Resumed',
+              message: 'Your membership has been successfully resumed.',
+            );
+          } else if (response.statusCode == 422) {
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            showCustomErrorSnackbar(
+              title: 'Subscriptions Resume Error',
+              message: 'Internal Server Error',
+            );
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }).catchError((error, straceTrace) {
+          dev.log("error=====>>>>${error.toString()}  $straceTrace");
+          setState(() {
+            isLoading = false;
+          });
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        buildErrorDialog(context, 'Error', "Internet Required");
+      }
+    });
+  }
+
   stopPausingApi() {
     setState(() {
       isPlanChange = true;
@@ -1413,7 +1852,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
       if (internet) {
         ManageMembershipProvider()
             .subscriptionsPauseApi(
-                data, subscriptionsDate?.subscriptions?[0].subscriptionId)
+                data, _getCurrentSubscription()?.subscriptionId)
             .then((response) async {
           pauseMembership =
               PauseMembershipModal.fromJson(json.decode(response.body));
@@ -1460,8 +1899,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
     checkInternet().then((internet) async {
       if (internet) {
         ManageMembershipProvider()
-            .subscriptionsCancelApi(
-                subscriptionsDate?.subscriptions?[0].subscriptionId)
+            .subscriptionsCancelApi(_getCurrentSubscription()?.subscriptionId)
             .then((response) async {
           cancelSubscription =
               CancelSubscriptionModal.fromJson(json.decode(response.body));
@@ -1546,9 +1984,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
+                  SizedBox(height: 2.h),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -1660,9 +2096,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
+                  SizedBox(height: 2.h),
                   selectedMembership == null
                       ? Container()
                       : InkWell(
@@ -1688,9 +2122,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                             ),
                           ),
                         ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  SizedBox(height: 10.h),
                 ],
               ),
             );
@@ -1853,326 +2285,6 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         );
       },
     );
-  }
-
-  planDetailsApi(plancode) {
-    checkInternet().then((internet) async {
-      if (internet) {
-        HomeProvider().planDetailsApi(plancode).then((response) async {
-          planDetails = PlanDetailsModal.fromJson(json.decode(response.body));
-          if (response.statusCode == 200) {
-            print("data=====>>>>>>>");
-            setState(() {
-              print(planDetails?.plans?[0].customFields?.length);
-              if ((planDetails?.plans?[0].customFields)!.isNotEmpty) {
-                int totalAdviceTimeInMinutes = int.parse(
-                    (planDetails?.plans?[0].customFields?[0].value).toString());
-                totalAdviceTime = totalAdviceTimeInMinutes * 60;
-
-                print("totalAdviceTime : $totalAdviceTime");
-              }
-              // isLoading = false;
-            });
-          } else if (response.statusCode == 422) {
-            setState(() {
-              isLoading = false;
-            });
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }).catchError((error, stackTrace) {
-          log("error=====>>>>$stackTrace");
-          setState(() {
-            isLoading = false;
-          });
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        buildErrorDialog(context, 'Error', "Internet Required");
-      }
-    });
-  }
-
-  // allTicketApi() {
-  //   checkInternet().then((internet) async {
-  //     if (internet) {
-  //       HomeProvider().Viewalltikit().then((response) async {
-  //         allTicket = MyTickitModal.fromJson(json.decode(response.body));
-  //
-  //         if (response.statusCode == 200 || response.statusCode == 204) {
-  //           List<int> secondsSpentList = [];
-  //
-  //           if (allTicket?.data != null && allTicket!.data!.isNotEmpty) {
-  //             for (var ticket in allTicket!.data!) {
-  //               final ticketId = ticket.id;
-  //               if (ticketId != null) {
-  //                 print(
-  //                     "Start Date: ${subscriptionsDate?.subscriptions?[0].currentTermStartsAt}");
-  //                 print(
-  //                     "End Date: ${subscriptionsDate?.subscriptions?[0].currentTermEndsAt}");
-  //
-  //                 await HomeProvider()
-  //                     .getTimeEntryApi(ticketId)
-  //                     .then((timeResponse) async {
-  //                   getTimeEntry = GetTimeEntryModal.fromJson(
-  //                       json.decode(timeResponse.body));
-  //
-  //                   if (timeResponse.statusCode == 200 &&
-  //                       getTimeEntry?.data != null &&
-  //                       getTimeEntry!.data!.isNotEmpty) {
-  //                     for (var entry in getTimeEntry!.data!) {
-  //                       print("🕓 Entry Created Time: ${entry.createdTime}");
-  //
-  //                       // Parse entry created time
-  //                       DateTime? createdTime =
-  //                           DateTime.tryParse(entry.createdTime.toString());
-  //
-  //                       // Parse subscription start and end as full DateTime
-  //                       String? startDateStr = subscriptionsDate
-  //                           ?.subscriptions?[0].currentTermStartsAt;
-  //                       String? endDateStr = subscriptionsDate
-  //                           ?.subscriptions?[0].currentTermEndsAt;
-  //
-  //                       DateTime? termStart = startDateStr != null
-  //                           ? DateTime.tryParse("${startDateStr}T00:00:00.000Z")
-  //                           : null;
-  //
-  //                       DateTime? termEnd = endDateStr != null
-  //                           ? DateTime.tryParse("${endDateStr}T23:59:59.999Z")
-  //                           : null;
-  //
-  //                       if (createdTime != null &&
-  //                           termStart != null &&
-  //                           termEnd != null) {
-  //                         if (createdTime.isAfter(termStart) &&
-  //                             createdTime.isBefore(termEnd)) {
-  //                           final int seconds =
-  //                               int.tryParse(entry.secondsSpent.toString()) ??
-  //                                   0;
-  //                           final int minutes =
-  //                               int.tryParse(entry.minutesSpent.toString()) ??
-  //                                   0;
-  //                           final int hours =
-  //                               int.tryParse(entry.hoursSpent.toString()) ?? 0;
-  //
-  //                           int totalEntrySeconds =
-  //                               seconds + (minutes * 60) + (hours * 3600);
-  //                           secondsSpentList.add(totalEntrySeconds);
-  //                           print("✅ Time counted: $totalEntrySeconds seconds");
-  //                         } else {
-  //                           print(
-  //                               "❌ Skipped: $createdTime not within $termStart → $termEnd");
-  //                         }
-  //                       } else {
-  //                         print("⚠️ Date parsing failed");
-  //                       }
-  //                     }
-  //                   }
-  //                 }).catchError((error) {
-  //                   log("Error fetching time entry for ticket ID $ticketId: $error");
-  //                 });
-  //               }
-  //             }
-  //           }
-  //
-  //           // 🔢 Calculate total seconds
-  //           int totalSeconds =
-  //               secondsSpentList.fold(0, (sum, element) => sum + element);
-  //           totalSpentTime = totalSeconds;
-  //           checkAndStoreTimeExceeded();
-  //           isTimeExceed = await getTimeExceededStatus();
-  //           print("Is time exceeded: $isTimeExceed");
-  //           print("All seconds spent list: $secondsSpentList");
-  //           print("Total seconds spent: $totalSpentTime");
-  //
-  //           setState(() {
-  //             isLoading = false;
-  //           });
-  //         } else {
-  //           setState(() {
-  //             isLoading = false;
-  //           });
-  //         }
-  //       }).catchError((error, straceTrace) {
-  //         final errorMessage = error.toString();
-  //
-  //         if (errorMessage
-  //             .contains("You are not authorized to perform this operation")) {
-  //           log("User not authorized, retaking token...");
-  //           fetchAuthtokenApi();
-  //           return;
-  //         }
-  //
-  //         setState(() {
-  //           isLoading = false;
-  //         });
-  //       });
-  //     } else {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //       buildErrorDialog(context, 'Error', "Internet Required");
-  //     }
-  //   });
-  // }
-
-  void allTicketApi() {
-    checkInternet().then((internet) async {
-      if (internet) {
-        HomeProvider().Viewalltikit().then((response) async {
-          allTicket = MyTickitModal.fromJson(json.decode(response.body));
-
-          if (response.statusCode == 200) {
-            List<int> secondsSpentList = [];
-
-            if (allTicket?.data != null && allTicket!.data!.isNotEmpty) {
-              for (var ticket in allTicket!.data!) {
-                final ticketId = ticket.id;
-                if (ticketId != null) {
-                  print(
-                      "Start Date (cfStartDateTime): ${subscriptionsDate?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
-                  print(
-                      "End Date (currentTermEndsAt): ${subscriptionsDate?.subscriptions?[0].currentTermEndsAt}");
-                  log("subscription Start===>>>>${subscriptionsDate?.subscriptions?[0].customFieldHash?.cfStartDateTime}");
-
-                  await HomeProvider()
-                      .getTimeEntryApi(ticketId)
-                      .then((timeResponse) async {
-                    getTimeEntry = GetTimeEntryModal.fromJson(
-                        json.decode(timeResponse.body));
-
-                    if (timeResponse.statusCode == 200 &&
-                        getTimeEntry?.data != null &&
-                        getTimeEntry!.data!.isNotEmpty) {
-                      for (var entry in getTimeEntry!.data!) {
-                        print("🕓 Entry Created Time: ${entry.createdTime}");
-
-                        DateTime? createdTime =
-                            DateTime.tryParse(entry.createdTime.toString());
-
-                        String? startDateStr = subscriptionsDate
-                            ?.subscriptions?[0]
-                            .customFieldHash
-                            ?.cfStartDateTime;
-                        String? endDateStr = subscriptionsDate
-                            ?.subscriptions?[0].currentTermEndsAt;
-
-                        DateTime? termStart;
-                        if (startDateStr != null) {
-                          try {
-                            final DateFormat formatter =
-                                DateFormat('dd/MM/yyyy hh:mm a');
-                            termStart = formatter
-                                .parse(startDateStr)
-                                .toUtc(); // ✅ Fix here
-                          } catch (e) {
-                            print("❌ Failed to parse cfStartDateTime: $e");
-                          }
-                        }
-
-                        DateTime? termEnd = endDateStr != null
-                            ? DateTime.tryParse("${endDateStr}T23:59:59.999Z")
-                            : null;
-
-                        if (createdTime != null &&
-                            termStart != null &&
-                            termEnd != null) {
-                          print(
-                              "🔍 Checking if $createdTime is between $termStart and $termEnd");
-
-                          if (createdTime.isAfter(termStart) &&
-                              createdTime.isBefore(termEnd)) {
-                            final int seconds =
-                                int.tryParse(entry.secondsSpent.toString()) ??
-                                    0;
-                            final int minutes =
-                                int.tryParse(entry.minutesSpent.toString()) ??
-                                    0;
-                            final int hours =
-                                int.tryParse(entry.hoursSpent.toString()) ?? 0;
-
-                            int totalEntrySeconds =
-                                seconds + (minutes * 60) + (hours * 3600);
-                            secondsSpentList.add(totalEntrySeconds);
-
-                            final duration =
-                                Duration(seconds: totalEntrySeconds);
-                            final formatted = duration
-                                .toString()
-                                .split('.')
-                                .first
-                                .padLeft(8, "0");
-
-                            print(
-                                "✅ Time counted: $formatted (Total $totalEntrySeconds seconds)");
-                          } else {
-                            print(
-                                "❌ Skipped: $createdTime not within $termStart → $termEnd");
-                          }
-                        } else {
-                          print(
-                              "⚠️ Date parsing failed: start=$termStart, end=$termEnd, created=$createdTime");
-                        }
-                      }
-                    }
-                  }).catchError((error) {
-                    log("❗ Error fetching time entry for ticket ID $ticketId: $error");
-                  });
-                }
-              }
-
-              // Final calculation
-              int totalSeconds =
-                  secondsSpentList.fold(0, (sum, element) => sum + element);
-              totalSpentTime = totalSeconds;
-              checkAndStoreTimeExceeded();
-              isTimeExceed = await getTimeExceededStatus();
-
-              final totalDuration = Duration(seconds: totalSpentTime);
-              final readableDuration =
-                  totalDuration.toString().split('.').first.padLeft(8, "0");
-
-              print("🧮 All seconds spent list: $secondsSpentList");
-              print(
-                  "⏱️ Total seconds spent: $totalSpentTime ($readableDuration)");
-              print("📛 Is time exceeded: $isTimeExceed");
-
-              setState(() {
-                isLoading = false;
-              });
-            }
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }).catchError((error, stackTrace) {
-          final errorMessage = error.toString();
-
-          if (errorMessage
-              .contains("You are not authorized to perform this operation")) {
-            log("🔐 User not authorized, retaking token...");
-            fetchAuthtokenApi();
-            return;
-          }
-
-          if (mounted) {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        buildErrorDialog(context, 'Error', "Internet Required");
-      }
-    });
   }
 
   fetchAuthtokenApi() {

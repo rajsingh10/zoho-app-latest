@@ -1,4 +1,4 @@
-class ReplyTikitModal {
+class ReplyTicketModal {
   String? content;
   String? id;
   String? channel;
@@ -7,26 +7,9 @@ class ReplyTikitModal {
   bool? hasAttach;
   String? status;
   String? summary;
-  Author? author;
-  String? attachmentCount;
-  var channelRelatedInfo;
-  String? respondedIn;
-  var readReceipts;
-  var impersonatedUser;
-  bool? isDescriptionThread;
-  bool? isContentTruncated;
-  Source? source;
-  String? visibility;
-  String? createdTime;
-  String? direction;
-  String? cc;
-  String? responderId;
-  String? bcc;
-  String? to;
   String? fromEmailAddress;
-  bool? isForward;
 
-  ReplyTikitModal(
+  ReplyTicketModal(
       {this.content,
       this.id,
       this.channel,
@@ -35,26 +18,9 @@ class ReplyTikitModal {
       this.hasAttach,
       this.status,
       this.summary,
-      this.author,
-      this.attachmentCount,
-      this.channelRelatedInfo,
-      this.respondedIn,
-      this.readReceipts,
-      this.impersonatedUser,
-      this.isDescriptionThread,
-      this.isContentTruncated,
-      this.source,
-      this.visibility,
-      this.createdTime,
-      this.direction,
-      this.cc,
-      this.responderId,
-      this.bcc,
-      this.to,
-      this.fromEmailAddress,
-      this.isForward});
+      this.fromEmailAddress});
 
-  ReplyTikitModal.fromJson(Map<String, dynamic> json) {
+  ReplyTicketModal.fromJson(Map<String, dynamic> json) {
     content = json['content'];
     id = json['id'];
     channel = json['channel'];
@@ -63,128 +29,20 @@ class ReplyTikitModal {
     hasAttach = json['hasAttach'];
     status = json['status'];
     summary = json['summary'];
-    author = json['author'] != null ? Author.fromJson(json['author']) : null;
-    attachmentCount = json['attachmentCount'];
-    channelRelatedInfo = json['channelRelatedInfo'];
-    respondedIn = json['respondedIn'];
-    readReceipts = json['readReceipts'];
-    impersonatedUser = json['impersonatedUser'];
-    isDescriptionThread = json['isDescriptionThread'];
-    isContentTruncated = json['isContentTruncated'];
-    source = json['source'] != null ? Source.fromJson(json['source']) : null;
-    visibility = json['visibility'];
-    createdTime = json['createdTime'];
-    direction = json['direction'];
-    cc = json['cc'];
-    responderId = json['responderId'];
-    bcc = json['bcc'];
-    to = json['to'];
     fromEmailAddress = json['fromEmailAddress'];
-    isForward = json['isForward'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['content'] = content;
-    data['id'] = id;
-    data['channel'] = channel;
-    data['canReply'] = canReply;
-    data['contentType'] = contentType;
-    data['hasAttach'] = hasAttach;
-    data['status'] = status;
-    data['summary'] = summary;
-    if (author != null) {
-      data['author'] = author!.toJson();
-    }
-    data['attachmentCount'] = attachmentCount;
-    data['channelRelatedInfo'] = channelRelatedInfo;
-    data['respondedIn'] = respondedIn;
-    data['readReceipts'] = readReceipts;
-    data['impersonatedUser'] = impersonatedUser;
-    data['isDescriptionThread'] = isDescriptionThread;
-    data['isContentTruncated'] = isContentTruncated;
-    if (source != null) {
-      data['source'] = source!.toJson();
-    }
-    data['visibility'] = visibility;
-    data['createdTime'] = createdTime;
-    data['direction'] = direction;
-    data['cc'] = cc;
-    data['responderId'] = responderId;
-    data['bcc'] = bcc;
-    data['to'] = to;
-    data['fromEmailAddress'] = fromEmailAddress;
-    data['isForward'] = isForward;
-    return data;
-  }
-}
-
-class Author {
-  String? id;
-  String? name;
-  String? email;
-  String? photoURL;
-  String? type;
-  String? firstName;
-  String? lastName;
-
-  Author(
-      {this.id,
-      this.name,
-      this.email,
-      this.photoURL,
-      this.type,
-      this.firstName,
-      this.lastName});
-
-  Author.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    photoURL = json['photoURL'];
-    type = json['type'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['email'] = email;
-    data['photoURL'] = photoURL;
-    data['type'] = type;
-    data['firstName'] = firstName;
-    data['lastName'] = lastName;
-    return data;
-  }
-}
-
-class Source {
-  var extId;
-  var appName;
-  var appPhotoURL;
-  var permalink;
-  String? type;
-
-  Source(
-      {this.extId, this.appName, this.appPhotoURL, this.permalink, this.type});
-
-  Source.fromJson(Map<String, dynamic> json) {
-    extId = json['extId'];
-    appName = json['appName'];
-    appPhotoURL = json['appPhotoURL'];
-    permalink = json['permalink'];
-    type = json['type'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['extId'] = extId;
-    data['appName'] = appName;
-    data['appPhotoURL'] = appPhotoURL;
-    data['permalink'] = permalink;
-    data['type'] = type;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['content'] = this.content;
+    data['id'] = this.id;
+    data['channel'] = this.channel;
+    data['canReply'] = this.canReply;
+    data['contentType'] = this.contentType;
+    data['hasAttach'] = this.hasAttach;
+    data['status'] = this.status;
+    data['summary'] = this.summary;
+    data['fromEmailAddress'] = this.fromEmailAddress;
     return data;
   }
 }
