@@ -115,6 +115,9 @@ flutter:
     - family: extrabold
       fonts:
         - asset: assets/fonts/Poppins-ExtraBold.ttf
+    - family: mv
+      fonts:
+        - asset: assets/fonts/mvboli.ttf
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf

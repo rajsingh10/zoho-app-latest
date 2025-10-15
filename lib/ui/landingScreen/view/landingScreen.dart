@@ -172,12 +172,12 @@ class _LandingScreenState extends State<LandingScreen> {
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 7.w),
                   child: Text(
-                    'Get ready to transform your Business...',
+                    'Get ready to transform you & your Business...',
                     style: TextStyle(
                       color: AppColors.whiteColor,
                       fontWeight: FontWeight.bold,
                       fontFamily: FontFamily.bold,
-                      fontSize: 25.sp,
+                      fontSize: 24.sp,
                       shadows: [
                         Shadow(
                           offset: const Offset(2.0, 2.0),

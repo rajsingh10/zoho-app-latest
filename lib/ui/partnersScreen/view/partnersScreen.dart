@@ -55,34 +55,47 @@ class _partnersScreenState extends State<partnersScreen> {
                       Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.symmetric(
-                            horizontal: 3.w, vertical: 0.5.h),
+                            horizontal: 3.w, vertical: 1.h),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(15),
                           color: AppColors.appBlueColor,
                         ),
                         child: Column(
                           children: [
                             Text(
-                              "Tide - Business Bank Account",
+                              "Business Bank Account",
                               style: TextStyle(
                                 fontFamily: FontFamily.bold,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.whiteColor,
                                 fontSize: 22.sp,
                               ),
+                            ),SizedBox(height: 0.5.h),
+                            Text(
+                              "Tap here to Set up a Bank Account For Your Business",
+                              style: TextStyle(
+                                fontFamily: FontFamily.regular,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.whiteColor,
+                                fontSize: 16.sp,
+                              ),
                             ),
                             SizedBox(height: 1.h),
-                            Image.asset(
-                              Imgs.partners1Img,
-                              scale: 2.5,
+                            ClipRRect(borderRadius: BorderRadius.circular(15),
+                              child: Image.asset(
+                                Imgs.partners1Img,
+                                scale: 2.5,
+                              ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(height: 1.h),
-                      Image.asset(
-                        Imgs.partners2Img,
-                        scale: 2.5,
+                      ClipRRect(borderRadius: BorderRadius.circular(15),
+                        child: Image.asset(
+                          Imgs.partners2Img,
+                          scale: 2.5,
+                        ),
                       ),
                       SizedBox(height: 1.h),
                       Container(
@@ -90,33 +103,27 @@ class _partnersScreenState extends State<partnersScreen> {
                             horizontal: 3.w, vertical: 0.5.h),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.whiteColor),
+                            borderRadius: BorderRadius.circular(15),
+                            color: AppColors.blackColor.withValues(alpha: 0.04)),
                         child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  Imgs.sjlLogo,
-                                  scale: 3.5,
-                                ),
-                              ],
+                          children: [Text(
+                            "Business Insurance",
+                            style: TextStyle(
+                              fontFamily: FontFamily.bold,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.blackColor,
+                              fontSize: 22.sp,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Tap here to insure your business",
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.regular,
-                                    fontWeight: FontWeight.normal,
-                                    color: AppColors.blackColor,
-                                    fontSize: 15.sp,
-                                  ),
-                                ),
-                              ],
-                            )
+                          ),SizedBox(height: 0.5.h),
+                            Text(
+                              "Tap here to insure your Business",
+                              style: TextStyle(
+                                fontFamily: FontFamily.regular,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.blackColor,
+                                fontSize: 16.sp,
+                              ),
+                            ),
                           ],
                         ),
                       ),

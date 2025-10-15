@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/apiCalling/apiConfig.dart';
@@ -378,6 +382,177 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                       SizedBox(
                                         height: 1.5.h,
                                       ),
+                                      // InkWell(
+                                      //   onTap: () {
+                                      //     final _formKey = GlobalKey<
+                                      //         FormState>(); // Form key
+                                      //     TextEditingController
+                                      //         _bodyController =
+                                      //         TextEditingController();
+                                      //     showModalBottomSheet(
+                                      //       context: context,
+                                      //       isScrollControlled: true,
+                                      //       shape: RoundedRectangleBorder(
+                                      //         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                      //       ),
+                                      //       builder: (context) {
+                                      //         return StatefulBuilder(
+                                      //           builder: (BuildContext context, StateSetter setState) {
+                                      //             return Padding(
+                                      //               padding: EdgeInsets.only(
+                                      //                 bottom: MediaQuery.of(context).viewInsets.bottom,
+                                      //                 top: 2.h,
+                                      //                 left: 2.w,
+                                      //                 right: 2.w,
+                                      //               ),
+                                      //               child: Form(
+                                      //                 key: _formKey,
+                                      //                 child: Column(
+                                      //                   mainAxisSize: MainAxisSize.min,
+                                      //                   children: [
+                                      //                     Text(
+                                      //                       'Send Ticket Reply',
+                                      //                       style: TextStyle(
+                                      //                         fontSize: 18.sp,
+                                      //                         fontWeight: FontWeight.bold,
+                                      //                       ),
+                                      //                     ),
+                                      //                     SizedBox(height: 2.h),
+                                      //                     AppTextField(
+                                      //                       controller: _bodyController,
+                                      //                       hintText: 'Enter Reply',
+                                      //                       text: 'Reply body',
+                                      //                       isTextavailable: true,
+                                      //                       maxline: 5,
+                                      //                       validator: (value) {
+                                      //                         if (value == null || value.trim().isEmpty) {
+                                      //                           return 'Reply Message is required';
+                                      //                         }
+                                      //                         return null;
+                                      //                       },
+                                      //                       textInputType: TextInputType.text,
+                                      //                       suffix: IconButton(
+                                      //                         icon: const Icon(Icons.attach_file, color: AppColors.bgColor),
+                                      //                         onPressed: () async {
+                                      //                           await _pickFiles();
+                                      //                           setState(() {}); // <-- Refresh UI after picking file
+                                      //                         },
+                                      //                       ),
+                                      //                     ),
+                                      //                     SizedBox(height: 1.h),
+                                      //                     if (_pickedFiles.isNotEmpty)
+                                      //                       Column(
+                                      //                         crossAxisAlignment: CrossAxisAlignment.start,
+                                      //                         children: _pickedFiles.asMap().entries.map((entry) {
+                                      //                           final index = entry.key;
+                                      //                           final file = entry.value;
+                                      //                           return Container(
+                                      //                             margin: EdgeInsets.symmetric(vertical: 0.5.h),
+                                      //                             padding: EdgeInsets.all(2.w),
+                                      //                             decoration: BoxDecoration(
+                                      //                               borderRadius: BorderRadius.circular(10),
+                                      //                               border: Border.all(color: AppColors.bgColor),
+                                      //                             ),
+                                      //                             child: Row(
+                                      //                               children: [
+                                      //                                 if (file.extension == 'jpg' ||
+                                      //                                     file.extension == 'jpeg' ||
+                                      //                                     file.extension == 'png')
+                                      //                                   Image.file(
+                                      //                                     File(file.path!),
+                                      //                                     width: 50,
+                                      //                                     height: 50,
+                                      //                                     fit: BoxFit.cover,
+                                      //                                   )
+                                      //                                 else if (file.extension == 'mp4' ||
+                                      //                                     file.extension == 'mov' ||
+                                      //                                     file.extension == 'avi')
+                                      //                                   const Icon(Icons.videocam,
+                                      //                                       color: AppColors.bgColor, size: 40)
+                                      //                                 else
+                                      //                                   const Icon(Icons.insert_drive_file,
+                                      //                                       color: AppColors.bgColor, size: 40),
+                                      //                                 SizedBox(width: 2.w),
+                                      //                                 Expanded(
+                                      //                                   child: Text(
+                                      //                                     file.name,
+                                      //                                     style: TextStyle(
+                                      //                                       fontSize: 14.sp,
+                                      //                                       color: AppColors.bgColor,
+                                      //                                       fontWeight: FontWeight.w500,
+                                      //                                     ),
+                                      //                                     overflow: TextOverflow.ellipsis,
+                                      //                                   ),
+                                      //                                 ),
+                                      //                                 IconButton(
+                                      //                                   icon: const Icon(Icons.delete, color: Colors.red),
+                                      //                                   onPressed: () {
+                                      //                                     _removeFile(index);
+                                      //                                     setState(() {}); // <-- Refresh UI after removing
+                                      //                                   },
+                                      //                                 ),
+                                      //                               ],
+                                      //                             ),
+                                      //                           );
+                                      //                         }).toList(),
+                                      //                       ),
+                                      //                     SizedBox(height: 3.h),
+                                      //                     GestureDetector(
+                                      //                       onTap: () {
+                                      //                         if (_formKey.currentState!.validate()) {
+                                      //                           print('Reply: ${_bodyController.text}');
+                                      //                           Get.back();
+                                      //                           replyTicketApi(_bodyController.text.trim());
+                                      //                         }
+                                      //                       },
+                                      //                       child: Container(
+                                      //                         height: 5.5.h,
+                                      //                         alignment: Alignment.center,
+                                      //                         decoration: BoxDecoration(
+                                      //                           color: AppColors.bgColor,
+                                      //                           borderRadius: BorderRadius.circular(3.w),
+                                      //                         ),
+                                      //                         child: Text(
+                                      //                           'Send',
+                                      //                           style: TextStyle(
+                                      //                             fontSize: 17.sp,
+                                      //                             color: AppColors.whiteColor,
+                                      //                             fontWeight: FontWeight.bold,
+                                      //                             fontFamily: FontFamily.bold,
+                                      //                           ),
+                                      //                         ),
+                                      //                       ).marginSymmetric(horizontal: 2.w),
+                                      //                     ),
+                                      //                     SizedBox(height: 2.h),
+                                      //                   ],
+                                      //                 ),
+                                      //               ),
+                                      //             );
+                                      //           },
+                                      //         );
+                                      //       },
+                                      //     );
+                                      //
+                                      //   },
+                                      //   child: Container(
+                                      //     height: 5.5.h,
+                                      //     alignment: Alignment.center,
+                                      //     decoration: BoxDecoration(
+                                      //       color: AppColors.bgColor,
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(3.w),
+                                      //     ),
+                                      //     child: Text(
+                                      //       'Send Ticket Reply',
+                                      //       style: TextStyle(
+                                      //         fontSize: 17.sp,
+                                      //         color: AppColors.whiteColor,
+                                      //         fontWeight: FontWeight.bold,
+                                      //         fontFamily: FontFamily.bold,
+                                      //       ),
+                                      //     ),
+                                      //   ).marginSymmetric(horizontal: 2.w),
+                                      // ),
                                       InkWell(
                                         onTap: () {
                                           final _formKey = GlobalKey<
@@ -395,104 +570,463 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                       top: Radius.circular(20)),
                                             ),
                                             builder: (context) {
-                                              return Padding(
-                                                padding: EdgeInsets.only(
-                                                  bottom: MediaQuery.of(context)
-                                                      .viewInsets
-                                                      .bottom,
-                                                  top: 2.h,
-                                                  left: 2.w,
-                                                  right: 2.w,
-                                                ),
-                                                child: Form(
-                                                  key:
-                                                      _formKey, // assign form key
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Text(
-                                                        'Send Ticket Reply',
-                                                        style: TextStyle(
-                                                          fontSize: 18.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 2.h),
-
-                                                      // Message TextField
-                                                      AppTextField(
-                                                        controller:
-                                                            _bodyController,
-                                                        hintText: 'Enter Reply',
-                                                        text: 'Reply body',
-                                                        isTextavailable: true,
-                                                        maxline: 5,
-                                                        validator: (value) {
-                                                          if (value == null ||
-                                                              value
-                                                                  .trim()
-                                                                  .isEmpty) {
-                                                            return 'Reply Message is required';
-                                                          }
-                                                          return null;
-                                                        },
-                                                        textInputType:
-                                                            TextInputType.text,
-                                                      ),
-                                                      SizedBox(height: 3.h),
-
-                                                      // Send button
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          if (_formKey
-                                                              .currentState!
-                                                              .validate()) {
-                                                            print(
-                                                                'Reply: ${_bodyController.text}');
-                                                            Get.back();
-                                                            replyTicketApi(
-                                                                _bodyController
-                                                                    .text
-                                                                    .trim()
-                                                                    .toString());
-                                                          }
-                                                        },
-                                                        child: Container(
-                                                          height: 5.5.h,
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: AppColors
-                                                                .bgColor,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        3.w),
+                                              return StatefulBuilder(
+                                                builder: (BuildContext context,
+                                                    StateSetter setState) {
+                                                  /// Pick files method using StatefulBuilder's setState
+                                                  Future<void>
+                                                      _pickFiles() async {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return SafeArea(
+                                                          child: Wrap(
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  const SizedBox(
+                                                                      width:
+                                                                          24),
+                                                                  Text(
+                                                                    "Choose an Option",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .bold,
+                                                                      color: AppColors
+                                                                          .bgColor,
+                                                                      fontSize:
+                                                                          17.sp,
+                                                                    ),
+                                                                  ),
+                                                                  InkWell(
+                                                                    onTap: () =>
+                                                                        Get.back(),
+                                                                    child: const Icon(
+                                                                        Icons
+                                                                            .close,
+                                                                        color: AppColors
+                                                                            .bgColor),
+                                                                  ).paddingOnly(
+                                                                      right:
+                                                                          4.w),
+                                                                ],
+                                                              ).paddingOnly(
+                                                                  top: 1.5.h),
+                                                              ListTile(
+                                                                leading: const Icon(
+                                                                    Icons
+                                                                        .insert_drive_file,
+                                                                    color: AppColors
+                                                                        .bgColor),
+                                                                title: const Text(
+                                                                    "Pick a File"),
+                                                                onTap:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  FilePickerResult?
+                                                                      result =
+                                                                      await FilePicker
+                                                                          .platform
+                                                                          .pickFiles(
+                                                                    type: FileType
+                                                                        .custom,
+                                                                    allowMultiple:
+                                                                        true,
+                                                                    allowedExtensions: [
+                                                                      'pdf',
+                                                                      'doc',
+                                                                      'docx'
+                                                                    ],
+                                                                  );
+                                                                  if (result !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      _pickedFiles
+                                                                          .addAll(
+                                                                              result.files);
+                                                                    });
+                                                                  }
+                                                                },
+                                                              ),
+                                                              ListTile(
+                                                                leading: const Icon(
+                                                                    Icons.photo,
+                                                                    color: AppColors
+                                                                        .bgColor),
+                                                                title: const Text(
+                                                                    "Pick Image (Gallery)"),
+                                                                onTap:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  final XFile?
+                                                                      picked =
+                                                                      await _picker.pickImage(
+                                                                          source:
+                                                                              ImageSource.gallery);
+                                                                  if (picked !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      _pickedFiles
+                                                                          .add(
+                                                                        PlatformFile(
+                                                                          name:
+                                                                              picked.name,
+                                                                          path:
+                                                                              picked.path,
+                                                                          size:
+                                                                              File(picked.path!).lengthSync(),
+                                                                        ),
+                                                                      );
+                                                                    });
+                                                                  }
+                                                                },
+                                                              ),
+                                                              ListTile(
+                                                                leading: const Icon(
+                                                                    Icons
+                                                                        .video_library,
+                                                                    color: AppColors
+                                                                        .bgColor),
+                                                                title: const Text(
+                                                                    "Pick Video (Gallery)"),
+                                                                onTap:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  final XFile?
+                                                                      video =
+                                                                      await _picker.pickVideo(
+                                                                          source:
+                                                                              ImageSource.gallery);
+                                                                  if (video !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      _pickedFiles
+                                                                          .add(
+                                                                        PlatformFile(
+                                                                          name:
+                                                                              video.name,
+                                                                          path:
+                                                                              video.path,
+                                                                          size:
+                                                                              File(video.path!).lengthSync(),
+                                                                        ),
+                                                                      );
+                                                                    });
+                                                                  }
+                                                                },
+                                                              ),
+                                                              ListTile(
+                                                                leading: const Icon(
+                                                                    Icons
+                                                                        .camera_alt,
+                                                                    color: AppColors
+                                                                        .bgColor),
+                                                                title: const Text(
+                                                                    "Open Camera"),
+                                                                onTap:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  final XFile?
+                                                                      photo =
+                                                                      await _picker.pickImage(
+                                                                          source:
+                                                                              ImageSource.camera);
+                                                                  if (photo !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      _pickedFiles
+                                                                          .add(
+                                                                        PlatformFile(
+                                                                          name:
+                                                                              photo.name,
+                                                                          path:
+                                                                              photo.path,
+                                                                          size:
+                                                                              File(photo.path!).lengthSync(),
+                                                                        ),
+                                                                      );
+                                                                    });
+                                                                  }
+                                                                },
+                                                              ),
+                                                              ListTile(
+                                                                leading: const Icon(
+                                                                    Icons
+                                                                        .videocam,
+                                                                    color: AppColors
+                                                                        .bgColor),
+                                                                title: const Text(
+                                                                    "Record Video"),
+                                                                onTap:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  final XFile?
+                                                                      video =
+                                                                      await _picker.pickVideo(
+                                                                          source:
+                                                                              ImageSource.camera);
+                                                                  if (video !=
+                                                                      null) {
+                                                                    setState(
+                                                                        () {
+                                                                      _pickedFiles
+                                                                          .add(
+                                                                        PlatformFile(
+                                                                          name:
+                                                                              video.name,
+                                                                          path:
+                                                                              video.path,
+                                                                          size:
+                                                                              File(video.path!).lengthSync(),
+                                                                        ),
+                                                                      );
+                                                                    });
+                                                                  }
+                                                                },
+                                                              ),
+                                                            ],
                                                           ),
-                                                          child: Text(
-                                                            'Send',
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+
+                                                  /// Remove file method
+                                                  void _removeFile(int index) {
+                                                    setState(() {
+                                                      _pickedFiles
+                                                          .removeAt(index);
+                                                    });
+                                                  }
+
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                      bottom:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets
+                                                              .bottom,
+                                                      top: 2.h,
+                                                      left: 2.w,
+                                                      right: 2.w,
+                                                    ),
+                                                    child: Form(
+                                                      key: _formKey,
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            'Send Ticket Reply',
                                                             style: TextStyle(
-                                                              fontSize: 17.sp,
-                                                              color: AppColors
-                                                                  .whiteColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontFamily:
-                                                                  FontFamily
-                                                                      .bold,
+                                                                fontSize: 18.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(height: 2.h),
+                                                          AppTextField(
+                                                            controller:
+                                                                _bodyController,
+                                                            hintText:
+                                                                'Enter Reply',
+                                                            text: 'Reply body',
+                                                            isTextavailable:
+                                                                true,
+                                                            maxline: 5,
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .trim()
+                                                                      .isEmpty) {
+                                                                return 'Reply Message is required';
+                                                              }
+                                                              return null;
+                                                            },
+                                                            textInputType:
+                                                                TextInputType
+                                                                    .text,
+                                                            suffix: IconButton(
+                                                              icon: const Icon(
+                                                                  Icons
+                                                                      .attach_file,
+                                                                  color: AppColors
+                                                                      .bgColor),
+                                                              onPressed:
+                                                                  () async {
+                                                                await _pickFiles(); // <-- Live refresh
+                                                              },
                                                             ),
                                                           ),
-                                                        ).marginSymmetric(
-                                                            horizontal: 2.w),
+                                                          SizedBox(height: 1.h),
+                                                          if (_pickedFiles
+                                                              .isNotEmpty)
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children:
+                                                                  _pickedFiles
+                                                                      .asMap()
+                                                                      .entries
+                                                                      .map(
+                                                                          (entry) {
+                                                                final index =
+                                                                    entry.key;
+                                                                final file =
+                                                                    entry.value;
+                                                                return Container(
+                                                                  margin: EdgeInsets
+                                                                      .symmetric(
+                                                                          vertical:
+                                                                              0.5.h),
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(2
+                                                                              .w),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                    border: Border.all(
+                                                                        color: AppColors
+                                                                            .bgColor),
+                                                                  ),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      if (file.extension == 'jpg' || file.extension == 'jpeg' || file.extension == 'png')
+                                                                        Image.file(
+                                                                            File(file
+                                                                                .path!),
+                                                                            width:
+                                                                                50,
+                                                                            height:
+                                                                                50,
+                                                                            fit: BoxFit
+                                                                                .cover)
+                                                                      else if (file
+                                                                                  .extension ==
+                                                                              'mp4' ||
+                                                                          file.extension ==
+                                                                              'mov' ||
+                                                                          file.extension ==
+                                                                              'avi')
+                                                                        const Icon(
+                                                                            Icons
+                                                                                .videocam,
+                                                                            color: AppColors
+                                                                                .bgColor,
+                                                                            size:
+                                                                                40)
+                                                                      else
+                                                                        const Icon(
+                                                                            Icons
+                                                                                .insert_drive_file,
+                                                                            color:
+                                                                                AppColors.bgColor,
+                                                                            size: 40),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2.w),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Text(
+                                                                          file.name,
+                                                                          style: TextStyle(
+                                                                              fontSize: 14.sp,
+                                                                              color: AppColors.bgColor,
+                                                                              fontWeight: FontWeight.w500),
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+                                                                      IconButton(
+                                                                        icon: const Icon(
+                                                                            Icons
+                                                                                .delete,
+                                                                            color:
+                                                                                Colors.red),
+                                                                        onPressed:
+                                                                            () {
+                                                                          _removeFile(
+                                                                              index); // <-- Live refresh
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          SizedBox(height: 3.h),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              if (_formKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                                print(
+                                                                    'Reply: ${_bodyController.text}');
+                                                                Get.back();
+                                                                replyTicketApi(
+                                                                    _bodyController
+                                                                        .text
+                                                                        .trim());
+                                                              }
+                                                            },
+                                                            child: Container(
+                                                              height: 5.5.h,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: AppColors
+                                                                    .bgColor,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            3.w),
+                                                              ),
+                                                              child: Text(
+                                                                'Send',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      17.sp,
+                                                                  color: AppColors
+                                                                      .whiteColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontFamily:
+                                                                      FontFamily
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            ).marginSymmetric(
+                                                                horizontal:
+                                                                    2.w),
+                                                          ),
+                                                          SizedBox(height: 2.h),
+                                                        ],
                                                       ),
-                                                      SizedBox(height: 2.h),
-                                                    ],
-                                                  ),
-                                                ),
+                                                    ),
+                                                  );
+                                                },
                                               );
                                             },
                                           );
@@ -516,6 +1050,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           ),
                                         ).marginSymmetric(horizontal: 2.w),
                                       ),
+
                                       SizedBox(
                                         height: 1.h,
                                       ),
@@ -787,28 +1322,200 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     });
   }
 
+  Future<String?> uploadFileToZoho(PlatformFile file) async {
+    try {
+      var uri = Uri.parse("https://desk.zoho.eu/api/v1/uploads");
+
+      Map<String, String> headers = await apiConfig.getAuthHeader();
+
+      var request = http.MultipartRequest("POST", uri);
+      request.headers.addAll(headers);
+
+      var multipartFile = await http.MultipartFile.fromPath(
+        "file",
+        file.path!,
+        filename: file.name,
+      );
+
+      request.files.add(multipartFile);
+
+      // 👇 Print everything you are sending
+      log("📤 API URL: $uri");
+      log("📤 Headers: $headers");
+      log("📤 Sending file -> field: file, name: ${multipartFile.filename}, path: ${file.path}");
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      log("📥 Upload Response Code: ${response.statusCode}");
+      log("📥 Upload Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data["id"] != null) {
+          log("✅ File uploaded, ID: ${data["id"]}");
+          return data["id"].toString();
+        }
+      }
+      return null;
+    } catch (e, stacktrace) {
+      log("💥 Upload Exception: $e");
+      log("💥 Stack: $stacktrace");
+      return null;
+    }
+  }
+
+  final ImagePicker _picker = ImagePicker();
+
+  final List<PlatformFile> _pickedFiles = [];
+
+  Future<void> _pickFiles(StateSetter setState) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        final options = [
+          {
+            'icon': Icons.insert_drive_file,
+            'title': 'Pick a File',
+            'action': () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles(
+                type: FileType.custom,
+                allowMultiple: true,
+                allowedExtensions: ['pdf', 'doc', 'docx'],
+              );
+              if (result != null)
+                setState(() => _pickedFiles.addAll(result.files));
+            }
+          },
+          {
+            'icon': Icons.photo,
+            'title': 'Pick Image (Gallery)',
+            'action': () async {
+              final XFile? picked =
+                  await _picker.pickImage(source: ImageSource.gallery);
+              if (picked != null)
+                setState(() => _pickedFiles.add(PlatformFile(
+                      name: picked.name,
+                      path: picked.path,
+                      size: File(picked.path!).lengthSync(),
+                    )));
+            }
+          },
+          {
+            'icon': Icons.video_library,
+            'title': 'Pick Video (Gallery)',
+            'action': () async {
+              final XFile? video =
+                  await _picker.pickVideo(source: ImageSource.gallery);
+              if (video != null)
+                setState(() => _pickedFiles.add(PlatformFile(
+                      name: video.name,
+                      path: video.path,
+                      size: File(video.path!).lengthSync(),
+                    )));
+            }
+          },
+          {
+            'icon': Icons.camera_alt,
+            'title': 'Open Camera',
+            'action': () async {
+              final XFile? photo =
+                  await _picker.pickImage(source: ImageSource.camera);
+              if (photo != null)
+                setState(() => _pickedFiles.add(PlatformFile(
+                      name: photo.name,
+                      path: photo.path,
+                      size: File(photo.path!).lengthSync(),
+                    )));
+            }
+          },
+          {
+            'icon': Icons.videocam,
+            'title': 'Record Video',
+            'action': () async {
+              final XFile? video =
+                  await _picker.pickVideo(source: ImageSource.camera);
+              if (video != null)
+                setState(() => _pickedFiles.add(PlatformFile(
+                      name: video.name,
+                      path: video.path,
+                      size: File(video.path!).lengthSync(),
+                    )));
+            }
+          },
+        ];
+
+        return SafeArea(
+          child: Wrap(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(width: 24),
+                  Text(
+                    "Choose an Option",
+                    style: TextStyle(
+                      fontFamily: FontFamily.bold,
+                      color: AppColors.bgColor,
+                      fontSize: 17.sp,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => Get.back(),
+                    child: const Icon(Icons.close, color: AppColors.bgColor),
+                  ).paddingOnly(right: 4.w),
+                ],
+              ).paddingOnly(top: 1.5.h),
+              ...options.map((opt) => ListTile(
+                    leading:
+                        Icon(opt['icon'] as IconData, color: AppColors.bgColor),
+                    title: Text(opt['title'] as String),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      await (opt['action'] as Future<void> Function())();
+                    },
+                  )),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _removeFile(int index) {
+    setState(() {
+      _pickedFiles.removeAt(index);
+    });
+  }
+
   replyTicketApi(content) async {
     setState(() => isAdding = true);
 
-    // Step 1: Prepare the reply message body
+    // Step 1: Upload all picked files → collect IDs
+    List<String> uploadIds = [];
+    for (var file in _pickedFiles) {
+      String? id = await uploadFileToZoho(file);
+      if (id != null) uploadIds.add(id);
+    }
+
+    // Step 2: Build ticket body
     final Map<String, dynamic> data = {
       "channel": "EMAIL",
       "fromEmailAddress": userData?.data?[0].email,
       "to": departmentEmail,
       "contentType": "plainText",
       "content": content,
+      if (uploadIds.isNotEmpty) "attachmentIds": uploadIds,
       "isForward": "false"
     };
 
-    log("📤 Ticket Reply Request Body: ${jsonEncode(data)}");
+    log("📤 Final Ticket Request Body: ${jsonEncode(data)}");
 
+    // Step 3: Call your wrapper
     try {
-      // Step 2: Send reply API call
-      final response =
-          await Adviceprovider().replyTicketApi(data, widget.tickitid);
-
-      log("📥 Ticket Reply Response Code: ${response.statusCode}");
-      log("📥 Ticket Reply Response Body: ${response.body}");
+      final response = await Adviceprovider().replyTicketApi(data,widget.tickitid);
+      log("📥 Ticket Response Code: ${response.statusCode}");
+      log("📥 Ticket Response Body: ${response.body}");
 
       replyTicket = ReplyTicketModal.fromJson(json.decode(response.body));
 
@@ -817,7 +1524,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
           title: 'Reply Sent',
           message: 'Your reply has been sent successfully.',
         );
-        allTicketRepliesApi(); // Refresh the replies list
+        _pickedFiles.clear();
+        allTicketRepliesApi();
       } else {
         setState(() {
           isAdding = false;
@@ -839,6 +1547,59 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
       setState(() => isAdding = false);
     }
   }
+
+  // replyTicketApi(content) async {
+  //   setState(() => isAdding = true);
+  //
+  //   // Step 1: Prepare the reply message body
+  //   final Map<String, dynamic> data = {
+  //     "channel": "EMAIL",
+  //     "fromEmailAddress": userData?.data?[0].email,
+  //     "to": departmentEmail,
+  //     "contentType": "plainText",
+  //     "content": content,
+  //     "isForward": "false"
+  //   };
+  //
+  //   log("📤 Ticket Reply Request Body: ${jsonEncode(data)}");
+  //
+  //   try {
+  //     // Step 2: Send reply API call
+  //     final response =
+  //         await Adviceprovider().replyTicketApi(data, widget.tickitid);
+  //
+  //     log("📥 Ticket Reply Response Code: ${response.statusCode}");
+  //     log("📥 Ticket Reply Response Body: ${response.body}");
+  //
+  //     replyTicket = ReplyTicketModal.fromJson(json.decode(response.body));
+  //
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       showCustomSuccessSnackbar(
+  //         title: 'Reply Sent',
+  //         message: 'Your reply has been sent successfully.',
+  //       );
+  //       allTicketRepliesApi(); // Refresh the replies list
+  //     } else {
+  //       setState(() {
+  //         isAdding = false;
+  //       });
+  //       showCustomErrorSnackbar(
+  //         title: 'Reply Failed',
+  //         message: 'Unable to send your reply. Please try again.',
+  //       );
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isAdding = false;
+  //     });
+  //     showCustomErrorSnackbar(
+  //       title: 'Reply Error',
+  //       message: 'An error occurred while sending your reply: $e',
+  //     );
+  //   } finally {
+  //     setState(() => isAdding = false);
+  //   }
+  // }
 
   String totalTimeString = "00:00:00"; // declare this at class level
 

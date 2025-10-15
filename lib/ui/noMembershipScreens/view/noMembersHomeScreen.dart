@@ -9,6 +9,7 @@ import 'package:zohosystem/utils/fontFamily.dart';
 import 'package:zohosystem/utils/orangeBottomBar.dart';
 
 import '../../../utils/images.dart';
+import '../../landingScreen/view/webViewAssociates.dart';
 import 'findOutMoreScreens/amzAdviceFindOutMore/amzAdviceFindOutMoreScreen.dart';
 import 'findOutMoreScreens/amzAgencyFindOutMore/amzAgencyFindOutMoreScreen.dart';
 import 'findOutMoreScreens/introducersFindOutMore/introducersFindOutMorePageScreen.dart';
@@ -271,6 +272,104 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         ),
                                       ],
                                     ),
+                                  ),SizedBox(
+                                    height: 0.8.h,
+                                  ),Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 2.5.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: AppColors.whiteColor),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              Imgs.aicenterphoto,
+                                              scale: 4.5,
+                                              // color: AppColors.yellowColor1,
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Get.to(WebviewScreen(
+                                                  link:
+                                                      "https://calendly.com/alexander-shelton/ai-advice-centre-demo",
+                                                ));
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5.5.w,
+                                                    vertical: 0.8.h),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(50),
+                                                    color: AppColors.perpl),
+                                                child: Text(
+                                                  "Book now",
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily.bold,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColors.whiteColor,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 0.8.h,
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: AppColors.whiteColor),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              Imgs.univercity,
+                                              scale: 2.2,
+                                              // color: AppColors.yellowColor1,
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Get.to(WebviewScreen(
+                                                  link:
+                                                      "https://calendly.com/alexander-shelton/university-of-experts-demo  ",
+                                                ));
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5.5.w,
+                                                    vertical: 0.8.h),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(50),
+                                                    color: AppColors.orangeColor),
+                                                child: Text(
+                                                  "Book now",
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily.bold,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColors.whiteColor,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -390,7 +489,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Our Services:',
+                            'Memberships to Transform Your Business:',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 18.sp,
@@ -691,29 +790,272 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           ),
                                         ),
                                       ),
-                                      // InkWell(
-                                      //   onTap: () {
-                                      //     Get.to(
-                                      //         ());
-                                      //   },
-                                      //   child: Container(
-                                      //     padding: EdgeInsets.symmetric(
-                                      //         horizontal: 3.w, vertical: 1.h),
-                                      //     decoration: BoxDecoration(
-                                      //         borderRadius:
-                                      //         BorderRadius.circular(50),
-                                      //         color: Color(0xff2274bb)),
-                                      //     child: Text(
-                                      //       "Find Out More",
-                                      //       style: TextStyle(
-                                      //         fontFamily: FontFamily.bold,
-                                      //         fontWeight: FontWeight.bold,
-                                      //         color: AppColors.whiteColor,
-                                      //         fontSize: 14.sp,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(webViewAssociates(
+                                      link:
+                                          "https://www.aiadvicecentre.com/lander"));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 1.w, vertical: 0.5.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w, color: AppColors.perpl),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        Imgs.aicenterphoto,
+                                        scale: 6,
+                                        // color: AppColors.yellowColor1,
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link:
+                                                  "https://www.aiadvicecentre.com/lander"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: AppColors.perpl),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(webViewAssociates(
+                                      link: "www.theadvicecentre.ltd"));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 1.w, vertical: 0.5.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w,
+                                          color: AppColors.blackColor),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        Imgs.allinonevip,
+                                        scale: 2.5,
+                                        // color: AppColors.yellowColor1,
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link: "www.theadvicecentre.ltd"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: AppColors.blackColor),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(webViewAssociates(
+                                      link: "www.bizboard.co.uk"));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 1.w, vertical: 0.5.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w,
+                                          color: AppColors.bizvoard),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        Imgs.bizboard,
+                                        scale: 3.6,
+                                        // color: AppColors.yellowColor1,
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link: "www.bizboard.co.uk"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: AppColors.bizvoard),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(webViewAssociates(
+                                      link: "www.thedeveloperagency.co.uk"));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 1.w, vertical: 0.5.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w, color: AppColors.perpl),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        Imgs.thedeveloperagency,
+                                        scale: 2,
+                                        // color: AppColors.yellowColor1,
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link:
+                                                  "www.thedeveloperagency.co.uk"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: AppColors.perpl),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),SizedBox(
+                                width: 2.w,
+                              ),
+                              InkWell(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 1.w, vertical: 0.5.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w, color: AppColors.orangeColor),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        Imgs.univercity,
+                                        scale: 3,
+                                        // color: AppColors.yellowColor1,
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link:
+                                              "www.universityofexperts.com"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(50),
+                                              color: AppColors.orangeColor),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -721,6 +1063,130 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                             ],
                           ).marginSymmetric(horizontal: 3.w),
                         ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Memberships to Transform You:',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18.sp,
+                                color: AppColors.bgColor,
+                                fontFamily: FontFamily.extraBold,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ).marginSymmetric(horizontal: 3.w),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Row(
+                          children: [
+                          InkWell(
+                              onTap: () {
+                                Get.to(
+                                    const IntroducersFindOutMorePageScreen());
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 1.w, vertical: 0.5.h),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 0.5.w,
+                                        color: const Color(0xff2274bb)),
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.whiteColor),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      Imgs.makemoneysavemoney,
+                                      fit: BoxFit.cover,
+                                      width: 20.w, height: 5.h,
+                                      // color: AppColors.yellowColor1,
+                                    ),
+                                    SizedBox(
+                                      height: 1.h,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                            const IntroducersFindOutMorePageScreen());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 3.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(50),
+                                            color: const Color(0xff2274bb)),
+                                        child: Text(
+                                          "Find Out More",
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.bold,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.whiteColor,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            InkWell(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 1.w, vertical: 0.5.h),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 0.5.w, color: AppColors.orangeColor),
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.whiteColor),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      Imgs.univercity,
+                                      scale: 3,
+                                      // color: AppColors.yellowColor1,
+                                    ),
+                                    SizedBox(
+                                      height: 1.h,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(webViewAssociates(
+                                            link:
+                                            "www.universityofexperts.com"));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 4.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(50),
+                                            color: AppColors.orangeColor),
+                                        child: Text(
+                                          "Find Out More",
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.bold,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.whiteColor,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ).marginSymmetric(horizontal: 3.w),
                         SizedBox(
                           height: 4.h,
                         ),
@@ -803,7 +1269,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                                 Color(0xff7ed957),
                                               ])),
                                           child: Text(
-                                            'Take Our Marketing Advice Centre Membership Quiz!',
+                                            'Take Our Marketing Membership Quiz!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize: 15.sp,
@@ -827,7 +1293,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                   width: 2.w,
                                 ),
                                 Text(
-                                  'Our Testimonials:',
+                                  'A Few Testimonials...',
                                   style: TextStyle(
                                       fontSize: 20.sp,
                                       color: AppColors.bgColor,

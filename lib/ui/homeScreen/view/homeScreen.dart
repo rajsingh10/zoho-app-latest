@@ -134,7 +134,26 @@ class _HomescreenState extends State<Homescreen> {
       key: _scaffoldKeyHome,
       backgroundColor: AppColors.bgColor,
       body: isLoading
-          ? Loader()
+          ? Container(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Loader(),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Text(
+                  'Good things come to those who wait... \n...we’re just gathering your membership details!',
+                  style: TextStyle(
+                      fontFamily: 'mv',
+                      color: AppColors.whiteColor,
+                      fontSize: 16.sp,
+                      height: 0.22.h),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
+                ).paddingSymmetric(horizontal: 3.w),
+              ],
+            ))
           : Column(
               children: [
                 Container(
