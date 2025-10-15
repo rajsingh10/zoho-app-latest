@@ -825,10 +825,11 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
 
             return;
           }
-          if (mounted)
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
+          }
         });
       } else {
         setState(() {

@@ -145,7 +145,7 @@ class Adviceprovider extends ChangeNotifier {
 
   Future<http.Response> replyTicketApi(
       Map<String, dynamic> bodyData, ticketId) async {
-    String url = apiEndpoints.tickets + "/${ticketId}/sendReply";
+    String url = "${apiEndpoints.tickets}/$ticketId/sendReply";
     print("API URL: $url");
     String? storedId;
     storedId = await getId();

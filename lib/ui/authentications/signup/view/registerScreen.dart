@@ -655,11 +655,11 @@ class _RegisterscreenState extends State<Registerscreen> {
               width: 1.5,
             ),
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -697,12 +697,12 @@ class _RegisterscreenState extends State<Registerscreen> {
                           fontSize: 14.sp,
                         ),
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text:
                             "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). ",
                       ),
                       // 🔸 Underlined "Multiple free trials..." line
-                      TextSpan(
+                      const TextSpan(
                         text: "Multiple free trials are not permitted.",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
@@ -717,19 +717,19 @@ class _RegisterscreenState extends State<Registerscreen> {
                             " If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
                             "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text: "Important: ",
                         style: TextStyle(
                           color: Colors.orange,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text:
                             "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n",
                       ),
                       // 🔹 Blue + Underlined Terms & Privacy section
-                      TextSpan(
+                      const TextSpan(
                         text:
                             "Please ensure you read & agree to our Terms and Conditions & Privacy Policy ",
                         style: TextStyle(
@@ -739,14 +739,14 @@ class _RegisterscreenState extends State<Registerscreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text:
                             "before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
                             "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
                             "If you are based outside of the UK, please speak to our team on the live chat or email ",
                       ),
                       // 🔹 Blue + Underlined email link
-                      TextSpan(
+                      const TextSpan(
                         text: "info@theadvicecentre.ltd",
                         style: TextStyle(
                           color: Colors.blue,
@@ -2040,7 +2040,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                         color: AppColors.blackColor,
                         fontFamily: FontFamily.regular,
                       ),
-                      children: [
+                      children: const [
                         TextSpan(
                           text:
                               "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
@@ -2104,7 +2104,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                         ),
                       ),
                       SizedBox(width: 2.w),
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 30,
                         backgroundImage: AssetImage(Imgs.askAlex1Image),
                       ),

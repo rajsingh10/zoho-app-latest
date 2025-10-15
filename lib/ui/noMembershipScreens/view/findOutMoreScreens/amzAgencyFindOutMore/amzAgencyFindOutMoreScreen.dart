@@ -8,7 +8,6 @@ import '../../../../../utils/colors.dart';
 import '../../../../../utils/fontFamily.dart';
 import '../../../../../utils/images.dart';
 import '../../webviewScreen.dart';
-import 'amzAgencyJoinTodayPageScreen.dart';
 
 class amzAgencyFindOutMoreScreen extends StatefulWidget {
   const amzAgencyFindOutMoreScreen({super.key});
@@ -20,10 +19,8 @@ class amzAgencyFindOutMoreScreen extends StatefulWidget {
 
 class _amzAgencyFindOutMoreScreenState
     extends State<amzAgencyFindOutMoreScreen> {
-  double _webViewHeight = 0; // initial height
-  final double _maxWebViewHeight = 600;
+  final double _webViewHeight = 0;
   InAppWebViewController? _controller;
-  bool _isLoading = true;
   int type = 1;
   final ScrollController _scrollController = ScrollController();
   int selectedIndex = -1;
@@ -385,88 +382,98 @@ class _amzAgencyFindOutMoreScreenState
                 ],
               ),
             ),
-// max height in pixels
-
-    Container(
-      width: Device.width,
-      height: _webViewHeight > _maxWebViewHeight ? _maxWebViewHeight : _webViewHeight,
-      margin: EdgeInsets.symmetric(horizontal: 2.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xffe9e7e7),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Stack(
-          children: [
-            InAppWebView(
-              initialData: InAppWebViewInitialData(
-                data: '''
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            </head>
-            <body>
-              <div id="zf-widget-root-id-1sxhtn2pg"
-                   data-pricing-table="true"
-                   data-digest="..."
-                   data-product_url="https://billing.zoho.eu">
-              </div>
-              <script src="https://js.zohostatic.com/books/zfwidgets/assets/js/zf-widget.js"></script>
-            </body>
-            </html>
-            ''',
-                baseUrl: WebUri('https://billing.zoho.eu'),
+            Container(
+              width: Device.width,
+              margin: EdgeInsets.symmetric(horizontal: 2.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color(0xffe9e7e7),
               ),
-              onWebViewCreated: (controller) {
-                _controller = controller;
-              },
-              onLoadStop: (controller, url) async {
-                await Future.delayed(const Duration(milliseconds: 500));
-
-                double? height = double.tryParse(
-                  await controller.evaluateJavascript(
-                    source: "document.body.scrollHeight.toString();",
-                  ),
-                );
-
-                if (height != null && mounted) {
-                  setState(() {
-                    // dynamic height but capped
-                    _webViewHeight = height > _maxWebViewHeight ? _maxWebViewHeight : height;
-                    _isLoading = false;
-                  });
-                }
-              },
-              initialOptions: InAppWebViewGroupOptions(
-                crossPlatform: InAppWebViewOptions(
-                  verticalScrollBarEnabled: true,
-                  useOnLoadResource: true,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: const _WebViewDynamicHeight(
+                  url: 'https://billing.zoho.eu',
                 ),
               ),
             ),
-            if (_isLoading)
-              Container(
-                color: Colors.white,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.orange,
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    ),
-
-    SizedBox(
+            SizedBox(
               height: 7.h,
             ),
-        
           ],
         ),
       ),
     );
+  }
+}
+
+class _WebViewDynamicHeight extends StatefulWidget {
+  final String url;
+
+  const _WebViewDynamicHeight({required this.url});
+
+  @override
+  State<_WebViewDynamicHeight> createState() => _WebViewDynamicHeightState();
+}
+
+class _WebViewDynamicHeightState extends State<_WebViewDynamicHeight> {
+  InAppWebViewController? _controller;
+  double _height = 300; // initial default height
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: _height,
+      child: InAppWebView(
+        initialData: InAppWebViewInitialData(
+          data: '''
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+          <body>
+            <div id="zf-widget-root-id-1sxhtn2pg"
+                 data-pricing-table="true"
+                 data-digest="2-5a63a60a6616461905001e2f3f89eb8a05726b34f798b5698de3b8d43c2e48493a92ce29f5e7d4bb8eb3357ff1546cd8d2e0a70dcd19f3011460627bd4e28617"
+                 data-product_url="https://billing.zoho.eu">
+            </div>
+            <script src="https://js.zohostatic.com/books/zfwidgets/assets/js/zf-widget.js"></script>
+          </body>
+          </html>
+        ''',
+          baseUrl: WebUri(widget.url),
+        ),
+        onWebViewCreated: (controller) {
+          _controller = controller;
+        },
+        onLoadStop: (controller, url) async {
+          _updateHeightPeriodically();
+        },
+      ),
+    );
+  }
+
+  // Poll height for dynamic content
+  void _updateHeightPeriodically() async {
+    if (_controller == null) return;
+
+    for (int i = 0; i < 5; i++) {
+      await Future.delayed(const Duration(seconds: 1));
+      try {
+        var result = await _controller!.evaluateJavascript(
+            source: "document.body.scrollHeight.toString();");
+
+        if (result != null) {
+          double newHeight = double.tryParse(result) ?? 0;
+          if (newHeight > 0 && newHeight != _height) {
+            setState(() {
+              _height = newHeight + 20; // small padding
+            });
+          }
+        }
+      } catch (e) {
+        print("Error updating WebView height: $e");
+      }
+    }
   }
 }

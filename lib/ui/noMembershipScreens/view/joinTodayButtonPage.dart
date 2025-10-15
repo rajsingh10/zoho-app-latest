@@ -547,7 +547,9 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                               fontSize: 18.sp,
                             ),
                           ),
-                          SizedBox(height: 1.h,),
+                          SizedBox(
+                            height: 1.h,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -573,14 +575,14 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                            "www.thedeveloperagency.co.uk"));
+                                                "www.thedeveloperagency.co.uk"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 4.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(50),
+                                                BorderRadius.circular(50),
                                             color: AppColors.intro),
                                         child: Text(
                                           "Find Out More",
@@ -601,7 +603,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     horizontal: 6.8.w, vertical: 3.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: AppColors.orangeColor),
+                                        width: 0.5.w,
+                                        color: AppColors.orangeColor),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -618,14 +621,14 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                            "www.universityofexperts.com"));
+                                                "www.universityofexperts.com"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 4.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(50),
+                                                BorderRadius.circular(50),
                                             color: AppColors.orangeColor),
                                         child: Text(
                                           "Find Out More",

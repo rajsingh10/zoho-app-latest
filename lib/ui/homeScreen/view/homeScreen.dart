@@ -68,7 +68,7 @@ class _HomescreenState extends State<Homescreen> {
   int _currentPage = 0;
 
   // Subscription time tracking
-  Map<String, SubscriptionTimeData> _subscriptionTimeData = {};
+  final Map<String, SubscriptionTimeData> _subscriptionTimeData = {};
 
   @override
   void initState() {
@@ -1623,7 +1623,7 @@ class _HomescreenState extends State<Homescreen> {
   void _navigateToSavedSubscription() async {
     final prefs = await SharedPreferences.getInstance();
     final savedId = prefs.getString('selectedSubscriptionId');
-    print('saved Id:${savedId}');
+    print('saved Id:$savedId');
     if (savedId != null && savedId.isNotEmpty) {
       final subscriptions = subscriptionsDate?.subscriptions ?? [];
       final savedIndex = subscriptions.indexWhere(
@@ -1679,13 +1679,11 @@ class _HomescreenState extends State<Homescreen> {
     if (lastBillingAtStr != null && nextBillingAtStr != null) {
       DateTime nextBillingAt = DateTime.parse(nextBillingAtStr);
       String? rawDate = nextBillingAtStr;
-      if (rawDate != null) {
-        DateTime parsedDate = DateTime.parse(rawDate);
-        setState(() {
-          dayWithSuffix = getDayWithSuffix(parsedDate);
-        });
-        dev.log("Subscription Day Only ===>>>> $dayWithSuffix");
-      }
+      DateTime parsedDate = DateTime.parse(rawDate);
+      setState(() {
+        dayWithSuffix = getDayWithSuffix(parsedDate);
+      });
+      dev.log("Subscription Day Only ===>>>> $dayWithSuffix");
       setState(() {
         daysRemaining = nextBillingAt.difference(DateTime.now()).inDays;
       });

@@ -272,15 +272,20 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         ),
                                       ],
                                     ),
-                                  ),SizedBox(
+                                  ),
+                                  SizedBox(
                                     height: 0.8.h,
-                                  ),Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 2.5.w, vertical: 1.h),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -305,7 +310,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                                     vertical: 0.8.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(50),
+                                                        BorderRadius.circular(
+                                                            50),
                                                     color: AppColors.perpl),
                                                 child: Text(
                                                   "Book now",
@@ -328,7 +334,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 5.w, vertical: 1.h),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -353,8 +360,10 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                                     vertical: 0.8.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(50),
-                                                    color: AppColors.orangeColor),
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color:
+                                                        AppColors.orangeColor),
                                                 child: Text(
                                                   "Book now",
                                                   style: TextStyle(
@@ -1010,7 +1019,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     ],
                                   ),
                                 ),
-                              ),SizedBox(
+                              ),
+                              SizedBox(
                                 width: 2.w,
                               ),
                               InkWell(
@@ -1019,7 +1029,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       horizontal: 1.w, vertical: 0.5.h),
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 0.5.w, color: AppColors.orangeColor),
+                                          width: 0.5.w,
+                                          color: AppColors.orangeColor),
                                       borderRadius: BorderRadius.circular(20),
                                       color: AppColors.whiteColor),
                                   child: Column(
@@ -1036,14 +1047,14 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         onTap: () {
                                           Get.to(webViewAssociates(
                                               link:
-                                              "www.universityofexperts.com"));
+                                                  "www.universityofexperts.com"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4.w, vertical: 1.h),
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(50),
+                                                  BorderRadius.circular(50),
                                               color: AppColors.orangeColor),
                                           child: Text(
                                             "Find Out More",
@@ -1083,7 +1094,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                         ),
                         Row(
                           children: [
-                          InkWell(
+                            InkWell(
                               onTap: () {
                                 Get.to(
                                     const IntroducersFindOutMorePageScreen());
@@ -1118,7 +1129,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                             horizontal: 3.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(50),
+                                                BorderRadius.circular(50),
                                             color: const Color(0xff2274bb)),
                                         child: Text(
                                           "Find Out More",
@@ -1144,7 +1155,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     horizontal: 1.w, vertical: 0.5.h),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 0.5.w, color: AppColors.orangeColor),
+                                        width: 0.5.w,
+                                        color: AppColors.orangeColor),
                                     borderRadius: BorderRadius.circular(20),
                                     color: AppColors.whiteColor),
                                 child: Column(
@@ -1161,14 +1173,14 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                            "www.universityofexperts.com"));
+                                                "www.universityofexperts.com"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 4.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(50),
+                                                BorderRadius.circular(50),
                                             color: AppColors.orangeColor),
                                         child: Text(
                                           "Find Out More",

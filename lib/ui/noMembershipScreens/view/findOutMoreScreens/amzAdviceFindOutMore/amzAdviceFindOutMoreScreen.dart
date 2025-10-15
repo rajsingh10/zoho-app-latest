@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -7,7 +8,6 @@ import '../../../../../utils/colors.dart';
 import '../../../../../utils/fontFamily.dart';
 import '../../../../../utils/images.dart';
 import '../../webviewScreen.dart';
-import 'amzAdviceJoinTodayPageScreen.dart';
 
 class amzAdviceFindOutMoreScreen extends StatefulWidget {
   const amzAdviceFindOutMoreScreen({super.key});
@@ -186,42 +186,42 @@ class _amzAdviceFindOutMoreScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-            width: Device.width,
-            decoration: const BoxDecoration(color: AppColors.orangeColor),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 5.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Image.asset(
-                        Imgs.backIcon,
-                        scale: 30,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+              width: Device.width,
+              decoration: const BoxDecoration(color: AppColors.orangeColor),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Image.asset(
+                          Imgs.backIcon,
+                          scale: 30,
+                        ),
                       ),
-                    ),
-                    Image.asset(
-                      Imgs.namedLogo,
-                      scale: 5.5,
-                      color: AppColors.whiteColor,
-                    ),
-                    const Icon(null),
-                  ],
-                ),
-              ],
+                      Image.asset(
+                        Imgs.namedLogo,
+                        scale: 5.5,
+                        color: AppColors.whiteColor,
+                      ),
+                      const Icon(null),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
+            Container(
               width: Device.width,
               color: AppColors.whiteColor,
               child: SingleChildScrollView(
@@ -801,665 +801,6 @@ class _amzAdviceFindOutMoreScreenState
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Container(
-                          height: 60.h,
-                          width: Device.width,
-                          margin: EdgeInsets.symmetric(horizontal: 2.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: const Color(0xffe9e7e7),
-                          ),
-                          child: Stack(
-                            children: [
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 4.w, vertical: 1.h),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "No Contract!",
-                                              style: TextStyle(
-                                                  fontSize: 20.sp,
-                                                  color: AppColors.blackColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: FontFamily.bold),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 0.5.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "from just £47+VAT a month",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppColors.blackColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: FontFamily.light,
-                                                fontStyle: FontStyle.italic,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 0.5.h,
-                                        ),
-                                        SizedBox(
-                                          width: 90.w,
-                                          child: Text(
-                                            "Amazon Training, Advice & Guidance from Leading UK Amazon Consultants...ideal for New Sellers & Existing Businesses alike!",
-                                            style: TextStyle(
-                                                fontSize: 14.5.sp,
-                                                color: AppColors.blackColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: FontFamily.bold),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 1.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  type = 1;
-                                                });
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 4.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: type == 1
-                                                      ? AppColors.orangeColor
-                                                      : AppColors.whiteColor,
-                                                ),
-                                                child: Text(
-                                                  "Pay Monthly",
-                                                  style: TextStyle(
-                                                      fontSize: 14.5.sp,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.bold),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 2.w,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  type = 2;
-                                                });
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 4.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: type == 2
-                                                      ? AppColors.orangeColor
-                                                      : AppColors.whiteColor,
-                                                ),
-                                                child: Text(
-                                                  "Pay Yearly (SAVE Over 15%)",
-                                                  style: TextStyle(
-                                                      fontSize: 14.5.sp,
-                                                      color:
-                                                          AppColors.blackColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.bold),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 13.h,
-                                  ),
-                                  Container(
-                                    height: 15.h,
-                                    width: Device.width,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 2.w),
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xff232f3f)),
-                                  ),
-                                ],
-                              ),
-                              Positioned(
-                                top: MediaQuery.of(context).size.height * 0.22,
-                                left: 15,
-                                right: 25,
-                                child: Row(
-                                  children: [
-                                    // Left fixed button
-                                    InkWell(
-                                      onTap: _scrollLeft,
-                                      child: ShaderMask(
-                                        shaderCallback: (bounds) =>
-                                            const LinearGradient(
-                                          colors: [
-                                            Color(0xff29a99a),
-                                            Color(0xff73d35f)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ).createShader(bounds),
-                                        blendMode: BlendMode.srcIn,
-                                        child: Image.asset(Imgs.backIcon,
-                                            scale: 30),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-
-                                    // Horizontal Plans List
-                                    Expanded(
-                                      child: SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                .80,
-                                        // fixed height for card list
-                                        child: type == 1
-                                            ? ListView.builder(
-                                                controller: _scrollController,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: plans.length,
-                                                itemBuilder: (context, index) {
-                                                  final plan = plans[index];
-                                                  return Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            .65,
-                                                    margin: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 8),
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            16),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                      border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 2,
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        SingleChildScrollView(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            plan["title"],
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    14.5.sp,
-                                                                color: AppColors
-                                                                    .blackColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .bold),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              SizedBox(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    .50,
-                                                                child: Text(
-                                                                  plan[
-                                                                      "title1"],
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13.sp,
-                                                                      color: AppColors
-                                                                          .blackColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .bold),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                plan["price"],
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15.sp,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 0.5.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                plan["billing"],
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        13.sp,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .light),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  Get.to(
-                                                                      const amzAdviceJoinTodayPageScreen());
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          10.w,
-                                                                      vertical:
-                                                                          0.5.h),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              5),
-                                                                      color: AppColors
-                                                                          .orangeColor),
-                                                                  child: Text(
-                                                                    "Join Today",
-                                                                    style: TextStyle(
-                                                                        fontSize: 15
-                                                                            .sp,
-                                                                        color: AppColors
-                                                                            .blackColor,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontFamily:
-                                                                            FontFamily.bold),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.h,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                          ...List.generate(
-                                                              (plan["features"]
-                                                                      as List)
-                                                                  .length,
-                                                              (fIndex) {
-                                                            return Row(
-                                                              children: [
-                                                                const Icon(
-                                                                    Icons.check,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                    size: 16),
-                                                                const SizedBox(
-                                                                    width: 4),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    plan["features"]
-                                                                        [
-                                                                        fIndex],
-                                                                    style: TextStyle(
-                                                                        fontSize: 14
-                                                                            .sp,
-                                                                        color: AppColors
-                                                                            .blackColor,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontFamily:
-                                                                            FontFamily.bold),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          }),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                            : ListView.builder(
-                                                controller: _scrollController,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: plans1.length,
-                                                itemBuilder: (context, index) {
-                                                  final plan = plans1[index];
-                                                  return Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            .65,
-                                                    margin: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 8),
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            16),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                      border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 2,
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        SingleChildScrollView(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            plan["title"],
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    14.5.sp,
-                                                                color: AppColors
-                                                                    .blackColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .bold),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              SizedBox(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    .50,
-                                                                child: Text(
-                                                                  plan[
-                                                                      "title1"],
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13.sp,
-                                                                      color: AppColors
-                                                                          .blackColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .bold),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(height: 1.h),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                plan["price"],
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15.sp,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 0.5.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                plan["billing"],
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        13.sp,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .light),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  Get.to(
-                                                                      const amzAdviceJoinTodayPageScreen());
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          10.w,
-                                                                      vertical:
-                                                                          0.5.h),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              5),
-                                                                      color: AppColors
-                                                                          .orangeColor),
-                                                                  child: Text(
-                                                                    "Join Today",
-                                                                    style: TextStyle(
-                                                                        fontSize: 15
-                                                                            .sp,
-                                                                        color: AppColors
-                                                                            .blackColor,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontFamily:
-                                                                            FontFamily.bold),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.h,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                          ...List.generate(
-                                                              (plan["features"]
-                                                                      as List)
-                                                                  .length,
-                                                              (fIndex) {
-                                                            return Row(
-                                                              children: [
-                                                                const Icon(
-                                                                    Icons.check,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                    size: 16),
-                                                                const SizedBox(
-                                                                    width: 4),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    plan["features"]
-                                                                        [
-                                                                        fIndex],
-                                                                    style: TextStyle(
-                                                                        fontSize: 14
-                                                                            .sp,
-                                                                        color: AppColors
-                                                                            .blackColor,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontFamily:
-                                                                            FontFamily.bold),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          }),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                      ),
-                                    ),
-
-                                    const SizedBox(width: 8),
-
-                                    // Right fixed button
-                                    InkWell(
-                                      onTap: _scrollRight,
-                                      child: Transform.rotate(
-                                        angle: 3.1416,
-                                        child: ShaderMask(
-                                          shaderCallback: (bounds) =>
-                                              const LinearGradient(
-                                            colors: [
-                                              Color(0xff29a99a),
-                                              Color(0xff73d35f)
-                                            ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                          ).createShader(bounds),
-                                          blendMode: BlendMode.srcIn,
-                                          child: Image.asset(Imgs.backIcon,
-                                              scale: 30),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 7.h,
-                        ),
                       ],
                     ),
                     Positioned(
@@ -1523,9 +864,81 @@ class _amzAdviceFindOutMoreScreenState
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+}
+
+class _WebViewDynamicHeight extends StatefulWidget {
+  final String url;
+
+  const _WebViewDynamicHeight({required this.url});
+
+  @override
+  State<_WebViewDynamicHeight> createState() => _WebViewDynamicHeightState();
+}
+
+class _WebViewDynamicHeightState extends State<_WebViewDynamicHeight> {
+  InAppWebViewController? _controller;
+  double _height = 300; // initial default height
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: _height,
+      child: InAppWebView(
+        initialData: InAppWebViewInitialData(
+          data: '''
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+          <body>
+            <div id="zf-widget-root-id-atykeik6j"
+                 data-pricing-table="true"
+                 data-digest="2-5a63a60a66164619b1976bb783a4c7030976dcb73c38514b8de3b8d43c2e484926c3616e6a2782a18eb3357ff1546cd8d2e0a70dcd19f3011460627bd4e28617"
+                 data-product_url="https://billing.zoho.eu">
+            </div>
+            <script src="https://js.zohostatic.com/books/zfwidgets/assets/js/zf-widget.js"></script>
+          </body>
+          </html>
+          ''',
+          baseUrl: WebUri(widget.url),
+        ),
+        onWebViewCreated: (controller) {
+          _controller = controller;
+        },
+        onLoadStop: (controller, url) async {
+          _updateHeightPeriodically();
+        },
+      ),
+    );
+  }
+
+  // Poll height for dynamic content
+  void _updateHeightPeriodically() async {
+    if (_controller == null) return;
+
+    for (int i = 0; i < 5; i++) {
+      await Future.delayed(const Duration(seconds: 1));
+      try {
+        var result = await _controller!.evaluateJavascript(
+            source: "document.body.scrollHeight.toString();");
+
+        if (result != null) {
+          double newHeight = double.tryParse(result) ?? 0;
+          if (newHeight > 0 && newHeight != _height) {
+            setState(() {
+              _height = newHeight + 20; // small padding
+            });
+          }
+        }
+      } catch (e) {
+        print("Error updating WebView height: $e");
+      }
+    }
   }
 }

@@ -69,7 +69,7 @@ class HomeProvider extends ChangeNotifier {
   Future<http.Response> Viewalltikit(id) async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = $headers');
-    String url = apiEndpoints.fetchTickets + "${id}";
+    String url = "${apiEndpoints.fetchTickets}$id";
     print(url);
 
     var responseJson;

@@ -45,18 +45,13 @@ class Imgs {
   static const String makeymoneyone = 'assets/images/makeymoneyone.png';
   static const String amzzaagencycenter =
       'assets/academy/amzzaagencycenter.png';
-  static const String allinonevip =
-      'assets/academy/allinonevip.png';
+  static const String allinonevip = 'assets/academy/allinonevip.png';
   static const String thedeveloperagency =
       'assets/academy/thedeveloperagency.png';
-  static const String indures =
-      'assets/academy/indures.png';
-  static const String univercity =
-      'assets/academy/univercity.png';
-  static const String aicenterphoto =
-      'assets/academy/aiadvicecenter.png';
-  static const String bizboard =
-      'assets/academy/bizboard.png';
+  static const String indures = 'assets/academy/indures.png';
+  static const String univercity = 'assets/academy/univercity.png';
+  static const String aicenterphoto = 'assets/academy/aiadvicecenter.png';
+  static const String bizboard = 'assets/academy/bizboard.png';
   static const String noHomeImg = 'assets/images/noHomeImg.png';
   static const String testi1Image = 'assets/images/testi1Image.png';
   static const String testi2Image = 'assets/images/testi2Image.png';

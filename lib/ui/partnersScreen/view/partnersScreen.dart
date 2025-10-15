@@ -70,7 +70,8 @@ class _partnersScreenState extends State<partnersScreen> {
                                 color: AppColors.whiteColor,
                                 fontSize: 22.sp,
                               ),
-                            ),SizedBox(height: 0.5.h),
+                            ),
+                            SizedBox(height: 0.5.h),
                             Text(
                               "Tap here to Set up a Bank Account For Your Business",
                               style: TextStyle(
@@ -81,7 +82,8 @@ class _partnersScreenState extends State<partnersScreen> {
                               ),
                             ),
                             SizedBox(height: 1.h),
-                            ClipRRect(borderRadius: BorderRadius.circular(15),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
                               child: Image.asset(
                                 Imgs.partners1Img,
                                 scale: 2.5,
@@ -91,7 +93,8 @@ class _partnersScreenState extends State<partnersScreen> {
                         ),
                       ),
                       SizedBox(height: 1.h),
-                      ClipRRect(borderRadius: BorderRadius.circular(15),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
                         child: Image.asset(
                           Imgs.partners2Img,
                           scale: 2.5,
@@ -104,17 +107,20 @@ class _partnersScreenState extends State<partnersScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: AppColors.blackColor.withValues(alpha: 0.04)),
+                            color:
+                                AppColors.blackColor.withValues(alpha: 0.04)),
                         child: Column(
-                          children: [Text(
-                            "Business Insurance",
-                            style: TextStyle(
-                              fontFamily: FontFamily.bold,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.blackColor,
-                              fontSize: 22.sp,
+                          children: [
+                            Text(
+                              "Business Insurance",
+                              style: TextStyle(
+                                fontFamily: FontFamily.bold,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.blackColor,
+                                fontSize: 22.sp,
+                              ),
                             ),
-                          ),SizedBox(height: 0.5.h),
+                            SizedBox(height: 0.5.h),
                             Text(
                               "Tap here to insure your Business",
                               style: TextStyle(

@@ -555,16 +555,15 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                       // ),
                                       InkWell(
                                         onTap: () {
-                                          final _formKey = GlobalKey<
+                                          final formKey = GlobalKey<
                                               FormState>(); // Form key
-                                          TextEditingController
-                                              _bodyController =
+                                          TextEditingController bodyController =
                                               TextEditingController();
 
                                           showModalBottomSheet(
                                             context: context,
                                             isScrollControlled: true,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.vertical(
                                                       top: Radius.circular(20)),
@@ -575,7 +574,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                     StateSetter setState) {
                                                   /// Pick files method using StatefulBuilder's setState
                                                   Future<void>
-                                                      _pickFiles() async {
+                                                      pickFiles() async {
                                                     showModalBottomSheet(
                                                       context: context,
                                                       builder: (context) {
@@ -683,7 +682,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                           path:
                                                                               picked.path,
                                                                           size:
-                                                                              File(picked.path!).lengthSync(),
+                                                                              File(picked.path).lengthSync(),
                                                                         ),
                                                                       );
                                                                     });
@@ -719,7 +718,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                           path:
                                                                               video.path,
                                                                           size:
-                                                                              File(video.path!).lengthSync(),
+                                                                              File(video.path).lengthSync(),
                                                                         ),
                                                                       );
                                                                     });
@@ -755,7 +754,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                           path:
                                                                               photo.path,
                                                                           size:
-                                                                              File(photo.path!).lengthSync(),
+                                                                              File(photo.path).lengthSync(),
                                                                         ),
                                                                       );
                                                                     });
@@ -791,7 +790,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                           path:
                                                                               video.path,
                                                                           size:
-                                                                              File(video.path!).lengthSync(),
+                                                                              File(video.path).lengthSync(),
                                                                         ),
                                                                       );
                                                                     });
@@ -806,7 +805,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   }
 
                                                   /// Remove file method
-                                                  void _removeFile(int index) {
+                                                  void removeFile(int index) {
                                                     setState(() {
                                                       _pickedFiles
                                                           .removeAt(index);
@@ -824,7 +823,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                       right: 2.w,
                                                     ),
                                                     child: Form(
-                                                      key: _formKey,
+                                                      key: formKey,
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.min,
@@ -840,7 +839,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                           SizedBox(height: 2.h),
                                                           AppTextField(
                                                             controller:
-                                                                _bodyController,
+                                                                bodyController,
                                                             hintText:
                                                                 'Enter Reply',
                                                             text: 'Reply body',
@@ -868,7 +867,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                       .bgColor),
                                                               onPressed:
                                                                   () async {
-                                                                await _pickFiles(); // <-- Live refresh
+                                                                await pickFiles(); // <-- Live refresh
                                                               },
                                                             ),
                                                           ),
@@ -963,7 +962,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                                 Colors.red),
                                                                         onPressed:
                                                                             () {
-                                                                          _removeFile(
+                                                                          removeFile(
                                                                               index); // <-- Live refresh
                                                                         },
                                                                       ),
@@ -975,14 +974,14 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                           SizedBox(height: 3.h),
                                                           GestureDetector(
                                                             onTap: () {
-                                                              if (_formKey
+                                                              if (formKey
                                                                   .currentState!
                                                                   .validate()) {
                                                                 print(
-                                                                    'Reply: ${_bodyController.text}');
+                                                                    'Reply: ${bodyController.text}');
                                                                 Get.back();
                                                                 replyTicketApi(
-                                                                    _bodyController
+                                                                    bodyController
                                                                         .text
                                                                         .trim());
                                                               }
@@ -1383,8 +1382,9 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 allowMultiple: true,
                 allowedExtensions: ['pdf', 'doc', 'docx'],
               );
-              if (result != null)
+              if (result != null) {
                 setState(() => _pickedFiles.addAll(result.files));
+              }
             }
           },
           {
@@ -1393,12 +1393,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             'action': () async {
               final XFile? picked =
                   await _picker.pickImage(source: ImageSource.gallery);
-              if (picked != null)
+              if (picked != null) {
                 setState(() => _pickedFiles.add(PlatformFile(
                       name: picked.name,
                       path: picked.path,
-                      size: File(picked.path!).lengthSync(),
+                      size: File(picked.path).lengthSync(),
                     )));
+              }
             }
           },
           {
@@ -1407,12 +1408,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             'action': () async {
               final XFile? video =
                   await _picker.pickVideo(source: ImageSource.gallery);
-              if (video != null)
+              if (video != null) {
                 setState(() => _pickedFiles.add(PlatformFile(
                       name: video.name,
                       path: video.path,
-                      size: File(video.path!).lengthSync(),
+                      size: File(video.path).lengthSync(),
                     )));
+              }
             }
           },
           {
@@ -1421,12 +1423,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             'action': () async {
               final XFile? photo =
                   await _picker.pickImage(source: ImageSource.camera);
-              if (photo != null)
+              if (photo != null) {
                 setState(() => _pickedFiles.add(PlatformFile(
                       name: photo.name,
                       path: photo.path,
-                      size: File(photo.path!).lengthSync(),
+                      size: File(photo.path).lengthSync(),
                     )));
+              }
             }
           },
           {
@@ -1435,12 +1438,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             'action': () async {
               final XFile? video =
                   await _picker.pickVideo(source: ImageSource.camera);
-              if (video != null)
+              if (video != null) {
                 setState(() => _pickedFiles.add(PlatformFile(
                       name: video.name,
                       path: video.path,
-                      size: File(video.path!).lengthSync(),
+                      size: File(video.path).lengthSync(),
                     )));
+              }
             }
           },
         ];
@@ -1513,7 +1517,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
 
     // Step 3: Call your wrapper
     try {
-      final response = await Adviceprovider().replyTicketApi(data,widget.tickitid);
+      final response =
+          await Adviceprovider().replyTicketApi(data, widget.tickitid);
       log("📥 Ticket Response Code: ${response.statusCode}");
       log("📥 Ticket Response Body: ${response.body}");
 

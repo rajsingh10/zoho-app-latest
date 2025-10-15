@@ -73,7 +73,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
   int _currentMembershipPage = 0;
 
   // Subscription time tracking
-  Map<String, SubscriptionTimeData> _subscriptionTimeData = {};
+  final Map<String, SubscriptionTimeData> _subscriptionTimeData = {};
 
   // Helper method to get current subscription
   Subscriptions? _getCurrentSubscription() {

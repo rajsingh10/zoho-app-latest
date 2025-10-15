@@ -33,16 +33,16 @@ class ReplyTicketModal {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['content'] = this.content;
-    data['id'] = this.id;
-    data['channel'] = this.channel;
-    data['canReply'] = this.canReply;
-    data['contentType'] = this.contentType;
-    data['hasAttach'] = this.hasAttach;
-    data['status'] = this.status;
-    data['summary'] = this.summary;
-    data['fromEmailAddress'] = this.fromEmailAddress;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['content'] = content;
+    data['id'] = id;
+    data['channel'] = channel;
+    data['canReply'] = canReply;
+    data['contentType'] = contentType;
+    data['hasAttach'] = hasAttach;
+    data['status'] = status;
+    data['summary'] = summary;
+    data['fromEmailAddress'] = fromEmailAddress;
     return data;
   }
 }

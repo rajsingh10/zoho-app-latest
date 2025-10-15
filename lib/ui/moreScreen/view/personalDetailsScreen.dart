@@ -863,7 +863,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                 _emailController.text = getCustomer?.customer?.email ?? '';
                 _phoneNumber.text = getCustomer?.customer?.phone ?? '';
                 _countryCode = getCustomer?.customer?.cfCountryCode ?? '';
-                log("country Code : ${_countryCode}");
+                log("country Code : $_countryCode");
                 _initialCountryCode = dialCodeToISO[_countryCode] ?? 'GB';
                 log(_initialCountryCode);
                 _state.text =
