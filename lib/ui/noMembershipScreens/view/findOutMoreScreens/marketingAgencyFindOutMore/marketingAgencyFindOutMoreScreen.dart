@@ -142,35 +142,35 @@ class _marketingAgencyFindOutMorePageScreenState
                                       Imgs.amzAgencyManPhoto,
                                       scale: 1.3,
                                     ),
-                                    SizedBox(
-                                      height: 1.h,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            Color(0xFF00B4DB),
-                                            Color(0xFF38EF7D)
-                                          ],
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            10), // round corners
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 1.h, horizontal: 2.w),
-                                        child: Text(
-                                          "Book a FREE Demo",
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              color: AppColors.whiteColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: FontFamily.extraBold),
-                                        ),
-                                      ),
-                                    )
+                                    // SizedBox(
+                                    //   height: 1.h,
+                                    // ),
+                                    // Container(
+                                    //   decoration: BoxDecoration(
+                                    //     gradient: const LinearGradient(
+                                    //       colors: [
+                                    //         Color(0xFF00B4DB),
+                                    //         Color(0xFF38EF7D)
+                                    //       ],
+                                    //       begin: Alignment.centerLeft,
+                                    //       end: Alignment.centerRight,
+                                    //     ),
+                                    //     borderRadius: BorderRadius.circular(
+                                    //         10), // round corners
+                                    //   ),
+                                    //   child: Padding(
+                                    //     padding: EdgeInsets.symmetric(
+                                    //         vertical: 1.h, horizontal: 2.w),
+                                    //     child: Text(
+                                    //       "Book a FREE Demo",
+                                    //       style: TextStyle(
+                                    //           fontSize: 15.sp,
+                                    //           color: AppColors.whiteColor,
+                                    //           fontWeight: FontWeight.bold,
+                                    //           fontFamily: FontFamily.extraBold),
+                                    //     ),
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                                 Column(
@@ -236,7 +236,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                         ),
                                       ),
                                       Text(
-                                        'in hundreds of different categories to grow their Amazon Sales & achieve serious sales (up to £350k a month!)',
+                                        '...with their Strategic and Digital Marketing Growth, helping our clients achieve serious sales (up to £350k a month!)',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontSize: 15.sp,
@@ -274,7 +274,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                     children: [
                                       Center(
                                         child: Text(
-                                          'We’re independent Amazon Consultants',
+                                          'Work with Leading UK Marketing Consultants',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 14.sp,
@@ -284,7 +284,7 @@ class _marketingAgencyFindOutMorePageScreenState
                                         ),
                                       ),
                                       Text(
-                                        'As Amazon Consultants we can take care of Listing Products, Product Optimisation (Amazon SEO), Amazon Sponsored Ads, Image Development, Video Development, A+ Content Development, Storefront Development & so much more.',
+                                        'As Marketing Consultants we can help with your Marketing Planning,  Website Development, SEO, Google Ads, Blogging, Video Production, Social Media Content, Social Media Ads and so much more!',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontSize: 14.sp,
@@ -655,7 +655,7 @@ class _marketingAgencyFindOutMorePageScreenState
                         ],
                       ),
                       Positioned(
-                          top: 22.h,
+                          top: 19.h,
                           right: 5.w,
                           child: Container(
                             height: 25.w,

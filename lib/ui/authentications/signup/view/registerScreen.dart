@@ -232,6 +232,32 @@ class _RegisterscreenState extends State<Registerscreen> {
           ),
         ),
         SizedBox(height: 2.h),
+        InkWell(
+          onTap: () {
+            showAdviceDialog(context);
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 1.5.h),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                gradient: const LinearGradient(colors: [
+                  Color(0xffffde59),
+                  Color(0xfff1811b),
+                  Color(0xfff1811b),
+                ]),
+                borderRadius: BorderRadius.circular(30)),
+            child: Text(
+              'A MESSAGE TO YOU FROM OUR FOUNDER CLICK HERE',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 15.5.sp,
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.bold),
+            ),
+          ),
+        ),
+
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -460,7 +486,7 @@ class _RegisterscreenState extends State<Registerscreen> {
         Text.rich(
           TextSpan(
             text:
-                'Whichever service you select you are entitled up to 30 mins of Professional Advice Time in your trial period. ',
+                'Whichever service you select above, you are entitled to up to 30 mins of Professional Advice Time in your trial period. Payment details are required for your trial.\n',
             style: TextStyle(
               fontSize: 14.sp,
               color: AppColors.blackColor,
@@ -468,7 +494,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             children: [
               TextSpan(
                 text:
-                    'If you choose to cancel within 7 days you will not be charged.',
+                    'Important: Your membership will auto-renew after your 7 day free trial period and you will be charged according to the membership plan you select above, unless you choose to cancel before the end of your trial period.',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14.sp,
@@ -477,7 +503,7 @@ class _RegisterscreenState extends State<Registerscreen> {
               ),
               TextSpan(
                 text:
-                    ' Your membership will auto-renew unless you choose to cancel.',
+                    ' Please contact accounts@theadvicecentre.ltd for any billing queries or contact our team on the live chat. ',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: AppColors.blackColor,
@@ -485,7 +511,6 @@ class _RegisterscreenState extends State<Registerscreen> {
               ),
             ],
           ),
-          textAlign: TextAlign.center,
         ),
         SizedBox(height: 2.h),
         InkWell(
@@ -545,6 +570,202 @@ class _RegisterscreenState extends State<Registerscreen> {
             ),
           ),
         ),
+        SizedBox(
+          height: 1.h,
+        ),
+        // Container(
+        //
+        //   padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.h),
+        //   decoration: BoxDecoration(
+        //     color: Colors.white,
+        //     border: Border.all(
+        //       color: Colors.orange, // border color
+        //       width: 1.5,
+        //     ),
+        //     borderRadius: BorderRadius.circular(12),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Colors.black12,
+        //         blurRadius: 6,
+        //         offset: const Offset(0, 2),
+        //       ),
+        //     ],
+        //   ),
+        //
+        //   // Make text scrollable
+        //   child: SizedBox(
+        //     height: 25.h, // 🔹 scroll area height (adjust as needed)
+        //     child: SingleChildScrollView(
+        //       child: RichText(
+        //         text: TextSpan(
+        //           style: TextStyle(
+        //             fontSize: 14.sp,
+        //             color: Colors.black,
+        //             fontFamily: 'Poppins',
+        //             height: 1.5,
+        //           ),
+        //           children: [
+        //
+        //             TextSpan(
+        //               text:
+        //               "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
+        //               style: TextStyle(
+        //                   fontFamily: FontFamily.bold,
+        //                   color: AppColors.blackColor,
+        //                   fontSize: 16.sp),
+        //             ),
+        //             TextSpan(
+        //               text: "Important Information to read before Signing up\n\n",
+        //               style: TextStyle(
+        //                   fontFamily: FontFamily.bold,
+        //                   color: AppColors.blackColor,
+        //                   fontSize: 16.sp),
+        //             ),
+        //             const TextSpan(
+        //               text:
+        //               "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). Multiple free trials are not permitted. If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
+        //                   "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
+        //             ),
+        //             TextSpan(
+        //               text: "Important: ",
+        //               style: TextStyle(
+        //                 color: Colors.orange,
+        //                 fontWeight: FontWeight.bold,
+        //               ),
+        //             ),
+        //             const TextSpan(
+        //               text:
+        //               "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n"
+        //                   "Please ensure you read & agree to our Terms and Conditions & Privacy Policy before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
+        //                   "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
+        //                   "If you are based outside of the UK, please speak to our team on the live chat or email info@theadvicecentre.ltd. Please do not sign up.",
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.orange,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+
+          // Scrollable text
+          child: SizedBox(
+            height: 25.h,
+            child: Scrollbar(
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      height: 1.5,
+                    ),
+                    children: [
+                      TextSpan(
+                        text:
+                            "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
+                        style: TextStyle(
+                          fontFamily: FontFamily.bold,
+                          color: AppColors.blackColor,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            "Important Information to read before Signing up\n\n",
+                        style: TextStyle(
+                          fontFamily: FontFamily.bold,
+                          color: AppColors.blackColor,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). ",
+                      ),
+                      // 🔸 Underlined "Multiple free trials..." line
+                      TextSpan(
+                        text: "Multiple free trials are not permitted.",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.blackColor,
+                          decorationThickness: 1.5,
+                          color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const TextSpan(
+                        text:
+                            " If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
+                            "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
+                      ),
+                      TextSpan(
+                        text: "Important: ",
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n",
+                      ),
+                      // 🔹 Blue + Underlined Terms & Privacy section
+                      TextSpan(
+                        text:
+                            "Please ensure you read & agree to our Terms and Conditions & Privacy Policy ",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            "before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
+                            "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
+                            "If you are based outside of the UK, please speak to our team on the live chat or email ",
+                      ),
+                      // 🔹 Blue + Underlined email link
+                      TextSpan(
+                        text: "info@theadvicecentre.ltd",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const TextSpan(
+                        text: ". Please do not sign up.",
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         SizedBox(height: 10.h),
       ],
     );
@@ -1739,5 +1960,162 @@ class _RegisterscreenState extends State<Registerscreen> {
         buildErrorDialog(context, 'Error', "Internet Required");
       }
     });
+  }
+
+  void showAdviceDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.black,
+                    size: 20.sp,
+                  )),
+            ],
+          ),
+          content: SizedBox(
+            height: 350, // scrollable area height
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // RichText(
+                  //   text: TextSpan(
+                  //     style: TextStyle(
+                  //       fontSize: 15.sp,
+                  //       color: AppColors.blackColor,
+                  //       fontFamily: FontFamily.regular,
+                  //     ),
+                  //     children: [
+                  //       const TextSpan(
+                  //         text:
+                  //         "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
+                  //       ),
+                  //       TextSpan(
+                  //         text:
+                  //         "Are you looking for Personal Advice from leading UK Experts, whenever you need it? ",
+                  //         style: TextStyle(
+                  //           color: AppColors.blackColor, // 🔸 highlight color
+                  //           fontWeight: FontWeight.bold,
+                  //           fontFamily: FontFamily.bold,
+                  //         ),
+                  //       ),
+                  //       const TextSpan(
+                  //         text:
+                  //         "Select a ‘Pro’ Membership Plan below which includes up to 120mins Professional Advice time a month "
+                  //             "alongside access to On-Demand Training & AI Tools (depending on the plan you select).\n\n"
+                  //             "You’ll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
+                  //             "payment details are required. After the trial, you’ll be automatically charged monthly or annually depending on the plan you select, "
+                  //             "unless you choose to cancel your membership within the 7-day trial period.\n\n"
+                  //             "We aim to respond to all queries within 24 hours, Monday–Friday, though complex issues may take longer. "
+                  //             "If you wish to cancel your membership after the trial period, we just require a 7-working-day notice before your monthly/annual renewal date. "
+                  //             "Once signed up, you can reach us anytime via the ‘Chat with us’ option for any questions.\n\n"
+                  //             "We look forward to supporting you and helping you build a very successful business.\n\n",
+                  //         style: TextStyle(
+                  //           color: AppColors.blackColor, // 🔸 highlight color
+                  //           fontWeight: FontWeight.normal,
+                  //           fontFamily: FontFamily.regular,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color: AppColors.blackColor,
+                        fontFamily: FontFamily.regular,
+                      ),
+                      children: [
+                        TextSpan(
+                          text:
+                              "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
+                        ),
+                        TextSpan(
+                          text:
+                              "Are you looking for Personal Advice from leading UK Experts, whenever you need it? ",
+                          style: TextStyle(
+                            color: AppColors.blackColor, // 🔸 highlight color
+                            fontWeight: FontWeight.bold,
+                            fontFamily: FontFamily.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              "Select a ‘Pro’ Membership Plan below which includes up to 120mins Professional Advice time a month "
+                              "alongside access to On-Demand Training & AI Tools (depending on the plan you select).\n\n"
+                              "You’ll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
+                              "payment details are required. After the trial, you’ll be automatically charged monthly or annually depending on the plan you select, ",
+                        ),
+                        TextSpan(
+                          text:
+                              "unless you choose to cancel your membership within the 7-day trial period.\n\n",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            // 🔸 underline this line
+                            decorationColor: AppColors.blackColor,
+                            decorationThickness: 1.5,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: FontFamily.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              "We aim to respond to all queries within 24 hours, Monday–Friday, though complex issues may take longer. "
+                              "If you wish to cancel your membership after the trial period, we just require a 7-working-day notice before your monthly/annual renewal date. "
+                              "Once signed up, you can reach us anytime via the ‘Chat with us’ option for any questions.\n\n"
+                              "We look forward to supporting you and helping you build a very successful business.\n\n",
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Founder section side-by-side
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Many thanks,\nAlex Shelton\nFounder, The Advice Centre Ltd",
+                          // style: TextStyle(
+                          //   fontSize: 14,
+                          //   height: 1.4,
+                          //   fontWeight: FontWeight.w500,
+                          // ),
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              color: AppColors.blackColor,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: FontFamily.regular),
+                        ),
+                      ),
+                      SizedBox(width: 2.w),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: AssetImage(Imgs.askAlex1Image),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
