@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +16,7 @@ import 'package:zohosystem/ui/adviceTicketsScreen/modal/ticketRepliesModal.dart'
 import 'package:zohosystem/utils/snackBars.dart';
 
 import '../../../apiCalling/Loader.dart';
+import '../../../apiCalling/buildErrorDialog.dart';
 import '../../../apiCalling/checkInternetModule.dart';
 import '../../../utils/bottomBar.dart';
 import '../../../utils/colors.dart';
@@ -23,6 +25,7 @@ import '../../../utils/images.dart';
 import '../../../utils/textFields.dart';
 import '../../homeScreen/modal/getTimeEntryModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
+import '../modal/ThreadModal.dart';
 import '../modal/singleDepartmentModal.dart';
 import '../modal/viewDetailsTikitModal.dart';
 import '../provider/adviceProvider.dart';
@@ -208,6 +211,30 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
+                                                    text: "Ticket Number :- ",
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.blackColor,
+                                                      fontSize: 16.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: "#${viewDetailsTikitModal
+                                                            ?.ticketNumber}" ,
+                                                    style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 16.sp,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 1.h), RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
                                                     text: "Subject :- ",
                                                     style: TextStyle(
                                                       color:
@@ -336,10 +363,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: viewDetailsTikitModal
-                                                            ?.layoutDetails
-                                                            ?.layoutName ??
-                                                        "",
+                                                    text: "Department",
                                                     style: TextStyle(
                                                       color: Colors.black54,
                                                       fontSize: 16.sp,
@@ -355,7 +379,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
-                                                    text: "Status Type :- ",
+                                                    text: "Ticket Status :- ",
                                                     style: TextStyle(
                                                       color:
                                                           AppColors.blackColor,
@@ -1080,6 +1104,140 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                 BorderRadius.circular(20)),
                                         child: Column(
                                           children: [
+                                            // for (int i = 0;
+                                            //     i <
+                                            //         (ticketReplies
+                                            //                 ?.data?.length ??
+                                            //             0);
+                                            //     i++)
+                                            //   Padding(
+                                            //     padding: EdgeInsets.symmetric(
+                                            //         vertical: 0.5.h),
+                                            //     child: Container(
+                                            //       width: Device.width,
+                                            //       padding: EdgeInsets.symmetric(
+                                            //           horizontal: 3.w,
+                                            //           vertical: 1.5.h),
+                                            //       decoration: BoxDecoration(
+                                            //         color:
+                                            //             const Color(0xffF5F5F5),
+                                            //         borderRadius:
+                                            //             BorderRadius.circular(
+                                            //                 15),
+                                            //         border: Border.all(
+                                            //             color: AppColors
+                                            //                 .blackColor
+                                            //                 .withValues(
+                                            //                     alpha: 0.1)),
+                                            //       ),
+                                            //       child: Column(
+                                            //         crossAxisAlignment:
+                                            //             CrossAxisAlignment
+                                            //                 .start,
+                                            //         children: [
+                                            //           /// Top Row: Author + Date
+                                            //           Row(
+                                            //             mainAxisAlignment:
+                                            //                 MainAxisAlignment
+                                            //                     .spaceBetween,
+                                            //             children: [
+                                            //               ticketReplies
+                                            //                           ?.data?[i]
+                                            //                           .author
+                                            //                           ?.id ==
+                                            //                       storedId
+                                            //                   ? Text(
+                                            //                       "Me",
+                                            //                       style:
+                                            //                           TextStyle(
+                                            //                         fontSize:
+                                            //                             15.sp,
+                                            //                         fontWeight:
+                                            //                             FontWeight
+                                            //                                 .bold,
+                                            //                         color: AppColors
+                                            //                             .blackColor,
+                                            //                       ),
+                                            //                     )
+                                            //                   : Expanded(
+                                            //                       child: Column(
+                                            //                         crossAxisAlignment:
+                                            //                             CrossAxisAlignment
+                                            //                                 .start,
+                                            //                         children: [
+                                            //                           Text(
+                                            //                             ticketReplies?.data?[i].author?.name ??
+                                            //                                 "",
+                                            //                             style:
+                                            //                                 TextStyle(
+                                            //                               fontSize:
+                                            //                                   15.sp,
+                                            //                               fontWeight:
+                                            //                                   FontWeight.bold,
+                                            //                               color:
+                                            //                                   AppColors.blackColor,
+                                            //                             ),
+                                            //                           ),
+                                            //                           Text(
+                                            //                             ticketReplies?.data?[i].author?.email ??
+                                            //                                 "",
+                                            //                             style:
+                                            //                                 TextStyle(
+                                            //                               fontSize:
+                                            //                                   15.sp,
+                                            //                               fontWeight:
+                                            //                                   FontWeight.bold,
+                                            //                               color:
+                                            //                                   AppColors.blackColor,
+                                            //                             ),
+                                            //                           ),
+                                            //                         ],
+                                            //                       ),
+                                            //                     ),
+                                            //               SizedBox(
+                                            //                 width: 2.w,
+                                            //               ),
+                                            //               Text(
+                                            //                 ticketReplies
+                                            //                             ?.data?[
+                                            //                                 i]
+                                            //                             .createdTime !=
+                                            //                         null
+                                            //                     ? DateFormat(
+                                            //                             "dd MMM yyyy, hh:mm a")
+                                            //                         .format(
+                                            //                         DateTime.parse(ticketReplies!
+                                            //                                 .data![i]
+                                            //                                 .createdTime!)
+                                            //                             .toLocal(),
+                                            //                       )
+                                            //                     : "",
+                                            //                 style: TextStyle(
+                                            //                   fontSize: 13.sp,
+                                            //                   color:
+                                            //                       Colors.grey,
+                                            //                 ),
+                                            //               ),
+                                            //             ],
+                                            //           ),
+                                            //           SizedBox(height: 0.5.h),
+                                            //
+                                            //           /// Reply Content
+                                            //           Text(
+                                            //             ticketReplies?.data?[i]
+                                            //                     .summary ??
+                                            //                 "",
+                                            //             style: TextStyle(
+                                            //               fontSize: 15.sp,
+                                            //               color: AppColors
+                                            //                   .blackColor,
+                                            //             ),
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            /// ee hale
                                             for (int i = 0;
                                                 i <
                                                     (ticketReplies
@@ -1111,7 +1269,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      /// Top Row: Author + Date
+                                                      /// Top Row (Author + Date)
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -1160,19 +1318,15 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
-                                                                              15.sp,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
+                                                                              13.sp,
                                                                           color:
-                                                                              AppColors.blackColor,
+                                                                              Colors.grey,
                                                                         ),
                                                                       ),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                          SizedBox(
-                                                            width: 2.w,
-                                                          ),
+                                                          SizedBox(width: 2.w),
                                                           Text(
                                                             ticketReplies
                                                                         ?.data?[
@@ -1189,25 +1343,89 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                   )
                                                                 : "",
                                                             style: TextStyle(
-                                                              fontSize: 13.sp,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
+                                                                fontSize: 13.sp,
+                                                                color: Colors
+                                                                    .grey),
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(height: 0.5.h),
 
-                                                      /// Reply Content
-                                                      Text(
-                                                        ticketReplies?.data?[i]
-                                                                .summary ??
-                                                            "",
-                                                        style: TextStyle(
-                                                          fontSize: 15.sp,
-                                                          color: AppColors
-                                                              .blackColor,
-                                                        ),
+                                                      SizedBox(height: 1.h),
+
+                                                      /// 👇 Instead of Text(summary), use FutureBuilder to fetch and render HTML
+                                                      // FutureBuilder(
+                                                      //   future: therddetaisl(ticketReplies?.data?[i].id),
+                                                      //   builder: (context, snapshot) {
+                                                      //     if (snapshot.connectionState == ConnectionState.waiting) {
+                                                      //       return const CircularProgressIndicator();
+                                                      //     } else if (snapshot.hasError) {
+                                                      //       return Text(
+                                                      //         "Error loading reply",
+                                                      //         style: TextStyle(color: Colors.red),
+                                                      //       );
+                                                      //     } else if (snapshot.hasData) {
+                                                      //       final ThreadModal thread = snapshot.data!;
+                                                      //       return Html(
+                                                      //         data: thread.content ?? "",
+                                                      //       );
+                                                      //     } else {
+                                                      //       return const SizedBox();
+                                                      //     }
+                                                      //   },
+                                                      // ),
+
+                                                      FutureBuilder(
+                                                        future: therddetaisl(
+                                                            ticketReplies
+                                                                ?.data?[i].id),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                                  .connectionState ==
+                                                              ConnectionState
+                                                                  .waiting) {
+                                                            return const CircularProgressIndicator();
+                                                          } else if (snapshot
+                                                              .hasError) {
+                                                            return Text(
+                                                              "Error loading reply",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .red),
+                                                            );
+                                                          } else if (snapshot
+                                                              .hasData) {
+                                                            final ThreadModal
+                                                                thread =
+                                                                snapshot.data!;
+
+                                                            String
+                                                                cleanedContent =
+                                                                cleanHtmlContent(
+                                                                    thread.content ??
+                                                                        "");
+
+                                                            // Convert HTML to plain text with paragraphs
+                                                            String plainText =
+                                                                htmlToPlainTextWithParagraphs(
+                                                                    cleanedContent);
+
+                                                            // Show plain text with paragraph formatting
+                                                            return Container(
+                                                              child: Text(
+                                                                plainText,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  height:
+                                                                      1.6, // Increased line height for better readability
+                                                                ),
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return const SizedBox();
+                                                          }
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -1241,6 +1459,97 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
               ],
             ),
     );
+  }
+
+  String htmlToPlainTextWithParagraphs(String htmlString) {
+    // More sophisticated approach that preserves paragraph structure
+    String text = htmlString;
+
+    // Preserve paragraph breaks
+    text = text
+        .replaceAll(RegExp(r'<p[^>]*>', caseSensitive: false),
+            '') // Remove opening <p> tags
+        .replaceAll(RegExp(r'</p>', caseSensitive: false),
+            '\n\n') // Replace closing </p> with double newline
+        .replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false),
+            '\n') // Replace <br> with single newline
+        .replaceAll(RegExp(r'<div[^>]*>', caseSensitive: false),
+            '') // Remove opening <div> tags
+        .replaceAll(RegExp(r'</div>', caseSensitive: false),
+            '\n'); // Replace closing </div> with newline
+
+    // Remove all other HTML tags
+    text = text.replaceAll(RegExp(r'<[^>]*>'), '');
+
+    // Decode HTML entities
+    text = htmlDecode(text);
+
+    // Clean up whitespace while preserving paragraph breaks
+    text = cleanWhitespacePreserveParagraphs(text);
+
+    return text;
+  }
+
+  String htmlDecode(String text) {
+    return text
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'")
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&emsp;', '    ')
+        .replaceAll('&ensp;', '  ');
+  }
+
+  String cleanWhitespacePreserveParagraphs(String text) {
+    // Replace 3 or more newlines with just 2 (preserve paragraph spacing)
+    text = text.replaceAll(RegExp(r'\n{3,}'), '\n\n');
+    // Replace multiple spaces within lines with single space
+    text = text.replaceAll(RegExp(r'[ ]+'), ' ');
+    // Trim each line and the entire text
+    text = text.split('\n').map((line) => line.trim()).join('\n').trim();
+
+    return text;
+  }
+
+  String htmlToPlainText(String htmlString) {
+    // Remove HTML tags using regex
+    String text = htmlString.replaceAll(RegExp(r'<[^>]*>'), ' ');
+
+    // Decode HTML entities
+    text = text
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'")
+        .replaceAll('&nbsp;', ' ');
+
+    // Clean up multiple spaces and trim
+    text = text.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+    return text;
+  }
+
+  String cleanHtmlContent(String html) {
+    if (html.isEmpty) return "";
+
+    // Remove extra spaces, newlines and trim
+    String cleaned = html
+        .replaceAll(
+            RegExp(r'\s+'), ' ') // Replace multiple spaces with single space
+        .replaceAll(RegExp(r'\n\s*\n'), '\n') // Remove empty lines
+        .trim();
+
+    // Fix common HTML spacing issues
+    cleaned = cleaned
+        .replaceAll(RegExp(r'>\s+<'), '><') // Remove spaces between tags
+        .replaceAll(RegExp(r'\s+</'), '</') // Remove spaces before closing tags
+        .replaceAll(RegExp(r'>\s+'), '> ') // Normalize spaces after tags
+        .replaceAll(RegExp(r'\s+<'), ' <'); // Normalize spaces before tags
+
+    return cleaned;
   }
 
   bool isLoading = true;
@@ -1720,5 +2029,96 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
         );
       }
     });
+  }
+
+  // Future<void> therddetaisl(therdcode) async {
+  //   bool internet = await checkInternet();
+  //
+  //   if (!internet) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     buildErrorDialog(context, 'Error', "Internet Required");
+  //     return;
+  //   }
+  //
+  //   try {
+  //     final response = await Adviceprovider().therdDetails(therdcode);
+  //     threadModal = ThreadModal.fromJson(json.decode(response.body));
+  //
+  //     if (response.statusCode == 200) {
+  //       print("data=====>>>>>>>");
+  //       print(planDetails?.plans?[0].customFields?.length);
+  //
+  //
+  //     } else if (response.statusCode == 422) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (error, stackTrace) {
+  //     print("=======>>>>>>>>>>>>>${stackTrace}");
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+  Future<ThreadModal?> therddetaisl(String? therdcode) async {
+    if (therdcode == null) return null;
+
+    bool internet = await checkInternet();
+    if (!internet) {
+      buildErrorDialog(context, 'Error', "Internet Required");
+      return null;
+    }
+
+    try {
+      final response = await Adviceprovider().therdDetails(therdcode);
+      if (response.statusCode == 200) {
+        return ThreadModal.fromJson(json.decode(response.body));
+      } else {
+        return null;
+      }
+    } catch (error) {
+      print("Thread details error: $error");
+      return null;
+    }
+  }
+
+  Widget buildHtmlContent(String content) {
+    // First clean the content
+    String cleanedContent = cleanHtmlContent(content);
+
+    // If it's just plain text without HTML tags, use Text widget
+    if (!cleanedContent.contains('<') && !cleanedContent.contains('>')) {
+      return Text(
+        cleanedContent,
+        style: TextStyle(
+          fontSize: 15.sp,
+          color: AppColors.blackColor,
+        ),
+        maxLines: null, // Allow multiple lines
+        overflow: TextOverflow.visible,
+      );
+    }
+
+    // For actual HTML content
+    return Container(
+      child: Html(
+        data: cleanedContent,
+        style: {
+          "*": Style(
+            margin: Margins.all(0),
+            padding: HtmlPaddings.all(0),
+            display: Display.inline, // Force inline to avoid extra space
+          ),
+        },
+        shrinkWrap: true,
+      ),
+    );
   }
 }

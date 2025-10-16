@@ -15,6 +15,7 @@ import 'package:zohosystem/ui/moreScreen/modal/updateCustomerModal.dart';
 import 'package:zohosystem/ui/moreScreen/modal/updatePaymentMethod.dart';
 
 import '../ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart';
+import '../ui/adviceTicketsScreen/modal/ThreadModal.dart';
 import '../ui/adviceTicketsScreen/modal/addTicketModal.dart';
 import '../ui/adviceTicketsScreen/modal/replyTikitModal.dart';
 import '../ui/adviceTicketsScreen/modal/ticketRepliesModal.dart';
@@ -91,3 +92,4 @@ FetchNotificationsModal? fetchNotifications;
 MarketingOptModal? marketingOpt;
 SingleDepartmentModal? singleDepartment;
 ReplyTicketModal? replyTicket;
+ThreadModal? threadModal;

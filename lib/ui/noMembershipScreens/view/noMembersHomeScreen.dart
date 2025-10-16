@@ -385,7 +385,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                             ),
                             Positioned(
                               right: 10.w,
-                              top: 22.h,
+                              top: 19.h,
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 1.w),
                                 height: 40.w,
@@ -398,7 +398,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                             ),
                             Positioned(
                               right: -0.5.w,
-                              top: 16.h,
+                              top: 14.h,
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 1.w),
                                 height: 23.w,

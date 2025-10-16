@@ -60,6 +60,8 @@ dependencies:
   googleapis_auth:
   image_picker:
   flutter_local_notifications:
+  flutter_html:
+  flutter_spinkit:
 
 
 dev_dependencies:

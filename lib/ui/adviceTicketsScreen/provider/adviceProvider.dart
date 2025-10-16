@@ -176,4 +176,25 @@ class Adviceprovider extends ChangeNotifier {
       rethrow; // 👈 rethrow for catchError() to handle
     }
   }
+  Future<http.Response> therdDetails(therdid) async {
+    String url = "${apiEndpoints.therdapi}$therdid";
+    print(url);
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    log('Api Header Data = $headers');
+    var responseJson;
+    final response = await http
+        .get(
+      Uri.parse(url),
+      headers: headers,
+    )
+        .timeout(
+      const Duration(seconds: 60),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+    responseJson = responses(response);
+
+    return responseJson;
+  }
 }
