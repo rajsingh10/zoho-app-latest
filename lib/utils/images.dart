@@ -34,6 +34,11 @@ class Imgs {
       'assets/academy/homepagethreephoto.png';
   static const String homepagefourphoto =
       'assets/academy/homepagefourphoto.png';
+
+
+  static const String homepagenew1 = 'assets/academy/homepagenew1.png';
+  static const String homepagenew2 = 'assets/academy/homepagenew2.png';
+
   static const String amzLadyPhoto = 'assets/academy/amzLady.png';
   static const String amzClientPhoto = 'assets/academy/amzClientLogo.png';
   static const String amzImg1Photo = 'assets/academy/amzImgss1.png';
