@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-import 'package:zohosystem/main.dart';
 import 'package:zohosystem/ui/authentications/login/modal/checkIdModal.dart';
 import 'package:zohosystem/ui/authentications/login/modal/userDataModal.dart';
 import 'package:zohosystem/utils/colors.dart';
@@ -433,7 +432,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'email': widget.emailAddress.toString(),
       'otp': _pinController.text.trim().toString(),
       "customer_id": widget.customerid.toString(),
-      "fcm_token": myDeviceToken ?? '',
+      // "fcm_token": myDeviceToken ?? '',
+      "fcm_token": 'xyz',
     };
     print(data);
     checkInternet().then((internet) async {
@@ -505,8 +505,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'otp': _pinController.text.trim().toString(),
       'country_code': widget.countryCode.toString(),
       "customer_id": widget.customerid.toString(),
-      "fcm_token": myDeviceToken ?? '',
-      // "fcm_token":  'xyz',
+      // "fcm_token": myDeviceToken ?? '',
+      "fcm_token": 'xyz',
     };
     print("=====>>>>>$data");
     checkInternet().then((internet) async {

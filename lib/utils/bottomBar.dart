@@ -123,6 +123,11 @@ class _AppBottombarState extends State<AppBottombar> {
       email: 'support@amzbuddy.ai',
       subject: 'AMZBuddy\tSupport',
     ),
+    SupportDepartment(
+      name: 'BizBoard',
+      email: 'support@bizboard.co.uk',
+      subject: 'Biz\tBoard\tSupport',
+    ),
     // SupportDepartment(
     //     name: 'Advice Center Support',
     //     whatsAppNumber: '447822018873',

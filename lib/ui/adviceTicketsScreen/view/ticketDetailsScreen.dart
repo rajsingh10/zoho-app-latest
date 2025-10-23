@@ -2081,7 +2081,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     }
 
     try {
-      final response = await Adviceprovider().therdDetails(therdcode);
+      final response =
+          await Adviceprovider().therdDetails(therdcode, widget.tickitid);
       if (response.statusCode == 200) {
         return ThreadModal.fromJson(json.decode(response.body));
       } else {

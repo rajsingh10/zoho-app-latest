@@ -21,7 +21,7 @@ class apiEndpoints {
   static String updateSubscription =
       "${zohoBillingBaseUrl}hostedpages/updatesubscription";
   static String alltikit = "${zohoDeskBaseUrl}tickets";
-  static String departments = "${zohoDeskBaseUrl}departments";
+  static String departments = "${zohoDeskBaseUrl}departments?limit=200&from=0";
   static String ticketsviw = "${zohoDeskBaseUrl}tickets/";
   static String chachak = "${zohoDeskBaseUrl}contacts/search?email=";
   static String tickets = "${zohoDeskBaseUrl}tickets";
@@ -35,6 +35,6 @@ class apiEndpoints {
   static String fetchMarketingOptIn = "${baseUrl}get-promotional-notification";
   static String fetchTickets =
       "${zohoDeskBaseUrl}tickets/search?customField1=cf_plan_id:";
-  static String therdapi =
-      "${zohoDeskBaseUrl}tickets/150682000008181001/threads/";
+  static String therdapi = "${zohoDeskBaseUrl}tickets/";
+  static String updateData = "${baseUrl}updateUserEmailMobileno";
 }

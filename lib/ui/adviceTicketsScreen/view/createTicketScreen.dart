@@ -800,12 +800,12 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
               customerList = allDepartment?.data ?? [];
               log('Customer Names: ${customerList.map((e) => e.name).toList()}');
 
-              final matchedList = (allDepartment?.data ?? []).where((apiDept) {
-                return departments.any((staticDept) =>
-                    apiDept.name?.toLowerCase().trim() ==
-                    staticDept.name.toLowerCase().trim());
-              }).toList();
-              customerList = matchedList;
+              // final matchedList = (allDepartment?.data ?? []).where((apiDept) {
+              //   return departments.any((staticDept) =>
+              //       apiDept.name?.toLowerCase().trim() ==
+              //       staticDept.name.toLowerCase().trim());
+              // }).toList();
+              // customerList = matchedList;
 
               isLoading = false;
             });

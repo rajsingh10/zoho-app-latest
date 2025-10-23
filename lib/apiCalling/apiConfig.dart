@@ -33,6 +33,7 @@ import '../ui/manageMembershipScreen/modal/cancalSubcariptionModal.dart';
 import '../ui/manageMembershipScreen/modal/updateSubscriptionModal.dart';
 import '../ui/moreScreen/modal/getCustomerDataModal.dart';
 import '../ui/moreScreen/modal/marketingOptModal.dart';
+import '../ui/moreScreen/modal/updateDataModal.dart';
 
 String organizationId = '20092882029';
 String testOrganizationId = '20107247529';
@@ -93,3 +94,4 @@ MarketingOptModal? marketingOpt;
 SingleDepartmentModal? singleDepartment;
 ReplyTicketModal? replyTicket;
 ThreadModal? threadModal;
+UpdateDataModal? updateData;

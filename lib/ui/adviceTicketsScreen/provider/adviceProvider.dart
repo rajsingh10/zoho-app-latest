@@ -177,8 +177,8 @@ class Adviceprovider extends ChangeNotifier {
     }
   }
 
-  Future<http.Response> therdDetails(therdid) async {
-    String url = "${apiEndpoints.therdapi}$therdid";
+  Future<http.Response> therdDetails(therdid, id) async {
+    String url = "${apiEndpoints.therdapi}$id/threads/$therdid";
     print(url);
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = $headers');

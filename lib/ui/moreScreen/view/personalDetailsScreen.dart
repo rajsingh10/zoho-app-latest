@@ -13,6 +13,7 @@ import 'package:zohosystem/ui/homeScreen/provider/homeProvider.dart';
 import 'package:zohosystem/ui/homeScreen/view/homeScreen.dart';
 import 'package:zohosystem/ui/moreScreen/modal/getCardModal.dart';
 import 'package:zohosystem/ui/moreScreen/modal/getCustomerDataModal.dart';
+import 'package:zohosystem/ui/moreScreen/modal/updateDataModal.dart';
 import 'package:zohosystem/ui/moreScreen/modal/updatePaymentMethod.dart';
 import 'package:zohosystem/ui/moreScreen/view/updateCardWebview.dart';
 import 'package:zohosystem/utils/countryIsoCodes.dart';
@@ -1306,6 +1307,71 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
           Signupprovider().updateContractApi(data).then((response) async {
             createContract =
                 CreateContractModal.fromJson(json.decode(response.body));
+            if (response.statusCode == 200) {
+              updateDataApi();
+            } else if (response.statusCode == 422) {
+              showCustomErrorSnackbar(
+                  title: "Update Error",
+                  message: 'There was an error. Please try again.');
+              if (mounted) {
+                setState(() {
+                  isAdding = false;
+                });
+              }
+            } else {
+              showCustomErrorSnackbar(
+                title: 'Update Error',
+                message: 'There was an error. Please try again.',
+              );
+              if (mounted) {
+                setState(() {
+                  isAdding = false;
+                });
+              }
+            }
+          }).catchError((error) {
+            log("Error ========>>>>>>>>${error.toString()}");
+            if (mounted) {
+              setState(() {
+                isAdding = false;
+              });
+            }
+          });
+        } else {
+          if (mounted) {
+            setState(() {
+              isAdding = false;
+            });
+          }
+          buildErrorDialog(context, 'Error', "Internet Required");
+        }
+      });
+    } else {
+      if (mounted) {
+        setState(() {
+          isAdding = false;
+        });
+      }
+    }
+  }
+
+  updateDataApi() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isAdding = true;
+      });
+      final Map<String, dynamic> data = {
+        'customer_id': userData?.data?[0].customerId,
+        'email': _emailController.text.trim(),
+        'mobile_no': _phoneNumber.text.trim(),
+        'country_code': _countryCode.toString()
+      };
+
+      print(data);
+      checkInternet().then((internet) async {
+        if (internet) {
+          Signupprovider().updateDataApi(data).then((response) async {
+            updateData = UpdateDataModal.fromJson(json.decode(response.body));
             if (response.statusCode == 200) {
               updateInformationApi();
             } else if (response.statusCode == 422) {

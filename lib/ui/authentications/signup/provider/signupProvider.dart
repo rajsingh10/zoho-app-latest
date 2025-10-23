@@ -152,6 +152,36 @@ class Signupprovider extends ChangeNotifier {
     }
   }
 
+  Future<http.Response> updateDataApi(Map<String, dynamic> bodyData) async {
+    String url = apiEndpoints.updateData;
+    print("API URL: $url");
+
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    log('API Headers: $headers');
+
+    try {
+      final response = await http
+          .post(
+        Uri.parse(url),
+        headers: headers,
+        body: bodyData,
+      )
+          .timeout(
+        const Duration(seconds: 60),
+        onTimeout: () {
+          throw const SocketException('Request timed out');
+        },
+      );
+
+      log('Response Status: ${response.statusCode}');
+
+      return response; // 🔁 returning full response directly
+    } catch (error) {
+      log("Error During Communication: $error");
+      rethrow; // 👈 rethrow for catchError() to handle
+    }
+  }
+
   Future<http.Response> updateCustomerApi(
       Map<String, dynamic> bodyData, id) async {
     String url = '${apiEndpoints.registerApi}/$id';
