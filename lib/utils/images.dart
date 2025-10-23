@@ -21,6 +21,7 @@ class Imgs {
   static const String partners1Img = 'assets/academy/partners1Img.png';
   static const String partners2Img = 'assets/academy/partners2Img.png';
   static const String amz = 'assets/academy/amz.png';
+  static const String amzBuddy = 'assets/academy/amzBuddy.png';
   static const String theagency = 'assets/academy/theagency.png';
   static const String amzagency = 'assets/academy/amzagency.png';
   static const String justaskalex = 'assets/academy/justaskalex.png';

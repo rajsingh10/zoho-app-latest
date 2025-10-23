@@ -86,9 +86,21 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
       subject: 'AMZBuddy\tSupport',
     ),
     SupportDepartment(
-      name: 'The Advice Centre Ltd',
+      name: 'The Advice Centre: VIP',
       email: 'support@amzbuddy.ai',
-      subject: 'AMZBuddy\tSupport',
+      subject: 'VIP\tSupport',
+    ),    SupportDepartment(
+      name: 'AMZAgency',
+      email: 'support@amzagency.co.uk',
+      subject: 'AMZAgency\tSupport\tDepartment',
+    ),SupportDepartment(
+      name: 'Just Ask Alex',
+      email: 'support@justaskalex.co.uk',
+      subject: 'Ask\tAlex',
+    ),SupportDepartment(
+      name: 'BizBoard',
+      email: 'support@bizboard.co.uk',
+      subject: 'Biz\tBoard',
     ),
   ];
   final _formKey = GlobalKey<FormState>();

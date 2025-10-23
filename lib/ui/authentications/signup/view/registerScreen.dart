@@ -93,7 +93,7 @@ class _RegisterscreenState extends State<Registerscreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.bgColor,
-      body: InkWell(
+      body: GestureDetector(
         onTap: () {
           if (_overlayEntry != null) _removeOverlay();
           if (_cityOverlayEntry != null) _removeCityOverlay();
@@ -663,8 +663,6 @@ class _RegisterscreenState extends State<Registerscreen> {
               ),
             ],
           ),
-
-          // Scrollable text
           child: SizedBox(
             height: 25.h,
             child: Scrollbar(
@@ -681,7 +679,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                     children: [
                       TextSpan(
                         text:
-                            "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
+                        "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
                         style: TextStyle(
                           fontFamily: FontFamily.bold,
                           color: AppColors.blackColor,
@@ -689,8 +687,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                         ),
                       ),
                       TextSpan(
-                        text:
-                            "Important Information to read before Signing up\n\n",
+                        text: "Important Information to read before Signing up\n\n",
                         style: TextStyle(
                           fontFamily: FontFamily.bold,
                           color: AppColors.blackColor,
@@ -699,9 +696,8 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       const TextSpan(
                         text:
-                            "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). ",
+                        "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). ",
                       ),
-                      // 🔸 Underlined "Multiple free trials..." line
                       const TextSpan(
                         text: "Multiple free trials are not permitted.",
                         style: TextStyle(
@@ -714,7 +710,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       const TextSpan(
                         text:
-                            " If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
+                        " If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
                             "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
                       ),
                       const TextSpan(
@@ -726,12 +722,11 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       const TextSpan(
                         text:
-                            "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n",
+                        "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n",
                       ),
-                      // 🔹 Blue + Underlined Terms & Privacy section
                       const TextSpan(
                         text:
-                            "Please ensure you read & agree to our Terms and Conditions & Privacy Policy ",
+                        "Please ensure you read & agree to our Terms and Conditions & Privacy Policy ",
                         style: TextStyle(
                           color: Colors.blue,
                           decoration: TextDecoration.underline,
@@ -741,11 +736,10 @@ class _RegisterscreenState extends State<Registerscreen> {
                       ),
                       const TextSpan(
                         text:
-                            "before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
+                        "before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
                             "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
                             "If you are based outside of the UK, please speak to our team on the live chat or email ",
                       ),
-                      // 🔹 Blue + Underlined email link
                       const TextSpan(
                         text: "info@theadvicecentre.ltd",
                         style: TextStyle(
@@ -756,8 +750,92 @@ class _RegisterscreenState extends State<Registerscreen> {
                         ),
                       ),
                       const TextSpan(
-                        text: ". Please do not sign up.",
+                        text:
+                        ". Please do not sign up for our services if you are based outside of the UK without liaising with our Team first.\n\n",
                       ),
+
+                      // 🔹 New Added Section Starts Here
+                      const TextSpan(
+                        text:
+                        "Cancellation notice for 7 Day (Free Trial) membership plans\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blackColor,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      const TextSpan(
+                        text:
+                        "You can cancel your membership at anytime within your 7 day trial period by emailing ",
+                      ),
+                      const TextSpan(
+                        text: "accounts@theadvicecentre.ltd",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      const TextSpan(
+                        text:
+                        " or by contacting our team on the live chat (available within The Advice Centre App).\n\n"
+                            "Please note: You will be charged automatically after your 7 day free trial period on the basis of the membership plan you selected. If you wish to cancel within your 7 day free trial, please note that this it is entirely your responsibility to do so. As stated, you will be charged automatically (according to the membership plan you selected) after your 7 day free trial and you will not be eligible for a refund on this payment.\n\n",
+                      ),
+                      const TextSpan(
+                        text: "Cancellation notice for on-going membership plans\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blackColor,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      const TextSpan(
+                        text:
+                        "Please note, if you wish to cancel after your trial period, we require a 7 working day cancellation notice from your monthly or yearly renewal date.\n"
+                            "All payments are handled securely via Stripe. Any issues or queries regarding billing, please email ",
+                      ),
+                      const TextSpan(
+                        text: "accounts@theadvicecentre.ltd\n\n",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      const TextSpan(
+                        text: "We are The Advice Centre Ltd\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      const TextSpan(
+                        text:
+                        "We are The Advice Centre Ltd, 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ. Company number: 15203680.\n\n",
+                      ),
+                      const TextSpan(
+                        text: "Disclaimer:\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      const TextSpan(
+                        text:
+                        "We are in no way endorsed or associated with Amazon, TikTok, Facebook, Instagram, Apple, Google etc. "
+                            "or any other Digital Marketing Platforms. We are an Independent UK-based Advice Centre. "
+                            "All advice and support provided is for demonstration purposes only.\n"
+                            "Examples of results shown are not in any way typical and depend on factors outside our control, "
+                            "including your own efforts, products, marketing activities, and market conditions.\n"
+                            "You are ultimately responsible for the product(s) you choose to sell, the supplier(s) you work with, "
+                            "and the decisions you make. The Advice Centre Ltd or its services cannot be held responsible in any way.\n\n"
+                            "Automatic renewals are billed to the payment method selected for this order or your "
+                            "backup/alternate payment method(s), until cancelled.\n"
+                            "Your payment details will be saved as an alternate payment method for future purchases and "
+                            "subscription renewals.\n"
+                            "Your payment is being processed safely\n"
+                            "by ‘Stripe’ in:\n"
+                            "United Kingdom.",
+                      ),
+
                     ],
                   ),
                 ),

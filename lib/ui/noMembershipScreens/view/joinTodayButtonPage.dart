@@ -412,7 +412,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(webViewAssociates(
-                                            link: "www.theadvicecentre.ltd"));
+                                            link: "https://www.theadvicecentre.ltd"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -457,7 +457,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(webViewAssociates(
-                                            link: "www.bizboard.co.uk"));
+                                            link: "https://www.bizboard.co.uk"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -486,7 +486,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                             height: 2.h,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
                                 padding: EdgeInsets.symmetric(
@@ -510,7 +510,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                                "www.thedeveloperagency.co.uk"));
+                                                "https://www.thedeveloperagency.co.uk"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -531,6 +531,61 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       ),
                                     ),
                                   ],
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(webViewAssociates(
+                                      link:
+                                      "https://www.amzbuddy.ai/"));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 2.w, vertical: 2.2.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w,
+                                          color: AppColors.orangeColor),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          Imgs.amzBuddy,
+                                          scale: 4.5,
+                                          // color: AppColors.yellowColor1,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link:
+                                              "https://www.amzbuddy.ai/"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(50),
+                                              color: AppColors.bgColor),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -575,7 +630,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                                "www.thedeveloperagency.co.uk"));
+                                                "https://www.thedeveloperagency.co.uk"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -621,7 +676,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                                "www.universityofexperts.com"));
+                                                "https://www.universityofexperts.com"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(

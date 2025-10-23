@@ -272,7 +272,107 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         ),
                                       ],
                                     ),
+                                  ),SizedBox(
+                                    height: 0.8.h,
+                                  ),Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 2.5.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: AppColors.whiteColor),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              Imgs.makemoneysavemoney,
+                                              scale: 3,
+                                              // color: AppColors.yellowColor1,
+                                            ),
+
+                                            InkWell(
+                                              onTap: () {
+                                                Get.to(WebviewScreen(
+                                                  link:
+                                                  "https://calendly.com/alexander-shelton/the-advice-centre-introducers-demo",
+                                                ));
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5.5.w,
+                                                    vertical: 0.8.h),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(50),
+                                                    color: AppColors.yellowColor),
+                                                child: Text(
+                                                  "Book now",
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily.bold,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColors.whiteColor,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(20),
+                                            color: AppColors.whiteColor),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              Imgs.justaskalex,
+                                              scale: 3.5,
+                                              // color: AppColors.yellowColor1,
+                                            ),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Get.to(WebviewScreen(
+                                                  link:
+                                                  "https://calendly.com/alexander-shelton/just-ask-alex-demo",
+                                                ));
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5.5.w,
+                                                    vertical: 0.8.h),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        50),
+                                                    color:
+                                                    AppColors.blueColor),
+                                                child: Text(
+                                                  "Book now",
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily.bold,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColors.whiteColor,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
+
                                   SizedBox(
                                     height: 0.8.h,
                                   ),
@@ -327,9 +427,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 0.8.h,
-                                      ),
+
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 5.w, vertical: 1.h),
@@ -351,7 +449,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                               onTap: () {
                                                 Get.to(WebviewScreen(
                                                   link:
-                                                      "https://calendly.com/alexander-shelton/university-of-experts-demo  ",
+                                                      "https://calendly.com/alexander-shelton/university-of-experts-demo",
                                                 ));
                                               },
                                               child: Container(
@@ -499,7 +597,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Memberships to Transform Your Business:',
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 color: AppColors.bgColor,
@@ -864,7 +962,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                               InkWell(
                                 onTap: () {
                                   Get.to(webViewAssociates(
-                                      link: "www.theadvicecentre.ltd"));
+                                      link: "https://www.theadvicecentre.ltd"));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -888,7 +986,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       InkWell(
                                         onTap: () {
                                           Get.to(webViewAssociates(
-                                              link: "www.theadvicecentre.ltd"));
+                                              link: "https://www.theadvicecentre.ltd"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -918,7 +1016,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                               InkWell(
                                 onTap: () {
                                   Get.to(webViewAssociates(
-                                      link: "www.bizboard.co.uk"));
+                                      link: "https://www.bizboard.co.uk"));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -942,7 +1040,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       InkWell(
                                         onTap: () {
                                           Get.to(webViewAssociates(
-                                              link: "www.bizboard.co.uk"));
+                                              link: "https://www.bizboard.co.uk"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -972,7 +1070,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                               InkWell(
                                 onTap: () {
                                   Get.to(webViewAssociates(
-                                      link: "www.thedeveloperagency.co.uk"));
+                                      link: "https://www.thedeveloperagency.co.uk"));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -996,7 +1094,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         onTap: () {
                                           Get.to(webViewAssociates(
                                               link:
-                                                  "www.thedeveloperagency.co.uk"));
+                                                  "https://www.thedeveloperagency.co.uk"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -1047,7 +1145,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         onTap: () {
                                           Get.to(webViewAssociates(
                                               link:
-                                                  "www.universityofexperts.com"));
+                                                  "https://www.universityofexperts.com"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -1056,6 +1154,63 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                               borderRadius:
                                                   BorderRadius.circular(50),
                                               color: AppColors.orangeColor),
+                                          child: Text(
+                                            "Find Out More",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.bold,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),SizedBox(
+                                width: 2.w,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                Get.to(webViewAssociates(
+                                    link:
+                                    "https://www.amzbuddy.ai/"));
+                              },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 1.w, vertical: 0.5.h),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5.w,
+                                          color: AppColors.bgColor),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.whiteColor),
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          Imgs.amzBuddy,
+                                          scale: 6.5,
+                                          // color: AppColors.yellowColor1,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.to(webViewAssociates(
+                                              link:
+                                                  "https://www.amzbuddy.ai/"));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.w, vertical: 1.h),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: AppColors.bgColor),
                                           child: Text(
                                             "Find Out More",
                                             style: TextStyle(
@@ -1173,7 +1328,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       onTap: () {
                                         Get.to(webViewAssociates(
                                             link:
-                                                "www.universityofexperts.com"));
+                                                "https://www.universityofexperts.com"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(

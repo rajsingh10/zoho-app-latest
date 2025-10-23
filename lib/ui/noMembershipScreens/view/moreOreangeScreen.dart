@@ -60,7 +60,7 @@ class _moreOreangeScreenState extends State<moreOreangeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Advice Centre Ltd Terms & Conditions',
+                        'The Advice Centre Ltd: Terms & Conditions',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: FontFamily.regular,
