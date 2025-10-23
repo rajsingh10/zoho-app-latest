@@ -523,11 +523,15 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                         SizedBox(
                           height: 2.h,
                         ),
-                        Text('Any Questions? \nWe’re available on the live chat!',textAlign: TextAlign.center,style: TextStyle(
-                            color: AppColors.bgColor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: FontFamily.bold,
-                            fontSize: 15.sp),),
+                        Text(
+                          'Any Questions? \nWe’re available on the live chat!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColors.bgColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: FontFamily.bold,
+                              fontSize: 15.sp),
+                        ),
                         SizedBox(
                           height: 2.h,
                         ),
@@ -1579,12 +1583,10 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                             ),
                           ],
                         ),
-
                         InkWell(
                           onTap: () => Get.to(
                             WebviewScreen(
-                              link:
-                              "https://www.theadvicecentre.ltd",
+                              link: "https://www.theadvicecentre.ltd",
                             ),
                           ),
                           child: Image.asset(
@@ -1598,8 +1600,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                         InkWell(
                           onTap: () => Get.to(
                             WebviewScreen(
-                              link:
-                              "https://www.makemoneysavemoney-now.co.uk",
+                              link: "https://www.makemoneysavemoney-now.co.uk",
                             ),
                           ),
                           child: Image.asset(

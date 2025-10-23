@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -890,6 +891,179 @@ class _HomescreenState extends State<Homescreen> {
                                     scale: 1.3,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 2.w, vertical: 1.h),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: Colors.orange, width: 1.5),
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 6,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: SizedBox(
+                                    height: 25.h,
+                                    child: Scrollbar(
+                                      thumbVisibility: true,
+                                      child: SingleChildScrollView(
+                                        child: RichText(
+                                          textAlign: TextAlign.justify,
+                                          text: TextSpan(
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: Colors.black,
+                                              fontFamily: 'Poppins',
+                                              height: 1.6,
+                                            ),
+                                            children: [
+                                              // 🔹 Centered "© The Advice Centre Ltd"
+                                              WidgetSpan(
+                                                child: Center(
+                                                  child: Text(
+                                                    "© The Advice Centre Ltd",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                      fontSize: 14.sp,
+                                                      fontFamily: 'Poppins',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const WidgetSpan(
+                                                child: SizedBox(height: 8),
+                                              ),
+
+                                              // 🔹 Centered "Disclaimer"
+                                              WidgetSpan(
+                                                child: Center(
+                                                  child: Text(
+                                                    "Disclaimer",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      decorationColor:
+                                                          Colors.black,
+                                                      fontFamily: 'Poppins',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const WidgetSpan(
+                                                child: SizedBox(height: 12),
+                                              ),
+
+                                              // 🔹 Main text (justified paragraphs)
+                                              const TextSpan(
+                                                text:
+                                                    "We are in no way endorsed or associated with Amazon, TikTok, Facebook, Instagram, ChatGPT, LinkedIn, Shopify, Zoho, Apple, Google, or any other digital marketing platforms. ",
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "We are The Advice Centre Ltd, an independent UK-based advice and training organisation.\n\n",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "All training, advice, and support provided are for educational and demonstration purposes only. ",
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "We do not provide legal, financial, compliance or accounting advice, ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "and any information shared should not be relied upon as such. It is your responsibility to seek independent advice from a qualified accountant, solicitor, or other professional before starting or operating your business.\n\n",
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "Please note that, in addition to working with experienced professionals, we use AI tools such as ChatGPT in our business to assist with certain aspects of our services. By using our services, you acknowledge and accept that AI tools may be used to provide advice, guidance, or support in certain areas.\n\n",
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "Examples of results or business outcomes shown are not typical ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "and depend on factors outside our control, including your own effort, products, marketing activities, and market conditions. You are solely responsible for your business decisions, the products you choose to sell, services you choose to offer and the suppliers you work with. The Advice Centre Ltd accepts no responsibility or liability for any losses, damages, or outcomes resulting from your use of our services, information, or materials.\n\n",
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "Automatic renewals are billed to the payment method selected (or your backup/alternate payment method) until cancelled. Your payment details may be securely stored for future purchases and subscription renewals. Payments are processed safely by Stripe and Zoho Billing in the United Kingdom. For billing queries, please contact ",
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "accounts@theadvicecentre.ltd\n\n",
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor: Colors.blue,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                text:
+                                                    "By using any of our services, you are deemed to have accepted our ",
+                                              ),
+                                              TextSpan(
+                                                text: "Terms & Conditions",
+                                                style: const TextStyle(
+                                                  color: Colors.blue,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor: Colors.blue,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        // launchUrl(Uri.parse("https://theadvicecentre.ltd/terms"));
+                                                      },
+                                              ),
+                                              const TextSpan(text: " and "),
+                                              TextSpan(
+                                                text: "Privacy Policy.",
+                                                style: const TextStyle(
+                                                  color: Colors.blue,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor: Colors.blue,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        // launchUrl(Uri.parse("https://theadvicecentre.ltd/privacy"));
+                                                      },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -1407,7 +1581,7 @@ class _HomescreenState extends State<Homescreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Plan is pausing',
+            'Plan is Paused',
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: AppColors.bgColor,
@@ -1464,12 +1638,12 @@ class _HomescreenState extends State<Homescreen> {
               Get.to(const membershipPageScreen());
             },
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
+              padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 10.w),
               decoration: BoxDecoration(
                   color: AppColors.bgColor,
                   borderRadius: BorderRadius.circular(5.w)),
               child: Text(
-                "Manage Membership",
+                "Manage",
                 style: TextStyle(
                     color: AppColors.whiteColor,
                     fontWeight: FontWeight.w100,
@@ -1646,10 +1820,6 @@ class _HomescreenState extends State<Homescreen> {
             fetchAuthtokenApi();
             return;
           }
-
-          setState(() {
-            isLoading = false;
-          });
         });
       } else {
         setState(() {
@@ -1756,9 +1926,6 @@ class _HomescreenState extends State<Homescreen> {
               ResumeMembershipModal.fromJson(json.decode(response.body));
 
           if (response.statusCode == 200) {
-            setState(() {
-              isLoading = false;
-            });
             fetchAuthtokenApi();
             showCustomSuccessSnackbar(
               title: 'Membership Resumed',
@@ -1812,6 +1979,9 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   fetchAuthtokenApi() {
+    setState(() {
+      isLoading = true;
+    });
     SaveAuthtokenData.removeAuthToken();
     checkInternet().then((internet) async {
       if (internet) {
@@ -2197,8 +2367,8 @@ class _HomescreenState extends State<Homescreen> {
 
           if (mounted) {
             setState(() {
-              isLoading = false;
-              _isTimeDataLoading = false;
+              // isLoading = false;
+              // _isTimeDataLoading = false;
             });
             dev.log('Error : ${stackTrace.toString()}');
           }

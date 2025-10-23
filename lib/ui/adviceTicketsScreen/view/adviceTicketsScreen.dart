@@ -185,6 +185,15 @@ class _adviceTicketsScreenState extends State<adviceTicketsScreen> {
                               ),
                             ),
                             SizedBox(height: 2.h),
+                            Text(
+                              'Our offices are open Mon–Fri (9am–5pm UK time) Excluding UK Bank Holidays. Our Experts aim to respond to all queries within 24hrs but in some cases this can take longer depending on workload and the complexity of the issue you’re facing. Speak soon!',
+                              style: TextStyle(
+                                  color: AppColors.bgColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: FontFamily.bold,
+                                  fontSize: 15.sp),
+                            ),
+                            SizedBox(height: 2.h),
                             Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),

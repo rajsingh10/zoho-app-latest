@@ -35,7 +35,6 @@ class Imgs {
   static const String homepagefourphoto =
       'assets/academy/homepagefourphoto.png';
 
-
   static const String homepagenew1 = 'assets/academy/homepagenew1.png';
   static const String homepagenew2 = 'assets/academy/homepagenew2.png';
 

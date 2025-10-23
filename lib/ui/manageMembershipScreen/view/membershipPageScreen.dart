@@ -919,11 +919,11 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
               title: Text(
-                'Stop Pausing',
+                'Reactivate Your Paused Membership',
                 style: TextStyle(fontSize: 18.sp),
               ),
               content: Text(
-                'Are you sure you want to stop your membership from pausing?',
+                'Please confirm that you would like to Reactivate your Paused Membership?',
                 style: TextStyle(fontSize: 17.sp),
               ),
               actions: [
@@ -963,7 +963,8 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                   fontSize: 17.sp),
             ),
             Text(
-              'Stop Pausing',
+              'Reactivate Your Paused Membership',
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
