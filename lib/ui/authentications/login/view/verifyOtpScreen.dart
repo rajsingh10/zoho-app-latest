@@ -19,6 +19,7 @@ import '../../../../apiCalling/apiConfig.dart';
 import '../../../../apiCalling/buildErrorDialog.dart';
 import '../../../../apiCalling/checkInternetModule.dart';
 import '../../../../apiCalling/saveUserData.dart';
+import '../../../../main.dart';
 import '../../../homeScreen/view/homeScreen.dart';
 import '../modal/sendOtpModal.dart';
 import '../provider/loginProvider.dart';
@@ -432,8 +433,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'email': widget.emailAddress.toString(),
       'otp': _pinController.text.trim().toString(),
       "customer_id": widget.customerid.toString(),
-      // "fcm_token": myDeviceToken ?? '',
-      "fcm_token": 'xyz',
+      "fcm_token": myDeviceToken ?? '',
+      // "fcm_token": 'xyz',
     };
     print(data);
     checkInternet().then((internet) async {
@@ -505,8 +506,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'otp': _pinController.text.trim().toString(),
       'country_code': widget.countryCode.toString(),
       "customer_id": widget.customerid.toString(),
-      // "fcm_token": myDeviceToken ?? '',
-      "fcm_token": 'xyz',
+      "fcm_token": myDeviceToken ?? '',
+      // "fcm_token": 'xyz',
     };
     print("=====>>>>>$data");
     checkInternet().then((internet) async {
