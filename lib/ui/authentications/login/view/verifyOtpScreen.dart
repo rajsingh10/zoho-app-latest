@@ -433,7 +433,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'email': widget.emailAddress.toString(),
       'otp': _pinController.text.trim().toString(),
       "customer_id": widget.customerid.toString(),
-      // "fcm_token": myDeviceToken ?? '',
+      "fcm_token": myDeviceToken ?? '',
     };
     print(data);
     checkInternet().then((internet) async {
@@ -505,8 +505,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       'otp': _pinController.text.trim().toString(),
       'country_code': widget.countryCode.toString(),
       "customer_id": widget.customerid.toString(),
-      // "fcm_token": myDeviceToken ?? '',
-      "fcm_token":  'xyz',
+      "fcm_token": myDeviceToken ?? '',
+      // "fcm_token":  'xyz',
     };
     print("=====>>>>>$data");
     checkInternet().then((internet) async {
