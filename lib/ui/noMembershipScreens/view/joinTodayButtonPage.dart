@@ -412,7 +412,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(webViewAssociates(
-                                            link: "https://www.theadvicecentre.ltd"));
+                                            link:
+                                                "https://www.theadvicecentre.ltd"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -457,7 +458,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                     InkWell(
                                       onTap: () {
                                         Get.to(webViewAssociates(
-                                            link: "https://www.bizboard.co.uk"));
+                                            link:
+                                                "https://www.bizboard.co.uk"));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -536,8 +538,7 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                               InkWell(
                                 onTap: () {
                                   Get.to(webViewAssociates(
-                                      link:
-                                      "https://www.amzbuddy.ai/"));
+                                      link: "https://www.amzbuddy.ai/"));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -550,7 +551,8 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                       color: AppColors.whiteColor),
                                   child: Column(
                                     children: [
-                                      ClipRRect(borderRadius: BorderRadius.circular(10),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
                                         child: Image.asset(
                                           Imgs.amzBuddy,
                                           scale: 4.5,
@@ -564,14 +566,14 @@ class _joinTodayButtonPageState extends State<joinTodayButtonPage> {
                                         onTap: () {
                                           Get.to(webViewAssociates(
                                               link:
-                                              "https://www.amzbuddy.ai/"));
+                                                  "https://www.amzbuddy.ai/"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4.w, vertical: 1.h),
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(50),
+                                                  BorderRadius.circular(50),
                                               color: AppColors.bgColor),
                                           child: Text(
                                             "Find Out More",

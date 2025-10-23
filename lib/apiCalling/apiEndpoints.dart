@@ -36,6 +36,5 @@ class apiEndpoints {
   static String fetchTickets =
       "${zohoDeskBaseUrl}tickets/search?customField1=cf_plan_id:";
   static String therdapi =
-
       "${zohoDeskBaseUrl}tickets/150682000008181001/threads/";
 }

@@ -249,20 +249,20 @@ import 'firebase_options.dart';
 String? myDeviceToken;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 /// Initialize Local Notifications
 Future<void> initLocalNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
+      AndroidInitializationSettings('@mipmap/ic_launcher');
 
   const DarwinInitializationSettings initializationSettingsIOS =
-  DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-      defaultPresentSound: true,
-      requestCriticalPermission: true);
+      DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+          defaultPresentSound: true,
+          requestCriticalPermission: true);
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
@@ -294,7 +294,7 @@ Future<void> _showLocalNotification(RemoteMessage message) async {
   log("🔔 Showing Local Notification - Title: $title, Body: $body, BigImage: $bigImage, SmallImage: $smallImage");
 
   final AndroidNotificationDetails androidPlatformChannelSpecifics =
-  AndroidNotificationDetails(
+      AndroidNotificationDetails(
     'basic_channel',
     'Basic Notifications',
     channelDescription: 'Used for basic notifications',
@@ -303,21 +303,21 @@ Future<void> _showLocalNotification(RemoteMessage message) async {
     playSound: true,
     styleInformation: bigImage != null
         ? BigPictureStyleInformation(
-      FilePathAndroidBitmap(bigImage),
-      contentTitle: title,
-      summaryText: body,
-      largeIcon:
-      smallImage != null ? FilePathAndroidBitmap(smallImage) : null,
-    )
+            FilePathAndroidBitmap(bigImage),
+            contentTitle: title,
+            summaryText: body,
+            largeIcon:
+                smallImage != null ? FilePathAndroidBitmap(smallImage) : null,
+          )
         : null,
   );
 
   const DarwinNotificationDetails iOSPlatformChannelSpecifics =
-  DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-      criticalSoundVolume: 100);
+      DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          criticalSoundVolume: 100);
 
   final NotificationDetails platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
@@ -421,7 +421,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> checkInitialMessage() async {
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null &&
         initialMessage.data['sender_token'] != myDeviceToken) {
       await _showLocalNotification(initialMessage);
@@ -435,14 +435,14 @@ class _MyAppState extends State<MyApp> {
 
       if (io.Platform.isIOS) {
         appKey =
-        "Y18FyOPEKwH9qLH6AN6BJY5cZ7aRvstiPpQitpCUSe1gQpI81qLcz6XWGzv1mdjN0N2IxLEMcjIPbzwIr3gPau4IBnCIgMXVxL0eBJyQj3g8U58w6cAKMg%3D%3D_eu";
+            "Y18FyOPEKwH9qLH6AN6BJY5cZ7aRvstiPpQitpCUSe1gQpI81qLcz6XWGzv1mdjN0N2IxLEMcjIPbzwIr3gPau4IBnCIgMXVxL0eBJyQj3g8U58w6cAKMg%3D%3D_eu";
         accessKey =
-        "Z8m6sGDVrZSyhGVPLMQblFvJVta91N8s3L7TfKUZF3ALV9vuYrk7zvSkhsjCDyJVzs0kpTHr%2BNL4EywBDGjLLq%2BNBSL5S6EIYo7qaRZ%2BUtqvw0sQwAc8%2FVItA1uTffRQDFsjkD%2BrRRjiqP8rJ0kE%2F84wko8u5PhNE8IA0L0udBo%3D";
+            "Z8m6sGDVrZSyhGVPLMQblFvJVta91N8s3L7TfKUZF3ALV9vuYrk7zvSkhsjCDyJVzs0kpTHr%2BNL4EywBDGjLLq%2BNBSL5S6EIYo7qaRZ%2BUtqvw0sQwAc8%2FVItA1uTffRQDFsjkD%2BrRRjiqP8rJ0kE%2F84wko8u5PhNE8IA0L0udBo%3D";
       } else {
         appKey =
-        "Y18FyOPEKwH9qLH6AN6BJY5cZ7aRvstiPpQitpCUSe1gQpI81qLcz6XWGzv1mdjN0N2IxLEMcjIPbzwIr3gPau4IBnCIgMXVxL0eBJyQj3g8U58w6cAKMg%3D%3D_eu";
+            "Y18FyOPEKwH9qLH6AN6BJY5cZ7aRvstiPpQitpCUSe1gQpI81qLcz6XWGzv1mdjN0N2IxLEMcjIPbzwIr3gPau4IBnCIgMXVxL0eBJyQj3g8U58w6cAKMg%3D%3D_eu";
         accessKey =
-        "eMWfJMMaw4S%2BmOFdVlYcPQxaGAaPqICx4NOPeXfDBL1iYyRj7P8wr7XsIeecrPLmV9Q7WCf1H2hpgaTyq8g2Gew%2BBQnAx7jRGANkOeCzQclDrqeiLmkU%2BTvagdVJsTq17%2F3zPFz1ZAInV%2F%2BNfM5htGasAerateoQ";
+            "eMWfJMMaw4S%2BmOFdVlYcPQxaGAaPqICx4NOPeXfDBL1iYyRj7P8wr7XsIeecrPLmV9Q7WCf1H2hpgaTyq8g2Gew%2BBQnAx7jRGANkOeCzQclDrqeiLmkU%2BTvagdVJsTq17%2F3zPFz1ZAInV%2F%2BNfM5htGasAerateoQ";
       }
 
       try {

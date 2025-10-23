@@ -176,6 +176,7 @@ class Adviceprovider extends ChangeNotifier {
       rethrow; // 👈 rethrow for catchError() to handle
     }
   }
+
   Future<http.Response> therdDetails(therdid) async {
     String url = "${apiEndpoints.therdapi}$therdid";
     print(url);

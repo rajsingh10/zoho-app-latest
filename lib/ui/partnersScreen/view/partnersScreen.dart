@@ -56,13 +56,13 @@ class _partnersScreenState extends State<partnersScreen> {
                       SizedBox(height: 2.h),
                       InkWell(
                         onTap: () {
-                        Get.to(
-                          WebviewScreen(
-                            link:
-                            "https://forms.zohopublic.eu/theadvicecentreltd/form/Tideform/formperma/cJvInVC6B_gZoM3y5rHRmEXlKWMX-Gb0oq0VfIq_vXM",
-                          ),
-                        );
-                      },
+                          Get.to(
+                            WebviewScreen(
+                              link:
+                                  "https://forms.zohopublic.eu/theadvicecentreltd/form/Tideform/formperma/cJvInVC6B_gZoM3y5rHRmEXlKWMX-Gb0oq0VfIq_vXM",
+                            ),
+                          );
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.symmetric(
@@ -105,14 +105,15 @@ class _partnersScreenState extends State<partnersScreen> {
                         ),
                       ),
                       SizedBox(height: 1.h),
-                      InkWell(onTap: () {
-                        Get.to(
-                          WebviewScreen(
-                            link:
-                            "https://forms.zohopublic.eu/theadvicecentreltd/form/OGH/formperma/t96Sr1f6pbWACEAUGkHUnhm0DMLxutmQWM1KvMELujU",
-                          ),
-                        );
-                      },
+                      InkWell(
+                        onTap: () {
+                          Get.to(
+                            WebviewScreen(
+                              link:
+                                  "https://forms.zohopublic.eu/theadvicecentreltd/form/OGH/formperma/t96Sr1f6pbWACEAUGkHUnhm0DMLxutmQWM1KvMELujU",
+                            ),
+                          );
+                        },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.asset(
@@ -122,14 +123,15 @@ class _partnersScreenState extends State<partnersScreen> {
                         ),
                       ),
                       SizedBox(height: 1.h),
-                      InkWell(onTap: () {
-                        Get.to(
-                          WebviewScreen(
-                            link:
-                            "https://forms.zohopublic.eu/theadvicecentreltd/form/SJCForm/formperma/6l5VWGzdwrBtXakdCDWS_tBrBAIDzl15Ml8pLIQZzM4",
-                          ),
-                        );
-                      },
+                      InkWell(
+                        onTap: () {
+                          Get.to(
+                            WebviewScreen(
+                              link:
+                                  "https://forms.zohopublic.eu/theadvicecentreltd/form/SJCForm/formperma/6l5VWGzdwrBtXakdCDWS_tBrBAIDzl15Ml8pLIQZzM4",
+                            ),
+                          );
+                        },
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 3.w, vertical: 0.5.h),

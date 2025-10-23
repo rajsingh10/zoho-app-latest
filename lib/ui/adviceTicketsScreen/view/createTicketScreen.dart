@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/ui/adviceTicketsScreen/Modal/AllDeparmentModal.dart'
     as AllDeparmentModal;
+import 'package:zohosystem/ui/manageMembershipScreen/view/membershipPageScreen.dart';
 import 'package:zohosystem/utils/textFields.dart';
 
 import '../../../apiCalling/Loader.dart';
@@ -89,15 +91,18 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
       name: 'The Advice Centre: VIP',
       email: 'support@amzbuddy.ai',
       subject: 'VIP\tSupport',
-    ),    SupportDepartment(
+    ),
+    SupportDepartment(
       name: 'AMZAgency',
       email: 'support@amzagency.co.uk',
       subject: 'AMZAgency\tSupport\tDepartment',
-    ),SupportDepartment(
+    ),
+    SupportDepartment(
       name: 'Just Ask Alex',
       email: 'support@justaskalex.co.uk',
       subject: 'Ask\tAlex',
-    ),SupportDepartment(
+    ),
+    SupportDepartment(
       name: 'BizBoard',
       email: 'support@bizboard.co.uk',
       subject: 'Biz\tBoard',
@@ -692,6 +697,43 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                     ),
                                   ),
                                   SizedBox(
+                                    height: 2.h,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                        color: AppColors.bgColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: FontFamily.light,
+                                        fontSize: 15.sp,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              'Before creating an Advice Centre ticket, please make sure to select a department above where you have a membership plan. If you choose a department without an active plan, your request may not receive a response. ',
+                                          style: TextStyle(
+                                              color: AppColors.bgColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: FontFamily.bold,
+                                              fontSize: 15.sp),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              'Click Here to view your current active membership plans..',
+                                          style: TextStyle(
+                                            color: Colors.orange[
+                                                800], // orange clickable text
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Get.to(
+                                                  () => membershipPageScreen());
+                                            },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
                                     height: 5.h,
                                   ),
                                   InkWell(
@@ -756,12 +798,15 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
 
             setState(() {
               customerList = allDepartment?.data ?? [];
+              log('Customer Names: ${customerList.map((e) => e.name).toList()}');
+
               final matchedList = (allDepartment?.data ?? []).where((apiDept) {
                 return departments.any((staticDept) =>
                     apiDept.name?.toLowerCase().trim() ==
                     staticDept.name.toLowerCase().trim());
               }).toList();
               customerList = matchedList;
+
               isLoading = false;
             });
           } else if (response.statusCode == 422) {

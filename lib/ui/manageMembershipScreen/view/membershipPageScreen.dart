@@ -13,6 +13,7 @@ import 'package:zohosystem/ui/adviceTicketsScreen/view/adviceTicketsScreen.dart'
 import 'package:zohosystem/ui/bills&Payments/view/bills&PaymentsScreen.dart';
 import 'package:zohosystem/ui/homeScreen/view/homeScreen.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/modal/pauseSubscriptionModal.dart';
+import 'package:zohosystem/ui/manageMembershipScreen/view/manageMembershipScreen.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/view/verifyPaymentsScripationScreen.dart';
 import 'package:zohosystem/utils/textFields.dart';
 
@@ -24,7 +25,6 @@ import '../../../apiCalling/saveUserToken.dart';
 import '../../../utils/bottomBar.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/fontFamily.dart';
-import '../../../utils/images.dart';
 import '../../../utils/snackBars.dart';
 import '../../authentications/login/modal/authTokenModal.dart';
 import '../../authentications/login/provider/loginProvider.dart';
@@ -200,55 +200,39 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                       child: Column(
                         children: [
                           SizedBox(height: 5.h),
-                          Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                child: Image.asset(
-                                  Imgs.backIcon,
-                                  scale: 30,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 3.w,
-                              ),
-                              Text.rich(
+                          Text.rich(
+                            TextSpan(
+                              children: [
                                 TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Manage Membership ",
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.bold,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.whiteColor,
-                                        fontSize: 19.sp,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: "HERE",
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.bold,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.whiteColor,
-                                        fontSize: 19.sp,
-                                        decorationColor: Colors.white,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          // Get.to(
-                                          //   manageMembershipScreen(),
-                                          //   transition: Transition.rightToLeft,
-                                          //   duration: Duration(milliseconds: 250),
-                                          // );
-                                        },
-                                    ),
-                                  ],
+                                  text: "Manage Membership ",
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.bold,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.whiteColor,
+                                    fontSize: 19.sp,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                TextSpan(
+                                  text: "HERE",
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.bold,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.whiteColor,
+                                    fontSize: 19.sp,
+                                    decorationColor: Colors.white,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Get.to(
+                                      //   manageMembershipScreen(),
+                                      //   transition: Transition.rightToLeft,
+                                      //   duration: Duration(milliseconds: 250),
+                                      // );
+                                    },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -313,6 +297,34 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                           color: const Color(0xff2273bb)),
                                       child: Text(
                                         "Downgrade Membership",
+                                        style: TextStyle(
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: FontFamily.bold,
+                                            fontSize: 14.sp),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 2.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(manageMembershipScreen());
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 6.w, vertical: 1.h),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(90),
+                                          color: AppColors.orangeColor),
+                                      child: Text(
+                                        "Add an Additional Membership",
                                         style: TextStyle(
                                             color: AppColors.whiteColor,
                                             fontWeight: FontWeight.bold,

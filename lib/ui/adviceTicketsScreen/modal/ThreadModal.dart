@@ -1,4 +1,3 @@
-
 class ThreadModal {
   String? content;
   String? id;

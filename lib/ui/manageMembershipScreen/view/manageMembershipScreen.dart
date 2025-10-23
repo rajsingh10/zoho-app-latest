@@ -9,13 +9,13 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/apiCalling/Loader.dart';
 import 'package:zohosystem/ui/homeScreen/view/homeScreen.dart';
-import 'package:zohosystem/ui/landingScreen/view/webviewIntroducers.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/view/verifyPaymentsScripationScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/amzAdviceFindOutMore/amzAdviceFindOutMoreScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/amzAgencyFindOutMore/amzAgencyFindOutMoreScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/introducersFindOutMore/introducersFindOutMorePageScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/justAskAlexFindOutMore/justAskAlexFindOutMorePageScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/marketingAgencyFindOutMore/marketingAgencyFindOutMoreScreen.dart';
+import 'package:zohosystem/ui/noMembershipScreens/view/webviewScreen.dart';
 
 import '../../../apiCalling/apiConfig.dart';
 import '../../../apiCalling/buildErrorDialog.dart';
@@ -34,7 +34,6 @@ import '../../authentications/signup/modal/createSubscriptionModal.dart';
 import '../../authentications/signup/provider/signupProvider.dart';
 import '../../homeScreen/modal/subscriptionsDateModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
-import '../../landingScreen/view/webViewAssociates.dart';
 import '../modal/resumeSubscriptionModal.dart';
 import '../provider/membershipProvider.dart';
 import 'membershipPageScreen.dart';
@@ -69,20 +68,35 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: 5.h),
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Manage Membership ",
-                              style: TextStyle(
-                                fontFamily: FontFamily.bold,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.whiteColor,
-                                fontSize: 19.sp,
-                              ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Image.asset(
+                              Imgs.backIcon,
+                              scale: 30,
                             ),
-                          ],
-                        ),
+                          ),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Manage Membership ",
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.bold,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.whiteColor,
+                                    fontSize: 19.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(null),
+                        ],
                       ),
                     ],
                   ),
@@ -357,7 +371,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "Our Other Memberships:",
+                                    "All Membership Plans:",
                                     style: TextStyle(
                                       fontFamily: FontFamily.extraBold,
                                       fontWeight: FontWeight.bold,
@@ -468,7 +482,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 2.w, vertical: 1.h),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -487,11 +502,14 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w, vertical: 1.h),
+                                                    horizontal: 5.w,
+                                                    vertical: 1.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(50),
-                                                    color: AppColors.orangeColor),
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color:
+                                                        AppColors.orangeColor),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -508,8 +526,6 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                       ),
                                     ],
                                   ),
-
-
                                   SizedBox(
                                     height: 1.h,
                                   ),
@@ -613,7 +629,8 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 2.w, vertical: 1.h),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -627,15 +644,18 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                Get.to(webViewIntroducers(
-                                                    link:"https://www.aiadvicecentre.com/lander"));
+                                                Get.to(WebviewScreen(
+                                                    link:
+                                                        "https://www.aiadvicecentre.com/lander"));
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w, vertical: 1.h),
+                                                    horizontal: 5.w,
+                                                    vertical: 1.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(50),
+                                                        BorderRadius.circular(
+                                                            50),
                                                     color: AppColors.perpl),
                                                 child: Text(
                                                   "Find Out More",
@@ -653,21 +673,19 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                       ),
                                     ],
                                   ),
-
-
                                   SizedBox(
                                     height: 1.h,
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 2.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(20),
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -681,9 +699,9 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                Get.to(webViewIntroducers(
+                                                Get.to(WebviewScreen(
                                                     link:
-                                                    "www.universityofexperts.com"));
+                                                        "www.universityofexperts.com"));
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -691,9 +709,10 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                     vertical: 1.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        50),
-                                                    color: AppColors.orangeColor),
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color:
+                                                        AppColors.orangeColor),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -713,7 +732,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             horizontal: 2.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(20),
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -727,9 +746,9 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                Get.to(webViewIntroducers(
+                                                Get.to(WebviewScreen(
                                                     link:
-                                                    "www.thedeveloperagency.co.uk"));
+                                                        "www.thedeveloperagency.co.uk"));
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
@@ -737,9 +756,9 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                     vertical: 1.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        50),
-                                                    color: AppColors.perpl ),
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color: AppColors.perpl),
                                                 child: Text(
                                                   "Find Out More",
                                                   style: TextStyle(
@@ -754,12 +773,12 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                           ],
                                         ),
                                       ),
-
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 2.w, vertical: 1.h),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -773,15 +792,18 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                Get.to(webViewIntroducers(
-                                                    link: "www.bizboard.co.uk"));
+                                                Get.to(WebviewScreen(
+                                                    link:
+                                                        "www.bizboard.co.uk"));
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w, vertical: 1.h),
+                                                    horizontal: 5.w,
+                                                    vertical: 1.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(50),
+                                                        BorderRadius.circular(
+                                                            50),
                                                     color: AppColors.bizvoard),
                                                 child: Text(
                                                   "Find Out More",
@@ -799,7 +821,6 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                       ),
                                     ],
                                   ),
-
                                 ],
                               )),
                         ],

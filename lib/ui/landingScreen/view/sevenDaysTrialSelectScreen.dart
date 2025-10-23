@@ -220,23 +220,28 @@ class _SevendaystrialselectscreenState
             Positioned(
               top: 72.h,
               right: 15.w,
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'Past Member?',
-                    style: TextStyle(
-                        color: AppColors.whiteColor,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontFamily.bold),
-                  ),
-                  Text(
-                    'Reactivate here...',
-                    style: TextStyle(
-                        color: AppColors.whiteColor,
-                        fontFamily: FontFamily.regular),
-                  ),
-                ],
+              child: InkWell(
+                onTap: () {
+                  Get.to(const Nomembershomescreen());
+                },
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Past Member?',
+                      style: TextStyle(
+                          color: AppColors.whiteColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: FontFamily.bold),
+                    ),
+                    Text(
+                      'Reactivate here...',
+                      style: TextStyle(
+                          color: AppColors.whiteColor,
+                          fontFamily: FontFamily.regular),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

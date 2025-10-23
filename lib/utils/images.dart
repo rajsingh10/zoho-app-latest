@@ -30,8 +30,10 @@ class Imgs {
   static const String homeyellow = 'assets/academy/homeyellow.png';
   static const String yellowtwo = 'assets/academy/yellowtwo.png';
   static const String homepagetwpphoto = 'assets/academy/homepagetwpphoto.png';
-  static const String homepagethreephoto = 'assets/academy/homepagethreephoto.png';
-  static const String homepagefourphoto = 'assets/academy/homepagefourphoto.png';
+  static const String homepagethreephoto =
+      'assets/academy/homepagethreephoto.png';
+  static const String homepagefourphoto =
+      'assets/academy/homepagefourphoto.png';
   static const String amzLadyPhoto = 'assets/academy/amzLady.png';
   static const String amzClientPhoto = 'assets/academy/amzClientLogo.png';
   static const String amzImg1Photo = 'assets/academy/amzImgss1.png';

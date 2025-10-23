@@ -11,6 +11,7 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zohosystem/ui/bills&Payments/view/bills&PaymentsScreen.dart';
 import 'package:zohosystem/ui/homeScreen/view/demandServicesScreen.dart';
+import 'package:zohosystem/ui/manageMembershipScreen/view/membershipPageScreen.dart';
 import 'package:zohosystem/ui/moreScreen/view/moreScreen.dart';
 import 'package:zohosystem/ui/partnersScreen/view/partnersScreen.dart';
 import 'package:zohosystem/utils/fontFamily.dart';
@@ -21,7 +22,6 @@ import '../apiCalling/saveUserToken.dart';
 import '../ui/adviceTicketsScreen/view/adviceTicketsScreen.dart';
 import '../ui/homeScreen/view/homeScreen.dart';
 import '../ui/landingScreen/view/landingScreen.dart';
-import '../ui/manageMembershipScreen/view/manageMembershipScreen.dart';
 import '../ui/moreScreen/view/formsApprovalsScreen.dart';
 import '../ui/moreScreen/view/personalDetailsScreen.dart';
 import '../ui/noMembershipScreens/view/webviewScreen.dart';
@@ -177,7 +177,7 @@ class _AppBottombarState extends State<AppBottombar> {
                   children: [
                     const Icon(null),
                     Text(
-                      "Select Support Department",
+                      "Email Support",
                       style: TextStyle(
                         color: AppColors.bgColor,
                         fontSize: 18.sp,
@@ -350,7 +350,7 @@ class _AppBottombarState extends State<AppBottombar> {
                   children: [
                     const Icon(null),
                     Text(
-                      "Select Support Department",
+                      "Whatsapp Support",
                       style: TextStyle(
                         color: AppColors.bgColor,
                         fontSize: 18.sp,
@@ -521,7 +521,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 setState(() {
                   selected = 2;
                 });
-                Get.offAll(() => const manageMembershipScreen());
+                Get.offAll(() => const membershipPageScreen());
               }
             },
             child: Column(

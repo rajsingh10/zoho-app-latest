@@ -79,6 +79,8 @@ class _HomescreenState extends State<Homescreen> {
       totalSpentTime = 0;
     });
     subscriptionsViewApi();
+    getPlansApi();
+    fetchContractApi(userData?.data?[0].customerId);
   }
 
   void _initializePageController() async {
@@ -261,6 +263,17 @@ class _HomescreenState extends State<Homescreen> {
                               _buildMembershipStatusSection(),
                               SizedBox(
                                 height: 2.h,
+                              ),
+                              Text(
+                                'Your Monthly Advice Time is tracked by professional time-tracking software. If you have any questions about how to make the most of your allocated Monthly Advice Time, feel free to reach out!',
+                                style: TextStyle(
+                                    color: AppColors.bgColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: FontFamily.bold,
+                                    fontSize: 14.sp),
+                              ),
+                              SizedBox(
+                                height: 1.h,
                               ),
                               _isTimeDataLoading
                                   ? Container()
@@ -844,6 +857,36 @@ class _HomescreenState extends State<Homescreen> {
                                   ),
                                   child: Image.asset(
                                     Imgs.homepagetwpphoto,
+                                    scale: 1.3,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                InkWell(
+                                  onTap: () => Get.to(
+                                    WebviewScreen(
+                                      link:
+                                          "https://www.theadvicecentre.ltd/vip",
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    Imgs.homepagethreephoto,
+                                    scale: 1.3,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                InkWell(
+                                  onTap: () => Get.to(
+                                    WebviewScreen(
+                                      link:
+                                          "https://www.theamazontrainer.co.uk/",
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    Imgs.homepagefourphoto,
                                     scale: 1.3,
                                   ),
                                 ),
@@ -1569,8 +1612,6 @@ class _HomescreenState extends State<Homescreen> {
               }
 
               allTicketApi();
-              fetchContractApi(userData?.data?[0].customerId);
-              getPlansApi();
 
               // Load data for first subscription
               _updateTimeDataForCurrentSubscription();
@@ -1782,6 +1823,8 @@ class _HomescreenState extends State<Homescreen> {
             });
             SaveAuthtokenData.saveAuthData(authtoken!);
             subscriptionsViewApi();
+            getPlansApi();
+            fetchContractApi(userData?.data?[0].customerId);
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Token Error", message: sendOtp?.message ?? '');
@@ -1820,6 +1863,7 @@ class _HomescreenState extends State<Homescreen> {
   List<Pllans.Plans> plansList = [];
 
   getPlansApi() {
+    dev.log('Hello ji Hello');
     checkInternet().then((internet) async {
       if (internet) {
         Signupprovider().fetchPlansApi().then((response) async {
@@ -2511,10 +2555,10 @@ class _HomescreenState extends State<Homescreen> {
               });
             }
           } else {
-            showCustomErrorSnackbar(
-              title: 'Fetch Error',
-              message: getCustomer?.message ?? '',
-            );
+            // showCustomErrorSnackbar(
+            //   title: 'Fetch Error',
+            //   message: getCustomer?.message ?? '',
+            // );
             if (mounted) {
               setState(() {
                 isLoading = false;

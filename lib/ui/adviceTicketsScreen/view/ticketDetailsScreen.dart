@@ -221,8 +221,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: "#${viewDetailsTikitModal
-                                                            ?.ticketNumber}" ,
+                                                    text:
+                                                        "#${viewDetailsTikitModal?.ticketNumber}",
                                                     style: TextStyle(
                                                       color: Colors.black54,
                                                       fontSize: 16.sp,
@@ -231,7 +231,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(height: 1.h), RichText(
+                                            SizedBox(height: 1.h),
+                                            RichText(
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
@@ -353,7 +354,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
-                                                    text: "Layout :- ",
+                                                    text: "Department :- ",
                                                     style: TextStyle(
                                                       color:
                                                           AppColors.blackColor,
@@ -363,7 +364,10 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: "Department",
+                                                    text: viewDetailsTikitModal
+                                                            ?.layoutDetails
+                                                            ?.layoutName ??
+                                                        "",
                                                     style: TextStyle(
                                                       color: Colors.black54,
                                                       fontSize: 16.sp,

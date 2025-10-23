@@ -272,17 +272,20 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                         ),
                                       ],
                                     ),
-                                  ),SizedBox(
+                                  ),
+                                  SizedBox(
                                     height: 0.8.h,
-                                  ),Row(
+                                  ),
+                                  Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 2.5.w, vertical: 1.h),
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -291,12 +294,11 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                               scale: 3,
                                               // color: AppColors.yellowColor1,
                                             ),
-
                                             InkWell(
                                               onTap: () {
                                                 Get.to(WebviewScreen(
                                                   link:
-                                                  "https://calendly.com/alexander-shelton/the-advice-centre-introducers-demo",
+                                                      "https://calendly.com/alexander-shelton/the-advice-centre-introducers-demo",
                                                 ));
                                               },
                                               child: Container(
@@ -305,8 +307,10 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                                     vertical: 0.8.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(50),
-                                                    color: AppColors.yellowColor),
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color:
+                                                        AppColors.yellowColor),
                                                 child: Text(
                                                   "Book now",
                                                   style: TextStyle(
@@ -321,13 +325,12 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           ],
                                         ),
                                       ),
-
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 5.w, vertical: 1.h),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(20),
+                                                BorderRadius.circular(20),
                                             color: AppColors.whiteColor),
                                         child: Column(
                                           children: [
@@ -343,7 +346,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                               onTap: () {
                                                 Get.to(WebviewScreen(
                                                   link:
-                                                  "https://calendly.com/alexander-shelton/just-ask-alex-demo",
+                                                      "https://calendly.com/alexander-shelton/just-ask-alex-demo",
                                                 ));
                                               },
                                               child: Container(
@@ -352,10 +355,9 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                                     vertical: 0.8.h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        50),
-                                                    color:
-                                                    AppColors.blueColor),
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color: AppColors.blueColor),
                                                 child: Text(
                                                   "Book now",
                                                   style: TextStyle(
@@ -372,7 +374,6 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       ),
                                     ],
                                   ),
-
                                   SizedBox(
                                     height: 0.8.h,
                                   ),
@@ -427,7 +428,6 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                           ],
                                         ),
                                       ),
-
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 5.w, vertical: 1.h),
@@ -986,7 +986,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       InkWell(
                                         onTap: () {
                                           Get.to(webViewAssociates(
-                                              link: "https://www.theadvicecentre.ltd"));
+                                              link:
+                                                  "https://www.theadvicecentre.ltd"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -1040,7 +1041,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       InkWell(
                                         onTap: () {
                                           Get.to(webViewAssociates(
-                                              link: "https://www.bizboard.co.uk"));
+                                              link:
+                                                  "https://www.bizboard.co.uk"));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -1070,7 +1072,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                               InkWell(
                                 onTap: () {
                                   Get.to(webViewAssociates(
-                                      link: "https://www.thedeveloperagency.co.uk"));
+                                      link:
+                                          "https://www.thedeveloperagency.co.uk"));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -1168,15 +1171,15 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     ],
                                   ),
                                 ),
-                              ),SizedBox(
+                              ),
+                              SizedBox(
                                 width: 2.w,
                               ),
                               InkWell(
                                 onTap: () {
-                                Get.to(webViewAssociates(
-                                    link:
-                                    "https://www.amzbuddy.ai/"));
-                              },
+                                  Get.to(webViewAssociates(
+                                      link: "https://www.amzbuddy.ai/"));
+                                },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 1.w, vertical: 0.5.h),
@@ -1188,7 +1191,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       color: AppColors.whiteColor),
                                   child: Column(
                                     children: [
-                                      ClipRRect(borderRadius: BorderRadius.circular(10),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
                                         child: Image.asset(
                                           Imgs.amzBuddy,
                                           scale: 6.5,

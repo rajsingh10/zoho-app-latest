@@ -22,7 +22,6 @@ class _webViewAssociatesState extends State<webViewAssociates> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   InAppWebViewController? webViewController;
