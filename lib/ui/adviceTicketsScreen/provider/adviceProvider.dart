@@ -39,7 +39,7 @@ class Adviceprovider extends ChangeNotifier {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = $headers');
     print("header pass====>>>$headers");
-    String url = '${apiEndpoints.departments}/$id';
+    String url = 'https://desk.zoho.eu/api/v1/departments/$id';
     print(url);
 
     var responseJson;
@@ -152,7 +152,7 @@ class Adviceprovider extends ChangeNotifier {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     headers['Content-Type'] = 'application/json';
     headers['impersonatedUserId'] = storedId ?? '';
-    log('API Headers: $headers');
+    log('Reply API Headers: $headers');
 
     try {
       final response = await http

@@ -101,6 +101,73 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
       email: 'support@amzbuddy.ai',
       subject: 'AMZBuddy\tSupport',
     ),
+    SupportDepartment(
+      name: 'BizBoard',
+      email: 'support@bizboard.co.uk',
+      subject: 'Biz\tBoard\tSupport',
+    ),
+    SupportDepartment(
+      name: 'AMZ Advice Centre',
+      email: 'support@amzadvicecentre.com',
+      subject: 'AMZ\tAdvice\tCentre\tSupport',
+      whatsAppNumber: '+44-114-405-5024',
+    ),
+    SupportDepartment(
+      name: 'AMZ Agency',
+      email: 'support@amzagency.co.uk',
+      subject: 'AMZAgency\tSupport',
+    ),
+    SupportDepartment(
+      name: 'Marketing Advice Centre',
+      email: 'support@marketingadvicecentre.co.uk',
+      subject: 'Marketing\tAdvice\tCentre\tSupport',
+      whatsAppNumber: '+44-114-405-5021',
+    ),
+    SupportDepartment(
+      name: 'The Marketing Agency',
+      email: 'support@the-marketingagency.co.uk',
+      subject: 'The\tMarketing\tAgency\tSupport',
+    ),
+    SupportDepartment(
+      name: 'The Advice Centre: Accounts',
+      email: 'accounts@theadvicecentre.ltd',
+      subject: 'Accounts\tSupport',
+    ),
+    SupportDepartment(
+      name: 'The Advice Centre: Introducers',
+      email: 'support@amzadvicecentre.com',
+      subject: 'Introducers\tSupport',
+    ),
+    SupportDepartment(
+      name: 'Just Ask Alex',
+      email: 'support@amzadvicecentre.com',
+      subject: 'Just\tAsk\tAlex\tSupport',
+    ),
+    SupportDepartment(
+      name: 'AMZBuddy',
+      email: 'support@amzbuddy.ai',
+      subject: 'AMZBuddy\tSupport',
+    ),
+    SupportDepartment(
+      name: 'The Advice Centre: VIP',
+      email: 'support@amzbuddy.ai',
+      subject: 'VIP\tSupport',
+    ),
+    SupportDepartment(
+      name: 'AMZAgency',
+      email: 'support@amzagency.co.uk',
+      subject: 'AMZAgency\tSupport\tDepartment',
+    ),
+    SupportDepartment(
+      name: 'Just Ask Alex',
+      email: 'support@justaskalex.co.uk',
+      subject: 'Ask\tAlex',
+    ),
+    SupportDepartment(
+      name: 'BizBoard',
+      email: 'support@bizboard.co.uk',
+      subject: 'Biz\tBoard',
+    ),
   ];
   String departmentEmail = '';
   bool isAdding = false;
@@ -1574,8 +1641,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             setState(() {
               // isLoading = false;
             });
-            allTicketRepliesApi();
             deparmentallapi();
+            allTicketRepliesApi();
           } else {
             setState(() {
               isLoading = false;
@@ -1988,6 +2055,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             .singleDepartment(viewDetailsTikitModal?.departmentId)
             .then((response) async {
           if (response.statusCode == 200) {
+            log('✅ API Response (200): ${response.body}');
             singleDepartment = SingleDepartmentModal.fromJson(
               json.decode(response.body),
             );
