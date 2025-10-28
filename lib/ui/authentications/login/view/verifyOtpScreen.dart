@@ -478,11 +478,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               isLoading = false;
             });
           }
-        }).catchError((error) {
+        }).catchError((error, stackTrace) {
           showCustomErrorSnackbar(
             title: 'Login Error',
             message: 'Internal Server Error',
           );
+          print('error : $stackTrace');
           setState(() {
             isLoading = false;
           });

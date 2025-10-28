@@ -95,7 +95,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                               ],
                             ),
                           ),
-                          Icon(null),
+                          const Icon(null),
                         ],
                       ),
                     ],
@@ -363,466 +363,119 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                             height: 2.h,
                           ),
                           Container(
-                              width: Device.width,
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 2.w, vertical: 3.h),
-                              color: AppColors.bgColor,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "All Membership Plans:",
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.extraBold,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.whiteColor,
-                                      fontSize: 19.sp,
+                            width: Device.width,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 2.w, vertical: 3.h),
+                            color: AppColors.bgColor,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "All Membership Plans:",
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.extraBold,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.whiteColor,
+                                    fontSize: 19.sp,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                Wrap(
+                                  alignment: WrapAlignment.spaceAround,
+                                  spacing: 5.w,
+                                  runSpacing: 1.h,
+                                  children: [
+                                    _buildCard(
+                                      image: Imgs.amz,
+                                      scale: 4,
+                                      color: const Color(0xfff2811b),
+                                      onTap: () => Get.to(
+                                          const amzAdviceFindOutMoreScreen()),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 2.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.amz,
-                                              scale: 4,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(
-                                                    const amzAdviceFindOutMoreScreen());
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 0.80.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: const Color(
-                                                        0xfff2811b)),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    _buildCard(
+                                      image: Imgs.theagency,
+                                      scale: 2.2,
+                                      color: const Color(0xff2070af),
+                                      onTap: () => Get.to(
+                                          const marketingAgencyFindOutMorePageScreen()),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.amzagency,
+                                      scale: 2.4,
+                                      color: AppColors.orangeColor,
+                                      onTap: () => Get.to(
+                                          const amzAgencyFindOutMoreScreen()),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.justaskalex,
+                                      scale: 5.5,
+                                      color: const Color(0xff2070af),
+                                      onTap: () => Get.to(
+                                          const JustAskAlexFindOutMorePageScreen()),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.theadvicecl,
+                                      scale: 5,
+                                      color: const Color(0xff8ebcd9),
+                                      onTap: () => Get.to(
+                                          const IntroducersFindOutMorePageScreen()),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.aicenterphoto,
+                                      scale: 6,
+                                      color: AppColors.perpl,
+                                      onTap: () => Get.to(
+                                        WebviewScreen(
+                                            link:
+                                                "https://www.aiadvicecentre.com/lander"),
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.theagency,
-                                              scale: 2.2,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(
-                                                    const marketingAgencyFindOutMorePageScreen());
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 0.80.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: const Color(
-                                                        0xff2070af)),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.univercity,
+                                      scale: 2.5,
+                                      color: AppColors.orangeColor,
+                                      onTap: () => Get.to(
+                                        WebviewScreen(
+                                            link:
+                                                "https://www.universityofexperts.com"),
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.amzagency,
-                                              scale: 2.4,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(
-                                                    const amzAgencyFindOutMoreScreen());
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color:
-                                                        AppColors.orangeColor),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.thedeveloperagency,
+                                      scale: 1.8,
+                                      color: AppColors.perpl,
+                                      onTap: () => Get.to(
+                                        WebviewScreen(
+                                            link:
+                                                "https://www.thedeveloperagency.co.uk"),
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.justaskalex,
-                                              scale: 5.5,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(
-                                                    const JustAskAlexFindOutMorePageScreen());
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: const Color(
-                                                        0xff2070af)),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.bizboard,
+                                      scale: 3.2,
+                                      color: AppColors.bizvoard,
+                                      onTap: () => Get.to(
+                                        WebviewScreen(
+                                            link: "https://www.bizboard.co.uk"),
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.theadvicecl,
-                                              scale: 5,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(
-                                                    const IntroducersFindOutMorePageScreen());
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: const Color(
-                                                        0xff8ebcd9)),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.allinonevip,
+                                      scale: 2,
+                                      color: AppColors.blackColor,
+                                      onTap: () => Get.to(
+                                        WebviewScreen(
+                                            link:
+                                                "https://www.theadvicecentre.ltd/vip"),
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.aicenterphoto,
-                                              scale: 6,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(WebviewScreen(
-                                                    link:
-                                                        "https://www.aiadvicecentre.com/lander"));
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: AppColors.perpl),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.univercity,
-                                              scale: 2.5,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(WebviewScreen(
-                                                    link:
-                                                        "www.universityofexperts.com"));
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color:
-                                                        AppColors.orangeColor),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.thedeveloperagency,
-                                              scale: 1.8,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(WebviewScreen(
-                                                    link:
-                                                        "www.thedeveloperagency.co.uk"));
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: AppColors.perpl),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2.w, vertical: 1.h),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.whiteColor),
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              Imgs.bizboard,
-                                              scale: 3.2,
-                                              // color: AppColors.yellowColor1,
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(WebviewScreen(
-                                                    link:
-                                                        "www.bizboard.co.uk"));
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w,
-                                                    vertical: 1.h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: AppColors.bizvoard),
-                                                child: Text(
-                                                  "Find Out More",
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.bold,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppColors.whiteColor,
-                                                    fontSize: 13.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -958,6 +611,47 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
   String? selectedMembership;
 
   List<Plans> plansList = [];
+
+  Widget _buildCard({
+    required String image,
+    required double scale,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      width: 40.w, // Adjust based on your layout
+      padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColors.whiteColor,
+      ),
+      child: Column(
+        children: [
+          Image.asset(image, scale: scale),
+          SizedBox(height: 1.h),
+          InkWell(
+            onTap: onTap,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: color,
+              ),
+              child: Text(
+                "Find Out More",
+                style: TextStyle(
+                  fontFamily: FontFamily.bold,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.whiteColor,
+                  fontSize: 13.sp,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   getPlansApi() {
     checkInternet().then((internet) async {

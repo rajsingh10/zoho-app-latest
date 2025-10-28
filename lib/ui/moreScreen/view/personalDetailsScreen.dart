@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:zohosystem/apiCalling/Loader.dart';
 import 'package:zohosystem/ui/authentications/signup/modal/countriesModal.dart';
@@ -1481,6 +1482,13 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
     });
   }
 
+  Future<void> _clearSubscriptionFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('selectedSubscriptionId');
+    await prefs.remove('selectedSubscriptionName');
+    await prefs.remove('selectedSubscriptionProductName');
+  }
+
   updateInformationApi() {
     if (_formKey.currentState!.validate()) {
       final Map<String, dynamic> data = {
@@ -1549,6 +1557,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
 
                 SaveAuthtokenData.clearUserData();
                 SaveDataLocal.clearUserData();
+                _clearSubscriptionFromPrefs();
                 Get.offAll(const LandingScreen());
               } else {
                 // if no email/phone change → go home

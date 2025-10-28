@@ -24,7 +24,7 @@ class MarketingOptModal {
 
 class Data {
   String? customerId;
-  int? marketingOptIn;
+  var marketingOptIn;
 
   Data({this.customerId, this.marketingOptIn});
 

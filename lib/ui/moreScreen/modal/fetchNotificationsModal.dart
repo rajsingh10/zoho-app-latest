@@ -25,7 +25,7 @@ class FetchNotificationsModal {
 }
 
 class Notifications {
-  int? id;
+  var id;
   String? title;
   String? message;
   String? createdAt;

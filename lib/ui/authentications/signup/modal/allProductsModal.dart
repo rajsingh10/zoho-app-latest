@@ -1,5 +1,5 @@
 class AllProductsModal {
-  int? code;
+  var code;
   String? message;
   List<Products>? products;
 

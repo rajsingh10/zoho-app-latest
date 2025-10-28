@@ -1,5 +1,5 @@
 class PauseMembershipModal {
-  int? code;
+  var code;
   String? message;
 
   PauseMembershipModal({this.code, this.message});

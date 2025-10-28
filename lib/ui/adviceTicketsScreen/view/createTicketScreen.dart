@@ -44,70 +44,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
   final TextEditingController _bodyController = TextEditingController();
   List<AllDeparmentModal.Data> customerList = [];
   String? selectedCustomer;
-  // final List<SupportDepartment> departments = [
-  //   SupportDepartment(
-  //     name: 'AMZ Advice Centre',
-  //     email: 'support@amzadvicecentre.com',
-  //     subject: 'AMZ\tAdvice\tCentre\tSupport',
-  //     whatsAppNumber: '+44-114-405-5024',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'AMZ Agency',
-  //     email: 'support@amzagency.co.uk',
-  //     subject: 'AMZAgency\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'Marketing Advice Centre',
-  //     email: 'support@marketingadvicecentre.co.uk',
-  //     subject: 'Marketing\tAdvice\tCentre\tSupport',
-  //     whatsAppNumber: '+44-114-405-5021',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'The Marketing Agency',
-  //     email: 'support@the-marketingagency.co.uk',
-  //     subject: 'The\tMarketing\tAgency\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'The Advice Centre: Accounts',
-  //     email: 'accounts@theadvicecentre.ltd',
-  //     subject: 'Accounts\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'The Advice Centre: Introducers',
-  //     email: 'support@amzadvicecentre.com',
-  //     subject: 'Introducers\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'Just Ask Alex',
-  //     email: 'support@amzadvicecentre.com',
-  //     subject: 'Just\tAsk\tAlex\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'AMZBuddy',
-  //     email: 'support@amzbuddy.ai',
-  //     subject: 'AMZBuddy\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'The Advice Centre: VIP',
-  //     email: 'support@amzbuddy.ai',
-  //     subject: 'VIP\tSupport',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'AMZAgency',
-  //     email: 'support@amzagency.co.uk',
-  //     subject: 'AMZAgency\tSupport\tDepartment',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'Just Ask Alex',
-  //     email: 'support@justaskalex.co.uk',
-  //     subject: 'Ask\tAlex',
-  //   ),
-  //   SupportDepartment(
-  //     name: 'BizBoard',
-  //     email: 'support@bizboard.co.uk',
-  //     subject: 'Biz\tBoard',
-  //   ),
-  // ];
+  final bool _isDropdownOpen = false;
   final List<SupportDepartment> departments = [
     SupportDepartment(
       name: 'AMZ Advice Centre',
@@ -389,7 +326,6 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
     super.initState();
     setState(() {
       isLoading = true;
-
       isAdding = false;
     });
     deparmentallapi();
@@ -731,9 +667,10 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 border: Border.all(
-                                                    color: _showError
-                                                        ? Colors.red
-                                                        : AppColors.bgColor),
+                                                  color: _showError
+                                                      ? Colors.red
+                                                      : AppColors.bgColor,
+                                                ),
                                               ),
                                               child:
                                                   DropdownButtonHideUnderline(
@@ -741,17 +678,30 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                   icon: Icon(
                                                     CupertinoIcons.chevron_down,
                                                     size: 16.sp,
+                                                    color: AppColors.bgColor,
                                                   ),
                                                   style: const TextStyle(
                                                       color: AppColors.bgColor),
                                                   value: selectedCustomer,
                                                   items: customerList
                                                       .map((customer) {
+                                                    final isSelected =
+                                                        selectedCustomer ==
+                                                            customer.id;
+
                                                     return DropdownMenuItem(
                                                       value: customer.id,
                                                       child: Text(
-                                                          customer.name ??
-                                                              'N/A'),
+                                                        customer.name ?? 'N/A',
+                                                        style: TextStyle(
+                                                          color: isSelected
+                                                              ? Colors.orange
+                                                              : AppColors
+                                                                  .bgColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
                                                     );
                                                   }).toList(),
                                                   onChanged: (value) {
@@ -765,9 +715,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                         value
                                                             .toString()
                                                             .isEmpty) {
-                                                      setState(() {
-                                                        _showError = true;
-                                                      });
+                                                      setState(() =>
+                                                          _showError = true);
                                                       return '';
                                                     }
                                                     return null;
@@ -775,7 +724,6 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                   decoration:
                                                       const InputDecoration(
                                                     border: InputBorder.none,
-                                                    // No underline
                                                     contentPadding:
                                                         EdgeInsets.zero,
                                                   ),
@@ -790,6 +738,7 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                                       fontSize: 14.5.sp,
                                                     ),
                                                   ),
+                                                  dropdownColor: Colors.white,
                                                 ),
                                               ),
                                             ),
@@ -842,8 +791,8 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
                                           ),
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Get.to(
-                                                  () => membershipPageScreen());
+                                              Get.to(() =>
+                                                  const membershipPageScreen());
                                             },
                                         ),
                                       ],
@@ -903,49 +852,76 @@ class _CreateTicketScreenState extends State<CreateTicketScreen> {
     );
   }
 
-  deparmentallapi() {
-    checkInternet().then((internet) async {
-      if (internet) {
-        Adviceprovider().departments().then((response) async {
-          if (response.statusCode == 200) {
-            allDepartment = AllDeparmentModal.AllDeparmentModal.fromJson(
-              json.decode(response.body),
-            );
+  Future<void> deparmentallapi() async {
+    if (!await checkInternet()) {
+      setState(() => isLoading = false);
+      return showCustomErrorSnackbar(
+        title: 'No Internet',
+        message: 'Please check your connection',
+      );
+    }
 
-            setState(() {
-              customerList = allDepartment?.data ?? [];
-              log('Customer Names: ${customerList.map((e) => e.name).toList()}');
+    try {
+      final response = await Adviceprovider().departments();
 
-              final matchedList = (allDepartment?.data ?? []).where((apiDept) {
-                return departments.any((staticDept) =>
-                    apiDept.name?.toLowerCase().trim() ==
-                    staticDept.name.toLowerCase().trim());
-              }).toList();
-              customerList = matchedList;
-
-              isLoading = false;
-            });
-          } else if (response.statusCode == 422) {
-            setState(() {
-              isLoading = false;
-            });
-          } else {
-            showCustomErrorSnackbar(
-              title: 'Server Error',
-              message: 'Internal Server Error',
-            );
-          }
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        showCustomErrorSnackbar(
-          title: 'No Internet',
-          message: 'Please check your connection',
+      if (response.statusCode != 200) {
+        setState(() => isLoading = false);
+        return showCustomErrorSnackbar(
+          title: 'Server Error',
+          message: 'Internal Server Error',
         );
       }
-    });
+
+      final data = json.decode(response.body);
+      final allDepartment = AllDeparmentModal.AllDeparmentModal.fromJson(data);
+      final prefs = await SharedPreferences.getInstance();
+      final selectedMembership =
+          prefs.getString('selectedSubscriptionProductName');
+
+      // Normalize helper
+      String normalize(String text) => text
+          .toLowerCase()
+          .replaceAll(' ', '')
+          .replaceAll('centre', 'center')
+          .trim();
+
+      final normalizedMembership = normalize(selectedMembership ?? '');
+
+      // Match against local departments only once
+      final matchedList = allDepartment.data
+          ?.where((apiDept) => departments.any(
+                (staticDept) =>
+                    apiDept.name?.toLowerCase().trim() ==
+                    staticDept.name.toLowerCase().trim(),
+              ))
+          .toList();
+
+      // Find matched department (exact or partial)
+      final matchedCustomer = matchedList?.firstWhere(
+        (dept) => normalize(dept.name ?? '') == normalizedMembership,
+        orElse: () => matchedList.firstWhere(
+          (dept) => normalize(dept.name ?? '').contains(normalizedMembership),
+          orElse: () => AllDeparmentModal.Data(),
+        ),
+      );
+
+      setState(() {
+        customerList = matchedList ?? [];
+        selectedCustomer =
+            (matchedCustomer?.id != null && matchedCustomer?.id != 0)
+                ? matchedCustomer!.id
+                : null;
+        isLoading = false;
+      });
+
+      // 🔶 Immediately rebuild dropdown with new selected item
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+    } catch (e) {
+      log('❌ Error in deparmentallapi: $e');
+      setState(() => isLoading = false);
+    }
   }
 
   fetchAuthtokenApi() {

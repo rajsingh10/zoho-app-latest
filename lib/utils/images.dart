@@ -17,6 +17,7 @@ class Imgs {
   static const String rewardsIcon = 'assets/images/rewardsIcon.png';
   static const String backIcon = 'assets/images/backIcon.png';
   static const String alexImage = 'assets/images/alexImage.png';
+  static const String alexxImage = 'assets/bottomImgs/alexx.webp';
   static const String menuIcon = 'assets/images/menuIcon.png';
   static const String partners1Img = 'assets/academy/partners1Img.png';
   static const String partners2Img = 'assets/academy/partners2Img.png';

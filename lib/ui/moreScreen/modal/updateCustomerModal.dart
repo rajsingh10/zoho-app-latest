@@ -1,5 +1,5 @@
 class UpdateCustomerModal {
-  int? code;
+  var code;
   String? message;
 
   UpdateCustomerModal({this.code, this.message});

@@ -20,7 +20,7 @@ import 'images.dart';
 
 // ignore: must_be_immutable
 class AppOrangeBottombar extends StatefulWidget {
-  int? selected;
+  var selected;
 
   AppOrangeBottombar({super.key, this.selected});
 

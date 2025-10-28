@@ -1,6 +1,6 @@
 class CheckIdModal {
   List<Data>? data;
-  int? count;
+  var count;
 
   CheckIdModal({this.data, this.count});
 

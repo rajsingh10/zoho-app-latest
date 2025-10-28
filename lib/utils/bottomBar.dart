@@ -31,7 +31,7 @@ import 'images.dart';
 
 // ignore: must_be_immutable
 class AppBottombar extends StatefulWidget {
-  int? selected;
+  var selected;
 
   AppBottombar({super.key, this.selected});
 
@@ -163,135 +163,181 @@ class _AppBottombarState extends State<AppBottombar> {
 
   SupportDepartment? selectedDepartment;
 
-  void showDepartmentSelector(BuildContext context) {
+  void showDepartmentSelector(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    final selectedMembership =
+        prefs.getString('selectedSubscriptionProductName') ?? '';
+
+    // 🔸 Normalize function for flexible match (handles Buddy vs Buddy, Center vs Centre)
+    String normalize(String text) =>
+        text.toLowerCase().replaceAll(' ', '').replaceAll('centre', 'center');
+
+    // 🔸 Determine which department should be selected initially
+    SupportDepartment? preselectedDept;
+    for (var dept in departments) {
+      final deptName = normalize(dept.name);
+      final selectedName = normalize(selectedMembership);
+      if (deptName.contains(selectedName)) {
+        preselectedDept = dept;
+        break;
+      }
+    }
+
+    bool isSheetOpen = true; // BottomSheet is open when shown
+    SupportDepartment? selectedDepartment = preselectedDept;
+
     Get.bottomSheet(
       StatefulBuilder(
         builder: (context, setState) {
-          return Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Header Row with Title and X Button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(null),
-                    Text(
-                      "Email Support",
-                      style: TextStyle(
-                        color: AppColors.bgColor,
-                        fontSize: 18.sp,
-                        fontFamily: FontFamily.bold,
+          return WillPopScope(
+            onWillPop: () async {
+              isSheetOpen = false;
+              return true;
+            },
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Header Row with Title and Close Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(null),
+                      Text(
+                        "Email Support",
+                        style: TextStyle(
+                          color: AppColors.bgColor,
+                          fontSize: 18.sp,
+                          fontFamily: FontFamily.bold,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: Icon(
-                        Icons.close,
-                        color: AppColors.bgColor,
-                        size: 22.sp,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 2.h),
-                // Department List
-                Flexible(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: departments.length,
-                    itemBuilder: (context, index) {
-                      final department = departments[index];
-                      final isSelected = selectedDepartment == department;
-                      return GestureDetector(
+                      GestureDetector(
                         onTap: () {
-                          setState(() {
-                            selectedDepartment = department;
-                          });
+                          isSheetOpen = false;
+                          Get.back();
                         },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 1.5.h, horizontal: 3.w),
-                          margin: EdgeInsets.symmetric(vertical: 0.5.h),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.bgColor.withOpacity(0.1)
-                                : Colors.transparent,
-                            border: Border.all(
+                        child: Icon(
+                          Icons.close,
+                          color: AppColors.bgColor,
+                          size: 22.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 2.h),
+
+                  // Department List
+                  Flexible(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: departments.length,
+                      itemBuilder: (context, index) {
+                        final department = departments[index];
+                        final isSelected = selectedDepartment == department;
+
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedDepartment = department;
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 1.5.h, horizontal: 3.w),
+                            margin: EdgeInsets.symmetric(vertical: 0.5.h),
+                            decoration: BoxDecoration(
                               color: isSelected
-                                  ? AppColors.bgColor
-                                  : Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                isSelected
-                                    ? Icons.radio_button_checked
-                                    : Icons.radio_button_off,
-                                color: AppColors.bgColor,
-                                size: 20.sp,
+                                  ? AppColors.bgColor.withOpacity(0.08)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: isSelected
+                                    ? (isSheetOpen
+                                        ? Colors.orange
+                                        : AppColors.bgColor)
+                                    : Colors.grey.shade300,
                               ),
-                              SizedBox(width: 3.w),
-                              Expanded(
-                                child: Text(
-                                  department.name,
-                                  style: TextStyle(
-                                    color: AppColors.bgColor,
-                                    fontSize: 16.sp,
-                                    fontFamily: FontFamily.bold,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  isSelected
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_off,
+                                  color: isSelected
+                                      ? (isSheetOpen
+                                          ? Colors.orange
+                                          : AppColors.bgColor)
+                                      : Colors.grey,
+                                  size: 20.sp,
+                                ),
+                                SizedBox(width: 3.w),
+                                Expanded(
+                                  child: Text(
+                                    department.name,
+                                    style: TextStyle(
+                                      color: isSelected
+                                          ? (isSheetOpen
+                                              ? Colors.orange
+                                              : AppColors.bgColor)
+                                          : AppColors.bgColor,
+                                      fontSize: 16.sp,
+                                      fontFamily: FontFamily.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(height: 2.h),
-                // Continue Button
-                GestureDetector(
-                  onTap: () {
-                    if (selectedDepartment != null) {
-                      Get.back();
-                      Get.back();
-                      launchSupportEmail(selectedDepartment!);
-                    } else {
-                      showCustomErrorSnackbar(
-                        title: 'No Department Selected',
-                        message:
-                            'Please select a support department to continue.',
-                      );
-                    }
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 1.8.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.bgColor,
-                      borderRadius: BorderRadius.circular(12),
+                        );
+                      },
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Continue",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: FontFamily.bold,
+                  ),
+
+                  SizedBox(height: 2.h),
+
+                  // Continue Button
+                  GestureDetector(
+                    onTap: () {
+                      if (selectedDepartment != null) {
+                        isSheetOpen = false;
+                        Get.back();
+                        Get.back();
+                        launchSupportEmail(selectedDepartment!);
+                      } else {
+                        showCustomErrorSnackbar(
+                          title: 'No Department Selected',
+                          message:
+                              'Please select a support department to continue.',
+                        );
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 1.8.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.bgColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Continue",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontFamily: FontFamily.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 1.h),
-              ],
+                  SizedBox(height: 1.h),
+                ],
+              ),
             ),
           );
         },
@@ -299,6 +345,143 @@ class _AppBottombarState extends State<AppBottombar> {
       isScrollControlled: true,
     );
   }
+
+  // void showDepartmentSelector(BuildContext context) {
+  //   Get.bottomSheet(
+  //     StatefulBuilder(
+  //       builder: (context, setState) {
+  //         return Container(
+  //           padding: const EdgeInsets.all(16),
+  //           decoration: const BoxDecoration(
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  //           ),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               // Header Row with Title and X Button
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   const Icon(null),
+  //                   Text(
+  //                     "Email Support",
+  //                     style: TextStyle(
+  //                       color: AppColors.bgColor,
+  //                       fontSize: 18.sp,
+  //                       fontFamily: FontFamily.bold,
+  //                     ),
+  //                   ),
+  //                   GestureDetector(
+  //                     onTap: () => Get.back(),
+  //                     child: Icon(
+  //                       Icons.close,
+  //                       color: AppColors.bgColor,
+  //                       size: 22.sp,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //               SizedBox(height: 2.h),
+  //               // Department List
+  //               Flexible(
+  //                 child: ListView.builder(
+  //                   shrinkWrap: true,
+  //                   itemCount: departments.length,
+  //                   itemBuilder: (context, index) {
+  //                     final department = departments[index];
+  //                     final isSelected = selectedDepartment == department;
+  //                     return GestureDetector(
+  //                       onTap: () {
+  //                         setState(() {
+  //                           selectedDepartment = department;
+  //                         });
+  //                       },
+  //                       child: Container(
+  //                         padding: EdgeInsets.symmetric(
+  //                             vertical: 1.5.h, horizontal: 3.w),
+  //                         margin: EdgeInsets.symmetric(vertical: 0.5.h),
+  //                         decoration: BoxDecoration(
+  //                           color: isSelected
+  //                               ? AppColors.bgColor.withOpacity(0.1)
+  //                               : Colors.transparent,
+  //                           border: Border.all(
+  //                             color: isSelected
+  //                                 ? AppColors.bgColor
+  //                                 : Colors.grey.shade300,
+  //                           ),
+  //                           borderRadius: BorderRadius.circular(10),
+  //                         ),
+  //                         child: Row(
+  //                           children: [
+  //                             Icon(
+  //                               isSelected
+  //                                   ? Icons.radio_button_checked
+  //                                   : Icons.radio_button_off,
+  //                               color: AppColors.bgColor,
+  //                               size: 20.sp,
+  //                             ),
+  //                             SizedBox(width: 3.w),
+  //                             Expanded(
+  //                               child: Text(
+  //                                 department.name,
+  //                                 style: TextStyle(
+  //                                   color: AppColors.bgColor,
+  //                                   fontSize: 16.sp,
+  //                                   fontFamily: FontFamily.bold,
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     );
+  //                   },
+  //                 ),
+  //               ),
+  //               SizedBox(height: 2.h),
+  //               // Continue Button
+  //               GestureDetector(
+  //                 onTap: () {
+  //                   if (selectedDepartment != null) {
+  //                     Get.back();
+  //                     Get.back();
+  //                     launchSupportEmail(selectedDepartment!);
+  //                   } else {
+  //                     showCustomErrorSnackbar(
+  //                       title: 'No Department Selected',
+  //                       message:
+  //                           'Please select a support department to continue.',
+  //                     );
+  //                   }
+  //                 },
+  //                 child: Container(
+  //                   width: double.infinity,
+  //                   padding: EdgeInsets.symmetric(vertical: 1.8.h),
+  //                   decoration: BoxDecoration(
+  //                     color: AppColors.bgColor,
+  //                     borderRadius: BorderRadius.circular(12),
+  //                   ),
+  //                   alignment: Alignment.center,
+  //                   child: Text(
+  //                     "Continue",
+  //                     style: TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 14.sp,
+  //                       fontFamily: FontFamily.bold,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 1.h),
+  //             ],
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //     isScrollControlled: true,
+  //   );
+  // }
 
   Future<void> launchSupportWhatsApp(SupportDepartment department) async {
     if (department.whatsAppNumber == null) {
@@ -329,13 +512,40 @@ class _AppBottombarState extends State<AppBottombar> {
     }
   }
 
-  void showWhatsAppDepartmentSelector(BuildContext context) {
+  bool isWhatsAppProcessing = false;
+
+  void showWhatsAppDepartmentSelector(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    final selectedMembership =
+        prefs.getString('selectedSubscriptionProductName');
+
     setState(() {
       whatsAppDepartments =
           departments.where((d) => d.whatsAppNumber != null).toList();
     });
 
+    // Auto-select based on saved membership
     SupportDepartment? selectedWhatsAppDept;
+    if (selectedMembership != null) {
+      for (var dept in whatsAppDepartments) {
+        final lowerName = dept.name.toLowerCase();
+        if (selectedMembership.toLowerCase().contains('amz buddy') &&
+            lowerName.contains('amzbuddy')) {
+          selectedWhatsAppDept = dept;
+          break;
+        } else if (selectedMembership
+                .toLowerCase()
+                .contains('marketing advice') &&
+            lowerName.contains('marketing advice centre')) {
+          selectedWhatsAppDept = dept;
+          break;
+        } else if (selectedMembership.toLowerCase().contains('amz agency') &&
+            lowerName.contains('amzagency')) {
+          selectedWhatsAppDept = dept;
+          break;
+        }
+      }
+    }
 
     Get.bottomSheet(
       StatefulBuilder(
@@ -349,7 +559,7 @@ class _AppBottombarState extends State<AppBottombar> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Header Row
+                // Header
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -374,7 +584,7 @@ class _AppBottombarState extends State<AppBottombar> {
                 ),
                 SizedBox(height: 2.h),
 
-                // WhatsApp department list
+                // Department List
                 Flexible(
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -382,6 +592,7 @@ class _AppBottombarState extends State<AppBottombar> {
                     itemBuilder: (context, index) {
                       final department = whatsAppDepartments[index];
                       final isSelected = selectedWhatsAppDept == department;
+
                       return GestureDetector(
                         onTap: () {
                           setState(() {
@@ -394,11 +605,11 @@ class _AppBottombarState extends State<AppBottombar> {
                           margin: EdgeInsets.symmetric(vertical: 0.5.h),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppColors.bgColor.withOpacity(0.1)
+                                ? Colors.orange.withOpacity(0.1)
                                 : Colors.transparent,
                             border: Border.all(
                               color: isSelected
-                                  ? AppColors.bgColor
+                                  ? Colors.orange
                                   : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(10),
@@ -409,7 +620,9 @@ class _AppBottombarState extends State<AppBottombar> {
                                 isSelected
                                     ? Icons.radio_button_checked
                                     : Icons.radio_button_off,
-                                color: AppColors.bgColor,
+                                color: isSelected
+                                    ? Colors.orange
+                                    : AppColors.bgColor,
                                 size: 20.sp,
                               ),
                               SizedBox(width: 3.w),
@@ -417,7 +630,9 @@ class _AppBottombarState extends State<AppBottombar> {
                                 child: Text(
                                   department.name,
                                   style: TextStyle(
-                                    color: AppColors.bgColor,
+                                    color: isSelected
+                                        ? Colors.orange
+                                        : AppColors.bgColor,
                                     fontSize: 16.sp,
                                     fontFamily: FontFamily.bold,
                                   ),
@@ -432,13 +647,16 @@ class _AppBottombarState extends State<AppBottombar> {
                 ),
                 SizedBox(height: 2.h),
 
-                // Continue Button
+                // Continue Button (double-tap protected)
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    if (isWhatsAppProcessing) return;
+                    isWhatsAppProcessing = true;
+
                     if (selectedWhatsAppDept != null) {
                       Get.back();
                       Get.back();
-                      launchSupportWhatsApp(selectedWhatsAppDept!);
+                      await launchSupportWhatsApp(selectedWhatsAppDept!);
                     } else {
                       showCustomErrorSnackbar(
                         title: 'No Department Selected',
@@ -446,6 +664,10 @@ class _AppBottombarState extends State<AppBottombar> {
                             'Please select a WhatsApp department to continue.',
                       );
                     }
+
+                    Future.delayed(const Duration(seconds: 1), () {
+                      isWhatsAppProcessing = false;
+                    });
                   },
                   child: Container(
                     width: double.infinity,
@@ -977,6 +1199,7 @@ class _AppBottombarState extends State<AppBottombar> {
                                             SaveAuthtokenData.clearUserData();
                                             SaveDataLocal.clearUserData();
                                             Get.offAll(const LandingScreen());
+                                            _clearSubscriptionFromPrefs();
                                             String? storedId = await getId();
                                             print(
                                                 "Stored ID =====>>> $storedId");
@@ -1022,6 +1245,13 @@ class _AppBottombarState extends State<AppBottombar> {
         );
       },
     );
+  }
+
+  Future<void> _clearSubscriptionFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('selectedSubscriptionId');
+    await prefs.remove('selectedSubscriptionName');
+    await prefs.remove('selectedSubscriptionProductName');
   }
 
   Future clearId() async {

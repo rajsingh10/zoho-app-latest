@@ -38,11 +38,11 @@ class Data {
   String? currencySymbol;
   String? status;
   String? companyName;
-  int? unusedCredits;
-  int? outstandingReceivableAmount;
-  int? unusedCreditsReceivableAmountBcy;
-  int? outstandingReceivableAmountBcy;
-  int? outstanding;
+  var unusedCredits;
+  var outstandingReceivableAmount;
+  var unusedCreditsReceivableAmountBcy;
+  var outstandingReceivableAmountBcy;
+  var outstanding;
   String? firstName;
   String? lastName;
   String? email;
@@ -54,7 +54,7 @@ class Data {
   String? updatedTime;
   bool? isPortalInvitationAccepted;
   String? paymentTermsLabel;
-  int? paymentTerms;
+  var paymentTerms;
   String? createdBy;
   bool? hasAttachment;
 

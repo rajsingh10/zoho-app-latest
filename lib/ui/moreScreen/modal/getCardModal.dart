@@ -1,5 +1,5 @@
 class GetCardModal {
-  int? code;
+  var code;
   String? message;
   List<Cards>? cards;
   PageContext? pageContext;
@@ -39,8 +39,8 @@ class Cards {
   String? customerId;
   String? status;
   String? lastFourDigits;
-  int? expiryMonth;
-  int? expiryYear;
+  var expiryMonth;
+  var expiryYear;
   String? funding;
   String? paymentGateway;
   String? createdTime;
@@ -96,8 +96,8 @@ class Cards {
 }
 
 class PageContext {
-  int? page;
-  int? perPage;
+  var page;
+  var perPage;
   bool? hasMorePage;
   String? sortColumn;
   String? sortOrder;

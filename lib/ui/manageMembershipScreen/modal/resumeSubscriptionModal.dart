@@ -1,5 +1,5 @@
 class ResumeMembershipModal {
-  int? code;
+  var code;
   String? message;
 
   ResumeMembershipModal({this.code, this.message});

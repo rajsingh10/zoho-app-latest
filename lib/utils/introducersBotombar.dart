@@ -20,7 +20,7 @@ import 'images.dart';
 
 // ignore: must_be_immutable
 class IntroducersBottombar extends StatefulWidget {
-  int? selected;
+  var selected;
 
   IntroducersBottombar({super.key, this.selected});
 

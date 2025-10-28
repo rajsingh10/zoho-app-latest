@@ -1,5 +1,5 @@
 class CreateSubscriptionModal {
-  int? code;
+  var code;
   String? message;
   Hostedpage? hostedpage;
 

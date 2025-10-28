@@ -2,7 +2,7 @@ class SendOtpModal {
   bool? status;
   String? message;
   String? customerId;
-  int? otp;
+  var otp;
 
   SendOtpModal({this.status, this.message, this.customerId, this.otp});
 

@@ -19,7 +19,7 @@ import 'images.dart';
 
 // ignore: must_be_immutable
 class AssoclatBottombar extends StatefulWidget {
-  int? selected;
+  var selected;
 
   AssoclatBottombar({super.key, this.selected});
 

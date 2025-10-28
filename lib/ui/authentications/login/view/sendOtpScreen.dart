@@ -180,64 +180,6 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                         SizedBox(height: 3.h),
                                         Center(
                                           child: Text(
-                                            'New To The Advice Centre?',
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: AppColors.blackColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: FontFamily.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: RichText(
-                                            textAlign: TextAlign.center,
-                                            text: TextSpan(
-                                              style: TextStyle(
-                                                fontSize: 15.5.sp,
-                                                fontWeight: FontWeight.normal,
-                                                fontFamily: FontFamily.regular,
-                                              ),
-                                              children: [
-                                                const TextSpan(
-                                                  text:
-                                                      'Start your 7 Day Free Trial ',
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.blackColor),
-                                                ),
-                                                TextSpan(
-                                                  text: 'here ',
-                                                  style: const TextStyle(
-                                                      color: AppColors
-                                                          .orangeColor),
-                                                  recognizer:
-                                                      TapGestureRecognizer()
-                                                        ..onTap = () => Get.to(
-                                                              const Registerscreen(),
-                                                              transition:
-                                                                  Transition
-                                                                      .rightToLeft,
-                                                              duration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          250),
-                                                            ),
-                                                ),
-                                                const TextSpan(
-                                                  text:
-                                                      'to Transform You & Your Business.',
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.blackColor),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 1.h),
-                                        Center(
-                                          child: Text(
                                             'Existing or Past Member?',
                                             style: TextStyle(
                                               fontSize: 16.sp,
@@ -316,6 +258,64 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 const TextSpan(
                                                   text:
                                                       'to confirm your identity, you’ll then be able to access your membership information.',
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppColors.blackColor),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 1.h),
+                                        Center(
+                                          child: Text(
+                                            'New To The Advice Centre?',
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              color: AppColors.blackColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: FontFamily.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: RichText(
+                                            textAlign: TextAlign.center,
+                                            text: TextSpan(
+                                              style: TextStyle(
+                                                fontSize: 15.5.sp,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: FontFamily.regular,
+                                              ),
+                                              children: [
+                                                const TextSpan(
+                                                  text:
+                                                      'Start your 7 Day Free Trial ',
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppColors.blackColor),
+                                                ),
+                                                TextSpan(
+                                                  text: 'here ',
+                                                  style: const TextStyle(
+                                                      color: AppColors
+                                                          .orangeColor),
+                                                  recognizer:
+                                                      TapGestureRecognizer()
+                                                        ..onTap = () => Get.to(
+                                                              const Registerscreen(),
+                                                              transition:
+                                                                  Transition
+                                                                      .rightToLeft,
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          250),
+                                                            ),
+                                                ),
+                                                const TextSpan(
+                                                  text:
+                                                      'to Transform You & Your Business.',
                                                   style: TextStyle(
                                                       color:
                                                           AppColors.blackColor),
@@ -442,64 +442,6 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                         SizedBox(height: 3.h),
                                         Center(
                                           child: Text(
-                                            'New To The Advice Centre?',
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              color: AppColors.blackColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: FontFamily.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: RichText(
-                                            textAlign: TextAlign.center,
-                                            text: TextSpan(
-                                              style: TextStyle(
-                                                fontSize: 15.5.sp,
-                                                fontWeight: FontWeight.normal,
-                                                fontFamily: FontFamily.regular,
-                                              ),
-                                              children: [
-                                                const TextSpan(
-                                                  text:
-                                                      'Start your 7 Day Free Trial ',
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.blackColor),
-                                                ),
-                                                TextSpan(
-                                                  text: 'here ',
-                                                  style: const TextStyle(
-                                                      color: AppColors
-                                                          .orangeColor),
-                                                  recognizer:
-                                                      TapGestureRecognizer()
-                                                        ..onTap = () => Get.to(
-                                                              const Registerscreen(),
-                                                              transition:
-                                                                  Transition
-                                                                      .rightToLeft,
-                                                              duration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          250),
-                                                            ),
-                                                ),
-                                                const TextSpan(
-                                                  text:
-                                                      'to Transform You & Your Business.',
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.blackColor),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 1.h),
-                                        Center(
-                                          child: Text(
                                             'Existing or Past Member?',
                                             style: TextStyle(
                                               fontSize: 16.sp,
@@ -578,6 +520,64 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 const TextSpan(
                                                   text:
                                                       'to confirm your identity, you’ll then be able to access your membership information.',
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppColors.blackColor),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 1.h),
+                                        Center(
+                                          child: Text(
+                                            'New To The Advice Centre?',
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              color: AppColors.blackColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: FontFamily.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: RichText(
+                                            textAlign: TextAlign.center,
+                                            text: TextSpan(
+                                              style: TextStyle(
+                                                fontSize: 15.5.sp,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: FontFamily.regular,
+                                              ),
+                                              children: [
+                                                const TextSpan(
+                                                  text:
+                                                      'Start your 7 Day Free Trial ',
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppColors.blackColor),
+                                                ),
+                                                TextSpan(
+                                                  text: 'here ',
+                                                  style: const TextStyle(
+                                                      color: AppColors
+                                                          .orangeColor),
+                                                  recognizer:
+                                                      TapGestureRecognizer()
+                                                        ..onTap = () => Get.to(
+                                                              const Registerscreen(),
+                                                              transition:
+                                                                  Transition
+                                                                      .rightToLeft,
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          250),
+                                                            ),
+                                                ),
+                                                const TextSpan(
+                                                  text:
+                                                      'to Transform You & Your Business.',
                                                   style: TextStyle(
                                                       color:
                                                           AppColors.blackColor),

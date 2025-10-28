@@ -1458,7 +1458,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                             return const CircularProgressIndicator();
                                                           } else if (snapshot
                                                               .hasError) {
-                                                            return Text(
+                                                            return const Text(
                                                               "Error loading reply",
                                                               style: TextStyle(
                                                                   color: Colors
@@ -1486,7 +1486,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                               child: Text(
                                                                 plainText,
                                                                 style:
-                                                                    TextStyle(
+                                                                    const TextStyle(
                                                                   fontSize: 14,
                                                                   height:
                                                                       1.6, // Increased line height for better readability

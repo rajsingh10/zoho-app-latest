@@ -1,5 +1,5 @@
 class UpdateSubscriptionModal {
-  int? code;
+  var code;
   String? message;
   Hostedpage? hostedpage;
 

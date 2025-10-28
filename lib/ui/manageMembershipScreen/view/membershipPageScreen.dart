@@ -313,7 +313,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Get.to(manageMembershipScreen());
+                                      Get.to(const manageMembershipScreen());
                                     },
                                     child: Container(
                                       alignment: Alignment.center,

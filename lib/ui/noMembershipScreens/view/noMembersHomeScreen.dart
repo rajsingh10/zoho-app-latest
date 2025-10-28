@@ -152,7 +152,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Book a FREE Demo',
+                                    'Get Ready To Transform You & Your Business: Book a Free Demo Below…',
                                     style: TextStyle(
                                         fontSize: 17.sp,
                                         fontFamily: FontFamily.bold,
@@ -162,7 +162,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     height: 0.8.h,
                                   ),
                                   Text(
-                                    'Ready to learn more? Book a quick call or demo with our founder to see how our services can support your goals.',
+                                    'Browse our range of Memberships or simply Book a Free Demo for one of the services below. We’ll talk you through how it all works and see how we can help you...',
                                     style: TextStyle(
                                         fontSize: 14.sp,
                                         fontFamily: FontFamily.regular,
@@ -172,7 +172,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                     height: 0.5.h,
                                   ),
                                   Text(
-                                    'Just tap one of the links below to choose a time that works for you!',
+                                    'Just tap on the ‘Book Now’ buttons below, learn more about each service & choose a time that works for you!”',
                                     style: TextStyle(
                                         fontSize: 14.sp,
                                         fontFamily: FontFamily.bold,
@@ -484,20 +484,20 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                             ),
                             Positioned(
                               right: 10.w,
-                              top: 19.h,
+                              top: 27.h,
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 1.w),
                                 height: 40.w,
                                 width: 40.w,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(90),
-                                  child: Image.asset(Imgs.alexImage),
+                                  child: Image.asset(Imgs.askAlex1Image),
                                 ),
                               ),
                             ),
                             Positioned(
                               right: -0.5.w,
-                              top: 14.h,
+                              top: 23.h,
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 1.w),
                                 height: 23.w,
@@ -975,7 +975,8 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                               InkWell(
                                 onTap: () {
                                   Get.to(webViewAssociates(
-                                      link: "https://www.theadvicecentre.ltd"));
+                                      link:
+                                          "https://www.theadvicecentre.ltd/vip"));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -1661,7 +1662,7 @@ class _NomembershomescreenState extends State<Nomembershomescreen> {
                                       ),
 
                                       // 🔹 Centered "Disclaimer"
-                                      WidgetSpan(
+                                      const WidgetSpan(
                                         child: Center(
                                           child: Text(
                                             "Disclaimer",

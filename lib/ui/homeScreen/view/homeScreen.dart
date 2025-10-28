@@ -719,7 +719,7 @@ class _HomescreenState extends State<Homescreen> {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.offAll(
+                                          Get.to(
                                               const manageMembershipScreen());
                                         },
                                         child: Container(
@@ -945,7 +945,7 @@ class _HomescreenState extends State<Homescreen> {
                                               ),
 
                                               // 🔹 Centered "Disclaimer"
-                                              WidgetSpan(
+                                              const WidgetSpan(
                                                 child: Center(
                                                   child: Text(
                                                     "Disclaimer",
@@ -1105,6 +1105,7 @@ class _HomescreenState extends State<Homescreen> {
       await _saveSubscriptionToPrefs(
         id: currentSub.subscriptionId ?? '',
         name: currentSub.name ?? '',
+        productName: (currentSub.name ?? '').split('-').first.trim(),
       );
     }
   }
@@ -1112,16 +1113,19 @@ class _HomescreenState extends State<Homescreen> {
   Future<void> _saveSubscriptionToPrefs({
     required String id,
     required String name,
+    required String productName,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedSubscriptionId', id);
     await prefs.setString('selectedSubscriptionName', name);
+    await prefs.setString('selectedSubscriptionProductName', productName);
   }
 
   Future<void> _clearSubscriptionFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('selectedSubscriptionId');
     await prefs.remove('selectedSubscriptionName');
+    await prefs.remove('selectedSubscriptionProductName');
   }
 
   Widget _buildMembershipContent() {
@@ -1158,9 +1162,9 @@ class _HomescreenState extends State<Homescreen> {
               _clearSubscriptionFromPrefs();
               final currentSub = subscriptionsdateleft!.subscriptions![page];
               await _saveSubscriptionToPrefs(
-                id: currentSub.subscriptionId ?? '',
-                name: currentSub.name ?? '',
-              );
+                  id: currentSub.subscriptionId ?? '',
+                  name: currentSub.name ?? '',
+                  productName: (currentSub.name ?? '').split('-').first.trim());
             },
             itemBuilder: (context, index) {
               final subscription = subscriptionsdateleft!.subscriptions![index];

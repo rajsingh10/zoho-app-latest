@@ -78,7 +78,7 @@ class Subscriptions {
   String? ordersCreated;
   String? ordersRemaining;
   String? pauseDate;
-  int? source;
+  var source;
   String? resumeDate;
   String? referenceId;
   String? nextShipmentAt;

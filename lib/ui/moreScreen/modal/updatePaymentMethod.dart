@@ -1,5 +1,5 @@
 class UpdatePaymentMethodModal {
-  int? code;
+  var code;
   String? message;
   Hostedpage? hostedpage;
 
