@@ -683,7 +683,7 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
       child: Column(
         children: [
           ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(12),
+              borderRadius: BorderRadius.circular(12),
               child: Image.asset(image, scale: scale)),
           SizedBox(height: 1.h),
           InkWell(
