@@ -236,7 +236,7 @@ class _SevendaystrialselectscreenState
                           fontFamily: FontFamily.bold),
                     ),
                     Text(
-                      'Sign here...',
+                      'Sign in here...',
                       style: TextStyle(
                           color: AppColors.whiteColor,
                           fontFamily: FontFamily.regular),

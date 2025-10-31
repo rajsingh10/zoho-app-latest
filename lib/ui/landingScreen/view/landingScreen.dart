@@ -294,7 +294,7 @@ class _LandingScreenState extends State<LandingScreen> {
                           fontFamily: FontFamily.bold),
                     ),
                     Text(
-                      'Sign here...',
+                      'Sign in here...',
                       style: TextStyle(
                           color: AppColors.whiteColor,
                           fontFamily: FontFamily.regular),

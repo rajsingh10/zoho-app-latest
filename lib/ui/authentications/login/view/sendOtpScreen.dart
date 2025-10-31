@@ -315,7 +315,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 ),
                                                 const TextSpan(
                                                   text:
-                                                      'to Transform You & Your Business.',
+                                                      'To Transform You & Your Business. Return back to this screen once signed up to access The Members Hub.',
                                                   style: TextStyle(
                                                       color:
                                                           AppColors.blackColor),
@@ -577,7 +577,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
                                                 ),
                                                 const TextSpan(
                                                   text:
-                                                      'to Transform You & Your Business.',
+                                                      'To Transform You & Your Business. Return back to this screen once signed up to access The Members Hub.',
                                                   style: TextStyle(
                                                       color:
                                                           AppColors.blackColor),
