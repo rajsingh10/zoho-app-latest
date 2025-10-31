@@ -502,7 +502,18 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                               _getCurrentSubscription()?.status == 'paused'
                                   ? Container()
                                   : SizedBox(height: 1.h),
-
+                              Text(
+                                'Your Monthly Advice Time is tracked by professional time-tracking software. If you have any questions about how to make the most of your allocated Monthly Advice Time, feel free to reach out!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: AppColors.bgColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: FontFamily.bold,
+                                    fontSize: 14.sp),
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
                               // Billing Section
                               _getCurrentSubscription()?.status == 'paused'
                                   ? Container()
@@ -685,60 +696,54 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
   Widget _buildNormalBillingSection(Subscriptions subscription) {
     return Container(
       width: Device.width,
-      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
       decoration: BoxDecoration(
           color: AppColors.cardBgColor,
           borderRadius: BorderRadius.circular(5.w)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
             children: [
-              Column(
-                children: [
-                  Text(
-                    'Next Billing Date',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.bgColor,
-                        fontWeight: FontWeight.w100,
-                        fontFamily: FontFamily.extraBold,
-                        fontSize: 18.5.sp),
-                  ).paddingSymmetric(horizontal: 3.w),
-                  Text(
-                    subscription.nextBillingAt ?? "",
-                    style: TextStyle(
-                        color: AppColors.bgColor,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontFamily.light,
-                        fontSize: 15.sp),
-                  ),
-                ],
+              Text(
+                'Next Billing \nDate',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.bgColor,
+                    fontWeight: FontWeight.w100,
+                    fontFamily: FontFamily.extraBold,
+                    fontSize: 18.5.sp),
+              ).paddingSymmetric(horizontal: 3.w),
+              Text(
+                subscription.nextBillingAt ?? "",
+                style: TextStyle(
+                    color: AppColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: FontFamily.light,
+                    fontSize: 15.sp),
               ),
-              Container(
-                child: Row(
-                  children: [
-                    Text(
-                      "$daysRemaining",
-                      style: TextStyle(
-                          color: AppColors.orangeColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: FontFamily.bold,
-                          fontSize: 30.sp),
-                    ),
-                    SizedBox(width: 2.w),
-                    Text(
-                      'days left',
-                      style: TextStyle(
-                          color: AppColors.orangeColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: FontFamily.light,
-                          fontSize: 16.sp),
-                    ),
-                  ],
-                ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                "$daysRemaining",
+                style: TextStyle(
+                    color: AppColors.orangeColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: FontFamily.bold,
+                    fontSize: 30.sp),
+              ),
+              SizedBox(width: 2.w),
+              Text(
+                'days left',
+                style: TextStyle(
+                    color: AppColors.orangeColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: FontFamily.light,
+                    fontSize: 16.sp),
               ),
             ],
           ),
@@ -1034,7 +1039,7 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                   fontSize: 17.sp),
             ),
             Text(
-              'Tickets',
+              'Advice Tickets',
               style: TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,

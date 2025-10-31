@@ -8,7 +8,6 @@ import 'package:zohosystem/ui/authentications/login/modal/authTokenModal.dart';
 import 'package:zohosystem/ui/authentications/login/view/sendOtpScreen.dart';
 import 'package:zohosystem/ui/landingScreen/view/landingIntroducers.dart';
 import 'package:zohosystem/ui/landingScreen/view/sevenDaysTrialSelectScreen.dart';
-import 'package:zohosystem/ui/noMembershipScreens/view/noMembersHomeScreen.dart';
 import 'package:zohosystem/utils/colors.dart';
 import 'package:zohosystem/utils/images.dart';
 
@@ -282,7 +281,7 @@ class _LandingScreenState extends State<LandingScreen> {
               right: 12.w,
               child: InkWell(
                 onTap: () {
-                  Get.to(const Nomembershomescreen());
+                  Get.to(const SendOtpScreen());
                 },
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -295,7 +294,7 @@ class _LandingScreenState extends State<LandingScreen> {
                           fontFamily: FontFamily.bold),
                     ),
                     Text(
-                      'Reactivate here...',
+                      'Sign here...',
                       style: TextStyle(
                           color: AppColors.whiteColor,
                           fontFamily: FontFamily.regular),

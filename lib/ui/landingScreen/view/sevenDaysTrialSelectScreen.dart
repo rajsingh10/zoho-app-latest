@@ -7,6 +7,7 @@ import 'package:zohosystem/utils/colors.dart';
 import 'package:zohosystem/utils/images.dart';
 
 import '../../../utils/fontFamily.dart';
+import '../../authentications/login/view/sendOtpScreen.dart';
 
 class Sevendaystrialselectscreen extends StatefulWidget {
   const Sevendaystrialselectscreen({super.key});
@@ -222,7 +223,7 @@ class _SevendaystrialselectscreenState
               right: 15.w,
               child: InkWell(
                 onTap: () {
-                  Get.to(const Nomembershomescreen());
+                  Get.to(const SendOtpScreen());
                 },
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -235,7 +236,7 @@ class _SevendaystrialselectscreenState
                           fontFamily: FontFamily.bold),
                     ),
                     Text(
-                      'Reactivate here...',
+                      'Sign here...',
                       style: TextStyle(
                           color: AppColors.whiteColor,
                           fontFamily: FontFamily.regular),

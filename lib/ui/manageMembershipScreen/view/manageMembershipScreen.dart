@@ -15,6 +15,7 @@ import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/amzAge
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/introducersFindOutMore/introducersFindOutMorePageScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/justAskAlexFindOutMore/justAskAlexFindOutMorePageScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/marketingAgencyFindOutMore/marketingAgencyFindOutMoreScreen.dart';
+import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/membershipFindOutMore/membershipFindOutMorePageScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/webviewScreen.dart';
 
 import '../../../apiCalling/apiConfig.dart';
@@ -37,13 +38,6 @@ import '../../homeScreen/provider/homeProvider.dart';
 import '../modal/resumeSubscriptionModal.dart';
 import '../provider/membershipProvider.dart';
 import 'membershipPageScreen.dart';
-
-class manageMembershipScreen extends StatefulWidget {
-  const manageMembershipScreen({super.key});
-
-  @override
-  State<manageMembershipScreen> createState() => _manageMembershipScreenState();
-}
 
 class _manageMembershipScreenState extends State<manageMembershipScreen> {
   @override
@@ -471,6 +465,22 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
                                                 "https://www.theadvicecentre.ltd/vip"),
                                       ),
                                     ),
+                                    _buildCard(
+                                      image: Imgs.marketingadv,
+                                      scale: 4,
+                                      color: Color(0xff22a34d),
+                                      onTap: () => Get.to(
+                                          membershipFindOutMorePageScreen()),
+                                    ),
+                                    _buildCard(
+                                      image: Imgs.amzBuddy,
+                                      scale: 2,
+                                      color: AppColors.bgColor,
+                                      onTap: () => Get.to(
+                                        WebviewScreen(
+                                            link: "https://www.amzbuddy.ai/"),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -608,6 +618,51 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
     });
   }
 
+  // Container(
+  // padding: EdgeInsets.symmetric(
+  // horizontal: 2.5.w, vertical: 1.h),
+  // decoration: BoxDecoration(
+  // border: Border.all(
+  // width: 0.5.w,
+  // color: const Color(0xff22a34d)),
+  // borderRadius: BorderRadius.circular(20),
+  // color: AppColors.whiteColor),
+  // child: Column(
+  // children: [
+  // Image.asset(
+  // Imgs.marketingadv,
+  // scale: 5.5,
+  // // color: AppColors.yellowColor1,
+  // ),
+  // SizedBox(
+  // height: 1.h,
+  // ),
+  // InkWell(
+  // onTap: () {
+  // Get.to(
+  // const membershipFindOutMorePageScreen());
+  // },
+  // child: Container(
+  // padding: EdgeInsets.symmetric(
+  // horizontal: 3.w, vertical: 1.h),
+  // decoration: BoxDecoration(
+  // borderRadius:
+  // BorderRadius.circular(50),
+  // color: const Color(0xff22a34d)),
+  // child: Text(
+  // "Find Out More",
+  // style: TextStyle(
+  // fontFamily: FontFamily.bold,
+  // fontWeight: FontWeight.bold,
+  // color: AppColors.whiteColor,
+  // fontSize: 14.sp,
+  // ),
+  // ),
+  // ),
+  // ),
+  // ],
+  // ),
+  // ),
   String? selectedMembership;
 
   List<Plans> plansList = [];
@@ -627,7 +682,9 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
       ),
       child: Column(
         children: [
-          Image.asset(image, scale: scale),
+          ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(12),
+              child: Image.asset(image, scale: scale)),
           SizedBox(height: 1.h),
           InkWell(
             onTap: onTap,
@@ -1153,4 +1210,11 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
       },
     );
   }
+}
+
+class manageMembershipScreen extends StatefulWidget {
+  const manageMembershipScreen({super.key});
+
+  @override
+  State<manageMembershipScreen> createState() => _manageMembershipScreenState();
 }

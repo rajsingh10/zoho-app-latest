@@ -265,17 +265,6 @@ class _HomescreenState extends State<Homescreen> {
                               SizedBox(
                                 height: 2.h,
                               ),
-                              Text(
-                                'Your Monthly Advice Time is tracked by professional time-tracking software. If you have any questions about how to make the most of your allocated Monthly Advice Time, feel free to reach out!',
-                                style: TextStyle(
-                                    color: AppColors.bgColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: FontFamily.bold,
-                                    fontSize: 14.sp),
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
                               _isTimeDataLoading
                                   ? Container()
                                   : InkWell(
@@ -1278,12 +1267,14 @@ class _HomescreenState extends State<Homescreen> {
       return _buildPausedMembershipSection(currentSubscription!);
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildMonthlyAdviceTimeSection(),
-        _buildNextBillingSection(currentSubscription!),
-      ],
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Expanded(child: _buildMonthlyAdviceTimeSection()),
+          SizedBox(width: 3.w),
+          Expanded(child: _buildNextBillingSection(currentSubscription!)),
+        ],
+      ),
     );
   }
 
@@ -1364,58 +1355,61 @@ class _HomescreenState extends State<Homescreen> {
 
   Widget _buildMonthlyAdviceTimeSection() {
     return InkWell(
-      onTap: () {
-        Get.to(const membershipPageScreen());
-      },
+      onTap: () => Get.to(const membershipPageScreen()),
       child: Container(
-        width: Device.width * 0.47,
-        padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 1.w),
+        padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 3.w),
         decoration: BoxDecoration(
-            color: AppColors.cardBgColor,
-            borderRadius: BorderRadius.circular(5.w)),
+          color: AppColors.cardBgColor,
+          borderRadius: BorderRadius.circular(5.w),
+        ),
         child: _isTimeDataLoading
-            ? Loader() // Show loader while time data is loading
+            ? Center(child: Loader())
             : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'Monthly Advice Time',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: AppColors.bgColor,
-                        fontWeight: FontWeight.w100,
-                        fontFamily: FontFamily.extraBold,
-                        fontSize: 18.5.sp),
-                  ).paddingSymmetric(horizontal: 3.w),
-                  SizedBox(height: 0.7.h),
+                      color: AppColors.bgColor,
+                      fontWeight: FontWeight.w100,
+                      fontFamily: FontFamily.extraBold,
+                      fontSize: 18.5.sp,
+                    ),
+                  ),
+                  SizedBox(height: 0.8.h),
+
                   Text(
                     _getCurrentSubscription()?.planName ?? "N/A",
                     style: TextStyle(
-                        color: AppColors.bgColor,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontFamily.light,
-                        fontSize: 14.sp),
+                      color: AppColors.bgColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: FontFamily.light,
+                      fontSize: 14.sp,
+                    ),
                   ),
-                  SizedBox(height: 0.7.h),
+
+                  SizedBox(height: 1.2.h),
+
+                  // Circular Progress
                   Container(
-                    height: 35.w,
-                    width: 35.w,
+                    height: 28.w,
+                    width: 28.w,
                     padding: EdgeInsets.all(11.sp),
                     decoration: const BoxDecoration(
-                        color: AppColors.whiteColor, shape: BoxShape.circle),
+                      color: AppColors.whiteColor,
+                      shape: BoxShape.circle,
+                    ),
                     child: Stack(
                       children: [
-                        SizedBox(
-                          height: 35.w,
-                          width: 35.w,
-                          child: CircularProgressIndicator(
-                            value: (totalAdviceTime > 0 &&
-                                    totalSpentTime <= totalAdviceTime)
-                                ? totalSpentTime / totalAdviceTime.toDouble()
-                                : 1.0,
-                            strokeWidth: 6,
-                            color: AppColors.bgColor,
-                          ),
+                        CircularProgressIndicator(
+                          value: (totalAdviceTime > 0 &&
+                                  totalSpentTime <= totalAdviceTime)
+                              ? totalSpentTime / totalAdviceTime.toDouble()
+                              : 1.0,
+                          strokeWidth: 6,
+                          color: AppColors.bgColor,
                         ),
                         Center(
                           child: Column(
@@ -1444,44 +1438,48 @@ class _HomescreenState extends State<Homescreen> {
                                     ? "secs"
                                     : "mins",
                                 style: TextStyle(
-                                    color: AppColors.bgColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: FontFamily.regular,
-                                    fontSize: 16.sp),
+                                  color: AppColors.bgColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: FontFamily.regular,
+                                  fontSize: 16.sp,
+                                ),
                               ),
                               Text(
                                 "Remaining",
                                 style: TextStyle(
-                                    color: AppColors.bgColor,
-                                    fontWeight: FontWeight.w100,
-                                    fontFamily: FontFamily.extraBold,
-                                    fontSize: 16.sp),
+                                  color: AppColors.bgColor,
+                                  fontWeight: FontWeight.w100,
+                                  fontFamily: FontFamily.extraBold,
+                                  fontSize: 14.5.sp,
+                                ),
                               ),
-                              SizedBox(height: 1.5.h)
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
+
+                  SizedBox(height: 1.5.h),
+
                   if (isTimeExceed)
                     InkWell(
-                      onTap: () {
-                        Get.to(const membershipPageScreen());
-                      },
+                      onTap: () => Get.to(const membershipPageScreen()),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             vertical: 1.h, horizontal: 3.5.w),
                         decoration: BoxDecoration(
-                            color: AppColors.bgColor,
-                            borderRadius: BorderRadius.circular(5.w)),
+                          color: AppColors.bgColor,
+                          borderRadius: BorderRadius.circular(5.w),
+                        ),
                         child: Text(
                           "Upgrade Membership",
                           style: TextStyle(
-                              color: AppColors.whiteColor,
-                              fontWeight: FontWeight.w100,
-                              fontFamily: FontFamily.bold,
-                              fontSize: 14.5.sp),
+                            color: AppColors.whiteColor,
+                            fontWeight: FontWeight.w100,
+                            fontFamily: FontFamily.bold,
+                            fontSize: 14.5.sp,
+                          ),
                         ),
                       ),
                     ),
