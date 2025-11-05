@@ -17,6 +17,7 @@ class apiEndpoints {
   static String singleInvoiceApi = "${zohoBillingBaseUrl}invoices/";
   static String subscriptionsCustomeridApi =
       "${zohoBillingBaseUrl}subscriptions?customer_id=";
+  static String allpaymetsapi = "${zohoBillingBaseUrl}payments?customer_id=";
   static String subscriptionsApi = "${zohoBillingBaseUrl}subscriptions/";
   static String updateSubscription =
       "${zohoBillingBaseUrl}hostedpages/updatesubscription";

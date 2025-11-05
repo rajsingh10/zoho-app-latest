@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zohosystem/apiCalling/apiConfig.dart';
 import 'package:zohosystem/apiCalling/saveUserData.dart';
 import 'package:zohosystem/apiCalling/saveUserToken.dart';
@@ -42,7 +43,11 @@ class _moreScreenState extends State<moreScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setState(() {
+      isLoading = true;
+    });
     fetchAuthtokenApi();
+    // subscriptionsViewApi();
   }
 
   @override
@@ -305,6 +310,76 @@ class _moreScreenState extends State<moreScreen> {
                                     fontFamily: FontFamily.regular,
                                     fontWeight: FontWeight.normal,
                                     color: AppColors.orangeColor,
+                                    fontSize: 16.sp,
+                                  ),
+                                  softWrap: true,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            const Divider(
+                              thickness: 0.5,
+                              color: AppColors.blackColor,
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Center(
+                              child: InkWell(
+                                onTap: () {
+                                  showCupertinoDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CupertinoAlertDialog(
+                                        title: Text(
+                                          'Confirm Account Deletion',
+                                          style: TextStyle(fontSize: 18.sp),
+                                        ),
+                                        content: Text(
+                                          'Are you sure you want to delete your account?',
+                                          style: TextStyle(fontSize: 17.sp),
+                                        ),
+                                        actions: [
+                                          CupertinoDialogAction(
+                                            child: const Text('No'),
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                          CupertinoDialogAction(
+                                            isDestructiveAction: true,
+                                            onPressed: () async {
+                                              const url =
+                                                  "https://www.theadvicecentre.ltd/";
+
+                                              if (await canLaunchUrl(
+                                                  Uri.parse(url))) {
+                                                Get.back();
+                                                await launchUrl(
+                                                  Uri.parse(url),
+                                                  mode: LaunchMode
+                                                      .externalApplication,
+                                                );
+                                              } else {
+                                                print("Could not launch URL");
+                                              }
+                                            },
+                                            child: const Text('Yes'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text(
+                                  'Delete Your Account?',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.regular,
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.redColor,
                                     fontSize: 16.sp,
                                   ),
                                   softWrap: true,

@@ -36,6 +36,31 @@ class HomeProvider extends ChangeNotifier {
     return responseJson;
   }
 
+  Future<http.Response> allpaymets() async {
+    Map<String, String> headers = await apiConfig.getAuthHeader();
+    log('Api Header Data = $headers');
+    print("header pass====>>>$headers");
+    String url =
+        "${apiEndpoints.allpaymetsapi}${userData?.data?[0].customerId}";
+    print(url);
+
+    var responseJson;
+    final response = await http
+        .get(
+      Uri.parse(url),
+      headers: headers,
+    )
+        .timeout(
+      const Duration(seconds: 60),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+    responseJson = responses(response);
+
+    return responseJson;
+  }
+
   Future<http.Response> subscriptionsLiveViewApi() async {
     Map<String, String> headers = await apiConfig.getAuthHeader();
     log('Api Header Data = $headers');
