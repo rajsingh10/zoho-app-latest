@@ -9,12 +9,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zohosystem/ui/adviceTicketsScreen/view/adviceTicketsScreen.dart';
 import 'package:zohosystem/ui/bills&Payments/view/bills&PaymentsScreen.dart';
 import 'package:zohosystem/ui/homeScreen/view/homeScreen.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/modal/pauseSubscriptionModal.dart';
 import 'package:zohosystem/ui/manageMembershipScreen/view/manageMembershipScreen.dart';
-import 'package:zohosystem/ui/manageMembershipScreen/view/verifyPaymentsScripationScreen.dart';
 import 'package:zohosystem/utils/textFields.dart';
 
 import '../../../apiCalling/Loader.dart';
@@ -37,6 +37,7 @@ import '../../homeScreen/modal/getTimeEntryModal.dart';
 import '../../homeScreen/modal/planDetailsModal.dart';
 import '../../homeScreen/modal/subscriptionsDateModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
+import '../../welcomeScreen/view/welcomeScreen.dart';
 import '../modal/cancalSubcariptionModal.dart';
 import '../modal/resumeSubscriptionModal.dart';
 import '../modal/updateSubscriptionModal.dart';
@@ -246,67 +247,68 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                             children: [
                               // Swipeable Membership Section Only
                               _buildSwipeableMembershipSection(),
-                              SizedBox(height: 2.h),
+                              if (_hasActiveSubscription())
+                                SizedBox(height: 2.h),
 
-                              // Upgrade/Downgrade Buttons
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedButton = 'upgrade';
-                                      });
-                                      _showStatefulBottomSheet(
-                                          context, selectedButton);
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 3.5.w, vertical: 1.h),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(90),
-                                          color: const Color(0xff2273bb)),
-                                      child: Text(
-                                        "Upgrade Membership",
-                                        style: TextStyle(
-                                            color: AppColors.whiteColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.bold,
-                                            fontSize: 14.sp),
+                              if (_hasActiveSubscription())
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedButton = 'upgrade';
+                                        });
+                                        _showStatefulBottomSheet(
+                                            context, selectedButton);
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 3.5.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(90),
+                                            color: const Color(0xff2273bb)),
+                                        child: Text(
+                                          "Upgrade Membership",
+                                          style: TextStyle(
+                                              color: AppColors.whiteColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: FontFamily.bold,
+                                              fontSize: 14.sp),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedButton = 'downgrade';
-                                      });
-                                      _showStatefulBottomSheet(
-                                          context, selectedButton);
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 3.w, vertical: 1.h),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(90),
-                                          color: const Color(0xff2273bb)),
-                                      child: Text(
-                                        "Downgrade Membership",
-                                        style: TextStyle(
-                                            color: AppColors.whiteColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: FontFamily.bold,
-                                            fontSize: 14.sp),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedButton = 'downgrade';
+                                        });
+                                        _showStatefulBottomSheet(
+                                            context, selectedButton);
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 3.w, vertical: 1.h),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(90),
+                                            color: const Color(0xff2273bb)),
+                                        child: Text(
+                                          "Downgrade Membership",
+                                          style: TextStyle(
+                                              color: AppColors.whiteColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: FontFamily.bold,
+                                              fontSize: 14.sp),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
                               SizedBox(height: 2.h),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -345,159 +347,173 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
                                 decoration: BoxDecoration(
                                     color: AppColors.cardBgColor,
                                     borderRadius: BorderRadius.circular(5.w)),
-                                child: isTicketLoad
-                                    ? Loader()
-                                    : Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Monthly Advice Time",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: AppColors.bgColor,
-                                                fontWeight: FontWeight.w100,
-                                                fontFamily:
-                                                    FontFamily.extraBold,
-                                                fontSize: 20.sp),
-                                          ).paddingSymmetric(horizontal: 3.w),
-                                          SizedBox(height: 1.h),
-                                          _getCurrentSubscription()?.status ==
-                                                  'paused'
-                                              ? Text(
-                                                  'Membership is currently paused please resume it to see details',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: AppColors.bgColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.light,
-                                                      fontSize: 17.sp),
-                                                )
-                                              : Text(
-                                                  _getCurrentSubscription()
-                                                          ?.planName ??
-                                                      "N/A",
-                                                  style: TextStyle(
-                                                      color: AppColors.bgColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.light,
-                                                      fontSize: 15.sp),
-                                                ),
-                                          SizedBox(height: 0.7.h),
-                                          _getCurrentSubscription()?.status ==
-                                                  'paused'
-                                              ? Container()
-                                              : Container(
-                                                  height: 35.w,
-                                                  width: 35.w,
-                                                  padding:
-                                                      EdgeInsets.all(11.sp),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          color: AppColors
-                                                              .whiteColor,
-                                                          shape:
-                                                              BoxShape.circle),
-                                                  child: Stack(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 35.w,
-                                                        width: 35.w,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          value: (totalAdviceTime >
-                                                                      0 &&
-                                                                  totalSpentTime <=
-                                                                      totalAdviceTime)
-                                                              ? totalSpentTime /
-                                                                  totalAdviceTime
-                                                                      .toDouble()
-                                                              : 1.0,
-                                                          strokeWidth: 6,
+                                child: !_hasActiveSubscription()
+                                    ? Text(
+                                        "Currently, you do not have an active membership. Please purchase a membership plan to access your advice tickets.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: AppColors.bgColor,
+                                            fontWeight: FontWeight.w100,
+                                            fontFamily: FontFamily.extraBold,
+                                            fontSize: 14.sp),
+                                      )
+                                    : isTicketLoad
+                                        ? Loader()
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Monthly Advice Time",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: AppColors.bgColor,
+                                                    fontWeight: FontWeight.w100,
+                                                    fontFamily:
+                                                        FontFamily.extraBold,
+                                                    fontSize: 20.sp),
+                                              ).paddingSymmetric(
+                                                  horizontal: 3.w),
+                                              SizedBox(height: 1.h),
+                                              _getCurrentSubscription()
+                                                          ?.status ==
+                                                      'paused'
+                                                  ? Text(
+                                                      'Membership is currently paused please resume it to see details',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
                                                           color:
                                                               AppColors.bgColor,
-                                                        ),
-                                                      ),
-                                                      Center(
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              (totalAdviceTime -
-                                                                              totalSpentTime)
-                                                                          .clamp(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontFamily:
+                                                              FontFamily.light,
+                                                          fontSize: 17.sp),
+                                                    )
+                                                  : Text(
+                                                      _getCurrentSubscription()
+                                                              ?.planName ??
+                                                          "N/A",
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.bgColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontFamily:
+                                                              FontFamily.light,
+                                                          fontSize: 15.sp),
+                                                    ),
+                                              SizedBox(height: 0.7.h),
+                                              _getCurrentSubscription()
+                                                          ?.status ==
+                                                      'paused'
+                                                  ? Container()
+                                                  : Container(
+                                                      height: 35.w,
+                                                      width: 35.w,
+                                                      padding:
+                                                          EdgeInsets.all(11.sp),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              color: AppColors
+                                                                  .whiteColor,
+                                                              shape: BoxShape
+                                                                  .circle),
+                                                      child: Stack(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 35.w,
+                                                            width: 35.w,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              value: (totalAdviceTime >
+                                                                          0 &&
+                                                                      totalSpentTime <=
+                                                                          totalAdviceTime)
+                                                                  ? totalSpentTime /
+                                                                      totalAdviceTime
+                                                                          .toDouble()
+                                                                  : 1.0,
+                                                              strokeWidth: 6,
+                                                              color: AppColors
+                                                                  .bgColor,
+                                                            ),
+                                                          ),
+                                                          Center(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                Text(
+                                                                  (totalAdviceTime - totalSpentTime).clamp(
                                                                               0,
                                                                               totalAdviceTime) <
-                                                                      60
-                                                                  ? "${(totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime)}"
-                                                                  : ((totalAdviceTime - totalSpentTime).clamp(
-                                                                              0,
-                                                                              totalAdviceTime) /
-                                                                          60)
-                                                                      .toStringAsFixed(
-                                                                          0),
-                                                              style: TextStyle(
-                                                                color: AppColors
-                                                                    .bgColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .bold,
-                                                                fontSize: 22.sp,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              (totalAdviceTime -
-                                                                              totalSpentTime)
-                                                                          .clamp(
+                                                                          60
+                                                                      ? "${(totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime)}"
+                                                                      : ((totalAdviceTime - totalSpentTime).clamp(0, totalAdviceTime) /
+                                                                              60)
+                                                                          .toStringAsFixed(
+                                                                              0),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: AppColors
+                                                                        .bgColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontFamily:
+                                                                        FontFamily
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        22.sp,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  (totalAdviceTime - totalSpentTime).clamp(
                                                                               0,
                                                                               totalAdviceTime) <
-                                                                      60
-                                                                  ? "secs"
-                                                                  : "mins",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .bgColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .regular,
-                                                                  fontSize:
-                                                                      16.sp),
+                                                                          60
+                                                                      ? "secs"
+                                                                      : "mins",
+                                                                  style: TextStyle(
+                                                                      color: AppColors
+                                                                          .bgColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .regular,
+                                                                      fontSize:
+                                                                          16.sp),
+                                                                ),
+                                                                Text(
+                                                                  "Remaining",
+                                                                  style: TextStyle(
+                                                                      color: AppColors
+                                                                          .bgColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w100,
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .extraBold,
+                                                                      fontSize:
+                                                                          16.sp),
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        1.5.h)
+                                                              ],
                                                             ),
-                                                            Text(
-                                                              "Remaining",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .bgColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w100,
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .extraBold,
-                                                                  fontSize:
-                                                                      16.sp),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 1.5.h)
-                                                          ],
-                                                        ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                        ],
-                                      ),
+                                                    ),
+                                            ],
+                                          ),
                               ),
                               _getCurrentSubscription()?.status == 'paused'
                                   ? Container()
@@ -843,10 +859,10 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
         _buildTicketsSection(),
         SizedBox(height: 1.h),
         if (currentSubscription?.status != 'paused') ...[
-          _buildPauseMembershipSection(),
-          SizedBox(height: 1.h),
+          if (_hasActiveSubscription()) _buildPauseMembershipSection(),
+          if (_hasActiveSubscription()) SizedBox(height: 1.h),
         ],
-        _buildCancelMembershipSection(),
+        if (_hasActiveSubscription()) _buildCancelMembershipSection(),
       ],
     );
   }
@@ -1632,13 +1648,22 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             setState(() {
               isPlanChange = false;
             });
-            Get.to(
-              VerifyPaymentScripationScreen(
-                paymentLink: createSubscription?.hostedpage?.url ?? '',
-              ),
-              transition: Transition.rightToLeft,
-              duration: const Duration(milliseconds: 250),
-            );
+            final url = createSubscription?.hostedpage?.url ?? '';
+
+            if (url.isNotEmpty) {
+              final uri = Uri.parse(url);
+              await launchUrl(
+                uri,
+                mode: LaunchMode
+                    .externalApplication, // Opens Chrome / external browser
+              );
+              Future.delayed(const Duration(seconds: 3), () {
+                Get.offAll(() => const Welcomescreen(),
+                    transition: Transition.fadeIn);
+              });
+            } else {
+              print("URL is empty");
+            }
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Register Error", message: register?.message ?? '');
@@ -1699,13 +1724,22 @@ class _membershipPageScreenState extends State<membershipPageScreen> {
             setState(() {
               isPlanChange = false;
             });
-            Get.to(
-              VerifyPaymentScripationScreen(
-                paymentLink: updateSubscription?.hostedpage?.url ?? '',
-              ),
-              transition: Transition.rightToLeft,
-              duration: const Duration(milliseconds: 250),
-            );
+            final url = updateSubscription?.hostedpage?.url ?? '';
+
+            if (url.isNotEmpty) {
+              final uri = Uri.parse(url);
+              await launchUrl(
+                uri,
+                mode: LaunchMode
+                    .externalApplication, // Opens Chrome / external browser
+              );
+              Future.delayed(const Duration(seconds: 3), () {
+                Get.offAll(() => const Welcomescreen(),
+                    transition: Transition.fadeIn);
+              });
+            } else {
+              print("URL is empty");
+            }
           } else if (response.statusCode == 400) {
             updateSubscription?.message ==
                     "The plan you've selected belongs to a different product. Select a plan from the same product to proceed."

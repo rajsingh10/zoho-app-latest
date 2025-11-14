@@ -1,3 +1,2303 @@
+// import 'dart:convert';
+// import 'dart:developer';
+//
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:in_app_purchase/in_app_purchase.dart';
+// import 'package:intl/intl.dart';
+// import 'package:intl_phone_field/intl_phone_field.dart';
+// import 'package:sizer/sizer.dart';
+// import 'package:zohosystem/ui/authentications/login/view/sendOtpScreen.dart';
+// import 'package:zohosystem/ui/authentications/signup/modal/allPlansModal.dart';
+// import 'package:zohosystem/ui/authentications/signup/modal/allProductsModal.dart';
+// import 'package:zohosystem/ui/authentications/signup/modal/countriesModal.dart';
+// import 'package:zohosystem/ui/authentications/signup/modal/createContractModal.dart';
+// import 'package:zohosystem/ui/authentications/signup/modal/createSubscriptionModal.dart';
+// import 'package:zohosystem/ui/authentications/signup/provider/signupProvider.dart';
+// import 'package:zohosystem/ui/authentications/signup/view/verifyPaymentWebview.dart';
+//
+// import '../../../../apiCalling/Loader.dart';
+// import '../../../../apiCalling/apiConfig.dart';
+// import '../../../../apiCalling/buildErrorDialog.dart';
+// import '../../../../apiCalling/checkInternetModule.dart';
+// import '../../../../apiCalling/saveUserToken.dart';
+// import '../../../../services/iapServices.dart';
+// import '../../../../utils/colors.dart';
+// import '../../../../utils/fontFamily.dart';
+// import '../../../../utils/images.dart';
+// import '../../../../utils/snackBars.dart';
+// import '../../../../utils/textFields.dart';
+// import '../../login/modal/authTokenModal.dart';
+// import '../../login/provider/loginProvider.dart';
+// import '../../login/view/policyWebview.dart';
+// import '../modal/checkEmailModal.dart';
+// import '../modal/signInModal.dart';
+//
+// class Registerscreen extends StatefulWidget {
+//   const Registerscreen({super.key});
+//
+//   @override
+//   State<Registerscreen> createState() => _RegisterscreenState();
+// }
+//
+// class _RegisterscreenState extends State<Registerscreen> {
+//   final TextEditingController _firstname = TextEditingController();
+//   final TextEditingController _lastname = TextEditingController();
+//   final TextEditingController _companyname = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _phoneNumber = TextEditingController();
+//   final TextEditingController _state = TextEditingController();
+//   final TextEditingController _address = TextEditingController();
+//   final TextEditingController _city = TextEditingController();
+//   final TextEditingController _zipCode = TextEditingController();
+//   TextEditingController searchController = TextEditingController();
+//
+//   String? selectedMembershipProduct;
+//   String? selectedMembership;
+//   final _formKey = GlobalKey<FormState>();
+//   bool isLoading = false;
+//   bool isChecked = false;
+//   int step = 1;
+//   List<Products> productsList = [];
+//   List<Data> countriesList = [];
+//   List<Plans> plansList = [];
+//
+//   String _countryCode = '+44';
+//   String? selectedCountry;
+//   List<String> cityList = [];
+//   List<String> allCountries = [];
+//   List<String> filteredCountries = [];
+//   final LayerLink _layerLink = LayerLink();
+//   OverlayEntry? _overlayEntry;
+//   final GlobalKey _textFieldKey = GlobalKey();
+//   final LayerLink _cityLayerLink = LayerLink();
+//   OverlayEntry? _cityOverlayEntry;
+//   final GlobalKey _cityFieldKey = GlobalKey();
+//   final TextEditingController _citySearchController = TextEditingController();
+//   List<String> filteredCities = [];
+//   final IAPService _iapService = IAPService();
+//   List<ProductDetails> _availableProducts = [];
+//   bool _isIAPLoading = false;
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     if (mounted) {
+//       setState(() {
+//         isLoading = true;
+//       });
+//     }
+//     _initializeIAP();
+//     getPlansApi();
+//   }
+//   Future<void> _initializeIAP() async {
+//     try {
+//       await _iapService.initialize();
+//
+//       // Map your plan codes to Apple Product IDs
+//       // You need to create these in App Store Connect
+//       final productIds = _getAppleProductIds();
+//       await _iapService.loadProducts(productIds);
+//
+//       setState(() {
+//         _availableProducts = _iapService.products;
+//       });
+//     } catch (e) {
+//       print('IAP initialization failed: $e');
+//     }
+//   }
+//
+//   List<String> _getAppleProductIds() {
+//     // Map your backend plan codes to Apple Product IDs
+//     // These should match what you set up in App Store Connect
+//     return plansList.map((plan) => 'com.yourapp.${plan.planCode}').toList();
+//   }
+//
+//   // Replace your current sign-up method
+//   Future<void> _processIAPPurchase() async {
+//     if (!_formKey.currentState!.validate() || !isChecked) return;
+//
+//     setState(() => _isIAPLoading = true);
+//
+//     try {
+//       // Find the corresponding Apple product
+//       final selectedPlan = plansList.firstWhere(
+//               (plan) => plan.planCode == selectedMembership
+//       );
+//
+//       final appleProductId = 'com.tac.advicecenter.${selectedPlan.planCode}';
+//       final product = _availableProducts.firstWhere(
+//               (p) => p.id == appleProductId
+//       );
+//
+//       // Process the IAP purchase
+//       await _iapService.purchaseProduct(product);
+//
+//       // The purchase flow is handled by Apple
+//       // Your _handlePurchase method will be called when complete
+//
+//     } catch (e) {
+//       setState(() => _isIAPLoading = false);
+//       showCustomErrorSnackbar(
+//         title: 'Purchase Error',
+//         message: 'Failed to process purchase: $e',
+//       );
+//     }
+//   }
+//
+//   // Update your sign-up button
+//   Widget _buildSignUpButton() {
+//     return InkWell(
+//       onTap: _isIAPLoading ? null : _processIAPPurchase,
+//       child: Container(
+//         height: 5.5.h,
+//         width: 38.w,
+//         alignment: Alignment.center,
+//         decoration: BoxDecoration(
+//           color: _isIAPLoading ? Colors.grey : AppColors.bgColor,
+//           borderRadius: BorderRadius.circular(3.w),
+//         ),
+//         child: _isIAPLoading
+//             ? SizedBox(
+//           height: 2.h,
+//           width: 2.h,
+//           child: CircularProgressIndicator(
+//             color: AppColors.whiteColor,
+//             strokeWidth: 2,
+//           ),
+//         )
+//             : Text(
+//           'Sign up',
+//           style: TextStyle(
+//             fontSize: 17.sp,
+//             color: AppColors.whiteColor,
+//             fontWeight: FontWeight.bold,
+//             fontFamily: FontFamily.bold,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+//   @override
+//   void dispose() {
+//     _iapService.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       resizeToAvoidBottomInset: true,
+//       backgroundColor: AppColors.bgColor,
+//       body: GestureDetector(
+//         onTap: () {
+//           if (_overlayEntry != null) _removeOverlay();
+//           if (_cityOverlayEntry != null) _removeCityOverlay();
+//           FocusScope.of(context).unfocus();
+//         },
+//         child: Stack(
+//           children: [
+//             SizedBox(
+//               height: Device.height,
+//               width: Device.width,
+//               child: Stack(
+//                 children: [
+//                   Positioned(
+//                     top: 7.h,
+//                     right: -18.w,
+//                     child: Image.asset(
+//                       Imgs.onlyLogoIcon,
+//                       scale: 1.15,
+//                       color: AppColors.whiteColor,
+//                     ),
+//                   ),
+//                   Positioned(
+//                       top: 55.h,
+//                       left: -22.w,
+//                       child: Transform.flip(
+//                         flipX: true,
+//                         child: Image.asset(
+//                           Imgs.onlyLogoIcon,
+//                           color: AppColors.whiteColor,
+//                           scale: 0.85,
+//                         ),
+//                       )),
+//                   Positioned(
+//                     top: 14.h,
+//                     left: 3.w,
+//                     child: Image.asset(
+//                       Imgs.namedLogo,
+//                       scale: 4,
+//                       color: AppColors.whiteColor,
+//                     ),
+//                   ),
+//                   Positioned(
+//                     top: 27.h,
+//                     left: 5.w,
+//                     child: Container(
+//                       height: Device.height * 0.8,
+//                       width: Device.width * 0.9,
+//                       padding: EdgeInsets.symmetric(vertical: 3.h),
+//                       decoration: BoxDecoration(
+//                         color: AppColors.whiteColor,
+//                         border: Border.all(
+//                           color: AppColors.blackColor,
+//                           width: 7,
+//                         ),
+//                         borderRadius: const BorderRadius.only(
+//                           topLeft: Radius.circular(50),
+//                           topRight: Radius.circular(50),
+//                         ),
+//                       ),
+//                       child: Padding(
+//                         padding: PagePadding,
+//                         child: Form(
+//                           key: _formKey,
+//                           child: SingleChildScrollView(
+//                             physics: const BouncingScrollPhysics(),
+//                             child: Column(
+//                               mainAxisSize: MainAxisSize.min,
+//                               children: [
+//                                 step == 1
+//                                     ? firstStep(context)
+//                                     : secondStep(context),
+//                                 SizedBox(
+//                                   height:
+//                                       MediaQuery.of(context).viewInsets.bottom >
+//                                               0
+//                                           ? 35.h
+//                                           : 0.h,
+//                                 ),
+//                                 // Ensure button is above keyboard
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                   Positioned(
+//                     top: 17.h,
+//                     right: 5.w,
+//                     child: Image.asset(
+//                       Imgs.starIcon,
+//                       scale: 3.5,
+//                     ),
+//                   ),
+//                   Positioned(
+//                     top: 6.h,
+//                     child: InkWell(
+//                       onTap: () => Get.back(),
+//                       child: Padding(
+//                         padding: EdgeInsets.only(left: 5.w),
+//                         child: Image.asset(
+//                           Imgs.leftIcon,
+//                           scale: 5,
+//                           color: AppColors.whiteColor,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             if (isLoading)
+//               Container(
+//                 color: Colors.black.withOpacity(0.3),
+//                 child: Center(child: Loader()),
+//               ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//
+//   Widget firstStep(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         SizedBox(height: 2.h),
+//         SizedBox(
+//           width: 60.w,
+//           child: Text(
+//             'Sign Up for Your 7-Day Free Trial',
+//             style: TextStyle(
+//                 fontFamily: FontFamily.extraBold,
+//                 color: AppColors.blackColor,
+//                 fontSize: 21.sp),
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         InkWell(
+//           onTap: () {
+//             showAdviceDialog(context);
+//           },
+//           child: Container(
+//             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 1.5.h),
+//             alignment: Alignment.center,
+//             decoration: BoxDecoration(
+//                 gradient: const LinearGradient(colors: [
+//                   Color(0xffffde59),
+//                   Color(0xfff1811b),
+//                   Color(0xfff1811b),
+//                 ]),
+//                 borderRadius: BorderRadius.circular(30)),
+//             child: Text(
+//               'A MESSAGE TO YOU FROM OUR FOUNDER CLICK HERE',
+//               textAlign: TextAlign.center,
+//               style: TextStyle(
+//                   fontSize: 15.5.sp,
+//                   color: AppColors.whiteColor,
+//                   fontWeight: FontWeight.bold,
+//                   fontFamily: FontFamily.bold),
+//             ),
+//           ),
+//         ),
+//
+//         Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             SizedBox(height: 2.h),
+//             RichText(
+//               text: TextSpan(
+//                 children: [
+//                   TextSpan(
+//                     text: "Membership Plan",
+//                     style: TextStyle(
+//                       fontWeight: FontWeight.w800,
+//                       fontFamily: FontFamily.light,
+//                       color: AppColors.blackColor,
+//                       fontSize: 16.sp,
+//                     ),
+//                   ),
+//                   // shows red * if validator is present
+//                   TextSpan(
+//                     text: ' *',
+//                     style: TextStyle(
+//                       color: AppColors.redColor,
+//                       fontSize: 16.sp,
+//                       fontFamily: FontFamily.light,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             SizedBox(height: 1.h),
+//             DropdownButtonFormField(
+//               hint: Text(
+//                 "Select Membership Plan",
+//                 style: TextStyle(
+//                   color: AppColors.border,
+//                   fontFamily: FontFamily.regular,
+//                   fontWeight: FontWeight.w500,
+//                   fontSize: 15.sp,
+//                 ),
+//               ),
+//               icon: Icon(
+//                 CupertinoIcons.chevron_down,
+//                 size: 16.sp,
+//                 color: AppColors.border,
+//               ).paddingOnly(right: 2.w),
+//               value: selectedMembership,
+//               items: plansList.map((item) {
+//                 return DropdownMenuItem(
+//                   value: item.planCode,
+//                   child: SizedBox(
+//                     width: 50.w,
+//                     child: Text(
+//                       item.name ?? '',
+//                       style: TextStyle(
+//                         fontFamily: FontFamily.regular,
+//                         fontSize: 15.sp,
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//               }).toList(),
+//               onChanged: (value) {
+//                 if (mounted) {
+//                   setState(() {
+//                     selectedMembership = value;
+//                   });
+//                 }
+//               },
+//               validator: (value) {
+//                 if (value == null) {
+//                   return 'Please select a Membership Plan';
+//                 }
+//                 return null;
+//               },
+//               decoration: InputDecoration(
+//                 prefixIcon: const Icon(Icons.person),
+//                 contentPadding:
+//                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+//                 fillColor: AppColors.whiteColor,
+//                 filled: true,
+//                 border: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(3.w),
+//                   borderSide:
+//                       const BorderSide(width: 1.5, color: AppColors.border),
+//                 ),
+//                 enabledBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(3.w),
+//                   borderSide:
+//                       const BorderSide(width: 1.5, color: AppColors.border),
+//                 ),
+//                 focusedBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(3.w),
+//                   borderSide:
+//                       const BorderSide(width: 1.5, color: AppColors.blackColor),
+//                 ),
+//                 errorBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(3.w),
+//                   borderSide:
+//                       const BorderSide(width: 1.5, color: AppColors.redColor),
+//                 ),
+//                 errorStyle: TextStyle(
+//                   color: AppColors.redColor,
+//                   fontSize: 15.sp,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _firstname,
+//           hintText: 'Enter Your First Name',
+//           text: 'First Name',
+//           isTextavailable: true,
+//           textInputType: TextInputType.text,
+//           prefix: const Icon(Icons.person),
+//           validator: (value) => value == null || value.isEmpty
+//               ? 'Please enter your first name'
+//               : null,
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _lastname,
+//           hintText: 'Enter Your Last Name',
+//           text: 'Last Name',
+//           isTextavailable: true,
+//           textInputType: TextInputType.text,
+//           prefix: const Icon(Icons.person),
+//           validator: (value) => value == null || value.isEmpty
+//               ? 'Please enter your last name'
+//               : null,
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _companyname,
+//           hintText: 'Enter Your Company Name',
+//           text: 'Company Name (If Applicable)',
+//           isTextavailable: true,
+//           textInputType: TextInputType.text,
+//           prefix: const Icon(Icons.business),
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _emailController,
+//           hintText: 'Enter Your Email Address',
+//           text: 'Email',
+//           isTextavailable: true,
+//           textInputType: TextInputType.emailAddress,
+//           prefix: const Icon(Icons.email_outlined),
+//           validator: (value) {
+//             if (value == null || value.isEmpty) return 'Please enter email';
+//             if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+//               return 'Enter valid email';
+//             }
+//             return null;
+//           },
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _phoneNumber,
+//           hintText: 'Enter Your Phone Number',
+//           text: 'Phone Number',
+//           isTextavailable: true,
+//           validator: (value) {
+//             if (value == null || value.isEmpty) {
+//               return 'Phone Number is required';
+//             }
+//             return null;
+//           },
+//           textInputType: TextInputType.phone,
+//           prefix: Row(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               SizedBox(
+//                 width: 2.w,
+//               ),
+//               Icon(
+//                 Icons.phone,
+//                 size: 19.sp,
+//               ),
+//               SizedBox(
+//                 width: 2.w,
+//               ),
+//               Expanded(
+//                 child: IntlPhoneField(
+//                   controller: _phoneNumber,
+//                   decoration: InputDecoration(
+//                     border:
+//                         const OutlineInputBorder(borderSide: BorderSide.none),
+//                     disabledBorder:
+//                         const OutlineInputBorder(borderSide: BorderSide.none),
+//                     enabledBorder:
+//                         const OutlineInputBorder(borderSide: BorderSide.none),
+//                     errorBorder:
+//                         const OutlineInputBorder(borderSide: BorderSide.none),
+//                     focusedBorder:
+//                         const OutlineInputBorder(borderSide: BorderSide.none),
+//                     hintText: 'Enter Your Phone Number',
+//                     hintStyle: TextStyle(
+//                       color: AppColors.border,
+//                       fontFamily: FontFamily.regular,
+//                       fontWeight: FontWeight.w500,
+//                       fontSize: 15.sp,
+//                     ),
+//                   ),
+//                   initialCountryCode: 'GB',
+//                   onCountryChanged: (value) {
+//                     if (mounted) {
+//                       setState(() {
+//                         _countryCode = value.displayCC;
+//                       });
+//                     }
+//                     log(_countryCode);
+//                   },
+//                   disableLengthCheck: true,
+//                   // optional: disable length restrictions
+//                   showDropdownIcon: true,
+//                   showCountryFlag: false,
+//                   dropdownIconPosition: IconPosition.trailing,
+//                   dropdownTextStyle: const TextStyle(color: Colors.black),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         Text.rich(
+//           TextSpan(
+//             text:
+//                 'Whichever service you select above, you are entitled to up to 30 mins of Professional Advice Time in your trial period. Payment details are required for your trial.\n',
+//             style: TextStyle(
+//               fontSize: 14.sp,
+//               color: AppColors.blackColor,
+//             ),
+//             children: [
+//               TextSpan(
+//                 text:
+//                     'Important: Your membership will auto-renew after your 7 day free trial period and you will be charged according to the membership plan you select above, unless you choose to cancel before the end of your trial period.',
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.bold,
+//                   fontSize: 14.sp,
+//                   color: AppColors.blackColor,
+//                 ),
+//               ),
+//               TextSpan(
+//                 text:
+//                     ' Please contact accounts@theadvicecentre.ltd for any billing queries or contact our team on the live chat. ',
+//                 style: TextStyle(
+//                   fontSize: 14.sp,
+//                   color: AppColors.blackColor,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         InkWell(
+//           onTap: () {
+//             if (_formKey.currentState!.validate()) {
+//               if (mounted) {
+//                 setState(() {
+//                   step++;
+//                 });
+//               }
+//             }
+//           },
+//           child: Container(
+//             height: 5.5.h,
+//             alignment: Alignment.center,
+//             decoration: BoxDecoration(
+//               color: AppColors.bgColor,
+//               borderRadius: BorderRadius.circular(3.w),
+//             ),
+//             child: Text(
+//               'Next',
+//               style: TextStyle(
+//                 fontSize: 17.sp,
+//                 color: AppColors.whiteColor,
+//                 fontWeight: FontWeight.bold,
+//                 fontFamily: FontFamily.bold,
+//               ),
+//             ),
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         Center(
+//           child: RichText(
+//             text: TextSpan(
+//               style: TextStyle(
+//                 fontSize: 15.sp,
+//                 fontFamily: FontFamily.regular,
+//               ),
+//               children: [
+//                 const TextSpan(
+//                   text: 'Already a member? Log-in ',
+//                   style: TextStyle(color: AppColors.blackColor),
+//                 ),
+//                 TextSpan(
+//                   text: 'here.',
+//                   style: const TextStyle(color: AppColors.orangeColor),
+//                   recognizer: TapGestureRecognizer()
+//                     ..onTap = () {
+//                       Get.to(
+//                         const SendOtpScreen(),
+//                         transition: Transition.rightToLeft,
+//                         duration: const Duration(milliseconds: 250),
+//                       );
+//                     },
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//         SizedBox(
+//           height: 1.h,
+//         ),
+//         // Container(
+//         //
+//         //   padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.h),
+//         //   decoration: BoxDecoration(
+//         //     color: Colors.white,
+//         //     border: Border.all(
+//         //       color: Colors.orange, // border color
+//         //       width: 1.5,
+//         //     ),
+//         //     borderRadius: BorderRadius.circular(12),
+//         //     boxShadow: [
+//         //       BoxShadow(
+//         //         color: Colors.black12,
+//         //         blurRadius: 6,
+//         //         offset: const Offset(0, 2),
+//         //       ),
+//         //     ],
+//         //   ),
+//         //
+//         //   // Make text scrollable
+//         //   child: SizedBox(
+//         //     height: 25.h, // 🔹 scroll area height (adjust as needed)
+//         //     child: SingleChildScrollView(
+//         //       child: RichText(
+//         //         text: TextSpan(
+//         //           style: TextStyle(
+//         //             fontSize: 14.sp,
+//         //             color: Colors.black,
+//         //             fontFamily: 'Poppins',
+//         //             height: 1.5,
+//         //           ),
+//         //           children: [
+//         //
+//         //             TextSpan(
+//         //               text:
+//         //               "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
+//         //               style: TextStyle(
+//         //                   fontFamily: FontFamily.bold,
+//         //                   color: AppColors.blackColor,
+//         //                   fontSize: 16.sp),
+//         //             ),
+//         //             TextSpan(
+//         //               text: "Important Information to read before Signing up\n\n",
+//         //               style: TextStyle(
+//         //                   fontFamily: FontFamily.bold,
+//         //                   color: AppColors.blackColor,
+//         //                   fontSize: 16.sp),
+//         //             ),
+//         //             const TextSpan(
+//         //               text:
+//         //               "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). Multiple free trials are not permitted. If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
+//         //                   "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
+//         //             ),
+//         //             TextSpan(
+//         //               text: "Important: ",
+//         //               style: TextStyle(
+//         //                 color: Colors.orange,
+//         //                 fontWeight: FontWeight.bold,
+//         //               ),
+//         //             ),
+//         //             const TextSpan(
+//         //               text:
+//         //               "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n"
+//         //                   "Please ensure you read & agree to our Terms and Conditions & Privacy Policy before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
+//         //                   "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
+//         //                   "If you are based outside of the UK, please speak to our team on the live chat or email info@theadvicecentre.ltd. Please do not sign up.",
+//         //             ),
+//         //           ],
+//         //         ),
+//         //       ),
+//         //     ),
+//         //   ),
+//         // ),
+//         Container(
+//           padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             border: Border.all(
+//               color: Colors.orange,
+//               width: 1.5,
+//             ),
+//             borderRadius: BorderRadius.circular(12),
+//             boxShadow: const [
+//               BoxShadow(
+//                 color: Colors.black12,
+//                 blurRadius: 6,
+//                 offset: Offset(0, 2),
+//               ),
+//             ],
+//           ),
+//           child: SizedBox(
+//             height: 25.h,
+//             child: Scrollbar(
+//               thumbVisibility: true,
+//               child: SingleChildScrollView(
+//                 child: RichText(
+//                   text: TextSpan(
+//                     style: TextStyle(
+//                       fontSize: 14.sp,
+//                       color: Colors.black,
+//                       fontFamily: 'Poppins',
+//                       height: 1.5,
+//                     ),
+//                     children: [
+//                       TextSpan(
+//                         text:
+//                             "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
+//                         style: TextStyle(
+//                           fontFamily: FontFamily.bold,
+//                           color: AppColors.blackColor,
+//                           fontSize: 14.sp,
+//                         ),
+//                       ),
+//                       TextSpan(
+//                         text:
+//                             "Important Information to read before Signing up\n\n",
+//                         style: TextStyle(
+//                           fontFamily: FontFamily.bold,
+//                           color: AppColors.blackColor,
+//                           fontSize: 14.sp,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). ",
+//                       ),
+//                       const TextSpan(
+//                         text: "Multiple free trials are not permitted.",
+//                         style: TextStyle(
+//                           decoration: TextDecoration.underline,
+//                           decorationColor: AppColors.blackColor,
+//                           decorationThickness: 1.5,
+//                           color: AppColors.blackColor,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             " If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
+//                             "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
+//                       ),
+//                       const TextSpan(
+//                         text: "Important: ",
+//                         style: TextStyle(
+//                           color: Colors.orange,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n",
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "Please ensure you read & agree to our Terms and Conditions & Privacy Policy ",
+//                         style: TextStyle(
+//                           color: Colors.blue,
+//                           decoration: TextDecoration.underline,
+//                           decorationColor: Colors.blue,
+//                           fontWeight: FontWeight.w600,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
+//                             "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
+//                             "If you are based outside of the UK, please speak to our team on the live chat or email ",
+//                       ),
+//                       const TextSpan(
+//                         text: "info@theadvicecentre.ltd",
+//                         style: TextStyle(
+//                           color: Colors.blue,
+//                           decoration: TextDecoration.underline,
+//                           decorationColor: Colors.blue,
+//                           fontWeight: FontWeight.w600,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             ". Please do not sign up for our services if you are based outside of the UK without liaising with our Team first.\n\n",
+//                       ),
+//
+//                       // 🔹 New Added Section Starts Here
+//                       const TextSpan(
+//                         text:
+//                             "Cancellation notice for 7 Day (Free Trial) membership plans\n",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: AppColors.blackColor,
+//                           decoration: TextDecoration.underline,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "You can cancel your membership at anytime within your 7 day trial period by emailing ",
+//                       ),
+//                       const TextSpan(
+//                         text: "accounts@theadvicecentre.ltd",
+//                         style: TextStyle(
+//                           color: Colors.blue,
+//                           decoration: TextDecoration.underline,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             " or by contacting our team on the live chat (available within The Advice Centre App).\n\n"
+//                             "Please note: You will be charged automatically after your 7 day free trial period on the basis of the membership plan you selected. If you wish to cancel within your 7 day free trial, please note that this it is entirely your responsibility to do so. As stated, you will be charged automatically (according to the membership plan you selected) after your 7 day free trial and you will not be eligible for a refund on this payment.\n\n",
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "Cancellation notice for on-going membership plans\n",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: AppColors.blackColor,
+//                           decoration: TextDecoration.underline,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "Please note, if you wish to cancel after your trial period, we require a 7 working day cancellation notice from your monthly or yearly renewal date.\n"
+//                             "All payments are handled securely via Stripe. Any issues or queries regarding billing, please email ",
+//                       ),
+//                       const TextSpan(
+//                         text: "accounts@theadvicecentre.ltd\n\n",
+//                         style: TextStyle(
+//                           color: Colors.blue,
+//                           decoration: TextDecoration.underline,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text: "We are The Advice Centre Ltd\n",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: AppColors.blackColor,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "We are The Advice Centre Ltd, 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ. Company number: 15203680.\n\n",
+//                       ),
+//                       const TextSpan(
+//                         text: "Disclaimer:\n",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: AppColors.blackColor,
+//                         ),
+//                       ),
+//                       const TextSpan(
+//                         text:
+//                             "We are in no way endorsed or associated with Amazon, TikTok, Facebook, Instagram, Apple, Google etc. "
+//                             "or any other Digital Marketing Platforms. We are an Independent UK-based Advice Centre. "
+//                             "All advice and support provided is for demonstration purposes only.\n"
+//                             "Examples of results shown are not in any way typical and depend on factors outside our control, "
+//                             "including your own efforts, products, marketing activities, and market conditions.\n"
+//                             "You are ultimately responsible for the product(s) you choose to sell, the supplier(s) you work with, "
+//                             "and the decisions you make. The Advice Centre Ltd or its services cannot be held responsible in any way.\n\n"
+//                             "Automatic renewals are billed to the payment method selected for this order or your "
+//                             "backup/alternate payment method(s), until cancelled.\n"
+//                             "Your payment details will be saved as an alternate payment method for future purchases and "
+//                             "subscription renewals.\n"
+//                             "Your payment is being processed safely\n"
+//                             "by ‘Stripe’ in:\n"
+//                             "United Kingdom.",
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//
+//         SizedBox(height: 10.h),
+//       ],
+//     );
+//   }
+//
+//   Widget secondStep(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         SizedBox(height: 2.h),
+//         SizedBox(
+//           width: 60.w,
+//           child: Text(
+//             'Sign Up for Your 7-Day Free Trial',
+//             style: TextStyle(
+//                 fontFamily: FontFamily.extraBold,
+//                 color: AppColors.blackColor,
+//                 fontSize: 21.sp),
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         RichText(
+//           text: TextSpan(
+//             children: [
+//               TextSpan(
+//                 text: "Country/Region",
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.w800,
+//                   fontFamily: FontFamily.light,
+//                   color: AppColors.blackColor,
+//                   fontSize: 16.sp,
+//                 ),
+//               ),
+//               // shows red * if validator is present
+//               TextSpan(
+//                 text: ' *',
+//                 style: TextStyle(
+//                   color: AppColors.redColor,
+//                   fontSize: 16.sp,
+//                   fontFamily: FontFamily.light,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(height: 1.h),
+//         CompositedTransformTarget(
+//           link: _layerLink,
+//           child: GestureDetector(
+//             onTap: () {
+//               if (_overlayEntry == null) {
+//                 _showSearchableDropdown();
+//               } else {
+//                 _removeOverlay();
+//               }
+//             },
+//             child: AbsorbPointer(
+//               child: TextFormField(
+//                 key: _textFieldKey,
+//                 controller: TextEditingController(text: selectedCountry),
+//                 decoration: InputDecoration(
+//                   hintText: "Select Country/Region",
+//                   prefixIcon: const Icon(Icons.flag),
+//                   suffixIcon: const Icon(CupertinoIcons.chevron_down),
+//                   contentPadding:
+//                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+//                   filled: true,
+//                   fillColor: AppColors.whiteColor,
+//                   border: OutlineInputBorder(
+//                     borderRadius: BorderRadius.circular(3.w),
+//                     borderSide:
+//                         const BorderSide(width: 1.5, color: AppColors.border),
+//                   ),
+//                   enabledBorder: OutlineInputBorder(
+//                     borderRadius: BorderRadius.circular(3.w),
+//                     borderSide:
+//                         const BorderSide(width: 1.5, color: AppColors.border),
+//                   ),
+//                   focusedBorder: OutlineInputBorder(
+//                     borderRadius: BorderRadius.circular(3.w),
+//                     borderSide: const BorderSide(
+//                         width: 1.5, color: AppColors.blackColor),
+//                   ),
+//                 ),
+//                 validator: (value) {
+//                   if (selectedCountry == null || selectedCountry!.isEmpty) {
+//                     return 'Please select a country/region';
+//                   }
+//                   return null;
+//                 },
+//               ),
+//             ),
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _address,
+//           hintText: 'Enter Billing Address',
+//           text: 'Billing Address',
+//           isTextavailable: true,
+//           textInputType: TextInputType.text,
+//           prefix: const Icon(Icons.location_history),
+//           validator: (value) => value == null || value.isEmpty
+//               ? 'Please enter your billing address'
+//               : null,
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _state,
+//           hintText: 'Enter Your Country/State',
+//           text: 'Country/State',
+//           isTextavailable: true,
+//           textInputType: TextInputType.text,
+//           prefix: const Icon(Icons.location_pin),
+//           validator: (value) => value == null || value.isEmpty
+//               ? 'Please enter your country/state'
+//               : null,
+//         ),
+//         SizedBox(height: 2.h),
+//         CompositedTransformTarget(
+//           link: _cityLayerLink,
+//           child: GestureDetector(
+//             onTap: () {
+//               if (cityList.isEmpty) {
+//                 showCustomErrorSnackbar(
+//                     title: 'Country Require',
+//                     message: 'Please Select Country Before Selecting City');
+//               } else {
+//                 if (_cityOverlayEntry == null) {
+//                   _showCityDropdown();
+//                 } else {
+//                   _removeCityOverlay();
+//                 }
+//               }
+//             },
+//             child: AbsorbPointer(
+//               child: AppTextField(
+//                 key: _cityFieldKey,
+//                 controller: _city,
+//                 hintText: 'Enter Your City',
+//                 text: 'City',
+//                 isTextavailable: true,
+//                 textInputType: TextInputType.text,
+//                 prefix: const Icon(Icons.business),
+//                 suffix: const Icon(CupertinoIcons.chevron_down),
+//                 validator: (value) =>
+//                     value == null || value.isEmpty ? 'Please enter city' : null,
+//               ),
+//             ),
+//           ),
+//         ),
+//         SizedBox(height: 2.h),
+//         AppTextField(
+//           controller: _zipCode,
+//           hintText: 'Enter Your Postal/Zip Code',
+//           text: 'Postal/Zip Code',
+//           isTextavailable: true,
+//           textInputType: TextInputType.text,
+//           prefix: const Icon(Icons.my_location_rounded),
+//           validator: (value) {
+//             if (value == null || value.isEmpty) {
+//               return 'Please enter postal/zip code';
+//             }
+//
+//             return null;
+//           },
+//         ),
+//         SizedBox(height: 2.h),
+//         Text.rich(
+//           TextSpan(
+//             text:
+//                 'Whichever service you select you are entitled up to 30 mins of Professional Advice Time in your trial period. ',
+//             style: TextStyle(
+//               fontSize: 14.sp,
+//               color: AppColors.blackColor,
+//             ),
+//             children: [
+//               TextSpan(
+//                 text:
+//                     'If you choose to cancel within 7 days you will not be charged.',
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.bold,
+//                   fontSize: 14.sp,
+//                   color: AppColors.blackColor,
+//                 ),
+//               ),
+//               TextSpan(
+//                 text:
+//                     ' Your membership will auto-renew unless you choose to cancel.',
+//                 style: TextStyle(
+//                   fontSize: 14.sp,
+//                   color: AppColors.blackColor,
+//                 ),
+//               ),
+//             ],
+//           ),
+//           textAlign: TextAlign.center,
+//         ),
+//         SizedBox(height: 1.5.h),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Transform.scale(
+//               scale: 0.9,
+//               child: Theme(
+//                 data: Theme.of(context).copyWith(
+//                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+//                   visualDensity: VisualDensity.compact,
+//                 ),
+//                 child: Checkbox(
+//                   value: isChecked,
+//                   activeColor: AppColors.primary,
+//                   onChanged: (value) {
+//                     setState(() {
+//                       isChecked = value!;
+//                     });
+//                   },
+//                 ),
+//               ),
+//             ),
+//             Expanded(
+//               child: Text.rich(
+//                 TextSpan(
+//                   text:
+//                       'By signing-up you are agreeing to The Advice Centre Ltd ',
+//                   style: TextStyle(
+//                     fontSize: 14.sp,
+//                     color: AppColors.blackColor,
+//                   ),
+//                   children: [
+//                     TextSpan(
+//                       text: 'Terms & Conditions',
+//                       style: const TextStyle(
+//                         decoration: TextDecoration.underline,
+//                         fontWeight: FontWeight.bold,
+//                         color: AppColors
+//                             .primary, // Optional: highlight clickable text
+//                       ),
+//                       recognizer: TapGestureRecognizer()
+//                         ..onTap = () {
+//                           Get.to(policyWebviewScreen(
+//                             link:
+//                                 "https://www.theadvicecentre.ltd/terms-and-conditions",
+//                             fileName: 'Terms & Conditions',
+//                           ));
+//                         },
+//                     ),
+//                     const TextSpan(
+//                       text: ' and ',
+//                     ),
+//                     TextSpan(
+//                       text: 'Privacy Policy',
+//                       style: const TextStyle(
+//                         decoration: TextDecoration.underline,
+//                         fontWeight: FontWeight.bold,
+//                         color: AppColors.primary,
+//                       ),
+//                       recognizer: TapGestureRecognizer()
+//                         ..onTap = () {
+//                           Get.to(policyWebviewScreen(
+//                             link:
+//                                 "https://www.theadvicecentre.ltd/privacy-policy",
+//                             fileName: 'Privacy Policy',
+//                           ));
+//                         },
+//                     ),
+//                     const TextSpan(
+//                       text: '.',
+//                     ),
+//                   ],
+//                 ),
+//                 textAlign: TextAlign.center,
+//               ),
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 2.h),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: [
+//             InkWell(
+//               onTap: () {
+//                 if (mounted) {
+//                   setState(() {
+//                     step--;
+//                   });
+//                 }
+//               },
+//               child: Container(
+//                 width: 38.w,
+//                 height: 5.5.h,
+//                 alignment: Alignment.center,
+//                 decoration: BoxDecoration(
+//                   color: AppColors.bgColor,
+//                   borderRadius: BorderRadius.circular(3.w),
+//                 ),
+//                 child: Text(
+//                   'Previous',
+//                   style: TextStyle(
+//                     fontSize: 17.sp,
+//                     color: AppColors.whiteColor,
+//                     fontWeight: FontWeight.bold,
+//                     fontFamily: FontFamily.bold,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             InkWell(
+//               onTap: () {
+//                 if (!isChecked) {
+//                   showCustomErrorSnackbar(
+//                     title: 'Agreement Required',
+//                     message:
+//                         'Please agree to the Terms & Conditions and Privacy Policy before proceeding.',
+//                   );
+//
+//                   return;
+//                 }
+//                 checkEmailApi();
+//               },
+//               child: Container(
+//                 height: 5.5.h,
+//                 width: 38.w,
+//                 alignment: Alignment.center,
+//                 decoration: BoxDecoration(
+//                   color: AppColors.bgColor,
+//                   borderRadius: BorderRadius.circular(3.w),
+//                 ),
+//                 child: Text(
+//                   'Sign up',
+//                   style: TextStyle(
+//                     fontSize: 17.sp,
+//                     color: AppColors.whiteColor,
+//                     fontWeight: FontWeight.bold,
+//                     fontFamily: FontFamily.bold,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         SizedBox(height: 1.5.h),
+//         Center(
+//           child: RichText(
+//             text: TextSpan(
+//               style: TextStyle(
+//                 fontSize: 15.sp,
+//                 fontFamily: FontFamily.regular,
+//               ),
+//               children: [
+//                 const TextSpan(
+//                   text: 'Already a member? Log-in ',
+//                   style: TextStyle(color: AppColors.blackColor),
+//                 ),
+//                 TextSpan(
+//                   text: 'here.',
+//                   style: const TextStyle(color: AppColors.orangeColor),
+//                   recognizer: TapGestureRecognizer()
+//                     ..onTap = () {
+//                       Get.to(
+//                         const SendOtpScreen(),
+//                         transition: Transition.rightToLeft,
+//                         duration: const Duration(milliseconds: 250),
+//                       );
+//                     },
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//         SizedBox(height: 10.h),
+//       ],
+//     );
+//   }
+//
+//   checkEmailApi() {
+//     if (_formKey.currentState!.validate()) {
+//       if (mounted) {
+//         setState(() {
+//           isLoading = true;
+//         });
+//       }
+//
+//       checkInternet().then((internet) async {
+//         if (internet) {
+//           Signupprovider()
+//               .checkEmailApi(_emailController.text.trim().toString())
+//               .then((response) async {
+//             checkEmail = checkEmailModal.fromJson(json.decode(response.body));
+//             if (response.statusCode == 200) {
+//               if (checkEmail?.customers?.length == 0) {
+//                 checkPhoneApi();
+//               } else {
+//                 if (mounted) {
+//                   setState(() {
+//                     isLoading = false;
+//                   });
+//                 }
+//                 showCustomErrorSnackbar(
+//                   title: 'Email Address',
+//                   message:
+//                       'This email address is already registered. Please use a different one.',
+//                 );
+//               }
+//             } else if (response.statusCode == 422) {
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             } else {
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             }
+//           }).catchError((error) {
+//             showCustomErrorSnackbar(
+//               title: 'Login Error',
+//               message: error.toString(),
+//             );
+//             log("error=====>>>>${error.toString()}");
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           });
+//         } else {
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//           buildErrorDialog(context, 'Error', "Internet Required");
+//         }
+//       });
+//     } else {
+//       if (mounted) {
+//         setState(() {
+//           isLoading = false;
+//         });
+//       }
+//     }
+//   }
+//
+//   checkPhoneApi() {
+//     if (_formKey.currentState!.validate()) {
+//       if (mounted) {
+//         setState(() {
+//           isLoading = true;
+//         });
+//       }
+//
+//       checkInternet().then((internet) async {
+//         if (internet) {
+//           Signupprovider()
+//               .checkPhoneApi(_phoneNumber.text.trim().toString())
+//               .then((response) async {
+//             checkEmail = checkEmailModal.fromJson(json.decode(response.body));
+//             if (response.statusCode == 200) {
+//               if (checkEmail?.customers?.length == 0) {
+//                 signUpApi();
+//               } else {
+//                 if (mounted) {
+//                   setState(() {
+//                     isLoading = false;
+//                   });
+//                 }
+//                 showCustomErrorSnackbar(
+//                   title: 'Mobile Number',
+//                   message:
+//                       'This phone number is already in use. Please try a different number.',
+//                 );
+//               }
+//             } else if (response.statusCode == 422) {
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             } else {
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             }
+//           }).catchError((error) {
+//             showCustomErrorSnackbar(
+//               title: 'Login Error',
+//               message: error.toString(),
+//             );
+//             log("error=====>>>>${error.toString()}");
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           });
+//         } else {
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//           buildErrorDialog(context, 'Error', "Internet Required");
+//         }
+//       });
+//     } else {
+//       if (mounted) {
+//         setState(() {
+//           isLoading = false;
+//         });
+//       }
+//     }
+//   }
+//
+//   createContractApi() {
+//     if (_formKey.currentState!.validate()) {
+//       final Map<String, dynamic> data = {
+//         'firstName': _firstname.text.trim(),
+//         'lastName': _lastname.text.trim(),
+//         'email': _emailController.text.trim(),
+//         'phone': _phoneNumber.text.trim(),
+//         'mobile': _phoneNumber.text.trim()
+//       };
+//
+//       print(data);
+//       checkInternet().then((internet) async {
+//         if (internet) {
+//           Signupprovider().createCustomerApi(data).then((response) async {
+//             createContract =
+//                 CreateContractModal.fromJson(json.decode(response.body));
+//             if (response.statusCode == 200) {
+//               createSubscriptionApi();
+//             } else if (response.statusCode == 422) {
+//               showCustomErrorSnackbar(
+//                   title: "Register Error", message: register?.message ?? '');
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             } else {
+//               showCustomErrorSnackbar(
+//                 title: 'Register Error',
+//                 message: register?.message ?? '',
+//               );
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             }
+//           }).catchError((error) {
+//             showCustomErrorSnackbar(
+//               title: 'Register Error',
+//               message: error.toString(),
+//             );
+//             log("Error ========>>>>>>>>${error.toString()}");
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           });
+//         } else {
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//           buildErrorDialog(context, 'Error', "Internet Required");
+//         }
+//       });
+//     } else {
+//       if (mounted) {
+//         setState(() {
+//           isLoading = false;
+//         });
+//       }
+//     }
+//   }
+//
+//   signUpApi() {
+//     if (_formKey.currentState!.validate()) {
+//       final Map<String, dynamic> data = {
+//         'display_name': _firstname.text.trim(),
+//         'first_name': _firstname.text.trim(),
+//         'last_name': _lastname.text.trim(),
+//         'email': _emailController.text.trim(),
+//         'company_name': _companyname.text.trim(),
+//         'phone': _phoneNumber.text.trim(),
+//         'mobile': _phoneNumber.text.trim(),
+//         "shipping_address": {
+//           "attention": "${_firstname.text.trim()} ${_lastname.text.trim()}",
+//           "street": _address.text.trim(),
+//           "city": _city.text.trim(),
+//           "state": _state.text.trim(),
+//           "zip": _zipCode.text.trim(),
+//           "country": selectedCountry!.length > 30
+//               ? selectedCountry!.substring(0, 30)
+//               : selectedCountry,
+//           "state_code": _state.text.trim().length >= 2
+//               ? _state.text.trim().substring(0, 2)
+//               : _state.text.trim(),
+//         },
+//         "billing_address": {
+//           "attention": "${_firstname.text.trim()} ${_lastname.text.trim()}",
+//           "street": _address.text.trim(),
+//           "city": _city.text.trim(),
+//           "state": _state.text.trim(),
+//           "zip": _zipCode.text.trim(),
+//           "country": selectedCountry!.length > 30
+//               ? selectedCountry!.substring(0, 30)
+//               : selectedCountry,
+//           "state_code": _state.text.trim().length >= 2
+//               ? _state.text.trim().substring(0, 2)
+//               : _state.text.trim(),
+//         },
+//         "custom_fields": [
+//           {
+//             "api_name": "cf_email_address",
+//             "value": _emailController.text.trim(),
+//           },
+//           {
+//             "api_name": "cf_country_code",
+//             "value": '+$_countryCode',
+//           }
+//         ]
+//       };
+//
+//       print(data);
+//       checkInternet().then((internet) async {
+//         if (internet) {
+//           Signupprovider().signInApi(data).then((response) async {
+//             register = signInModal.fromJson(json.decode(response.body));
+//             if (response.statusCode == 201 || register?.code == 0) {
+//               createContractApi();
+//             } else if (response.statusCode == 422) {
+//               showCustomErrorSnackbar(
+//                   title: "Register Error", message: register?.message ?? '');
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             } else {
+//               showCustomErrorSnackbar(
+//                 title: 'Register Error',
+//                 message: register?.message ?? '',
+//               );
+//               if (mounted) {
+//                 setState(() {
+//                   isLoading = false;
+//                 });
+//               }
+//             }
+//           }).catchError((error) {
+//             showCustomErrorSnackbar(
+//               title: 'Register Error',
+//               message: error.toString(),
+//             );
+//             log("Error ========>>>>>>>>${error.toString()}");
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           });
+//         } else {
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//           buildErrorDialog(context, 'Error', "Internet Required");
+//         }
+//       });
+//     } else {
+//       if (mounted) {
+//         setState(() {
+//           isLoading = false;
+//         });
+//       }
+//     }
+//   }
+//
+//   createSubscriptionApi() {
+//     final Map<String, dynamic> data = {
+//       'customer_id': register?.customer?.customerId,
+//       'plan': {
+//         "plan_code": selectedMembership,
+//       },
+//       "starts_at": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+//       "can_charge_setup_fee_immediately": true,
+//       "custom_fields": [
+//         {
+//           "label": "Start Date/Time",
+//           "value": DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())
+//         }
+//       ]
+//     };
+//
+//     print(data);
+//     checkInternet().then((internet) async {
+//       if (internet) {
+//         Signupprovider().createSubscriptionApi(data).then((response) async {
+//           createSubscription =
+//               CreateSubscriptionModal.fromJson(json.decode(response.body));
+//           if (response.statusCode == 201) {
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//             Get.to(
+//               VerifyPaymentScreen(
+//                 paymentLink: createSubscription?.hostedpage?.url ?? '',
+//               ),
+//               transition: Transition.rightToLeft,
+//               duration: const Duration(milliseconds: 250),
+//             );
+//           } else if (response.statusCode == 422) {
+//             showCustomErrorSnackbar(
+//                 title: "Register Error", message: register?.message ?? '');
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           } else {
+//             showCustomErrorSnackbar(
+//               title: 'Register Error',
+//               message: register?.message ?? '',
+//             );
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           }
+//         }).catchError((error) {
+//           showCustomErrorSnackbar(
+//             title: 'Register Error',
+//             message: error.toString(),
+//           );
+//           log("Error ========>>>>>>>>${error.toString()}");
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//         });
+//       } else {
+//         if (mounted) {
+//           setState(() {
+//             isLoading = false;
+//           });
+//         }
+//         buildErrorDialog(context, 'Error', "Internet Required");
+//       }
+//     });
+//   }
+//
+//   getCountriesApi() {
+//     checkInternet().then((internet) async {
+//       if (internet) {
+//         Signupprovider().fetchCountriesApi().then((response) async {
+//           countries = CountriesModal.fromJson(json.decode(response.body));
+//           if (response.statusCode == 200) {
+//             if (mounted) {
+//               setState(() {
+//                 countriesList = countries?.data ?? [];
+//                 allCountries =
+//                     countriesList.map((item) => item.country ?? '').toList();
+//
+//                 allCountries.removeWhere(
+//                     (element) => element.toLowerCase() == 'united kingdom');
+//                 allCountries.insert(0, 'United Kingdom');
+//
+//                 filteredCountries = List.from(allCountries);
+//               });
+//             }
+//           } else if (response.statusCode == 422) {
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           } else {
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           }
+//         }).catchError((error) {
+//           showCustomErrorSnackbar(
+//             title: 'Error',
+//             message: error.toString(),
+//           );
+//           log("error=====>>>>${error.toString()}");
+//           if (mounted) if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//         });
+//       } else {
+//         if (mounted) {
+//           setState(() {
+//             isLoading = false;
+//           });
+//         }
+//         buildErrorDialog(context, 'Error', "Internet Required");
+//       }
+//     });
+//   }
+//
+//   void getCitiesFromSelectedCountry(String selectedCountryName) {
+//     final selectedCountry = countriesList.firstWhere(
+//       (country) => country.country == selectedCountryName,
+//       orElse: () => Data(),
+//     );
+//
+//     if (selectedCountry.cities != null) {
+//       cityList = List<String>.from(selectedCountry.cities!);
+//       print("Cities: $cityList");
+//       if (mounted) setState(() {});
+//     } else {
+//       cityList = [];
+//       print("No cities found for selected country");
+//     }
+//   }
+//
+//   void _showCityDropdown() {
+//     final renderBox =
+//         _cityFieldKey.currentContext!.findRenderObject() as RenderBox;
+//     final size = renderBox.size;
+//     final offset = renderBox.localToGlobal(Offset.zero);
+//
+//     filteredCities = List.from(cityList); // use current cityList
+//
+//     _cityOverlayEntry = OverlayEntry(
+//       builder: (context) => Positioned(
+//         left: offset.dx,
+//         top: offset.dy + size.height - 6.h,
+//         width: size.width,
+//         child: CompositedTransformFollower(
+//           link: _cityLayerLink,
+//           showWhenUnlinked: false,
+//           offset: Offset(0, size.height - 6.h),
+//           child: Material(
+//             elevation: 4,
+//             borderRadius: BorderRadius.circular(10),
+//             child: Container(
+//               constraints: const BoxConstraints(maxHeight: 350),
+//               padding: const EdgeInsets.all(8),
+//               decoration: BoxDecoration(
+//                   color: Colors.white,
+//                   border: Border.all(color: AppColors.border, width: 2),
+//                   borderRadius: BorderRadius.circular(10)),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   TextField(
+//                     controller: _citySearchController,
+//                     decoration: InputDecoration(
+//                       prefixIcon: const Icon(Icons.search),
+//                       hintText: 'Search City',
+//                       fillColor: AppColors.whiteColor,
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.border,
+//                         ),
+//                       ),
+//                       errorStyle:
+//                           TextStyle(color: AppColors.redColor, fontSize: 15.sp),
+//                       errorBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.redColor,
+//                         ),
+//                       ),
+//                       enabledBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.border,
+//                         ),
+//                       ),
+//                       focusedBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.blackColor,
+//                         ),
+//                       ),
+//                       filled: true,
+//                       hintStyle: TextStyle(
+//                         color: AppColors.border,
+//                         fontFamily: FontFamily.regular,
+//                         fontWeight: FontWeight.w500,
+//                         fontSize: 15.sp,
+//                       ),
+//                     ),
+//                     onChanged: (value) {
+//                       filteredCities = cityList
+//                           .where((city) =>
+//                               city.toLowerCase().contains(value.toLowerCase()))
+//                           .toList();
+//                       _cityOverlayEntry!.markNeedsBuild();
+//                     },
+//                   ),
+//                   const SizedBox(height: 8),
+//                   Expanded(
+//                     child: ListView.builder(
+//                       padding: EdgeInsets.zero,
+//                       itemCount: filteredCities.length,
+//                       itemBuilder: (context, index) {
+//                         return ListTile(
+//                           title: Text(filteredCities[index]),
+//                           onTap: () {
+//                             if (mounted) {
+//                               setState(() {
+//                                 _city.text = filteredCities[index];
+//                               });
+//                             }
+//                             _removeCityOverlay();
+//                           },
+//                         );
+//                       },
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//
+//     Overlay.of(context).insert(_cityOverlayEntry!);
+//   }
+//
+//   void _showSearchableDropdown() {
+//     final renderBox =
+//         _textFieldKey.currentContext!.findRenderObject() as RenderBox;
+//     final size = renderBox.size;
+//     final offset = renderBox.localToGlobal(Offset.zero);
+//
+//     filteredCountries = List.from(allCountries);
+//
+//     _overlayEntry = OverlayEntry(
+//       builder: (context) => Positioned(
+//         left: offset.dx,
+//         top: offset.dy + size.height - 6.h,
+//         width: size.width,
+//         child: CompositedTransformFollower(
+//           link: _layerLink,
+//           showWhenUnlinked: false,
+//           offset: Offset(0, size.height - 6.h),
+//           child: Material(
+//             elevation: 4,
+//             borderRadius: BorderRadius.circular(10),
+//             child: Container(
+//               constraints: const BoxConstraints(maxHeight: 400),
+//               padding: const EdgeInsets.all(8),
+//               decoration: BoxDecoration(
+//                   color: Colors.white,
+//                   border: Border.all(color: AppColors.border, width: 2),
+//                   borderRadius: BorderRadius.circular(10)),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   TextField(
+//                     controller: searchController,
+//                     decoration: InputDecoration(
+//                       prefixIcon: const Icon(Icons.search),
+//                       fillColor: AppColors.whiteColor,
+//                       hintText: 'Search Country',
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.border,
+//                         ),
+//                       ),
+//                       errorStyle:
+//                           TextStyle(color: AppColors.redColor, fontSize: 15.sp),
+//                       errorBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.redColor,
+//                         ),
+//                       ),
+//                       enabledBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.border,
+//                         ),
+//                       ),
+//                       focusedBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(3.w),
+//                         borderSide: const BorderSide(
+//                           width: 1.5,
+//                           style: BorderStyle.solid,
+//                           color: AppColors.blackColor,
+//                         ),
+//                       ),
+//                       filled: true,
+//                       hintStyle: TextStyle(
+//                         color: AppColors.border,
+//                         fontFamily: FontFamily.regular,
+//                         fontWeight: FontWeight.w500,
+//                         fontSize: 15.sp,
+//                       ),
+//                     ),
+//                     onChanged: (value) {
+//                       filteredCountries = allCountries
+//                           .where((country) => country
+//                               .toLowerCase()
+//                               .contains(value.toLowerCase()))
+//                           .toList();
+//                       _overlayEntry!.markNeedsBuild(); // Refresh the overlay
+//                     },
+//                   ),
+//                   const SizedBox(height: 8),
+//                   Expanded(
+//                     child: ListView.builder(
+//                       padding: EdgeInsets.zero,
+//                       shrinkWrap: true,
+//                       itemCount: filteredCountries.length,
+//                       itemBuilder: (context, index) {
+//                         return ListTile(
+//                           title: Text(filteredCountries[index]),
+//                           onTap: () {
+//                             if (mounted) {
+//                               setState(() {
+//                                 selectedCountry = filteredCountries[index];
+//                                 getCitiesFromSelectedCountry(
+//                                     selectedCountry ?? '');
+//                               });
+//                             }
+//                             _removeOverlay();
+//                           },
+//                         );
+//                       },
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//
+//     Overlay.of(context).insert(_overlayEntry!);
+//   }
+//
+//   fetchAuthtokenApi() {
+//     SaveAuthtokenData.removeAuthToken();
+//     checkInternet().then((internet) async {
+//       if (internet) {
+//         LoginProvider().refreshTokenApi().then((response) async {
+//           authtoken = AuthtokenModal.fromJson(json.decode(response.body));
+//           if (response.statusCode == 200) {
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//             SaveAuthtokenData.saveAuthData(authtoken!);
+//             getPlansApi();
+//           } else if (response.statusCode == 422) {
+//             showCustomErrorSnackbar(
+//                 title: "Token Error", message: sendOtp?.message ?? '');
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           } else {
+//             showCustomErrorSnackbar(
+//               title: 'Token Error',
+//               message: 'Internal Server Error',
+//             );
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           }
+//         }).catchError((error) {
+//           showCustomErrorSnackbar(
+//             title: 'Token Error',
+//             message: 'Internal Server Error',
+//           );
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//         });
+//       } else {
+//         if (mounted) {
+//           setState(() {
+//             isLoading = false;
+//           });
+//         }
+//         buildErrorDialog(context, 'Error', "Internet Required");
+//       }
+//     });
+//   }
+//
+//   void _removeOverlay() {
+//     searchController.clear();
+//     _overlayEntry?.remove();
+//     _overlayEntry = null;
+//   }
+//
+//   void _removeCityOverlay() {
+//     _citySearchController.clear();
+//     _cityOverlayEntry?.remove();
+//     _cityOverlayEntry = null;
+//   }
+//
+//   getPlansApi() {
+//     checkInternet().then((internet) async {
+//       if (internet) {
+//         Signupprovider().fetchPlansApi().then((response) async {
+//           allPlans = AllPlansModal.fromJson(json.decode(response.body));
+//           if (response.statusCode == 200) {
+//             if (mounted) {
+//               setState(() {
+//                 plansList = allPlans?.plans ?? [];
+//                 isLoading = false;
+//                 getCountriesApi();
+//               });
+//             }
+//           } else if (response.statusCode == 422) {
+//             if (mounted) {
+//               setState(() {
+//                 isLoading = false;
+//               });
+//             }
+//           } else {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//         }).catchError((error, straceTrace) {
+//           final errorMessage = error.toString();
+//           log("error=====>>>>$errorMessage  $straceTrace");
+//
+//           if (errorMessage
+//               .contains("You are not authorized to perform this operation")) {
+//             log("User not authorized, retaking token...");
+//             fetchAuthtokenApi();
+//
+//             return;
+//           }
+//
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//           }
+//         });
+//       } else {
+//         if (mounted) {
+//           setState(() {
+//             isLoading = false;
+//           });
+//         }
+//         buildErrorDialog(context, 'Error', "Internet Required");
+//       }
+//     });
+//   }
+//
+//   void showAdviceDialog(BuildContext context) {
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(15),
+//           ),
+//           title: Row(
+//             mainAxisAlignment: MainAxisAlignment.end,
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.back();
+//                   },
+//                   child: Icon(
+//                     Icons.close,
+//                     color: Colors.black,
+//                     size: 20.sp,
+//                   )),
+//             ],
+//           ),
+//           content: SizedBox(
+//             height: 350, // scrollable area height
+//             width: double.maxFinite,
+//             child: SingleChildScrollView(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   // RichText(
+//                   //   text: TextSpan(
+//                   //     style: TextStyle(
+//                   //       fontSize: 15.sp,
+//                   //       color: AppColors.blackColor,
+//                   //       fontFamily: FontFamily.regular,
+//                   //     ),
+//                   //     children: [
+//                   //       const TextSpan(
+//                   //         text:
+//                   //         "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
+//                   //       ),
+//                   //       TextSpan(
+//                   //         text:
+//                   //         "Are you looking for Personal Advice from leading UK Experts, whenever you need it? ",
+//                   //         style: TextStyle(
+//                   //           color: AppColors.blackColor, // 🔸 highlight color
+//                   //           fontWeight: FontWeight.bold,
+//                   //           fontFamily: FontFamily.bold,
+//                   //         ),
+//                   //       ),
+//                   //       const TextSpan(
+//                   //         text:
+//                   //         "Select a ‘Pro’ Membership Plan below which includes up to 120mins Professional Advice time a month "
+//                   //             "alongside access to On-Demand Training & AI Tools (depending on the plan you select).\n\n"
+//                   //             "You’ll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
+//                   //             "payment details are required. After the trial, you’ll be automatically charged monthly or annually depending on the plan you select, "
+//                   //             "unless you choose to cancel your membership within the 7-day trial period.\n\n"
+//                   //             "We aim to respond to all queries within 24 hours, Monday–Friday, though complex issues may take longer. "
+//                   //             "If you wish to cancel your membership after the trial period, we just require a 7-working-day notice before your monthly/annual renewal date. "
+//                   //             "Once signed up, you can reach us anytime via the ‘Chat with us’ option for any questions.\n\n"
+//                   //             "We look forward to supporting you and helping you build a very successful business.\n\n",
+//                   //         style: TextStyle(
+//                   //           color: AppColors.blackColor, // 🔸 highlight color
+//                   //           fontWeight: FontWeight.normal,
+//                   //           fontFamily: FontFamily.regular,
+//                   //         ),
+//                   //       ),
+//                   //     ],
+//                   //   ),
+//                   // ),
+//
+//                   RichText(
+//                     text: TextSpan(
+//                       style: TextStyle(
+//                         fontSize: 15.sp,
+//                         color: AppColors.blackColor,
+//                         fontFamily: FontFamily.regular,
+//                       ),
+//                       children: const [
+//                         TextSpan(
+//                           text:
+//                               "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
+//                         ),
+//                         TextSpan(
+//                           text:
+//                               "Are you looking for Personal Advice from leading UK Experts, whenever you need it? ",
+//                           style: TextStyle(
+//                             color: AppColors.blackColor, // 🔸 highlight color
+//                             fontWeight: FontWeight.bold,
+//                             fontFamily: FontFamily.bold,
+//                           ),
+//                         ),
+//                         TextSpan(
+//                           text:
+//                               "Select a ‘Pro’ Membership Plan below which includes up to 120mins Professional Advice time a month "
+//                               "alongside access to On-Demand Training & AI Tools (depending on the plan you select).\n\n"
+//                               "You’ll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
+//                               "payment details are required. After the trial, you’ll be automatically charged monthly or annually depending on the plan you select, ",
+//                         ),
+//                         TextSpan(
+//                           text:
+//                               "unless you choose to cancel your membership within the 7-day trial period.\n\n",
+//                           style: TextStyle(
+//                             decoration: TextDecoration.underline,
+//                             // 🔸 underline this line
+//                             decorationColor: AppColors.blackColor,
+//                             decorationThickness: 1.5,
+//                             fontWeight: FontWeight.normal,
+//                             fontFamily: FontFamily.bold,
+//                           ),
+//                         ),
+//                         TextSpan(
+//                           text:
+//                               "We aim to respond to all queries within 24 hours, Monday–Friday, though complex issues may take longer. "
+//                               "If you wish to cancel your membership after the trial period, we just require a 7-working-day notice before your monthly/annual renewal date. "
+//                               "Once signed up, you can reach us anytime via the ‘Chat with us’ option for any questions.\n\n"
+//                               "We look forward to supporting you and helping you build a very successful business.\n\n",
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//
+//                   // Founder section side-by-side
+//                   Row(
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       Expanded(
+//                         child: Text(
+//                           "Many thanks,\nAlex Shelton\nFounder, The Advice Centre Ltd",
+//                           // style: TextStyle(
+//                           //   fontSize: 14,
+//                           //   height: 1.4,
+//                           //   fontWeight: FontWeight.w500,
+//                           // ),
+//                           style: TextStyle(
+//                               fontSize: 16.sp,
+//                               color: AppColors.blackColor,
+//                               fontWeight: FontWeight.w500,
+//                               fontFamily: FontFamily.regular),
+//                         ),
+//                       ),
+//                       SizedBox(width: 2.w),
+//                       const CircleAvatar(
+//                         radius: 30,
+//                         backgroundImage: AssetImage(Imgs.askAlex1Image),
+//                       ),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -5,6 +2305,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sizer/sizer.dart';
@@ -15,13 +2316,12 @@ import 'package:zohosystem/ui/authentications/signup/modal/countriesModal.dart';
 import 'package:zohosystem/ui/authentications/signup/modal/createContractModal.dart';
 import 'package:zohosystem/ui/authentications/signup/modal/createSubscriptionModal.dart';
 import 'package:zohosystem/ui/authentications/signup/provider/signupProvider.dart';
-import 'package:zohosystem/ui/authentications/signup/view/verifyPaymentWebview.dart';
 
-import '../../../../apiCalling/Loader.dart';
 import '../../../../apiCalling/apiConfig.dart';
 import '../../../../apiCalling/buildErrorDialog.dart';
 import '../../../../apiCalling/checkInternetModule.dart';
 import '../../../../apiCalling/saveUserToken.dart';
+import '../../../../services/iapServices.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/fontFamily.dart';
 import '../../../../utils/images.dart';
@@ -51,7 +2351,6 @@ class _RegisterscreenState extends State<Registerscreen> {
   final TextEditingController _city = TextEditingController();
   final TextEditingController _zipCode = TextEditingController();
   TextEditingController searchController = TextEditingController();
-
   String? selectedMembershipProduct;
   String? selectedMembership;
   final _formKey = GlobalKey<FormState>();
@@ -61,7 +2360,6 @@ class _RegisterscreenState extends State<Registerscreen> {
   List<Products> productsList = [];
   List<Data> countriesList = [];
   List<Plans> plansList = [];
-
   String _countryCode = '+44';
   String? selectedCountry;
   List<String> cityList = [];
@@ -75,17 +2373,360 @@ class _RegisterscreenState extends State<Registerscreen> {
   final GlobalKey _cityFieldKey = GlobalKey();
   final TextEditingController _citySearchController = TextEditingController();
   List<String> filteredCities = [];
+  final IAPService _iapService = IAPService();
+  List<ProductDetails> _availableProducts = [];
+  bool _isIAPLoading = false;
+  bool _isIAPInitialized = false;
+  Map<String, dynamic>? _pendingUserData;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (mounted) {
       setState(() {
         isLoading = true;
       });
     }
-    getPlansApi();
+    getCountriesApi();
+    _initializeIAPAfterPlans();
+  }
+
+  // Initialize IAP after plans are loaded
+  void _initializeIAPAfterPlans() {
+    if (_isIAPInitialized) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        await _iapService.initialize();
+        final productIds = _getAppleProductIds();
+        if (productIds.isNotEmpty) {
+          await _iapService.loadProducts(productIds);
+          if (mounted) {
+            setState(() {
+              _availableProducts = _iapService.products;
+              _isIAPInitialized = true;
+            });
+          }
+          log('IAP initialized with ${_availableProducts.length} products');
+        }
+      } catch (e) {
+        log('IAP initialization failed: $e');
+        // Don't show error - just continue without IAP
+        if (mounted) {
+          setState(() {
+            _isIAPInitialized = true; // Mark as initialized to allow fallback
+          });
+        }
+      }
+    });
+  }
+
+  List<String> _getAppleProductIds() {
+    if (plansList.isEmpty) return [];
+
+    // Map your backend plan codes to Apple Product IDs
+    return plansList
+        .map((plan) => 'com.tac.advicecenter.${plan.planCode}')
+        .toList();
+  }
+
+  // Main IAP purchase method
+  Future<void> _processIAPPurchase() async {
+    if (!_formKey.currentState!.validate()) {
+      showCustomErrorSnackbar(
+        title: 'Validation Error',
+        message: 'Please fill all required fields correctly.',
+      );
+      return;
+    }
+
+    if (!isChecked) {
+      showCustomErrorSnackbar(
+        title: 'Agreement Required',
+        message:
+            'Please agree to the Terms & Conditions and Privacy Policy before proceeding.',
+      );
+      return;
+    }
+
+    // if (selectedMembership == null) {
+    //   showCustomErrorSnackbar(
+    //     title: 'Membership Required',
+    //     message: 'Please select a membership plan.',
+    //   );
+    //   return;
+    // }
+
+    // Check if IAP is available, if not use direct signup
+    if (!_isIAPInitialized || _availableProducts.isEmpty) {
+      log('IAP not available, using direct signup');
+      _processDirectSignUp();
+      return;
+    }
+
+    setState(() => _isIAPLoading = true);
+
+    try {
+      // First check if email and phone are available
+      final isUserDataValid = await _validateUserData();
+      if (!isUserDataValid) {
+        setState(() => _isIAPLoading = false);
+        return;
+      }
+
+      // Store user data for IAP completion
+      _pendingUserData = _prepareUserData();
+
+      // Find the corresponding Apple product
+      final selectedPlan =
+          plansList.firstWhere((plan) => plan.planCode == selectedMembership);
+
+      final appleProductId = 'com.tac.advicecenter.${selectedPlan.planCode}';
+      final product = _availableProducts.firstWhere(
+          (p) => p.id == appleProductId,
+          orElse: () => _availableProducts.first); // Fallback to first product
+
+      log('Starting IAP purchase for: ${product.id}');
+
+      // Process the IAP purchase with success callback
+      await _iapService.purchaseProduct(
+        product,
+        onSuccess: _onPurchaseSuccess,
+        onError: _onPurchaseError,
+      );
+    } catch (e) {
+      setState(() => _isIAPLoading = false);
+      log('IAP purchase error: $e');
+      // Fallback to direct signup
+      _processDirectSignUp();
+    }
+  }
+
+  // Direct signup without IAP (fallback method)
+  Future<void> _processDirectSignUp() async {
+    log('Using direct signup (IAP fallback)');
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isIAPLoading = true);
+
+    try {
+      final isUserDataValid = await _validateUserData();
+      if (!isUserDataValid) {
+        setState(() => _isIAPLoading = false);
+        return;
+      }
+
+      // Proceed with direct user creation
+      signUpApi();
+    } catch (e) {
+      setState(() => _isIAPLoading = false);
+      showCustomErrorSnackbar(
+        title: 'Signup Error',
+        message: 'Failed to process signup: ${e.toString()}',
+      );
+    }
+  }
+
+  Map<String, dynamic> _prepareUserData() {
+    return {
+      'display_name': _firstname.text.trim(),
+      'first_name': _firstname.text.trim(),
+      'last_name': _lastname.text.trim(),
+      'email': _emailController.text.trim(),
+      'company_name': _companyname.text.trim(),
+      'phone': _phoneNumber.text.trim(),
+      'mobile': _phoneNumber.text.trim(),
+      "shipping_address": {
+        "attention": "${_firstname.text.trim()} ${_lastname.text.trim()}",
+        "street": _address.text.trim(),
+        "city": _city.text.trim(),
+        "state": _state.text.trim(),
+        "zip": _zipCode.text.trim(),
+        "country": selectedCountry!.length > 30
+            ? selectedCountry!.substring(0, 30)
+            : selectedCountry,
+        "state_code": _state.text.trim().length >= 2
+            ? _state.text.trim().substring(0, 2)
+            : _state.text.trim(),
+      },
+      "billing_address": {
+        "attention": "${_firstname.text.trim()} ${_lastname.text.trim()}",
+        "street": _address.text.trim(),
+        "city": _city.text.trim(),
+        "state": _state.text.trim(),
+        "zip": _zipCode.text.trim(),
+        "country": selectedCountry!.length > 30
+            ? selectedCountry!.substring(0, 30)
+            : selectedCountry,
+        "state_code": _state.text.trim().length >= 2
+            ? _state.text.trim().substring(0, 2)
+            : _state.text.trim(),
+      },
+      "custom_fields": [
+        {
+          "api_name": "cf_email_address",
+          "value": _emailController.text.trim(),
+        },
+        {
+          "api_name": "cf_country_code",
+          "value": '+$_countryCode',
+        }
+      ]
+    };
+  }
+
+  Future<bool> _validateUserData() async {
+    try {
+      // Check email
+      final emailAvailable = await _checkEmailAvailability();
+      if (!emailAvailable) return false;
+
+      // Check phone
+      final phoneAvailable = await _checkPhoneAvailability();
+      if (!phoneAvailable) return false;
+
+      return true;
+    } catch (e) {
+      showCustomErrorSnackbar(
+        title: 'Validation Error',
+        message: 'Failed to validate user data: ${e.toString()}',
+      );
+      return false;
+    }
+  }
+
+  Future<bool> _checkEmailAvailability() async {
+    final completer = Completer<bool>();
+
+    Signupprovider()
+        .checkEmailApi(_emailController.text.trim().toString())
+        .then((response) async {
+      checkEmail = checkEmailModal.fromJson(json.decode(response.body));
+      if (response.statusCode == 200) {
+        if (checkEmail?.customers?.length == 0) {
+          completer.complete(true);
+        } else {
+          showCustomErrorSnackbar(
+            title: 'Email Address',
+            message:
+                'This email address is already registered. Please use a different one.',
+          );
+          completer.complete(false);
+        }
+      } else {
+        showCustomErrorSnackbar(
+          title: 'Email Check Failed',
+          message: 'Unable to verify email availability. Please try again.',
+        );
+        completer.complete(false);
+      }
+    }).catchError((error) {
+      showCustomErrorSnackbar(
+        title: 'Email Check Error',
+        message: 'Failed to check email availability.',
+      );
+      completer.complete(false);
+    });
+
+    return completer.future;
+  }
+
+  Future<bool> _checkPhoneAvailability() async {
+    final completer = Completer<bool>();
+
+    Signupprovider()
+        .checkPhoneApi(_phoneNumber.text.trim().toString())
+        .then((response) async {
+      checkEmail = checkEmailModal.fromJson(json.decode(response.body));
+      if (response.statusCode == 200) {
+        if (checkEmail?.customers?.length == 0) {
+          completer.complete(true);
+        } else {
+          showCustomErrorSnackbar(
+            title: 'Mobile Number',
+            message:
+                'This phone number is already in use. Please try a different number.',
+          );
+          completer.complete(false);
+        }
+      } else {
+        showCustomErrorSnackbar(
+          title: 'Phone Check Failed',
+          message: 'Unable to verify phone availability. Please try again.',
+        );
+        completer.complete(false);
+      }
+    }).catchError((error) {
+      showCustomErrorSnackbar(
+        title: 'Phone Check Error',
+        message: 'Failed to check phone availability.',
+      );
+      completer.complete(false);
+    });
+
+    return completer.future;
+  }
+
+  void _onPurchaseSuccess(PurchaseDetails purchaseDetails) {
+    log('IAP purchase successful: ${purchaseDetails.productID}');
+
+    // Now create the user account and subscription using stored data
+    if (_pendingUserData != null) {
+      signUpApi();
+    } else {
+      // Fallback to direct signup if no pending data
+      _processDirectSignUp();
+    }
+  }
+
+  void _onPurchaseError(String error) {
+    setState(() => _isIAPLoading = false);
+    showCustomErrorSnackbar(
+      title: 'Purchase Failed',
+      message: error,
+    );
+    // Fallback to direct signup
+    _processDirectSignUp();
+  }
+
+  // IAP Sign-up button
+  Widget _buildSignUpButton() {
+    return InkWell(
+      onTap: _isIAPLoading ? null : _processIAPPurchase,
+      child: Container(
+        height: 5.5.h,
+        width: 40.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: _isIAPLoading ? Colors.grey : AppColors.bgColor,
+          borderRadius: BorderRadius.circular(3.w),
+        ),
+        child: _isIAPLoading
+            ? SizedBox(
+                height: 2.h,
+                width: 2.h,
+                child: CircularProgressIndicator(
+                  color: AppColors.whiteColor,
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(
+                'Sign up',
+                style: TextStyle(
+                  fontSize: 17.sp,
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.bold,
+                ),
+              ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _iapService.dispose();
+    super.dispose();
   }
 
   @override
@@ -99,118 +2740,107 @@ class _RegisterscreenState extends State<Registerscreen> {
           if (_cityOverlayEntry != null) _removeCityOverlay();
           FocusScope.of(context).unfocus();
         },
-        child: Stack(
-          children: [
-            SizedBox(
-              height: Device.height,
-              width: Device.width,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 7.h,
-                    right: -18.w,
+        child: SizedBox(
+          height: Device.height,
+          width: Device.width,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 7.h,
+                right: -18.w,
+                child: Image.asset(
+                  Imgs.onlyLogoIcon,
+                  scale: 1.15,
+                  color: AppColors.whiteColor,
+                ),
+              ),
+              Positioned(
+                  top: 55.h,
+                  left: -22.w,
+                  child: Transform.flip(
+                    flipX: true,
                     child: Image.asset(
                       Imgs.onlyLogoIcon,
-                      scale: 1.15,
                       color: AppColors.whiteColor,
+                      scale: 0.85,
+                    ),
+                  )),
+              Positioned(
+                top: 14.h,
+                left: 3.w,
+                child: Image.asset(
+                  Imgs.namedLogo,
+                  scale: 4,
+                  color: AppColors.whiteColor,
+                ),
+              ),
+              Positioned(
+                top: 27.h,
+                left: 5.w,
+                child: Container(
+                  height: Device.height * 0.8,
+                  width: Device.width * 0.9,
+                  padding: EdgeInsets.symmetric(vertical: 3.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    border: Border.all(
+                      color: AppColors.blackColor,
+                      width: 7,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
                     ),
                   ),
-                  Positioned(
-                      top: 55.h,
-                      left: -22.w,
-                      child: Transform.flip(
-                        flipX: true,
-                        child: Image.asset(
-                          Imgs.onlyLogoIcon,
-                          color: AppColors.whiteColor,
-                          scale: 0.85,
-                        ),
-                      )),
-                  Positioned(
-                    top: 14.h,
-                    left: 3.w,
-                    child: Image.asset(
-                      Imgs.namedLogo,
-                      scale: 4,
-                      color: AppColors.whiteColor,
-                    ),
-                  ),
-                  Positioned(
-                    top: 27.h,
-                    left: 5.w,
-                    child: Container(
-                      height: Device.height * 0.8,
-                      width: Device.width * 0.9,
-                      padding: EdgeInsets.symmetric(vertical: 3.h),
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border.all(
-                          color: AppColors.blackColor,
-                          width: 7,
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: PagePadding,
-                        child: Form(
-                          key: _formKey,
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                step == 1
-                                    ? firstStep(context)
-                                    : secondStep(context),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).viewInsets.bottom >
-                                              0
-                                          ? 35.h
-                                          : 0.h,
-                                ),
-                                // Ensure button is above keyboard
-                              ],
+                  child: Padding(
+                    padding: PagePadding,
+                    child: Form(
+                      key: _formKey,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            step == 1
+                                ? firstStep(context)
+                                : secondStep(context),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).viewInsets.bottom > 0
+                                      ? 35.h
+                                      : 0.h,
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 17.h,
-                    right: 5.w,
+                ),
+              ),
+              Positioned(
+                top: 17.h,
+                right: 5.w,
+                child: Image.asset(
+                  Imgs.starIcon,
+                  scale: 3.5,
+                ),
+              ),
+              Positioned(
+                top: 6.h,
+                child: InkWell(
+                  onTap: () => Get.back(),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 5.w),
                     child: Image.asset(
-                      Imgs.starIcon,
-                      scale: 3.5,
+                      Imgs.leftIcon,
+                      scale: 5,
+                      color: AppColors.whiteColor,
                     ),
                   ),
-                  Positioned(
-                    top: 6.h,
-                    child: InkWell(
-                      onTap: () => Get.back(),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5.w),
-                        child: Image.asset(
-                          Imgs.leftIcon,
-                          scale: 5,
-                          color: AppColors.whiteColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-            if (isLoading)
-              Container(
-                color: Colors.black.withOpacity(0.3),
-                child: Center(child: Loader()),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -257,114 +2887,112 @@ class _RegisterscreenState extends State<Registerscreen> {
             ),
           ),
         ),
-
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 2.h),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Membership Plan",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontFamily: FontFamily.light,
-                      color: AppColors.blackColor,
-                      fontSize: 16.sp,
-                    ),
-                  ),
-                  // shows red * if validator is present
-                  TextSpan(
-                    text: ' *',
-                    style: TextStyle(
-                      color: AppColors.redColor,
-                      fontSize: 16.sp,
-                      fontFamily: FontFamily.light,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 1.h),
-            DropdownButtonFormField(
-              hint: Text(
-                "Select Membership Plan",
-                style: TextStyle(
-                  color: AppColors.border,
-                  fontFamily: FontFamily.regular,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15.sp,
-                ),
-              ),
-              icon: Icon(
-                CupertinoIcons.chevron_down,
-                size: 16.sp,
-                color: AppColors.border,
-              ).paddingOnly(right: 2.w),
-              value: selectedMembership,
-              items: plansList.map((item) {
-                return DropdownMenuItem(
-                  value: item.planCode,
-                  child: SizedBox(
-                    width: 50.w,
-                    child: Text(
-                      item.name ?? '',
-                      style: TextStyle(
-                        fontFamily: FontFamily.regular,
-                        fontSize: 15.sp,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (value) {
-                if (mounted) {
-                  setState(() {
-                    selectedMembership = value;
-                  });
-                }
-              },
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select a Membership Plan';
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.person),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                fillColor: AppColors.whiteColor,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3.w),
-                  borderSide:
-                      const BorderSide(width: 1.5, color: AppColors.border),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3.w),
-                  borderSide:
-                      const BorderSide(width: 1.5, color: AppColors.border),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3.w),
-                  borderSide:
-                      const BorderSide(width: 1.5, color: AppColors.blackColor),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3.w),
-                  borderSide:
-                      const BorderSide(width: 1.5, color: AppColors.redColor),
-                ),
-                errorStyle: TextStyle(
-                  color: AppColors.redColor,
-                  fontSize: 15.sp,
-                ),
-              ),
-            ),
-          ],
-        ),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     SizedBox(height: 2.h),
+        //     RichText(
+        //       text: TextSpan(
+        //         children: [
+        //           TextSpan(
+        //             text: "Membership Plan",
+        //             style: TextStyle(
+        //               fontWeight: FontWeight.w800,
+        //               fontFamily: FontFamily.light,
+        //               color: AppColors.blackColor,
+        //               fontSize: 16.sp,
+        //             ),
+        //           ),
+        //           TextSpan(
+        //             text: ' *',
+        //             style: TextStyle(
+        //               color: AppColors.redColor,
+        //               fontSize: 16.sp,
+        //               fontFamily: FontFamily.light,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     SizedBox(height: 1.h),
+        //     DropdownButtonFormField(
+        //       hint: Text(
+        //         "Select Membership Plan",
+        //         style: TextStyle(
+        //           color: AppColors.border,
+        //           fontFamily: FontFamily.regular,
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 15.sp,
+        //         ),
+        //       ),
+        //       icon: Icon(
+        //         CupertinoIcons.chevron_down,
+        //         size: 16.sp,
+        //         color: AppColors.border,
+        //       ).paddingOnly(right: 2.w),
+        //       value: selectedMembership,
+        //       items: plansList.map((item) {
+        //         return DropdownMenuItem(
+        //           value: item.planCode,
+        //           child: SizedBox(
+        //             width: 50.w,
+        //             child: Text(
+        //               item.name ?? '',
+        //               style: TextStyle(
+        //                 fontFamily: FontFamily.regular,
+        //                 fontSize: 15.sp,
+        //               ),
+        //             ),
+        //           ),
+        //         );
+        //       }).toList(),
+        //       onChanged: (value) {
+        //         if (mounted) {
+        //           setState(() {
+        //             selectedMembership = value;
+        //           });
+        //         }
+        //       },
+        //       validator: (value) {
+        //         if (value == null) {
+        //           return 'Please select a Membership Plan';
+        //         }
+        //         return null;
+        //       },
+        //       decoration: InputDecoration(
+        //         prefixIcon: const Icon(Icons.person),
+        //         contentPadding:
+        //             const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        //         fillColor: AppColors.whiteColor,
+        //         filled: true,
+        //         border: OutlineInputBorder(
+        //           borderRadius: BorderRadius.circular(3.w),
+        //           borderSide:
+        //               const BorderSide(width: 1.5, color: AppColors.border),
+        //         ),
+        //         enabledBorder: OutlineInputBorder(
+        //           borderRadius: BorderRadius.circular(3.w),
+        //           borderSide:
+        //               const BorderSide(width: 1.5, color: AppColors.border),
+        //         ),
+        //         focusedBorder: OutlineInputBorder(
+        //           borderRadius: BorderRadius.circular(3.w),
+        //           borderSide:
+        //               const BorderSide(width: 1.5, color: AppColors.blackColor),
+        //         ),
+        //         errorBorder: OutlineInputBorder(
+        //           borderRadius: BorderRadius.circular(3.w),
+        //           borderSide:
+        //               const BorderSide(width: 1.5, color: AppColors.redColor),
+        //         ),
+        //         errorStyle: TextStyle(
+        //           color: AppColors.redColor,
+        //           fontSize: 15.sp,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         SizedBox(height: 2.h),
         AppTextField(
           controller: _firstname,
@@ -472,7 +3100,6 @@ class _RegisterscreenState extends State<Registerscreen> {
                     log(_countryCode);
                   },
                   disableLengthCheck: true,
-                  // optional: disable length restrictions
                   showDropdownIcon: true,
                   showCountryFlag: false,
                   dropdownIconPosition: IconPosition.trailing,
@@ -570,82 +3197,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             ),
           ),
         ),
-        SizedBox(
-          height: 1.h,
-        ),
-        // Container(
-        //
-        //   padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.h),
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     border: Border.all(
-        //       color: Colors.orange, // border color
-        //       width: 1.5,
-        //     ),
-        //     borderRadius: BorderRadius.circular(12),
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: Colors.black12,
-        //         blurRadius: 6,
-        //         offset: const Offset(0, 2),
-        //       ),
-        //     ],
-        //   ),
-        //
-        //   // Make text scrollable
-        //   child: SizedBox(
-        //     height: 25.h, // 🔹 scroll area height (adjust as needed)
-        //     child: SingleChildScrollView(
-        //       child: RichText(
-        //         text: TextSpan(
-        //           style: TextStyle(
-        //             fontSize: 14.sp,
-        //             color: Colors.black,
-        //             fontFamily: 'Poppins',
-        //             height: 1.5,
-        //           ),
-        //           children: [
-        //
-        //             TextSpan(
-        //               text:
-        //               "Important: Please make sure to use the email address and mobile phone number you intend to use when contacting our support team. If you use different contact details, we may not be able to provide support through those channels.\n\n",
-        //               style: TextStyle(
-        //                   fontFamily: FontFamily.bold,
-        //                   color: AppColors.blackColor,
-        //                   fontSize: 16.sp),
-        //             ),
-        //             TextSpan(
-        //               text: "Important Information to read before Signing up\n\n",
-        //               style: TextStyle(
-        //                   fontFamily: FontFamily.bold,
-        //                   color: AppColors.blackColor,
-        //                   fontSize: 16.sp),
-        //             ),
-        //             const TextSpan(
-        //               text:
-        //               "Please note: You or your Business is entitled to ONE 7-Day Free Trial on one Advice Centre Membership Service only (e.g. Marketing Advice Centre Pro –Monthly, AMZ Advice Centre Pro – Monthly). Multiple free trials are not permitted. If we feel that any of our services are being abused or taken advantage of in any way, we reserve the right to terminate your 7 day membership at any time. "
-        //                   "If you require any additional services after a 7-day free trial on any plan, this would be chargeable and you would not be eligible for a 7 day free trial on any additional service.\n\n",
-        //             ),
-        //             TextSpan(
-        //               text: "Important: ",
-        //               style: TextStyle(
-        //                 color: Colors.orange,
-        //                 fontWeight: FontWeight.bold,
-        //               ),
-        //             ),
-        //             const TextSpan(
-        //               text:
-        //               "Payment details are required for a free trial on the membership plan you select and you will be charged either monthly or yearly, again depending on the membership you select, the first payment will be taken after your 7 day Free Trial.\n\n"
-        //                   "Please ensure you read & agree to our Terms and Conditions & Privacy Policy before signing up to any membership plan - by using our service, you are deemed to have accepted our Terms & Conditions & Privacy Policy.\n\n"
-        //                   "All of our Services are available for UK Businesses & Individuals Only. Please note that our Advice and support services are only available to Businesses and Individuals who are based in the United Kingdom. We charge VAT on all services.\n\n"
-        //                   "If you are based outside of the UK, please speak to our team on the live chat or email info@theadvicecentre.ltd. Please do not sign up.",
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        SizedBox(height: 1.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
           decoration: BoxDecoration(
@@ -754,8 +3306,6 @@ class _RegisterscreenState extends State<Registerscreen> {
                         text:
                             ". Please do not sign up for our services if you are based outside of the UK without liaising with our Team first.\n\n",
                       ),
-
-                      // 🔹 New Added Section Starts Here
                       const TextSpan(
                         text:
                             "Cancellation notice for 7 Day (Free Trial) membership plans\n",
@@ -834,7 +3384,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                             "Your payment details will be saved as an alternate payment method for future purchases and "
                             "subscription renewals.\n"
                             "Your payment is being processed safely\n"
-                            "by ‘Stripe’ in:\n"
+                            "by 'Stripe' in:\n"
                             "United Kingdom.",
                       ),
                     ],
@@ -844,7 +3394,6 @@ class _RegisterscreenState extends State<Registerscreen> {
             ),
           ),
         ),
-
         SizedBox(height: 10.h),
       ],
     );
@@ -878,7 +3427,6 @@ class _RegisterscreenState extends State<Registerscreen> {
                   fontSize: 16.sp,
                 ),
               ),
-              // shows red * if validator is present
               TextSpan(
                 text: ' *',
                 style: TextStyle(
@@ -1008,7 +3556,6 @@ class _RegisterscreenState extends State<Registerscreen> {
             if (value == null || value.isEmpty) {
               return 'Please enter postal/zip code';
             }
-
             return null;
           },
         ),
@@ -1080,8 +3627,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                       style: const TextStyle(
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.bold,
-                        color: AppColors
-                            .primary, // Optional: highlight clickable text
+                        color: AppColors.primary,
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -1152,38 +3698,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                if (!isChecked) {
-                  showCustomErrorSnackbar(
-                    title: 'Agreement Required',
-                    message:
-                        'Please agree to the Terms & Conditions and Privacy Policy before proceeding.',
-                  );
-
-                  return;
-                }
-                checkEmailApi();
-              },
-              child: Container(
-                height: 5.5.h,
-                width: 38.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.bgColor,
-                  borderRadius: BorderRadius.circular(3.w),
-                ),
-                child: Text(
-                  'Sign up',
-                  style: TextStyle(
-                    fontSize: 17.sp,
-                    color: AppColors.whiteColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: FontFamily.bold,
-                  ),
-                ),
-              ),
-            ),
+            _buildSignUpButton(),
           ],
         ),
         SizedBox(height: 1.5.h),
@@ -1220,319 +3735,131 @@ class _RegisterscreenState extends State<Registerscreen> {
     );
   }
 
-  checkEmailApi() {
-    if (_formKey.currentState!.validate()) {
-      if (mounted) {
-        setState(() {
-          isLoading = true;
-        });
-      }
+  // Your existing API methods - NO CHANGES NEEDED
+  signUpApi() {
+    final Map<String, dynamic> data = _pendingUserData ?? _prepareUserData();
 
-      checkInternet().then((internet) async {
-        if (internet) {
-          Signupprovider()
-              .checkEmailApi(_emailController.text.trim().toString())
-              .then((response) async {
-            checkEmail = checkEmailModal.fromJson(json.decode(response.body));
-            if (response.statusCode == 200) {
-              if (checkEmail?.customers?.length == 0) {
-                checkPhoneApi();
-              } else {
-                if (mounted) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                }
-                showCustomErrorSnackbar(
-                  title: 'Email Address',
-                  message:
-                      'This email address is already registered. Please use a different one.',
-                );
-              }
-            } else if (response.statusCode == 422) {
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            } else {
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            }
-          }).catchError((error) {
+    print(data);
+    checkInternet().then((internet) async {
+      if (internet) {
+        Signupprovider().signInApi(data).then((response) async {
+          register = signInModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 201 || register?.code == 0) {
+            createContractApi();
+          } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
-              title: 'Login Error',
-              message: error.toString(),
-            );
-            log("error=====>>>>${error.toString()}");
+                title: "Register Error", message: register?.message ?? '');
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
-          });
-        } else {
-          if (mounted) {
-            setState(() {
-              isLoading = false;
-            });
-          }
-          buildErrorDialog(context, 'Error', "Internet Required");
-        }
-      });
-    } else {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
-  }
-
-  checkPhoneApi() {
-    if (_formKey.currentState!.validate()) {
-      if (mounted) {
-        setState(() {
-          isLoading = true;
-        });
-      }
-
-      checkInternet().then((internet) async {
-        if (internet) {
-          Signupprovider()
-              .checkPhoneApi(_phoneNumber.text.trim().toString())
-              .then((response) async {
-            checkEmail = checkEmailModal.fromJson(json.decode(response.body));
-            if (response.statusCode == 200) {
-              if (checkEmail?.customers?.length == 0) {
-                signUpApi();
-              } else {
-                if (mounted) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                }
-                showCustomErrorSnackbar(
-                  title: 'Mobile Number',
-                  message:
-                      'This phone number is already in use. Please try a different number.',
-                );
-              }
-            } else if (response.statusCode == 422) {
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            } else {
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            }
-          }).catchError((error) {
+          } else {
             showCustomErrorSnackbar(
-              title: 'Login Error',
-              message: error.toString(),
+              title: 'Register Error',
+              message: register?.message ?? '',
             );
-            log("error=====>>>>${error.toString()}");
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
-          });
-        } else {
+          }
+        }).catchError((error) {
+          showCustomErrorSnackbar(
+            title: 'Register Error',
+            message: error.toString(),
+          );
+          log("Error ========>>>>>>>>${error.toString()}");
           if (mounted) {
             setState(() {
               isLoading = false;
+              _isIAPLoading = false;
             });
           }
-          buildErrorDialog(context, 'Error', "Internet Required");
-        }
-      });
-    } else {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
         });
+      } else {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+            _isIAPLoading = false;
+          });
+        }
+        buildErrorDialog(context, 'Error', "Internet Required");
       }
-    }
+    });
   }
 
   createContractApi() {
-    if (_formKey.currentState!.validate()) {
-      final Map<String, dynamic> data = {
-        'firstName': _firstname.text.trim(),
-        'lastName': _lastname.text.trim(),
-        'email': _emailController.text.trim(),
-        'phone': _phoneNumber.text.trim(),
-        'mobile': _phoneNumber.text.trim()
-      };
+    final Map<String, dynamic> data = {
+      'firstName': _firstname.text.trim(),
+      'lastName': _lastname.text.trim(),
+      'email': _emailController.text.trim(),
+      'phone': _phoneNumber.text.trim(),
+      'mobile': _phoneNumber.text.trim()
+    };
 
-      print(data);
-      checkInternet().then((internet) async {
-        if (internet) {
-          Signupprovider().createCustomerApi(data).then((response) async {
-            createContract =
-                CreateContractModal.fromJson(json.decode(response.body));
-            if (response.statusCode == 200) {
-              createSubscriptionApi();
-            } else if (response.statusCode == 422) {
-              showCustomErrorSnackbar(
-                  title: "Register Error", message: register?.message ?? '');
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            } else {
-              showCustomErrorSnackbar(
-                title: 'Register Error',
-                message: register?.message ?? '',
-              );
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            }
-          }).catchError((error) {
-            showCustomErrorSnackbar(
-              title: 'Register Error',
-              message: error.toString(),
+    print(data);
+    checkInternet().then((internet) async {
+      if (internet) {
+        Signupprovider().createCustomerApi(data).then((response) async {
+          createContract =
+              CreateContractModal.fromJson(json.decode(response.body));
+          if (response.statusCode == 200) {
+            // SUCCESS: Account created successfully
+            showCustomSuccessSnackbar(
+              title: 'Success',
+              message: 'Your account has been created successfully!',
             );
-            log("Error ========>>>>>>>>${error.toString()}");
+
+            // Navigate to main app screen
+            Get.offAll(const SendOtpScreen());
+          } else if (response.statusCode == 422) {
+            showCustomErrorSnackbar(
+                title: "Register Error", message: register?.message ?? '');
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
-          });
-        } else {
-          if (mounted) {
-            setState(() {
-              isLoading = false;
-            });
-          }
-          buildErrorDialog(context, 'Error', "Internet Required");
-        }
-      });
-    } else {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
-  }
-
-  signUpApi() {
-    if (_formKey.currentState!.validate()) {
-      final Map<String, dynamic> data = {
-        'display_name': _firstname.text.trim(),
-        'first_name': _firstname.text.trim(),
-        'last_name': _lastname.text.trim(),
-        'email': _emailController.text.trim(),
-        'company_name': _companyname.text.trim(),
-        'phone': _phoneNumber.text.trim(),
-        'mobile': _phoneNumber.text.trim(),
-        "shipping_address": {
-          "attention": "${_firstname.text.trim()} ${_lastname.text.trim()}",
-          "street": _address.text.trim(),
-          "city": _city.text.trim(),
-          "state": _state.text.trim(),
-          "zip": _zipCode.text.trim(),
-          "country": selectedCountry!.length > 30
-              ? selectedCountry!.substring(0, 30)
-              : selectedCountry,
-          "state_code": _state.text.trim().length >= 2
-              ? _state.text.trim().substring(0, 2)
-              : _state.text.trim(),
-        },
-        "billing_address": {
-          "attention": "${_firstname.text.trim()} ${_lastname.text.trim()}",
-          "street": _address.text.trim(),
-          "city": _city.text.trim(),
-          "state": _state.text.trim(),
-          "zip": _zipCode.text.trim(),
-          "country": selectedCountry!.length > 30
-              ? selectedCountry!.substring(0, 30)
-              : selectedCountry,
-          "state_code": _state.text.trim().length >= 2
-              ? _state.text.trim().substring(0, 2)
-              : _state.text.trim(),
-        },
-        "custom_fields": [
-          {
-            "api_name": "cf_email_address",
-            "value": _emailController.text.trim(),
-          },
-          {
-            "api_name": "cf_country_code",
-            "value": '+$_countryCode',
-          }
-        ]
-      };
-
-      print(data);
-      checkInternet().then((internet) async {
-        if (internet) {
-          Signupprovider().signInApi(data).then((response) async {
-            register = signInModal.fromJson(json.decode(response.body));
-            if (response.statusCode == 201 || register?.code == 0) {
-              createContractApi();
-            } else if (response.statusCode == 422) {
-              showCustomErrorSnackbar(
-                  title: "Register Error", message: register?.message ?? '');
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            } else {
-              showCustomErrorSnackbar(
-                title: 'Register Error',
-                message: register?.message ?? '',
-              );
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            }
-          }).catchError((error) {
+          } else {
             showCustomErrorSnackbar(
               title: 'Register Error',
-              message: error.toString(),
+              message: register?.message ?? '',
             );
-            log("Error ========>>>>>>>>${error.toString()}");
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
-          });
-        } else {
+          }
+        }).catchError((error) {
+          showCustomErrorSnackbar(
+            title: 'Register Error',
+            message: error.toString(),
+          );
+          log("Error ========>>>>>>>>${error.toString()}");
           if (mounted) {
             setState(() {
               isLoading = false;
+              _isIAPLoading = false;
             });
           }
-          buildErrorDialog(context, 'Error', "Internet Required");
-        }
-      });
-    } else {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
         });
+      } else {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+            _isIAPLoading = false;
+          });
+        }
+        buildErrorDialog(context, 'Error', "Internet Required");
       }
-    }
+    });
   }
 
   createSubscriptionApi() {
@@ -1561,21 +3888,25 @@ class _RegisterscreenState extends State<Registerscreen> {
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
-            Get.to(
-              VerifyPaymentScreen(
-                paymentLink: createSubscription?.hostedpage?.url ?? '',
-              ),
-              transition: Transition.rightToLeft,
-              duration: const Duration(milliseconds: 250),
+
+            // SUCCESS: Account created successfully
+            showCustomErrorSnackbar(
+              title: 'Success',
+              message: 'Your account has been created successfully!',
             );
+
+            // Navigate to main app screen
+            Get.offAll(const SendOtpScreen());
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Register Error", message: register?.message ?? '');
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
           } else {
@@ -1586,6 +3917,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             if (mounted) {
               setState(() {
                 isLoading = false;
+                _isIAPLoading = false;
               });
             }
           }
@@ -1598,6 +3930,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           if (mounted) {
             setState(() {
               isLoading = false;
+              _isIAPLoading = false;
             });
           }
         });
@@ -1605,6 +3938,7 @@ class _RegisterscreenState extends State<Registerscreen> {
         if (mounted) {
           setState(() {
             isLoading = false;
+            _isIAPLoading = false;
           });
         }
         buildErrorDialog(context, 'Error', "Internet Required");
@@ -1612,6 +3946,7 @@ class _RegisterscreenState extends State<Registerscreen> {
     });
   }
 
+  // Your existing helper methods - NO CHANGES NEEDED
   getCountriesApi() {
     checkInternet().then((internet) async {
       if (internet) {
@@ -1650,7 +3985,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             message: error.toString(),
           );
           log("error=====>>>>${error.toString()}");
-          if (mounted) if (mounted) {
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
@@ -1689,7 +4024,7 @@ class _RegisterscreenState extends State<Registerscreen> {
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
 
-    filteredCities = List.from(cityList); // use current cityList
+    filteredCities = List.from(cityList);
 
     _cityOverlayEntry = OverlayEntry(
       builder: (context) => Positioned(
@@ -1884,7 +4219,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                               .toLowerCase()
                               .contains(value.toLowerCase()))
                           .toList();
-                      _overlayEntry!.markNeedsBuild(); // Refresh the overlay
+                      _overlayEntry!.markNeedsBuild();
                     },
                   ),
                   const SizedBox(height: 8),
@@ -1934,7 +4269,8 @@ class _RegisterscreenState extends State<Registerscreen> {
               });
             }
             SaveAuthtokenData.saveAuthData(authtoken!);
-            getPlansApi();
+            getCountriesApi();
+            _initializeIAPAfterPlans();
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Token Error", message: sendOtp?.message ?? '');
@@ -1988,58 +4324,58 @@ class _RegisterscreenState extends State<Registerscreen> {
     _cityOverlayEntry = null;
   }
 
-  getPlansApi() {
-    checkInternet().then((internet) async {
-      if (internet) {
-        Signupprovider().fetchPlansApi().then((response) async {
-          allPlans = AllPlansModal.fromJson(json.decode(response.body));
-          if (response.statusCode == 200) {
-            if (mounted) {
-              setState(() {
-                plansList = allPlans?.plans ?? [];
-                isLoading = false;
-                getCountriesApi();
-              });
-            }
-          } else if (response.statusCode == 422) {
-            if (mounted) {
-              setState(() {
-                isLoading = false;
-              });
-            }
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }).catchError((error, straceTrace) {
-          final errorMessage = error.toString();
-          log("error=====>>>>$errorMessage  $straceTrace");
-
-          if (errorMessage
-              .contains("You are not authorized to perform this operation")) {
-            log("User not authorized, retaking token...");
-            fetchAuthtokenApi();
-
-            return;
-          }
-
-          if (mounted) {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        });
-      } else {
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
-        }
-        buildErrorDialog(context, 'Error', "Internet Required");
-      }
-    });
-  }
+  // getPlansApi() {
+  //   checkInternet().then((internet) async {
+  //     if (internet) {
+  //       Signupprovider().fetchPlansApi().then((response) async {
+  //         allPlans = AllPlansModal.fromJson(json.decode(response.body));
+  //         if (response.statusCode == 200) {
+  //           if (mounted) {
+  //             setState(() {
+  //               plansList = allPlans?.plans ?? [];
+  //               isLoading = false;
+  //             });
+  //           }
+  //           getCountriesApi();
+  //           _initializeIAPAfterPlans();
+  //         } else if (response.statusCode == 422) {
+  //           if (mounted) {
+  //             setState(() {
+  //               isLoading = false;
+  //             });
+  //           }
+  //         } else {
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         }
+  //       }).catchError((error, straceTrace) {
+  //         final errorMessage = error.toString();
+  //         log("error=====>>>>$errorMessage  $straceTrace");
+  //
+  //         if (errorMessage
+  //             .contains("You are not authorized to perform this operation")) {
+  //           log("User not authorized, retaking token...");
+  //           fetchAuthtokenApi();
+  //           return;
+  //         }
+  //
+  //         if (mounted) {
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         }
+  //       });
+  //     } else {
+  //       if (mounted) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //       }
+  //       buildErrorDialog(context, 'Error', "Internet Required");
+  //     }
+  //   });
+  // }
 
   void showAdviceDialog(BuildContext context) {
     showDialog(
@@ -2064,54 +4400,12 @@ class _RegisterscreenState extends State<Registerscreen> {
             ],
           ),
           content: SizedBox(
-            height: 350, // scrollable area height
+            height: 350,
             width: double.maxFinite,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // RichText(
-                  //   text: TextSpan(
-                  //     style: TextStyle(
-                  //       fontSize: 15.sp,
-                  //       color: AppColors.blackColor,
-                  //       fontFamily: FontFamily.regular,
-                  //     ),
-                  //     children: [
-                  //       const TextSpan(
-                  //         text:
-                  //         "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
-                  //       ),
-                  //       TextSpan(
-                  //         text:
-                  //         "Are you looking for Personal Advice from leading UK Experts, whenever you need it? ",
-                  //         style: TextStyle(
-                  //           color: AppColors.blackColor, // 🔸 highlight color
-                  //           fontWeight: FontWeight.bold,
-                  //           fontFamily: FontFamily.bold,
-                  //         ),
-                  //       ),
-                  //       const TextSpan(
-                  //         text:
-                  //         "Select a ‘Pro’ Membership Plan below which includes up to 120mins Professional Advice time a month "
-                  //             "alongside access to On-Demand Training & AI Tools (depending on the plan you select).\n\n"
-                  //             "You’ll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
-                  //             "payment details are required. After the trial, you’ll be automatically charged monthly or annually depending on the plan you select, "
-                  //             "unless you choose to cancel your membership within the 7-day trial period.\n\n"
-                  //             "We aim to respond to all queries within 24 hours, Monday–Friday, though complex issues may take longer. "
-                  //             "If you wish to cancel your membership after the trial period, we just require a 7-working-day notice before your monthly/annual renewal date. "
-                  //             "Once signed up, you can reach us anytime via the ‘Chat with us’ option for any questions.\n\n"
-                  //             "We look forward to supporting you and helping you build a very successful business.\n\n",
-                  //         style: TextStyle(
-                  //           color: AppColors.blackColor, // 🔸 highlight color
-                  //           fontWeight: FontWeight.normal,
-                  //           fontFamily: FontFamily.regular,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
                   RichText(
                     text: TextSpan(
                       style: TextStyle(
@@ -2122,30 +4416,29 @@ class _RegisterscreenState extends State<Registerscreen> {
                       children: const [
                         TextSpan(
                           text:
-                              "Hi, thanks for downloading The Advice Centre App! We’re looking forward to working with you.\n\n",
+                              "Hi, thanks for downloading The Advice Centre App! We're looking forward to working with you.\n\n",
                         ),
                         TextSpan(
                           text:
                               "Are you looking for Personal Advice from leading UK Experts, whenever you need it? ",
                           style: TextStyle(
-                            color: AppColors.blackColor, // 🔸 highlight color
+                            color: AppColors.blackColor,
                             fontWeight: FontWeight.bold,
                             fontFamily: FontFamily.bold,
                           ),
                         ),
                         TextSpan(
                           text:
-                              "Select a ‘Pro’ Membership Plan below which includes up to 120mins Professional Advice time a month "
+                              "Select a 'Pro' Membership Plan below which includes up to 120mins Professional Advice time a month "
                               "alongside access to On-Demand Training & AI Tools (depending on the plan you select).\n\n"
-                              "You’ll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
-                              "payment details are required. After the trial, you’ll be automatically charged monthly or annually depending on the plan you select, ",
+                              "You'll be eligible for up to 30 minutes of Professional Advice/Guidance during your 7-day free trial – please note, "
+                              "payment details are required. After the trial, you'll be automatically charged monthly or annually depending on the plan you select, ",
                         ),
                         TextSpan(
                           text:
                               "unless you choose to cancel your membership within the 7-day trial period.\n\n",
                           style: TextStyle(
                             decoration: TextDecoration.underline,
-                            // 🔸 underline this line
                             decorationColor: AppColors.blackColor,
                             decorationThickness: 1.5,
                             fontWeight: FontWeight.normal,
@@ -2156,25 +4449,18 @@ class _RegisterscreenState extends State<Registerscreen> {
                           text:
                               "We aim to respond to all queries within 24 hours, Monday–Friday, though complex issues may take longer. "
                               "If you wish to cancel your membership after the trial period, we just require a 7-working-day notice before your monthly/annual renewal date. "
-                              "Once signed up, you can reach us anytime via the ‘Chat with us’ option for any questions.\n\n"
+                              "Once signed up, you can reach us anytime via the 'Chat with us' option for any questions.\n\n"
                               "We look forward to supporting you and helping you build a very successful business.\n\n",
                         ),
                       ],
                     ),
                   ),
-
-                  // Founder section side-by-side
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Text(
                           "Many thanks,\nAlex Shelton\nFounder, The Advice Centre Ltd",
-                          // style: TextStyle(
-                          //   fontSize: 14,
-                          //   height: 1.4,
-                          //   fontWeight: FontWeight.w500,
-                          // ),
                           style: TextStyle(
                               fontSize: 16.sp,
                               color: AppColors.blackColor,

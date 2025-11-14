@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zohosystem/apiCalling/Loader.dart';
 import 'package:zohosystem/apiCalling/apiConfig.dart';
 import 'package:zohosystem/ui/adviceTicketsScreen/view/adviceTicketsScreen.dart';
@@ -38,9 +39,9 @@ import '../../authentications/signup/modal/createSubscriptionModal.dart';
 import '../../authentications/signup/provider/signupProvider.dart';
 import '../../manageMembershipScreen/provider/membershipProvider.dart';
 import '../../manageMembershipScreen/view/manageMembershipScreen.dart';
-import '../../manageMembershipScreen/view/verifyPaymentsScripationScreen.dart';
 import '../../moreScreen/modal/getCustomerDataModal.dart';
 import '../../noMembershipScreens/view/webviewScreen.dart';
+import '../../welcomeScreen/view/welcomeScreen.dart';
 import '../modal/allTicketModal.dart';
 import '../modal/subscriptionsDateModal.dart';
 import '../provider/homeProvider.dart';
@@ -293,209 +294,219 @@ class _HomescreenState extends State<Homescreen> {
                                             SizedBox(
                                               height: 1.h,
                                             ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  _hasActiveSubscription()
-                                                      ? _getCurrentSubscription()
-                                                              ?.planName ??
-                                                          "N/A"
-                                                      : "",
-                                                  style: TextStyle(
-                                                      color: AppColors.bgColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.light,
-                                                      fontSize: 15.sp),
-                                                ),
-                                                SizedBox(
-                                                  height: 1.h,
-                                                ),
-                                                Container(
-                                                  width: Device.width,
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 1.h,
-                                                      horizontal: 4.w),
-                                                  decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.whiteColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  child: allTicket?.data
-                                                                  ?.length ==
-                                                              null ||
-                                                          allTicket?.data
-                                                                  ?.length ==
-                                                              0
-                                                      ? Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                            "No Ticket Available",
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .bgColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .light,
-                                                                fontSize:
-                                                                    15.sp),
-                                                          ),
-                                                        )
-                                                      : Column(
-                                                          children: [
-                                                            for (int i = 0;
-                                                                i <
-                                                                    min(
-                                                                        (allTicket?.data?.length ??
-                                                                            0),
-                                                                        5);
-                                                                i++) ...[
-                                                              Row(
-                                                                children: [
-                                                                  Container(
-                                                                    padding: EdgeInsets
-                                                                        .all(9
-                                                                            .sp),
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                      border: Border.all(
-                                                                          width: 6
-                                                                              .sp,
-                                                                          color:
-                                                                              AppColors.bgColor),
-                                                                    ),
-                                                                    child:
-                                                                        const Icon(
-                                                                      CupertinoIcons
-                                                                          .doc_richtext,
+                                            !_hasActiveSubscription()
+                                                ? Container(
+                                                    child: Text(
+                                                      "Currently, you do not have an active membership. Please purchase a membership plan to access your advice tickets.",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.bgColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontFamily:
+                                                              FontFamily.light,
+                                                          fontSize: 15.sp),
+                                                    ),
+                                                  )
+                                                : Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        _hasActiveSubscription()
+                                                            ? _getCurrentSubscription()
+                                                                    ?.planName ??
+                                                                "N/A"
+                                                            : "",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .bgColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily:
+                                                                FontFamily
+                                                                    .light,
+                                                            fontSize: 15.sp),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 1.h,
+                                                      ),
+                                                      Container(
+                                                        width: Device.width,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 1.h,
+                                                                horizontal:
+                                                                    4.w),
+                                                        decoration: BoxDecoration(
+                                                            color: AppColors
+                                                                .whiteColor,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                        child: allTicket?.data
+                                                                        ?.length ==
+                                                                    null ||
+                                                                allTicket?.data
+                                                                        ?.length ==
+                                                                    0
+                                                            ? Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Text(
+                                                                  "No Ticket Available",
+                                                                  style: TextStyle(
                                                                       color: AppColors
                                                                           .bgColor,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 2.w,
-                                                                  ),
-                                                                  Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        width:
-                                                                            65.w,
-                                                                        child:
-                                                                            Text(
-                                                                          allTicket?.data?[i].subject ??
-                                                                              "N/A",
-                                                                          style: TextStyle(
-                                                                              color: AppColors.bgColor,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontFamily: FontFamily.light,
-                                                                              fontSize: 15.sp),
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        '#${allTicket?.data?[i].ticketNumber ?? "N/A"}',
-                                                                        style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .light,
+                                                                      fontSize:
+                                                                          15.sp),
+                                                                ),
+                                                              )
+                                                            : Column(
+                                                                children: [
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          min((allTicket?.data?.length ?? 0),
+                                                                              5);
+                                                                      i++) ...[
+                                                                    Row(
+                                                                      children: [
+                                                                        Container(
+                                                                          padding:
+                                                                              EdgeInsets.all(9.sp),
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            border:
+                                                                                Border.all(width: 6.sp, color: AppColors.bgColor),
+                                                                          ),
+                                                                          child:
+                                                                              const Icon(
+                                                                            CupertinoIcons.doc_richtext,
                                                                             color:
-                                                                                AppColors.border,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontFamily: FontFamily.bold,
-                                                                            fontSize: 15.sp),
-                                                                      ),
-                                                                    ],
-                                                                  )
+                                                                                AppColors.bgColor,
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              2.w,
+                                                                        ),
+                                                                        Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            SizedBox(
+                                                                              width: 65.w,
+                                                                              child: Text(
+                                                                                allTicket?.data?[i].subject ?? "N/A",
+                                                                                style: TextStyle(color: AppColors.bgColor, fontWeight: FontWeight.bold, fontFamily: FontFamily.light, fontSize: 15.sp),
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              '#${allTicket?.data?[i].ticketNumber ?? "N/A"}',
+                                                                              style: TextStyle(color: AppColors.border, fontWeight: FontWeight.bold, fontFamily: FontFamily.bold, fontSize: 15.sp),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    ).paddingSymmetric(
+                                                                        vertical:
+                                                                            1.h),
+                                                                  ],
                                                                 ],
-                                                              ).paddingSymmetric(
-                                                                  vertical:
-                                                                      1.h),
-                                                            ],
-                                                          ],
-                                                        ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                if (isTimeExceed) {
-                                                  showCupertinoDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return CupertinoAlertDialog(
-                                                        title: Text(
-                                                          'Monthly Advice Time Exceeded',
-                                                          style: TextStyle(
-                                                              fontSize: 18.sp),
-                                                        ),
-                                                        content: Text(
-                                                          'Please upgrade your membership to create a new ticket.',
-                                                          style: TextStyle(
-                                                              fontSize: 17.sp),
-                                                        ),
-                                                        actions: [
-                                                          CupertinoDialogAction(
-                                                            child: const Text(
-                                                                'Cancel'),
-                                                            onPressed: () {
-                                                              Get.back();
-                                                            },
-                                                          ),
-                                                          CupertinoDialogAction(
-                                                            isDestructiveAction:
-                                                                true,
-                                                            onPressed: () {
-                                                              Get.back();
-                                                              Get.to(
-                                                                  const membershipPageScreen());
-                                                            },
-                                                            child: const Text(
-                                                                'Upgrade'),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                                } else {
-                                                  Get.to(
-                                                      const CreateTicketScreen());
-                                                }
-                                              },
-                                              child: Container(
-                                                height: 5.h,
-                                                width: 60.w,
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.blueColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            900)),
-                                                child: Text(
-                                                  'Create a New Ticket',
-                                                  style: TextStyle(
-                                                      fontSize: 17.sp,
-                                                      color:
-                                                          AppColors.whiteColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily:
-                                                          FontFamily.bold),
-                                                ),
+                                                              ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            if (_hasActiveSubscription())
+                                              SizedBox(
+                                                height: 1.h,
                                               ),
-                                            ).marginSymmetric(horizontal: 2.w)
+                                            if (_hasActiveSubscription())
+                                              InkWell(
+                                                onTap: () {
+                                                  if (isTimeExceed) {
+                                                    showCupertinoDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return CupertinoAlertDialog(
+                                                          title: Text(
+                                                            'Monthly Advice Time Exceeded',
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    18.sp),
+                                                          ),
+                                                          content: Text(
+                                                            'Please upgrade your membership to create a new ticket.',
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    17.sp),
+                                                          ),
+                                                          actions: [
+                                                            CupertinoDialogAction(
+                                                              child: const Text(
+                                                                  'Cancel'),
+                                                              onPressed: () {
+                                                                Get.back();
+                                                              },
+                                                            ),
+                                                            CupertinoDialogAction(
+                                                              isDestructiveAction:
+                                                                  true,
+                                                              onPressed: () {
+                                                                Get.back();
+                                                                Get.to(
+                                                                    const membershipPageScreen());
+                                                              },
+                                                              child: const Text(
+                                                                  'Upgrade'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    Get.to(
+                                                        const CreateTicketScreen());
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 5.h,
+                                                  width: 60.w,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          AppColors.blueColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              900)),
+                                                  child: Text(
+                                                    'Create a New Ticket',
+                                                    style: TextStyle(
+                                                        fontSize: 17.sp,
+                                                        color: AppColors
+                                                            .whiteColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily:
+                                                            FontFamily.bold),
+                                                  ),
+                                                ),
+                                              ).marginSymmetric(horizontal: 2.w)
                                           ],
                                         ),
                                       ),
@@ -2174,13 +2185,22 @@ class _HomescreenState extends State<Homescreen> {
             setState(() {
               isLoading = false;
             });
-            Get.to(
-              VerifyPaymentScripationScreen(
-                paymentLink: createSubscription?.hostedpage?.url ?? '',
-              ),
-              transition: Transition.rightToLeft,
-              duration: const Duration(milliseconds: 250),
-            );
+            final url = createSubscription?.hostedpage?.url ?? '';
+
+            if (url.isNotEmpty) {
+              final uri = Uri.parse(url);
+              await launchUrl(
+                uri,
+                mode: LaunchMode
+                    .externalApplication, // Opens Chrome / external browser
+              );
+              Future.delayed(const Duration(seconds: 3), () {
+                Get.offAll(() => const Welcomescreen(),
+                    transition: Transition.fadeIn);
+              });
+            } else {
+              print("URL is empty");
+            }
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Register Error", message: register?.message ?? '');

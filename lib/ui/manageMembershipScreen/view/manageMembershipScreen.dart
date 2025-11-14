@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zohosystem/apiCalling/Loader.dart';
 import 'package:zohosystem/ui/homeScreen/view/homeScreen.dart';
-import 'package:zohosystem/ui/manageMembershipScreen/view/verifyPaymentsScripationScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/amzAdviceFindOutMore/amzAdviceFindOutMoreScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/amzAgencyFindOutMore/amzAgencyFindOutMoreScreen.dart';
 import 'package:zohosystem/ui/noMembershipScreens/view/findOutMoreScreens/introducersFindOutMore/introducersFindOutMorePageScreen.dart';
@@ -35,6 +35,7 @@ import '../../authentications/signup/modal/createSubscriptionModal.dart';
 import '../../authentications/signup/provider/signupProvider.dart';
 import '../../homeScreen/modal/subscriptionsDateModal.dart';
 import '../../homeScreen/provider/homeProvider.dart';
+import '../../welcomeScreen/view/welcomeScreen.dart';
 import '../modal/resumeSubscriptionModal.dart';
 import '../provider/membershipProvider.dart';
 import 'membershipPageScreen.dart';
@@ -778,13 +779,22 @@ class _manageMembershipScreenState extends State<manageMembershipScreen> {
             setState(() {
               isLoading = false;
             });
-            Get.to(
-              VerifyPaymentScripationScreen(
-                paymentLink: createSubscription?.hostedpage?.url ?? '',
-              ),
-              transition: Transition.rightToLeft,
-              duration: const Duration(milliseconds: 250),
-            );
+            final url = createSubscription?.hostedpage?.url ?? '';
+
+            if (url.isNotEmpty) {
+              final uri = Uri.parse(url);
+              await launchUrl(
+                uri,
+                mode: LaunchMode
+                    .externalApplication, // Opens Chrome / external browser
+              );
+              Future.delayed(const Duration(seconds: 3), () {
+                Get.offAll(() => const Welcomescreen(),
+                    transition: Transition.fadeIn);
+              });
+            } else {
+              print("URL is empty");
+            }
           } else if (response.statusCode == 422) {
             showCustomErrorSnackbar(
                 title: "Register Error", message: register?.message ?? '');
